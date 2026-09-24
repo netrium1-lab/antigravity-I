@@ -1,0 +1,8 @@
+# 운영체제 및 임시 파일
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# 에디터 및 로그
+*.log
+.vscode/
