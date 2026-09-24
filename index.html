@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>나를 소개합니다 | 개인 홈페이지</title>
+  <meta name="description" content="안녕하세요! 저의 소개, 보유 역량, 프로젝트를 한눈에 볼 수 있는 자기소개 홈페이지입니다.">
+  
+  <!-- 웹 폰트 (Pretendard - 한글 최적화 폰트) -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <style>
+    /* -------------------- 색상 테마 변수 -------------------- */
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-card: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent: #4f46e5;
+      --accent-hover: #4338ca;
+      --accent-light: #eef2ff;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+      --transition: all 0.25s ease;
+      --radius: 16px;
+    }
+
+    /* 다크 모드 (어두운 화면) */
+    [data-theme="dark"] {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #64748b;
+      --accent: #818cf8;
+      --accent-hover: #6366f1;
+      --accent-light: rgba(99, 102, 241, 0.15);
+      --border-color: #334155;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+    }
+
+    /* 기본 스타일 초기화 */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.75;
+      letter-spacing: -0.3px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* -------------------- 상단 메뉴바 (헤더) -------------------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background-color: rgba(255, 255, 255, 0.88);
+      border-bottom: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    [data-theme="dark"] header {
+      background-color: rgba(15, 23, 42, 0.88);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-link {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--accent);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* 화면 모드 전환 버튼 */
+    .theme-toggle {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      transition: var(--transition);
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent-light);
+      border-color: var(--accent);
+    }
+
+    /* -------------------- 메인 첫 화면 (히어로) -------------------- */
+    .hero {
+      padding: 90px 0 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 48px;
+    }
+
+    .hero-content {
+      flex: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: 2.6rem;
+      font-weight: 800;
+      line-height: 1.35;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+      word-break: keep-all;
+    }
+
+    .hero-title .highlight {
+      background: linear-gradient(135deg, var(--accent), #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      max-width: 540px;
+      word-break: keep-all;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border-color: var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-secondary);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .hero-image-wrapper {
+      position: relative;
+    }
+
+    .hero-avatar {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e0e7ff, #fce7f3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 6rem;
+      box-shadow: var(--shadow-lg);
+      border: 4px solid var(--bg-card);
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .hero-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* -------------------- 공통 섹션 서식 -------------------- */
+    section {
+      padding: 80px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+
+    .section-tag {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    /* -------------------- 자기소개 섹션 -------------------- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .about-card {
+      background: var(--bg-card);
+      padding: 32px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .about-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .about-card p {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      word-break: keep-all;
+    }
+
+    .info-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .info-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .info-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* -------------------- 보유 역량 (기술 스택) -------------------- */
+    .skills-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .skill-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+
+    .skill-icon {
+      font-size: 2rem;
+      margin-bottom: 14px;
+    }
+
+    .skill-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .skill-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    /* -------------------- 프로젝트 섹션 -------------------- */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent);
+    }
+
+    .project-preview {
+      height: 180px;
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: white;
+    }
+
+    .project-preview.alt1 {
+      background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
+    }
+
+    .project-preview.alt2 {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .project-body {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .project-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+      flex: 1;
+      word-break: keep-all;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .project-links a {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .project-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* -------------------- 연락처 섹션 -------------------- */
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 48px 32px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .contact-title {
+      font-size: 1.7rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .contact-desc {
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      word-break: keep-all;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .contact-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      transition: var(--transition);
+    }
+
+    .contact-item:hover {
+      background: var(--accent-light);
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* -------------------- 하단 푸터 -------------------- */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 36px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* -------------------- 모바일 화면 반응형 스타일 -------------------- */
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 50px 0;
+        gap: 32px;
+      }
+
+      .hero-title {
+        font-size: 2.1rem;
+      }
+
+      .hero-desc {
+        margin: 0 auto 28px;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .hero-avatar {
+        width: 180px;
+        height: 180px;
+        font-size: 4.5rem;
+        margin: 0 auto;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-menu {
+        display: none; /* 모바일 단순화를 위해 메뉴 감춤 */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 상단 네비게이션 헤더 -->
+  <header>
+    <div class="container nav-container">
+      <a href="#" class="logo">홍길동의 홈페이지</a>
+      <ul class="nav-menu">
+        <li><a href="#about" class="nav-link">소개</a></li>
+        <li><a href="#skills" class="nav-link">보유 기술</a></li>
+        <li><a href="#projects" class="nav-link">프로젝트</a></li>
+        <li><a href="#contact" class="nav-link">연락처</a></li>
+      </ul>
+      <div class="nav-actions">
+        <!-- 화면 테마 변경 버튼 -->
+        <button class="theme-toggle" id="themeToggle" aria-label="화면 모드 변경" title="화면 모드 변경">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 첫인사 및 메인 소개 (히어로) -->
+    <div class="container">
+      <section class="hero">
+        <div class="hero-content">
+          <span class="badge">👋 반갑습니다!</span>
+          <h1 class="hero-title">
+            배움을 즐기며 성장하는<br>
+            <span class="highlight">홍길동</span>입니다.
+          </h1>
+          <p class="hero-desc">
+            복잡한 문제를 직관적이고 편리하게 해결하는 것을 좋아합니다.<br>
+            새로운 지식을 빠르게 습득하고, 사람들에게 실질적인 도움을 주는 결과물을 만듭니다.
+          </p>
+          <div class="hero-buttons">
+            <a href="#contact" class="btn btn-primary">✉️ 연락하기</a>
+            <a href="#projects" class="btn btn-secondary">📂 프로젝트 구경하기</a>
+          </div>
+        </div>
+        <div class="hero-image-wrapper">
+          <!-- 사용자 사진이 있다면 아래 <span> 대신 <img src="내사진.jpg" alt="프로필 사진"> 태그로 교체 가능합니다 -->
+          <div class="hero-avatar">
+            <span>🧑‍💻</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 자기소개 섹션 -->
+    <section id="about" style="background-color: var(--bg-secondary);">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-tag">소개</p>
+          <h2 class="section-title">저를 소개합니다</h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-card">
+            <h3>💡 저는 이런 사람입니다</h3>
+            <p>
+              궁금한 점이 생기면 깊이 파고들어 원리를 이해하고, 이를 바탕으로 실생활의 불편함을 개선하는 것을 즐깁니다.
+            </p>
+            <p>
+              함께 일하는 동료들과의 적극적인 소통과 신뢰를 가장 중요하게 생각하며,
+              사용자 관점에서 한 번 더 생각하고 꼼꼼하게 완성도를 높여갑니다.
+            </p>
+          </div>
+          <div class="about-card">
+            <h3>📋 기본 정보</h3>
+            <p>언제든 편하게 연락 주시면 기쁜 마음으로 답변드리겠습니다.</p>
+            <div class="info-list">
+              <div class="info-item">
+                <span class="info-label">이름</span>
+                <span class="info-value">홍길동</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">거주지</span>
+                <span class="info-value">대한민국 서울</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">이메일</span>
+                <span class="info-value">your-email@example.com</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">관심 분야</span>
+                <span class="info-value">웹 개발, AI 활용, 자동화</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 보유 기술 및 역량 섹션 -->
+    <section id="skills">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-tag">보유 기술</p>
+          <h2 class="section-title">다룰 수 있는 기술 및 도구</h2>
+        </div>
+        <div class="skills-container">
+          <div class="skill-card">
+            <div class="skill-icon">🎨</div>
+            <h3 class="skill-title">화면 구현 (프론트엔드)</h3>
+            <p class="skill-subtitle">사용자가 마주하는 직관적인 웹 화면을 만듭니다.</p>
+            <div class="skill-tags">
+              <span class="tag">HTML5</span>
+              <span class="tag">CSS3</span>
+              <span class="tag">자바스크립트</span>
+              <span class="tag">반응형 웹 디자인</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-icon">⚙️</div>
+            <h3 class="skill-title">데이터 및 로직 (백엔드)</h3>
+            <p class="skill-subtitle">데이터 처리와 안정적인 기능을 구현합니다.</p>
+            <div class="skill-tags">
+              <span class="tag">파이썬</span>
+              <span class="tag">데이터베이스</span>
+              <span class="tag">REST API 연동</span>
+              <span class="tag">업무 자동화</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-icon">🛠️</div>
+            <h3 class="skill-title">협업 및 도구</h3>
+            <p class="skill-subtitle">원활한 소통과 효율적인 협업을 위한 도구입니다.</p>
+            <div class="skill-tags">
+              <span class="tag">Git & GitHub</span>
+              <span class="tag">VS Code</span>
+              <span class="tag">피그마(Figma)</span>
+              <span class="tag">노션 / 슬랙</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 프로젝트 섹션 -->
+    <section id="projects" style="background-color: var(--bg-secondary);">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-tag">프로젝트</p>
+          <h2 class="section-title">주요 활동 및 작업물</h2>
+        </div>
+        <div class="projects-grid">
+          <!-- 첫 번째 프로젝트 -->
+          <article class="project-card">
+            <div class="project-preview">💻</div>
+            <div class="project-body">
+              <h3 class="project-title">개인 소개 홈페이지</h3>
+              <p class="project-desc">
+                다크 모드와 반응형 화면을 지원하여 누구나 편하게 볼 수 있는 순수 웹 표준 자기소개 사이트입니다.
+              </p>
+              <div class="project-tech">
+                <span class="tag">HTML5</span>
+                <span class="tag">CSS3</span>
+                <span class="tag">자바스크립트</span>
+              </div>
+              <div class="project-links">
+                <a href="#" target="_blank" rel="noopener noreferrer">🔗 바로가기</a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer">📂 코드 보기</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 두 번째 프로젝트 -->
+          <article class="project-card">
+            <div class="project-preview alt1">📝</div>
+            <div class="project-body">
+              <h3 class="project-title">할 일 관리 웹 어플리케이션</h3>
+              <p class="project-desc">
+                일정을 간편하게 등록하고 완료 상태를 관리할 수 있는 가볍고 직관적인 웹 도구입니다.
+              </p>
+              <div class="project-tech">
+                <span class="tag">웹 저장소(LocalStorage)</span>
+                <span class="tag">화면 반응형 UI</span>
+              </div>
+              <div class="project-links">
+                <a href="#" target="_blank" rel="noopener noreferrer">🔗 바로가기</a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer">📂 코드 보기</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 세 번째 프로젝트 -->
+          <article class="project-card">
+            <div class="project-preview alt2">☀️</div>
+            <div class="project-body">
+              <h3 class="project-title">실시간 날씨 정보 알리미</h3>
+              <p class="project-desc">
+                외부 공공/오픈 날씨 데이터를 연동하여 현재 위치의 기온과 미세먼지 정보를 실시간으로 제공합니다.
+              </p>
+              <div class="project-tech">
+                <span class="tag">외부 데이터 연동(API)</span>
+                <span class="tag">비동기 데이터 처리</span>
+              </div>
+              <div class="project-links">
+                <a href="#" target="_blank" rel="noopener noreferrer">🔗 바로가기</a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer">📂 코드 보기</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 연락처 섹션 -->
+    <section id="contact">
+      <div class="container">
+        <div class="contact-card">
+          <h2 class="contact-title">언제든 편하게 연락 주세요!</h2>
+          <p class="contact-desc">
+            새로운 아이디어 나눔, 프로젝트 제안, 궁금한 점 등 무엇이든 환영합니다.<br>
+            아래 링크를 통해 바로 연락하실 수 있습니다.
+          </p>
+          <div class="contact-links">
+            <a href="mailto:your-email@example.com" class="contact-item">
+              📧 이메일 보내기
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="contact-item">
+              🐙 깃허브 (GitHub)
+            </a>
+            <a href="https://velog.io" target="_blank" rel="noopener noreferrer" class="contact-item">
+              ✍️ 개인 블로그
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="contact-item">
+              💼 링크드인 (LinkedIn)
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 하단 저작권 푸터 -->
+  <footer>
+    <div class="container">
+      <p>© 2026 홍길동. 모든 권리 보유.</p>
+    </div>
+  </footer>
+
+  <!-- 화면 모드 전환 스크립트 -->
+  <script>
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeToggleBtn.textContent = '☀️';
+        themeToggleBtn.title = '밝은 화면으로 전환';
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        themeToggleBtn.textContent = '🌙';
+        themeToggleBtn.title = '어두운 화면으로 전환';
+      }
+      localStorage.setItem('theme', theme);
+    }
+
+    // 처음 접속 시 테마 적용
+    applyTheme(savedTheme);
+
+    // 버튼 클릭 시 테마 전환
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
