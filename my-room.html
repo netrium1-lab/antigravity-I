@@ -2868,6 +2868,17 @@
   </a>
 
   <script>
+    // HTML 이스케이프 안전 헬퍼 함수 (전역)
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
     // 탭 전환
     function switchTab(tabId) {
       document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
@@ -3168,17 +3179,24 @@
     // ================= 🌿 전담 코칭 관리틀 모달 조작 & 데이터 동기화 =================
     let currentEditingCoachData = null;
 
-    // 코치 관리 모달 열기
+    // 코치 관리 모달 열기 (안전한 방어 코드 탑재)
     function openCoachAdminModal(initialTab) {
-      currentEditingCoachData = getCoachData();
-      populateCoachModalForm(currentEditingCoachData);
-      if (initialTab) {
-        switchCoachTab(initialTab);
-      } else {
-        switchCoachTab('pdf');
+      try {
+        const modal = document.getElementById('coachAdminModal');
+        if (modal) modal.classList.add('open');
+
+        currentEditingCoachData = getCoachData();
+        populateCoachModalForm(currentEditingCoachData);
+        if (initialTab) {
+          switchCoachTab(initialTab);
+        } else {
+          switchCoachTab('pdf');
+        }
+      } catch (err) {
+        console.error('코치 모달 열기 오류:', err);
+        const modal = document.getElementById('coachAdminModal');
+        if (modal) modal.classList.add('open');
       }
-      const modal = document.getElementById('coachAdminModal');
-      if (modal) modal.classList.add('open');
     }
 
     // 코치 관리 모달 닫기
@@ -3195,76 +3213,91 @@
 
     // 관리틀 탭 전환
     function switchCoachTab(tabKey) {
-      document.querySelectorAll('.coach-tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.coach-panel').forEach(p => p.classList.remove('active'));
+      try {
+        document.querySelectorAll('.coach-tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.coach-panel').forEach(p => p.classList.remove('active'));
 
-      const tabBtnMap = {
-        'pdf': 'btnCoachTabPdf',
-        'audio': 'btnCoachTabAudio',
-        'delivery': 'btnCoachTabDelivery',
-        'chapters': 'btnCoachTabChapters',
-        'report': 'btnCoachTabReport'
-      };
-      const panelMap = {
-        'pdf': 'coachPanelPdf',
-        'audio': 'coachPanelAudio',
-        'delivery': 'coachPanelDelivery',
-        'chapters': 'coachPanelChapters',
-        'report': 'coachPanelReport'
-      };
+        const tabBtnMap = {
+          'pdf': 'btnCoachTabPdf',
+          'audio': 'btnCoachTabAudio',
+          'delivery': 'btnCoachTabDelivery',
+          'chapters': 'btnCoachTabChapters',
+          'report': 'btnCoachTabReport'
+        };
+        const panelMap = {
+          'pdf': 'coachPanelPdf',
+          'audio': 'coachPanelAudio',
+          'delivery': 'coachPanelDelivery',
+          'chapters': 'coachPanelChapters',
+          'report': 'coachPanelReport'
+        };
 
-      const btn = document.getElementById(tabBtnMap[tabKey]);
-      const panel = document.getElementById(panelMap[tabKey]);
-      if (btn) btn.classList.add('active');
-      if (panel) panel.classList.add('active');
+        const btn = document.getElementById(tabBtnMap[tabKey]);
+        const panel = document.getElementById(panelMap[tabKey]);
+        if (btn) btn.classList.add('active');
+        if (panel) panel.classList.add('active');
+      } catch (e) {
+        console.error('탭 전환 에러:', e);
+      }
     }
 
-    // 폼에 데이터 채우기
+    // 폼에 데이터 채우기 (모든 필드 Null-safe 처리)
     function populateCoachModalForm(data) {
+      if (!data) data = getCoachData();
+
       // 1. PDF
-      document.getElementById('coachPdfFileNameDisplay').textContent = data.pdfFileName || '미등록 (파일 선택 필요)';
-      document.getElementById('coachPdfFileSizeDisplay').textContent = data.pdfFileSize || '미등록';
-      document.getElementById('inputCoachPdfTitle').value = data.pdfFileName || '';
-      document.getElementById('inputCoachPdfPages').value = data.pdfPages || '184';
+      const pdfNameDisplay = document.getElementById('coachPdfFileNameDisplay');
+      if (pdfNameDisplay) pdfNameDisplay.textContent = data.pdfFileName || '미등록 (파일 선택 필요)';
+      const pdfSizeDisplay = document.getElementById('coachPdfFileSizeDisplay');
+      if (pdfSizeDisplay) pdfSizeDisplay.textContent = data.pdfFileSize || '미등록';
+      const pdfTitleInput = document.getElementById('inputCoachPdfTitle');
+      if (pdfTitleInput) pdfTitleInput.value = data.pdfFileName || '';
+      const pdfPagesInput = document.getElementById('inputCoachPdfPages');
+      if (pdfPagesInput) pdfPagesInput.value = data.pdfPages || '184';
 
       // 2. Audio
-      document.getElementById('coachAudioFileNameDisplay').textContent = data.audioFileName || '미등록 (파일 선택 필요)';
-      document.getElementById('coachAudioDurationDisplay').textContent = `재생시간: ${data.audioDuration || '01:15'}`;
-      document.getElementById('inputCoachAudioTitle').value = data.audioTitle || '';
-      document.getElementById('inputCoachAudioDuration').value = data.audioDuration || '01:15';
-      document.getElementById('inputCoachAudioSubtitle').value = data.audioSubtitle || '';
+      const audioNameDisplay = document.getElementById('coachAudioFileNameDisplay');
+      if (audioNameDisplay) audioNameDisplay.textContent = data.audioFileName || '미등록 (파일 선택 필요)';
+      const audioDurationDisplay = document.getElementById('coachAudioDurationDisplay');
+      if (audioDurationDisplay) audioDurationDisplay.textContent = `재생시간: ${data.audioDuration || '01:15'}`;
+      const audioTitleInput = document.getElementById('inputCoachAudioTitle');
+      if (audioTitleInput) audioTitleInput.value = data.audioTitle || '';
+      const audioDurationInput = document.getElementById('inputCoachAudioDuration');
+      if (audioDurationInput) audioDurationInput.value = data.audioDuration || '01:15';
+      const audioSubtitleInput = document.getElementById('inputCoachAudioSubtitle');
+      if (audioSubtitleInput) audioSubtitleInput.value = data.audioSubtitle || '';
 
       // 3. Delivery
       selectCoachStage(data.deliveryStage || 4);
-      document.getElementById('inputCoachDeliveryStatus').value = data.deliveryStatus || '';
-      document.getElementById('inputCoachDeliveryCourier').value = data.deliveryCourier || '우체국 등기택배';
-      document.getElementById('inputCoachDeliveryTracking').value = data.deliveryTrackingNo || '';
-      document.getElementById('inputCoachDeliveryEta').value = data.deliveryEta || '';
+      const delStatusInput = document.getElementById('inputCoachDeliveryStatus');
+      if (delStatusInput) delStatusInput.value = data.deliveryStatus || '';
+      const delCourierInput = document.getElementById('inputCoachDeliveryCourier');
+      if (delCourierInput) delCourierInput.value = data.deliveryCourier || '우체국 등기택배';
+      const delTrackingInput = document.getElementById('inputCoachDeliveryTracking');
+      if (delTrackingInput) delTrackingInput.value = data.deliveryTrackingNo || '';
+      const delEtaInput = document.getElementById('inputCoachDeliveryEta');
+      if (delEtaInput) delEtaInput.value = data.deliveryEta || '';
 
       // 4. Chapters
       const chs = data.chapters || [];
-      if (chs[0]) {
-        document.getElementById('inputCoachCh1Title').value = chs[0].title || '';
-        document.getElementById('inputCoachCh1Content').value = chs[0].content || '';
-      }
-      if (chs[1]) {
-        document.getElementById('inputCoachCh2Title').value = chs[1].title || '';
-        document.getElementById('inputCoachCh2Content').value = chs[1].content || '';
-      }
-      if (chs[2]) {
-        document.getElementById('inputCoachCh3Title').value = chs[2].title || '';
-        document.getElementById('inputCoachCh3Content').value = chs[2].content || '';
-      }
-      if (chs[3]) {
-        document.getElementById('inputCoachCh4Title').value = chs[3].title || '';
-        document.getElementById('inputCoachCh4Content').value = chs[3].content || '';
+      for (let i = 1; i <= 4; i++) {
+        const titleEl = document.getElementById(`inputCoachCh${i}Title`);
+        const contentEl = document.getElementById(`inputCoachCh${i}Content`);
+        if (chs[i - 1]) {
+          if (titleEl) titleEl.value = chs[i - 1].title || '';
+          if (contentEl) contentEl.value = chs[i - 1].content || '';
+        }
       }
 
       // 5. Coach Profile & Reports
       const prof = data.coachProfile || {};
-      document.getElementById('inputCoachName').value = prof.name || '';
-      document.getElementById('inputCoachBadge').value = prof.badge || '';
-      document.getElementById('inputCoachQuote').value = prof.quote || '';
+      const coachNameInput = document.getElementById('inputCoachName');
+      if (coachNameInput) coachNameInput.value = prof.name || '';
+      const coachBadgeInput = document.getElementById('inputCoachBadge');
+      if (coachBadgeInput) coachBadgeInput.value = prof.badge || '';
+      const coachQuoteInput = document.getElementById('inputCoachQuote');
+      if (coachQuoteInput) coachQuoteInput.value = prof.quote || '';
+      
       renderCoachReportsEditList();
     }
 
@@ -3460,94 +3493,98 @@
 
     // ================= 🏛️ 서재 화면에 코치 데이터 실시간 적용 =================
     function applyCoachDataToRoom() {
-      const data = getCoachData();
+      try {
+        const data = getCoachData();
 
-      // 1. 배송 상태 & 송장 정보 갱신
-      const statusTagEl = document.getElementById('viewDeliveryStatusTag');
-      if (statusTagEl) statusTagEl.textContent = data.deliveryStatus || '발송 완료 (배송중)';
+        // 1. 배송 상태 & 송장 정보 갱신
+        const statusTagEl = document.getElementById('viewDeliveryStatusTag');
+        if (statusTagEl) statusTagEl.textContent = data.deliveryStatus || '발송 완료 (배송중)';
 
-      const courierEl = document.getElementById('viewDeliveryCourier');
-      if (courierEl) courierEl.textContent = data.deliveryCourier || '우체국 등기택배';
+        const courierEl = document.getElementById('viewDeliveryCourier');
+        if (courierEl) courierEl.textContent = data.deliveryCourier || '우체국 등기택배';
 
-      const trackingEl = document.getElementById('viewDeliveryTrackingNo');
-      if (trackingEl) trackingEl.textContent = data.deliveryTrackingNo || '6892-4112-9011';
+        const trackingEl = document.getElementById('viewDeliveryTrackingNo');
+        if (trackingEl) trackingEl.textContent = data.deliveryTrackingNo || '6892-4112-9011';
 
-      const etaEl = document.getElementById('viewDeliveryEta');
-      if (etaEl) etaEl.textContent = data.deliveryEta || '내일 오후 도착 예정';
+        const etaEl = document.getElementById('viewDeliveryEta');
+        if (etaEl) etaEl.textContent = data.deliveryEta || '내일 오후 도착 예정';
 
-      // 4단계 트래커 스텝 아이콘 갱신
-      const stepsContainer = document.getElementById('viewDeliverySteps');
-      if (stepsContainer) {
-        const stageNum = data.deliveryStage || 4;
-        const labels = ['구술 인터뷰', '교정 & 감수', '양장 제본 인쇄', '안심 패키징 발송'];
-        stepsContainer.innerHTML = labels.map((lbl, idx) => {
-          const stepIdx = idx + 1;
-          let stepClass = '';
-          let icon = stepIdx;
-          if (stepIdx < stageNum) {
-            stepClass = 'completed';
-            icon = '✓';
-          } else if (stepIdx === stageNum) {
-            stepClass = 'current';
-            icon = stepIdx;
-          }
-          return `
-            <div class="tracker-step ${stepClass}">
-              <div class="step-circle">${icon}</div>
-              <div class="step-label">${lbl}</div>
-            </div>
-          `;
-        }).join('');
-      }
-
-      // 2. 육성 회고록 플레이어 갱신
-      const audioTitleEl = document.getElementById('viewAudioTitle');
-      if (audioTitleEl) audioTitleEl.textContent = data.audioTitle || '🎙️ 김순옥 어르신의 1분 육성 회고록';
-
-      const audioSubTagEl = document.getElementById('viewAudioSubTag');
-      if (audioSubTagEl) audioSubTagEl.textContent = data.audioSubTag || '자녀에게 들려주는 목소리';
-
-      const audioTimerEl = document.getElementById('audioTimer');
-      if (audioTimerEl) audioTimerEl.textContent = `00:00 / ${data.audioDuration || '01:15'}`;
-
-      const audioSubtitleEl = document.getElementById('audioSubtitle');
-      if (audioSubtitleEl) audioSubtitleEl.textContent = `"${data.audioSubtitle || ''}"`;
-
-      // 3. 목차 탭 제목 갱신
-      if (data.chapters) {
-        for (let i = 1; i <= 4; i++) {
-          const tabBtn = document.getElementById(`viewChapterTab${i}`);
-          if (tabBtn && data.chapters[i - 1]) {
-            tabBtn.textContent = data.chapters[i - 1].title;
-          }
+        // 4단계 트래커 스텝 아이콘 갱신
+        const stepsContainer = document.getElementById('viewDeliverySteps');
+        if (stepsContainer) {
+          const stageNum = data.deliveryStage || 4;
+          const labels = ['구술 인터뷰', '교정 & 감수', '양장 제본 인쇄', '안심 패키징 발송'];
+          stepsContainer.innerHTML = labels.map((lbl, idx) => {
+            const stepIdx = idx + 1;
+            let stepClass = '';
+            let icon = stepIdx;
+            if (stepIdx < stageNum) {
+              stepClass = 'completed';
+              icon = '✓';
+            } else if (stepIdx === stageNum) {
+              stepClass = 'current';
+              icon = stepIdx;
+            }
+            return `
+              <div class="tracker-step ${stepClass}">
+                <div class="step-circle">${icon}</div>
+                <div class="step-label">${lbl}</div>
+              </div>
+            `;
+          }).join('');
         }
-        loadChapter(currentChapterNum || 1);
-      }
 
-      // 4. 코치 프로필 갱신
-      const prof = data.coachProfile || {};
-      const coachNameEl = document.getElementById('viewCoachName');
-      if (coachNameEl) coachNameEl.textContent = prof.name || '박지은 수석코치';
+        // 2. 육성 회고록 플레이어 갱신
+        const audioTitleEl = document.getElementById('viewAudioTitle');
+        if (audioTitleEl) audioTitleEl.textContent = data.audioTitle || '🎙️ 김순옥 어르신의 1분 육성 회고록';
 
-      const coachBadgeEl = document.getElementById('viewCoachBadge');
-      if (coachBadgeEl) coachBadgeEl.textContent = prof.badge || '시니어 뷰티 & 공간 리셋 1급 공인코치';
+        const audioSubTagEl = document.getElementById('viewAudioSubTag');
+        if (audioSubTagEl) audioSubTagEl.textContent = data.audioSubTag || '자녀에게 들려주는 목소리';
 
-      const coachQuoteEl = document.getElementById('viewCoachQuote');
-      if (coachQuoteEl) coachQuoteEl.textContent = `"${prof.quote || ''}"`;
+        const audioTimerEl = document.getElementById('audioTimer');
+        if (audioTimerEl) audioTimerEl.textContent = `00:00 / ${data.audioDuration || '01:15'}`;
 
-      // 5. 케어 리포트 타임라인 갱신
-      const timelineContainer = document.getElementById('viewReportTimeline');
-      if (timelineContainer && data.careReports) {
-        timelineContainer.innerHTML = data.careReports.map(r => `
-          <div class="report-item">
-            <div class="report-dot"></div>
-            <div class="report-date">${escapeHtml(r.date || '')} (${escapeHtml(r.round || '')})</div>
-            <h4 class="report-heading">${escapeHtml(r.title || '')}</h4>
-            <div class="report-memo">
-              "${escapeHtml(r.memo || '')}"
+        const audioSubtitleEl = document.getElementById('audioSubtitle');
+        if (audioSubtitleEl) audioSubtitleEl.textContent = `"${data.audioSubtitle || ''}"`;
+
+        // 3. 목차 탭 제목 갱신
+        if (data.chapters) {
+          for (let i = 1; i <= 4; i++) {
+            const tabBtn = document.getElementById(`viewChapterTab${i}`);
+            if (tabBtn && data.chapters[i - 1]) {
+              tabBtn.textContent = data.chapters[i - 1].title;
+            }
+          }
+          loadChapter(currentChapterNum || 1);
+        }
+
+        // 4. 코치 프로필 갱신
+        const prof = data.coachProfile || {};
+        const coachNameEl = document.getElementById('viewCoachName');
+        if (coachNameEl) coachNameEl.textContent = prof.name || '박지은 수석코치';
+
+        const coachBadgeEl = document.getElementById('viewCoachBadge');
+        if (coachBadgeEl) coachBadgeEl.textContent = prof.badge || '시니어 뷰티 & 공간 리셋 1급 공인코치';
+
+        const coachQuoteEl = document.getElementById('viewCoachQuote');
+        if (coachQuoteEl) coachQuoteEl.textContent = `"${prof.quote || ''}"`;
+
+        // 5. 케어 리포트 타임라인 갱신
+        const timelineContainer = document.getElementById('viewReportTimeline');
+        if (timelineContainer && data.careReports) {
+          timelineContainer.innerHTML = data.careReports.map(r => `
+            <div class="report-item">
+              <div class="report-dot"></div>
+              <div class="report-date">${escapeHtml(r.date || '')} (${escapeHtml(r.round || '')})</div>
+              <h4 class="report-heading">${escapeHtml(r.title || '')}</h4>
+              <div class="report-memo">
+                "${escapeHtml(r.memo || '')}"
+              </div>
             </div>
-          </div>
-        `).join('');
+          `).join('');
+        }
+      } catch (err) {
+        console.error('서재 코치 데이터 렌더링 에러:', err);
       }
     }
 
