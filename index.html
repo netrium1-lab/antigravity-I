@@ -283,6 +283,74 @@
       border-radius: 3px;
     }
 
+    /* 상단 네비게이션 핵심 CTA 강조 뱃지 버튼 (1분 자가진단 & 나의 고유한 서재) */
+    .nav-highlight-btn {
+      display: inline-flex !important;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px !important;
+      border-radius: 999px;
+      font-weight: 850 !important;
+      font-size: 0.98rem;
+      letter-spacing: -0.3px;
+      transition: all 0.25s ease;
+      white-space: nowrap !important;
+      text-decoration: none;
+    }
+
+    /* 🎯 1분 자가진단 버튼 (생동감 있는 세이지 그린 & 펄스 뱃지) */
+    .nav-test-pill {
+      background: var(--accent-light);
+      color: var(--accent) !important;
+      border: 1.8px solid var(--accent);
+      box-shadow: 0 2px 8px rgba(94, 107, 82, 0.16);
+      position: relative;
+    }
+
+    .nav-test-pill:hover {
+      background: var(--accent);
+      color: #ffffff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 14px rgba(94, 107, 82, 0.28);
+    }
+
+    .nav-pulse-badge {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #e03131;
+      box-shadow: 0 0 0 rgba(224, 49, 49, 0.7);
+      animation: pulseDot 1.8s infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes pulseDot {
+      0% { box-shadow: 0 0 0 0 rgba(224, 49, 49, 0.7); }
+      70% { box-shadow: 0 0 0 6px rgba(224, 49, 49, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(224, 49, 49, 0); }
+    }
+
+    /* 🏛️ 나의 고유한 서재 버튼 (품격 있는 프리미엄 골드) */
+    .nav-room-pill {
+      background: rgba(194, 155, 56, 0.14);
+      color: #8c6610 !important;
+      border: 1.8px solid var(--accent-gold);
+      box-shadow: 0 2px 8px rgba(194, 155, 56, 0.18);
+    }
+
+    [data-theme="dark"] .nav-room-pill {
+      color: var(--accent-gold) !important;
+      background: rgba(216, 178, 82, 0.16);
+    }
+
+    .nav-room-pill:hover {
+      background: var(--accent-gold);
+      color: #ffffff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 14px rgba(194, 155, 56, 0.3);
+    }
+
     /* 나의 아카이브 옆 독립 로그인 버튼 (줄바꿈 방지) */
     .nav-login-btn {
       display: inline-flex;
@@ -550,6 +618,162 @@
       line-height: 1.9;
       word-break: keep-all;
       letter-spacing: -0.3px;
+    }
+
+    /* -------------------- 메인 상단 헤드 유저 모집 듀얼 액션 카드 -------------------- */
+    .hero-cta-banner-wrap {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      max-width: 860px;
+      margin: 40px auto 0;
+      padding: 0 10px;
+      text-align: left;
+    }
+
+    @media (max-width: 768px) {
+      .hero-cta-banner-wrap {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 28px;
+      }
+    }
+
+    .hero-action-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--bg-card);
+      border-radius: 20px;
+      padding: 20px 22px;
+      text-decoration: none;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .hero-action-card:hover {
+      transform: translateY(-4px);
+    }
+
+    /* 1. 🎯 1분 인생진단 카드 */
+    .hero-action-card.test-card {
+      border: 2px solid var(--accent);
+      box-shadow: 0 6px 20px rgba(94, 107, 82, 0.12);
+    }
+
+    .hero-action-card.test-card:hover {
+      box-shadow: 0 10px 28px rgba(94, 107, 82, 0.24);
+      border-color: var(--accent-hover);
+    }
+
+    /* 2. 🏛️ 나의 고유한 서재 카드 */
+    .hero-action-card.room-card {
+      border: 2px solid var(--accent-gold);
+      box-shadow: 0 6px 20px rgba(194, 155, 56, 0.15);
+    }
+
+    .hero-action-card.room-card:hover {
+      box-shadow: 0 10px 28px rgba(194, 155, 56, 0.28);
+      border-color: #b08a28;
+    }
+
+    .hero-card-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.9rem;
+      flex-shrink: 0;
+      transition: transform 0.25s ease;
+    }
+
+    .hero-action-card:hover .hero-card-icon {
+      transform: scale(1.1) rotate(4deg);
+    }
+
+    .hero-card-icon.test-bg {
+      background: var(--accent-light);
+      border: 1px solid rgba(94, 107, 82, 0.25);
+    }
+
+    .hero-card-icon.room-bg {
+      background: rgba(194, 155, 56, 0.15);
+      border: 1px solid rgba(194, 155, 56, 0.35);
+    }
+
+    .hero-card-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero-card-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .hero-mini-badge {
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+      letter-spacing: -0.2px;
+      line-height: 1.3;
+    }
+
+    .hero-mini-badge.green {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .hero-mini-badge.gold {
+      background: var(--accent-gold);
+      color: #ffffff;
+    }
+
+    .hero-card-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .hero-card-title {
+      font-size: 1.22rem;
+      font-weight: 850;
+      color: var(--text-primary);
+      line-height: 1.3;
+      letter-spacing: -0.4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    .hero-card-arrow {
+      font-size: 1.15rem;
+      color: var(--accent);
+      transition: transform 0.2s ease;
+    }
+
+    .hero-action-card.room-card .hero-card-arrow {
+      color: var(--accent-gold);
+    }
+
+    .hero-action-card:hover .hero-card-arrow {
+      transform: translateX(4px);
+    }
+
+    .hero-card-desc {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      margin-top: 4px;
+      word-break: keep-all;
     }
 
     .hero-buttons {
@@ -3620,10 +3844,21 @@
           <li><a href="#home" class="nav-link active">홈</a></li>
           <li><a href="#magazine" class="nav-link">여백의 서재</a></li>
           <li><a href="#lounge" class="nav-link">비움 한 줄</a></li>
-          <li><a href="#test" class="nav-link">자가진단</a></li>
+          <li>
+            <a href="#test" class="nav-highlight-btn nav-test-pill" title="1분 무료 인생 리셋 자가진단 바로가기">
+              <span>🎯</span>
+              <span>1분 자가진단</span>
+              <span class="nav-pulse-badge" title="지금 진단 가능"></span>
+            </a>
+          </li>
           <li><a href="#memoir" class="nav-link" style="color: var(--accent); font-weight: 800;">디지털 자서전</a></li>
           <li><a href="academy.html" class="nav-link" style="color: var(--accent-gold); font-weight: 800;" title="시니어 라이프 리셋 코치 양성 아카데미">🎓 코치 아카데미</a></li>
-          <li><a href="my-room.html" class="nav-link" style="font-weight: 800;" title="나만의 고유한 서재 (개인 온라인룸)">🏛️ 고유한 서재</a></li>
+          <li>
+            <a href="my-room.html" class="nav-highlight-btn nav-room-pill" title="어르신 전용 프라이빗 온라인룸 입장">
+              <span>🏛️</span>
+              <span>나의 고유한 서재</span>
+            </a>
+          </li>
         </ul>
 
         <!-- 나의 아카이브 바로 옆의 독립 로그인 버튼 및 테마 토글 -->
@@ -3653,10 +3888,16 @@
         <a href="#home" class="drawer-nav-item" onclick="closeMobileDrawer()">🏠 <strong>홈</strong></a>
         <a href="#magazine" class="drawer-nav-item" onclick="closeMobileDrawer()">📖 <strong>여백의 서재</strong></a>
         <a href="#lounge" class="drawer-nav-item" onclick="closeMobileDrawer()">💬 <strong>오늘의 비움 한 줄</strong></a>
-        <a href="#test" class="drawer-nav-item" onclick="closeMobileDrawer()">🧭 <strong>1분 자가진단</strong></a>
+        <a href="#test" class="drawer-nav-item" onclick="closeMobileDrawer()" style="background: var(--accent-light); color: var(--accent); border: 1.5px solid var(--accent); font-weight: 850;">
+          <span>🎯 <strong>1분 자가진단</strong></span>
+          <span style="font-size: 0.72rem; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 999px;">무료진단</span>
+        </a>
         <a href="#memoir" class="drawer-nav-item" onclick="closeMobileDrawer()" style="color: var(--accent);">✍️ <strong>디지털 자서전</strong></a>
         <a href="academy.html" class="drawer-nav-item" style="color: var(--accent-gold);">🎓 <strong>코치 양성 아카데미</strong></a>
-        <a href="my-room.html" class="drawer-nav-item" style="color: var(--accent-gold);">🏛️ <strong>나만의 고유한 서재</strong></a>
+        <a href="my-room.html" class="drawer-nav-item" style="background: rgba(194, 155, 56, 0.14); color: #8c6610; border: 1.5px solid var(--accent-gold); font-weight: 850;">
+          <span>🏛️ <strong>나의 고유한 서재</strong></span>
+          <span style="font-size: 0.72rem; background: var(--accent-gold); color: #fff; padding: 2px 8px; border-radius: 999px;">온라인룸</span>
+        </a>
         <a href="#login" class="drawer-nav-item drawer-login-btn" onclick="closeMobileDrawer(); openLoginModal(event)">👤 <strong>로그인</strong></a>
       </nav>
     </div>
@@ -3706,6 +3947,41 @@
           내 몸의 건강과 소중한 서사를 우아하게 정리하여 가장 눈부신 두 번째 황금기를 맞이하세요.<br>
           전담 코칭스태프와 함께 온라인과 오프라인에서 당신만의 라이프 아카이브를 완성합니다.
         </p>
+
+        <!-- 🚀 고객 관심 집중 & 유저 모집 핵심 진입 듀얼 액션 카드 -->
+        <div class="hero-cta-banner-wrap">
+          <!-- 1) 🎯 1분 인생진단 카드 -->
+          <a href="#test" class="hero-action-card test-card" title="1분 만에 나의 인생 후반전 준비도 무료 진단">
+            <div class="hero-card-icon test-bg">🎯</div>
+            <div class="hero-card-body">
+              <div class="hero-card-badge-row">
+                <span class="hero-mini-badge green">⚡ 1분 무료 자가진단</span>
+                <span class="hero-card-hint">로그인 없이 즉시 분석</span>
+              </div>
+              <div class="hero-card-title">
+                <span>🎯 1분 인생진단 시작하기</span>
+                <span class="hero-card-arrow">→</span>
+              </div>
+              <p class="hero-card-desc">나의 건강, 관계, 자서전, 엔딩 준비도를 5대 테마로 점검해보세요</p>
+            </div>
+          </a>
+
+          <!-- 2) 🏛️ 나의 고유한 서재 카드 -->
+          <a href="my-room.html" class="hero-action-card room-card" title="나만의 독립된 프라이빗 온라인 서재 입장">
+            <div class="hero-card-icon room-bg">🏛️</div>
+            <div class="hero-card-body">
+              <div class="hero-card-badge-row">
+                <span class="hero-mini-badge gold">✨ 프라이빗 온라인룸</span>
+                <span class="hero-card-hint">무료 체험 & 열람</span>
+              </div>
+              <div class="hero-card-title">
+                <span>🏛️ 나의 고유한 서재 입장하기</span>
+                <span class="hero-card-arrow">→</span>
+              </div>
+              <p class="hero-card-desc">디지털 자서전, 추억 사진관, 비움 일기가 담긴 독립 서재입니다</p>
+            </div>
+          </a>
+        </div>
       </section>
     </div>
 
@@ -4086,7 +4362,7 @@
       <div class="container">
         <div class="section-header">
           <p class="section-tag">Private Online Room & Sacred Shelf</p>
-          <h2 class="section-title">나만의 고유한 서재 <span style="font-size: 1.3rem; font-weight: 600; color: var(--accent-gold);">(온라인룸)</span></h2>
+          <h2 class="section-title">나의 고유한 서재 <span style="font-size: 1.3rem; font-weight: 600; color: var(--accent-gold);">(온라인룸)</span></h2>
           <p class="section-desc">오픈된 광장을 벗어나, 오직 나와 나의 가족만을 위해 열리는 독립된 프라이빗 인생 보관소입니다.</p>
         </div>
 
@@ -4183,10 +4459,10 @@
           <ul>
             <li><a href="#magazine">여백의 서재</a></li>
             <li><a href="#lounge">오늘의 비움 한 줄</a></li>
-            <li><a href="#test">1분 여백 자가진단</a></li>
+            <li><a href="#test">🎯 1분 자가진단</a></li>
             <li><a href="#memoir">디지털 자서전</a></li>
             <li><a href="academy.html" style="color: var(--accent-gold); font-weight: 700;">🎓 코치 양성 아카데미</a></li>
-            <li><a href="my-room.html" style="color: var(--accent); font-weight: 700;">🏛️ 나만의 고유한 서재</a></li>
+            <li><a href="my-room.html" style="color: var(--accent-gold); font-weight: 700;">🏛️ 나의 고유한 서재</a></li>
           </ul>
         </div>
         <div class="footer-links">
