@@ -3346,6 +3346,164 @@
     [data-theme="dark"] .memoir-stage-select.stage-3 { background: #4a044e; color: #f5d0fe; border-color: #9333ea; }
     [data-theme="dark"] .memoir-stage-select.stage-4 { background: #172554; color: #bfdbfe; border-color: #2563eb; }
     [data-theme="dark"] .memoir-stage-select.stage-5 { background: #052e16; color: #bbf7d0; border-color: #16a34a; }
+
+    /* 메인 화면 코칭 아카데미 전용 홍보 카드 */
+    .academy-promo-card-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .academy-promo-card-link:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+      border-color: var(--accent-gold);
+    }
+    [data-theme="dark"] .academy-promo-card-link:hover {
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+      border-color: var(--accent-gold);
+    }
+
+    .academy-promo-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      align-items: stretch;
+    }
+
+    .academy-promo-img-wrap {
+      position: relative;
+      overflow: hidden;
+      min-height: 380px;
+      background: #e5e0d8;
+    }
+    .academy-promo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .academy-promo-card-link:hover .academy-promo-img {
+      transform: scale(1.04);
+    }
+
+    .academy-promo-img-tag {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 6px 14px;
+      background: rgba(22, 26, 24, 0.82);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      border-radius: 20px;
+      font-size: 0.80rem;
+      font-weight: 750;
+      letter-spacing: 0.3px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .academy-promo-content {
+      padding: 44px 38px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .academy-promo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      background: #fdf8eb;
+      color: var(--accent-gold);
+      border: 1px solid var(--accent-gold);
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      width: fit-content;
+      margin-bottom: 16px;
+    }
+    [data-theme="dark"] .academy-promo-badge {
+      background: #332b13;
+      color: #e2b73e;
+      border-color: #e2b73e;
+    }
+
+    .academy-promo-title {
+      font-size: 1.82rem;
+      font-weight: 850;
+      line-height: 1.34;
+      letter-spacing: -0.8px;
+      margin-bottom: 14px;
+      color: var(--text-primary);
+    }
+    .academy-promo-title span {
+      color: var(--accent);
+    }
+
+    .academy-promo-desc {
+      font-size: 0.96rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 22px;
+    }
+
+    .academy-promo-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .academy-promo-tag {
+      font-size: 0.82rem;
+      font-weight: 750;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    .academy-promo-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 26px;
+      font-size: 0.98rem;
+      font-weight: 800;
+      background: var(--accent);
+      color: #ffffff;
+      border-radius: 8px;
+      transition: all 0.25s ease;
+      width: fit-content;
+    }
+    .academy-promo-card-link:hover .academy-promo-btn {
+      background: var(--accent-hover);
+      box-shadow: 0 4px 16px rgba(43, 106, 56, 0.35);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 900px) {
+      .academy-promo-grid {
+        grid-template-columns: 1fr;
+      }
+      .academy-promo-img-wrap {
+        min-height: 250px;
+      }
+      .academy-promo-content {
+        padding: 28px 22px;
+      }
+      .academy-promo-title {
+        font-size: 1.48rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -3797,89 +3955,58 @@
       </div>
     </section>
 
-    <!-- 6. [코치 양성 아카데미] 우아한 라이프 리셋 코칭 아카데미 소개 & 독립 사이트 연동 -->
-    <section id="programs" style="background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 90px 0;">
+    <!-- 6. [코칭스태프 양성 아카데미] 클릭 시 아카데미로 이동하는 프리미엄 홍보카드 이미지 -->
+    <section id="programs" style="background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 80px 0;">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header" style="margin-bottom: 36px;">
           <p class="section-tag" style="color: var(--accent-gold); letter-spacing: 2px;">Coach Academy & Partnership</p>
           <h2 class="section-title">우아한 라이프 리셋 코칭 아카데미</h2>
           <p class="section-desc">
-            타인의 삶에 여백과 결을 찾아주는 일, 인생 2막 가장 품격 있는 전문 코치가 되다.<br>
-            초고령사회 일본의 4대 공인 자격 체계를 벤치마킹한 실전형 시니어 라이프 케어 전문가 양성 과정입니다.
+            타인의 삶에 여백과 결을 찾아주는 일, 당신의 인생 2막 가장 품격 있는 전문 커리어가 됩니다.
           </p>
         </div>
 
-        <!-- 4대 전문 트랙 미리보기 그리드 -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-bottom: 36px;">
-          <!-- Track 1: 뷰티 -->
-          <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 18px; padding: 26px 22px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;">
-            <div style="font-size: 2rem; margin-bottom: 12px;">💄</div>
-            <span style="font-size: 0.76rem; font-weight: 800; color: #db2777; background: #fdf2f8; padding: 3px 8px; border-radius: 4px; width: fit-content; margin-bottom: 8px;">Track 01 · 뷰티 테라피</span>
-            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; color: var(--text-primary);">시니어 웰니스 & 뷰티 코치</h3>
-            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; flex-grow: 1;">
-              시니어 피부학, 터치 테라피, 내추럴 메이크업으로 어르신의 생기와 자존감을 회복시키는 뷰티 케어 전문가.
-            </p>
-            <div style="font-size: 0.80rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 10px;">
-              🇯🇵 일본 개호미용 세라피스트 모델
+        <!-- 클릭 시 아카데미(academy.html)로 바로 이동하는 프리미엄 홍보 카드 이미지 -->
+        <a href="academy.html" class="academy-promo-card-link" title="클릭 시 [여백과 결] 코칭 아카데미 공식 웹사이트로 이동합니다">
+          <div class="academy-promo-grid">
+            <!-- 좌측: 고화질 코칭 실사 이미지 -->
+            <div class="academy-promo-img-wrap">
+              <img src="images/coach-academy-banner.jpg" alt="여백과 결 시니어 라이프 리셋 전문 코칭 현장" class="academy-promo-img" loading="lazy">
+              <div class="academy-promo-img-tag">
+                <span>🌿</span> 여백과 결 1:1 방문 코칭 현장
+              </div>
+            </div>
+
+            <!-- 우측: 명확하고 품격 있는 홍보 텍스트 및 액션 -->
+            <div class="academy-promo-content">
+              <div class="academy-promo-badge">
+                <span>🎓</span> 2026년 [여백과 결] 공식 코칭스태프 1기 모집
+              </div>
+
+              <h3 class="academy-promo-title">
+                타인의 삶에 위로와 존엄을,<br>
+                <span>시니어 전문 라이프 코치</span> 양성 과정
+              </h3>
+
+              <p class="academy-promo-desc">
+                초고령사회 일본의 <strong>4대 선진 공인 자격 체계</strong>(뷰티 케어, 공간 비움, 생전 및 유품 정리, 디지털 자서전)를 도입한 4주 완성 실전 과정입니다.<br>
+                수료 즉시 [여백과 결] 플랫폼의 <strong>공식 코칭스태프로 위촉되어 전국 1:1 방문 현장에 파견</strong>됩니다.
+              </p>
+
+              <!-- 4대 트랙 태그 칩 -->
+              <div class="academy-promo-features">
+                <span class="academy-promo-tag">💄 뷰티 웰니스 코치</span>
+                <span class="academy-promo-tag">👗 공간 & 비움 코디네이터</span>
+                <span class="academy-promo-tag">📦 생전정리 & 엔딩 플래너</span>
+                <span class="academy-promo-tag">✍️ 디지털 자서전 에디터</span>
+              </div>
+
+              <div class="academy-promo-btn">
+                <span>👉</span> 코칭 아카데미 상세 커리큘럼 & 입학 신청 바로가기 ➔
+              </div>
             </div>
           </div>
-
-          <!-- Track 2: 공간/옷장 -->
-          <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 18px; padding: 26px 22px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;">
-            <div style="font-size: 2rem; margin-bottom: 12px;">👗</div>
-            <span style="font-size: 0.76rem; font-weight: 800; color: #4f46e5; background: #eef2ff; padding: 3px 8px; border-radius: 4px; width: fit-content; margin-bottom: 8px;">Track 02 · 공간 & 비움</span>
-            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; color: var(--text-primary);">라이프 공간 & 비움 코디네이터</h3>
-            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; flex-grow: 1;">
-              비움의 심리학과 안전 동선 재배치를 통해 안락하고 평온한 일상 공간을 창조하는 시니어 수납 큐레이터.
-            </p>
-            <div style="font-size: 0.80rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 10px;">
-              🇯🇵 일본 정리수납 어드바이저 모델
-            </div>
-          </div>
-
-          <!-- Track 3: 생전정리/유품 -->
-          <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 18px; padding: 26px 22px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;">
-            <div style="font-size: 2rem; margin-bottom: 12px;">📦</div>
-            <span style="font-size: 0.76rem; font-weight: 800; color: #d97706; background: #fef3c7; padding: 3px 8px; border-radius: 4px; width: fit-content; margin-bottom: 8px;">Track 03 · 엔딩 라이프</span>
-            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; color: var(--text-primary);">생전정리 & 엔딩 라이프 플래너</h3>
-            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; flex-grow: 1;">
-              생전정리, 디지털 유산 정리, 엔딩노트 작성 및 유족 애도(Grief) 케어를 담당하는 인생 갈무리 컨설턴트.
-            </p>
-            <div style="font-size: 0.80rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 10px;">
-              🇯🇵 일본 생전정리 어드바이저 · 유품정리사 모델
-            </div>
-          </div>
-
-          <!-- Track 4: 자서전/생애사 -->
-          <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 18px; padding: 26px 22px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;">
-            <div style="font-size: 2rem; margin-bottom: 12px;">✍️</div>
-            <span style="font-size: 0.76rem; font-weight: 800; color: #2563eb; background: #dbeafe; padding: 3px 8px; border-radius: 4px; width: fit-content; margin-bottom: 8px;">Track 04 · 생애사 에디팅</span>
-            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; color: var(--text-primary);">디지털 생애사 채록 에디터</h3>
-            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; flex-grow: 1;">
-              회상요법 질문법으로 삶의 기억을 채록하고 옛 사진을 복원해 품격 있는 디지털 자서전과 책을 엮는 작가.
-            </p>
-            <div style="font-size: 0.80rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 10px;">
-              🇯🇵 일본 자신사 활용 어드바이저 모델
-            </div>
-          </div>
-        </div>
-
-        <!-- 독립 아카데미 사이트 이동 프리미엄 배너 카드 -->
-        <div style="background: var(--bg-card); border: 2px solid var(--accent-gold); border-radius: 20px; padding: 36px 32px; text-align: center; box-shadow: var(--shadow-md); max-width: 880px; margin: 0 auto;">
-          <span style="display: inline-block; font-size: 0.82rem; font-weight: 800; color: #ffffff; background: var(--accent-gold); padding: 5px 14px; border-radius: 20px; margin-bottom: 14px;">
-            🎓 2026년 [여백과 결] 코칭스태프 1기 수강생 모집 중
-          </span>
-          <h3 style="font-size: 1.55rem; font-weight: 850; margin-bottom: 12px; color: var(--text-primary); letter-spacing: -0.6px;">
-            수료 즉시 [여백과 결] 공식 코칭스태프 현장 파견 파트너십 활동
-          </h3>
-          <p style="color: var(--text-secondary); font-size: 0.96rem; line-height: 1.7; margin-bottom: 24px; max-width: 680px; margin-left: auto; margin-right: auto;">
-            단순 수료증 발급에 그치지 않고, 본사 플랫폼으로 유입되는 전국 고객의 1:1 방문 맞춤 케어 서비스 전담 코치로 위촉되어 활동합니다.<br>
-            자세한 주차별 상세 커리큘럼과 수강 혜택, 1기 지원서는 전용 아카데미 홈페이지에서 확인하실 수 있습니다.
-          </p>
-          <a href="academy.html" class="btn btn-gold" style="padding: 14px 34px; font-size: 1.05rem; font-weight: 800; box-shadow: 0 4px 16px rgba(197, 155, 39, 0.4); text-decoration: none;">
-            <span>🎓</span> 코칭 아카데미 공식 웹사이트 바로가기 ➔
-          </a>
-        </div>
+        </a>
       </div>
     </section>
 
