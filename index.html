@@ -1077,14 +1077,224 @@
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 20px;
-      max-width: 860px;
+      max-width: 1060px;
       width: 100%;
-      max-height: 90vh;
+      max-height: 92vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
       overflow: hidden;
       animation: modalSlideUp 0.3s ease;
+    }
+
+    /* 사진 보관함 사이드바 및 이미지 관리 레이아웃 */
+    .editor-body-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .editor-photo-sidebar {
+      width: 250px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .photo-sidebar-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .photo-sidebar-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btn-photo-upload {
+      width: 100%;
+      background: var(--bg-card);
+      color: var(--accent);
+      border: 1.5px dashed var(--accent);
+      padding: 9px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 700;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: inherit;
+    }
+
+    .btn-photo-upload:hover {
+      background: var(--accent-light);
+    }
+
+    .photo-img-grid {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .photo-item {
+      background: var(--bg-card);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid var(--border-color);
+      position: relative;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .photo-item.is-main {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 12px rgba(194, 155, 56, 0.45);
+    }
+
+    .photo-item img {
+      width: 100%;
+      height: 72px;
+      object-fit: cover;
+      cursor: pointer;
+      display: block;
+    }
+
+    .photo-item-controls {
+      display: flex;
+      background: var(--bg-secondary);
+      padding: 4px;
+      gap: 3px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .photo-btn {
+      flex: 1;
+      font-size: 0.68rem;
+      padding: 4px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 700;
+      font-family: inherit;
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .photo-btn-ins {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    .photo-btn-ins:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .photo-btn-rep {
+      background: var(--border-color);
+      color: var(--text-primary);
+    }
+
+    .photo-btn-rep.active {
+      background: var(--accent-gold);
+      color: #fff;
+    }
+
+    .photo-del-btn {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      background: rgba(0, 0, 0, 0.65);
+      color: #fff;
+      border: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      font-size: 10px;
+      cursor: pointer;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .photo-del-btn:hover {
+      background: #d9534f;
+    }
+
+    .editor-main-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: var(--bg-card);
+    }
+
+    /* 서재 카드 대표사진 썸네일 스타일 */
+    .mag-card-img-wrap {
+      width: 100%;
+      height: 175px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+    }
+
+    .mag-card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+      display: block;
+    }
+
+    .magazine-card:hover .mag-card-img-wrap img {
+      transform: scale(1.05);
+    }
+
+    .reader-cover-img {
+      width: 100%;
+      max-height: 380px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 24px;
+      display: block;
+      border: 1px solid var(--border-color);
+    }
+
+    @media (max-width: 768px) {
+      .editor-body-layout {
+        flex-direction: column;
+      }
+      .editor-photo-sidebar {
+        width: 100%;
+        max-height: 165px;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .photo-img-grid {
+        grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+      }
     }
 
     /* 에디터 상단 헤더바 */
@@ -1216,6 +1426,72 @@
       height: 20px;
       background: var(--border-color);
       margin: 0 4px;
+    }
+
+    .editor-popup-menu {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 14px;
+      border-radius: 12px;
+      z-index: 1000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .popup-menu-title {
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      display: block;
+      font-weight: 800;
+    }
+
+    .editor-color-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 24px);
+      gap: 6px;
+    }
+
+    .color-chip {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      transition: transform 0.15s ease;
+    }
+
+    .color-chip:hover {
+      transform: scale(1.15);
+    }
+
+    .editor-symbol-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 28px);
+      gap: 5px;
+      width: 200px;
+    }
+
+    .symbol-chip {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 6px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      font-size: 0.88rem;
+      transition: var(--transition);
+    }
+
+    .symbol-chip:hover {
+      background: var(--accent);
+      color: #fff;
     }
 
     /* 에디터 본문 작성 영역 */
@@ -2117,33 +2393,45 @@
     </div>
   </footer>
 
-  <!-- ================= 모달 1) 티스토리 감성 글작성 에디터 ================= -->
+  <!-- ================= 모달 1) 프리미엄 서재 에디터 (티스토리 + fitflunce 사진보관함 & 대표사진 지정) ================= -->
   <div class="cms-modal-overlay" id="tistoryEditorModal" onclick="closeEditorOnOverlay(event)">
     <div class="tistory-editor-card">
       <!-- 에디터 상단 헤더바 -->
       <div class="editor-top-bar">
         <div class="editor-top-title">
-          <span>✍️</span> 여백의 서재 칼럼 에디터
+          <span>✍️</span> 여백의 서재 프리미엄 에디터
         </div>
         <div class="editor-btn-group">
-          <button class="btn-mag-action" onclick="closeTistoryEditor()">취소</button>
-          <button class="btn-editor-publish" onclick="publishArticle()">
+          <button type="button" class="btn-mag-action" onclick="saveEditorDraft()" title="작성 중인 내용을 임시 저장합니다" style="font-size: 0.84rem;">
+            💾 임시저장
+          </button>
+          <button type="button" class="btn-mag-action" onclick="openEditorDraftsModal()" title="임시 저장된 글 목록을 불러옵니다" style="font-size: 0.84rem;">
+            📂 불러오기
+          </button>
+          <button type="button" class="btn-mag-action" onclick="closeTistoryEditor()">취소</button>
+          <button type="button" class="btn-editor-publish" onclick="publishArticle()">
             <span>🚀</span> 발행하기
           </button>
         </div>
       </div>
 
-      <!-- 에디터 설정 옵션바 (카테고리, 메인 전면 노출 여부) -->
+      <!-- 에디터 설정 옵션바 (카테고리, 메인 전면 노출 여부, 대표사진 뱃지) -->
       <div class="editor-settings-bar">
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <label for="editorCategory" style="font-weight: 700; font-size: 0.9rem; color: var(--text-secondary);">카테고리:</label>
-          <select id="editorCategory" class="editor-category-select">
-            <option value="비움과 갈무리">비움과 갈무리</option>
-            <option value="로망과 축제">로망과 축제</option>
-            <option value="몸과 웰니스">몸과 웰니스</option>
-            <option value="인생 서사">인생 서사</option>
-            <option value="마음과 영성">마음과 영성</option>
-          </select>
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <label for="editorCategory" style="font-weight: 700; font-size: 0.9rem; color: var(--text-secondary);">카테고리:</label>
+            <select id="editorCategory" class="editor-category-select">
+              <option value="비움과 갈무리">비움과 갈무리</option>
+              <option value="로망과 축제">로망과 축제</option>
+              <option value="몸과 웰니스">몸과 웰니스</option>
+              <option value="인생 서사">인생 서사</option>
+              <option value="마음과 영성">마음과 영성</option>
+            </select>
+          </div>
+          <div id="editorMainThumbIndicator" style="font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 1.05rem;">🖼️</span>
+            <span>대표사진: <strong id="editorMainThumbText" style="color: var(--text-secondary);">미지정 (좌측 보관함에서 지정)</strong></span>
+          </div>
         </div>
         <label class="editor-featured-toggle" title="체크 시 메인 화면 전면 서재 카드에 우선 노출됩니다.">
           <input type="checkbox" id="editorIsFeatured" checked>
@@ -2151,29 +2439,134 @@
         </label>
       </div>
 
-      <!-- 서식 툴바 (티스토리 스타일) -->
-      <div class="editor-toolbar">
-        <button type="button" class="tool-btn" onclick="execEditorCmd('bold')" title="굵게 (Bold)"><b>B</b></button>
-        <button type="button" class="tool-btn" onclick="execEditorCmd('italic')" title="기울임 (Italic)"><i>I</i></button>
-        <button type="button" class="tool-btn" onclick="execEditorCmd('underline')" title="밑줄 (Underline)"><u>U</u></button>
-        <button type="button" class="tool-btn" onclick="execEditorCmd('strikeThrough')" title="취소선"><s>S</s></button>
-        <div class="tool-separator"></div>
-        <button type="button" class="tool-btn" onclick="insertEditorBlockquote()" title="티스토리 인용구 박스 삽입">❝ 인용구</button>
-        <button type="button" class="tool-btn" onclick="execEditorCmd('insertHorizontalRule')" title="구분선 삽입">― 구분선</button>
-        <div class="tool-separator"></div>
-        <button type="button" class="tool-btn" onclick="execEditorCmd('justifyLeft')" title="왼쪽 정렬">⫷</button>
-        <button type="button" class="tool-btn" onclick="execEditorCmd('justifyCenter')" title="가운데 정렬">≡</button>
-        <button type="button" class="tool-btn" onclick="execEditorCmd('justifyRight')" title="오른쪽 정렬">⫸</button>
-        <div class="tool-separator"></div>
-        <button type="button" class="tool-btn" onclick="execEditorCmd('insertUnorderedList')" title="글머리 목록">• 목록</button>
-      </div>
+      <!-- 에디터 워크스페이스: 좌측 사진 보관함 + 우측 본문 에디터 -->
+      <div class="editor-body-layout">
+        <!-- 📸 좌측 사진 보관함 (fitflunce 핵심 기능) -->
+        <div class="editor-photo-sidebar">
+          <div class="photo-sidebar-header">
+            <div class="photo-sidebar-title">
+              <span>📸 사진 보관함</span>
+              <span id="photoCountBadge" style="font-size: 0.72rem; color: var(--text-muted);">0장</span>
+            </div>
+            <button type="button" class="btn-photo-upload" onclick="document.getElementById('editorImgInput').click()">
+              <span>+ 사진 불러오기</span>
+            </button>
+            <input type="file" id="editorImgInput" style="display:none" onchange="processUploadedImgs(this)" multiple accept="image/*">
+            <span style="font-size: 0.7rem; color: var(--text-muted); line-height: 1.3;">
+              사진 업로드 후 <strong>[대표 지정]</strong>을 누르면 메인 카드 커버 사진으로 적용됩니다.
+            </span>
+          </div>
+          <!-- 업로드된 이미지 그리드 -->
+          <div id="photoImgGrid" class="photo-img-grid">
+            <!-- JS 동적 렌더링 -->
+          </div>
+        </div>
 
-      <!-- 에디터 본문 작성 영역 -->
-      <div class="editor-scroll-body">
-        <input type="text" id="editorTitle" class="editor-title-input" placeholder="제목을 입력하세요 (예: 품격 있는 생전 정리의 첫걸음)" maxlength="120">
-        <textarea id="editorExcerpt" class="editor-excerpt-input" placeholder="글 요약 한 줄을 적어주세요 (메인 카드 미리보기에 노출됩니다)" rows="2"></textarea>
-        <div id="editorContent" class="editor-content-area" contenteditable="true" data-placeholder="이곳에 따뜻하고 깊이 있는 글을 자유롭게 작성해보세요. 티스토리처럼 인용구와 굵은 글씨, 구분선을 활용하여 아름다운 결을 만들어갈 수 있습니다..."></div>
+        <!-- ✍️ 우측 메인 에디터 패널 -->
+        <div class="editor-main-panel">
+          <!-- 서식 툴바 (티스토리 + fitflunce 확장 도구) -->
+          <div class="editor-toolbar">
+            <div class="tool-group" style="display: flex; gap: 3px; align-items: center;">
+              <button type="button" class="tool-btn" onclick="execEditorCmd('bold')" title="굵게 (Bold)"><b>B</b></button>
+              <button type="button" class="tool-btn" onclick="execEditorCmd('italic')" title="기울임 (Italic)"><i>I</i></button>
+              <button type="button" class="tool-btn" onclick="execEditorCmd('underline')" title="밑줄 (Underline)"><u>U</u></button>
+              <button type="button" class="tool-btn" onclick="execEditorCmd('strikeThrough')" title="취소선"><s>S</s></button>
+            </div>
+
+            <div class="tool-separator"></div>
+
+            <!-- 글자색 팝업 팔레트 -->
+            <div style="position: relative; display: inline-block;">
+              <button type="button" class="tool-btn" onclick="toggleColorPopup(event)" title="글자색 변경" style="font-weight: 800; color: var(--accent);">
+                🎨 색상
+              </button>
+              <div id="editorColorMenu" class="editor-popup-menu" style="width: 160px;" onclick="event.stopPropagation()">
+                <span class="popup-menu-title">글자색 선택</span>
+                <div class="editor-color-grid">
+                  <div class="color-chip" style="background:#2c2a29;" onclick="execEditorColor('#2c2a29')" title="기본 먹색"></div>
+                  <div class="color-chip" style="background:#5e6b52;" onclick="execEditorColor('#5e6b52')" title="세이지 그린"></div>
+                  <div class="color-chip" style="background:#c29b38;" onclick="execEditorColor('#c29b38')" title="웜 골드"></div>
+                  <div class="color-chip" style="background:#d9534f;" onclick="execEditorColor('#d9534f')" title="레드"></div>
+                  <div class="color-chip" style="background:#2e7d32;" onclick="execEditorColor('#2e7d32')" title="그린"></div>
+                  <div class="color-chip" style="background:#1976d2;" onclick="execEditorColor('#1976d2')" title="블루"></div>
+                  <div class="color-chip" style="background:#7b1fa2;" onclick="execEditorColor('#7b1fa2')" title="퍼플"></div>
+                  <div class="color-chip" style="background:#8d6e63;" onclick="execEditorColor('#8d6e63')" title="브라운"></div>
+                  <div class="color-chip" style="background:#757575;" onclick="execEditorColor('#757575')" title="그레이"></div>
+                  <input type="color" style="width: 24px; height: 24px; padding: 0; border: none; background: none; cursor: pointer;" onchange="execEditorColor(this.value)" title="직접 선택">
+                </div>
+              </div>
+            </div>
+
+            <div class="tool-separator"></div>
+
+            <button type="button" class="tool-btn" onclick="insertEditorBlockquote()" title="티스토리 인용구 박스 삽입">❝ 인용구</button>
+            <button type="button" class="tool-btn" onclick="execEditorCmd('insertHorizontalRule')" title="구분선 삽입">― 구분선</button>
+
+            <!-- 특수기호 팝업 팔레트 -->
+            <div style="position: relative; display: inline-block;">
+              <button type="button" class="tool-btn" onclick="toggleSymbolPopup(event)" title="특수기호 삽입">Ω 기호</button>
+              <div id="editorSymbolMenu" class="editor-popup-menu" onclick="event.stopPropagation()">
+                <span class="popup-menu-title">특수기호 삽입</span>
+                <div class="editor-symbol-grid">
+                  <div class="symbol-chip" onclick="insertSymbolChar('★')">★</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('☆')">☆</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('○')">○</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('●')">●</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('◎')">◎</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('◆')">◆</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('→')">→</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('←')">←</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('↑')">↑</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('↓')">↓</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('↔')">↔</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('✔')">✔</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('※')">※</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('▶')">▶</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('◀')">◀</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('▼')">▼</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('▲')">▲</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('■')">■</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tool-separator"></div>
+
+            <button type="button" class="tool-btn" onclick="execEditorCmd('justifyLeft')" title="왼쪽 정렬">⫷</button>
+            <button type="button" class="tool-btn" onclick="execEditorCmd('justifyCenter')" title="가운데 정렬">≡</button>
+            <button type="button" class="tool-btn" onclick="execEditorCmd('justifyRight')" title="오른쪽 정렬">⫸</button>
+
+            <div class="tool-separator"></div>
+
+            <button type="button" class="tool-btn" onclick="insertExternalImgPrompt()" title="웹 이미지 URL 삽입">🖼️ 사진주소</button>
+            <button type="button" class="tool-btn" onclick="insertYoutubeVideoPrompt()" title="유튜브 영상 삽입">🎬 영상</button>
+            <button type="button" class="tool-btn" onclick="insertLinkPrompt()" title="하이퍼링크 삽입">🔗 링크</button>
+          </div>
+
+          <!-- 본문 작성 스크롤 영역 -->
+          <div class="editor-scroll-body">
+            <input type="text" id="editorTitle" class="editor-title-input" placeholder="제목을 입력하세요 (예: 품격 있는 생전 정리의 첫걸음)" maxlength="120">
+            <textarea id="editorExcerpt" class="editor-excerpt-input" placeholder="글 요약 한 줄을 적어주세요 (메인 카드 미리보기에 노출됩니다)" rows="2"></textarea>
+            <div id="editorContent" class="editor-content-area" contenteditable="true" data-placeholder="이곳에 따뜻하고 깊이 있는 글을 자유롭게 작성해보세요. 좌측 사진 보관함에서 사진을 본문에 삽입하거나 대표사진을 지정할 수 있습니다..."></div>
+          </div>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <!-- 임시저장 글 불러오기 모달 -->
+  <div class="cms-modal-overlay" id="editorDraftsModal" onclick="closeDraftsOnOverlay(event)">
+    <div class="admin-auth-card" style="max-width: 500px; text-align: left;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+        <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin: 0;">
+          📂 임시 저장된 글 불러오기
+        </h3>
+        <button class="drawer-close" onclick="closeEditorDraftsModal()" aria-label="닫기" style="border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer;">✕</button>
+      </div>
+      <div id="draftListContainer" style="max-height: 320px; overflow-y: auto; margin-bottom: 16px;">
+        <!-- JS로 동적 렌더링 -->
+      </div>
+      <button class="btn btn-secondary" onclick="closeEditorDraftsModal()" style="width: 100%; padding: 10px;">닫기</button>
     </div>
   </div>
 
@@ -2196,6 +2589,9 @@
           <span>여백과 결 에디터팀</span>
         </div>
       </div>
+
+      <!-- 대표 커버 이미지 (지정된 경우 표시) -->
+      <img id="readerCoverImg" class="reader-cover-img" style="display: none;" alt="칼럼 대표 이미지">
 
       <!-- 본문 영역 -->
       <div class="reader-body" id="readerBody">
@@ -2505,15 +2901,16 @@
     }
 
     // =========================================================================
-    // 6. 여백의 서재 CMS 엔진 (게시판, 티스토리 에디터, 뷰어, 전면 노출 토글)
+    // 6. 여백의 서재 CMS 엔진 (게시판, 프리미엄 에디터, 뷰어, 사진 보관함)
     // =========================================================================
 
-    // 기본 칼럼 데이터셋 (정적 fallback & 초기값)
+    // 기본 칼럼 데이터셋 (정적 fallback & 초기값 - 품격 있는 웰라이프 대표 이미지 탑재)
     const initialMagazineArticles = [
       {
         id: 'mag_1',
         title: '스마트폰 속 3만 장의 사진, 사후에는 어떻게 될까?',
         category: '비움과 갈무리',
+        image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=75',
         excerpt: "가족들에게 남겨질 내 디지털 흔적을 미리 깔끔하고 안전하게 정돈하는 '디지털 유세거니(Digital Legacy)'의 시작법을 소개합니다.",
         content: `
           <p>현대인의 삶은 손바닥만 한 스마트폰 속에 고스란히 담겨 있습니다. 지난 10여 년간 찍어온 3만 장이 넘는 사진, 메신저 대화록, 은행과 포털의 수많은 계정들... 만약 우리가 갑작스레 세상을 떠나게 된다면 이 디지털 흔적들은 어떻게 될까요?</p>
@@ -2539,6 +2936,7 @@
         id: 'mag_2',
         title: "눈물 대신 웃음으로 건네는 인사, 일본의 '생전 장례식'",
         category: '로망과 축제',
+        image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=75',
         excerpt: "내가 살아있을 때 소중한 사람들을 초대해 맛있는 음식을 대접하고 고마움을 전하는 인생 감사 파티의 품격 있는 미학.",
         content: `
           <p>내가 세상을 떠난 뒤, 나는 정작 볼 수도 들을 수도 없는 엄숙하고 슬픈 장례식 대신 살아 숨 쉬며 온전한 정신일 때 소중한 이들을 초대해 맛있는 음식을 나누는 문화가 선진국을 중심으로 확산되고 있습니다. 일본에서 시작된 '생전 장례식(生前葬)', 혹은 '인생 감사 축제'입니다.</p>
@@ -2560,6 +2958,7 @@
         id: 'mag_3',
         title: "미래의 병원비를 줄이는 세포 건강과 '소버 큐리어스'",
         category: '몸과 웰니스',
+        image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75',
         excerpt: "무리한 통제가 아닌 미네랄 밸런스와 일상 대사 루틴을 통해 남은 인생을 활기차게 걸어갈 수 있는 체력을 만듭니다.",
         content: `
           <p>은퇴 이후 가장 두려운 것 중 하나는 오랜 투병으로 인한 자존감의 상실과 막대한 의료비입니다. 하지만 노년의 건강은 어느 날 갑자기 무너지는 것이 아니라, 50대부터 매일 축적된 미세한 생활 루틴의 결과입니다.</p>
@@ -2582,6 +2981,7 @@
         id: 'mag_4',
         title: '부모와 자식이 함께 쓰는 30일 인생 서사 워크북',
         category: '인생 서사',
+        image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=75',
         excerpt: '말로는 쑥스러워 전하지 못했던 지난날의 후회와 사랑을 글과 사진으로 엮어 남기는 특별한 유산 기록법.',
         content: `
           <p>부모님이 돌아가신 후 자녀들이 가장 후회하는 것은 "부모님의 젊은 시절 꿈이 무엇이었는지, 어떤 순간 가장 행복하셨는지 제대로 물어보지 못했다"는 점입니다.</p>
@@ -2616,7 +3016,7 @@
       localStorage.setItem('yebaek_magazine_articles', JSON.stringify(list));
     }
 
-    // 메인 전면 서재 카드 렌더링 (isFeatured === true 만 노출)
+    // 메인 전면 서재 카드 렌더링 (isFeatured === true 만 노출, 대표사진 커버 연동)
     function renderFeaturedMagazine() {
       const grid = document.getElementById('magazineGrid');
       if (!grid) return;
@@ -2630,11 +3030,11 @@
             <div style="font-size: 2.2rem; margin-bottom: 12px;">📚</div>
             <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">현재 전면에 노출된 대표글이 없습니다</h3>
             <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px;">
-              [전체 글 목록 보기]에서 대표글을 지정(⭐)하거나, [칼럼 글쓰기]로 새 글을 작성하여 메인 대문에 띄워보세요.
+              [전체 글 목록 보기]에서 대표글을 지정(⭐)하거나, 관리자 홈에서 새 글을 작성하여 메인 대문에 띄워보세요.
             </p>
             <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
               <button class="btn btn-secondary" onclick="openBoardModal()" style="padding: 10px 20px;">📋 전체 글 목록에서 선택하기</button>
-              <button class="btn btn-primary" onclick="openTistoryEditor()" style="padding: 10px 20px;">✍️ 새 칼럼 작성하기</button>
+              <button class="btn btn-primary" onclick="openAdminAuthModal()" style="padding: 10px 20px;">⚙️ 관리자 홈 바로가기</button>
             </div>
           </div>
         `;
@@ -2643,6 +3043,11 @@
 
       grid.innerHTML = featured.map(article => `
         <article class="magazine-card" onclick="openArticleReader('${article.id}')" title="클릭하여 전문 읽기">
+          ${article.image ? `
+            <div class="mag-card-img-wrap">
+              <img src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}" loading="lazy">
+            </div>
+          ` : ''}
           <div>
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
               <span class="mag-tag">[${escapeHtml(article.category)}]</span>
@@ -2681,6 +3086,17 @@
       const badge = document.getElementById('readerFeaturedBadge');
       if (badge) {
         badge.style.display = article.isFeatured ? 'inline-flex' : 'none';
+      }
+
+      // 대표 커버 이미지 노출
+      const coverImg = document.getElementById('readerCoverImg');
+      if (coverImg) {
+        if (article.image) {
+          coverImg.src = article.image;
+          coverImg.style.display = 'block';
+        } else {
+          coverImg.style.display = 'none';
+        }
       }
 
       const modal = document.getElementById('articleReaderModal');
@@ -2750,7 +3166,7 @@
       if (filtered.length === 0) {
         listContainer.innerHTML = `
           <div style="padding: 40px 20px; text-align: center; color: var(--text-muted); font-size: 0.95rem;">
-            등록된 게시글이 없습니다. [✍️ 칼럼 글쓰기]를 눌러 첫 글을 남겨보세요.
+            등록된 게시글이 없습니다.
           </div>
         `;
         return;
@@ -2758,6 +3174,9 @@
 
       listContainer.innerHTML = filtered.map(a => `
         <div class="board-item-row" onclick="openArticleReader('${a.id}')">
+          ${a.image ? `
+            <img src="${escapeHtml(a.image)}" alt="대표사진" style="width: 68px; height: 52px; object-fit: cover; border-radius: 8px; flex-shrink: 0; border: 1px solid var(--border-color);">
+          ` : ''}
           <div class="board-item-left">
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
               <span class="mag-tag" style="font-size: 0.78rem;">[${escapeHtml(a.category)}]</span>
@@ -2917,7 +3336,7 @@
       renderAdminTable();
     }
 
-    // 관리자 테이블 렌더링 (카테고리 필터링 지원)
+    // 관리자 테이블 렌더링 (카테고리 필터링 및 썸네일 지원)
     function renderAdminTable() {
       const tbody = document.getElementById('adminArticleTableBody');
       if (!tbody) return;
@@ -2952,11 +3371,18 @@
             <span class="mag-tag" style="font-size: 0.8rem;">[${escapeHtml(a.category)}]</span>
           </td>
           <td>
-            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 4px; cursor: pointer;" onclick="openArticleReader('${a.id}')" title="클릭하여 전문 읽기">
-              ${escapeHtml(a.title)}
-            </div>
-            <div style="font-size: 0.82rem; color: var(--text-muted); max-width: 380px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-              ${escapeHtml(a.excerpt || '')}
+            <div style="display: flex; align-items: center; gap: 10px;">
+              ${a.image ? `
+                <img src="${escapeHtml(a.image)}" alt="썸네일" style="width: 44px; height: 34px; object-fit: cover; border-radius: 6px; flex-shrink: 0; border: 1px solid var(--border-color);">
+              ` : ''}
+              <div style="min-width: 0; flex: 1;">
+                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 2px; cursor: pointer;" onclick="openArticleReader('${a.id}')" title="클릭하여 전문 읽기">
+                  ${escapeHtml(a.title)}
+                </div>
+                <div style="font-size: 0.82rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                  ${escapeHtml(a.excerpt || '')}
+                </div>
+              </div>
             </div>
           </td>
           <td style="font-size: 0.84rem; color: var(--text-muted); white-space: nowrap;">
@@ -3012,12 +3438,155 @@
       }
     }
 
-    // ================= 모달 1) 티스토리 감성 글작성 및 수정 에디터 =================
+    // =========================================================================
+    // 8. 프리미엄 서재 에디터 (사진 보관함, 캔버스 압축, 대표사진 지정, 리치 툴바)
+    // =========================================================================
     let currentEditingArticleId = null; // 수정 중인 글 ID (null이면 신규 작성)
+    let editorPhotos = [];             // 사진 보관함 목록 [{ src }]
+    let mainThumbImg = "";             // 현재 선택된 대표사진
+    let editorSavedSelection = null;   // 커서 위치 보존용
+
+    function saveEditorSelection() {
+      const sel = window.getSelection();
+      if (sel.getRangeAt && sel.rangeCount) {
+        editorSavedSelection = sel.getRangeAt(0);
+      }
+    }
+
+    function restoreEditorSelection() {
+      if (editorSavedSelection) {
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(editorSavedSelection);
+      }
+    }
+
+    // fitflunce 핵심: 캔버스 기반 800px / JPEG 0.45 압축 리사이징
+    function resizeImg(file, maxW = 800, quality = 0.45) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let w = img.width, h = img.height;
+            if (w > maxW) {
+              h = Math.round(h * (maxW / w));
+              w = maxW;
+            }
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // 복수 사진 업로드 및 압축 처리
+    async function processUploadedImgs(input) {
+      const files = Array.from(input.files);
+      if (!files.length) return;
+
+      for (const file of files) {
+        try {
+          const dataUrl = await resizeImg(file, 800, 0.45);
+          const isFirst = editorPhotos.length === 0 && !mainThumbImg;
+          addPhotoToSidebar(dataUrl);
+          if (isFirst) {
+            setAsMainThumb(dataUrl);
+          }
+        } catch (e) {
+          console.error('이미지 리사이징 압축 실패:', e);
+        }
+      }
+      input.value = '';
+    }
+
+    // 사진 보관함 사이드바 관리
+    function addPhotoToSidebar(src) {
+      if (!editorPhotos.some(p => p.src === src)) {
+        editorPhotos.push({ src });
+      }
+      renderPhotoSidebar();
+    }
+
+    function renderPhotoSidebar() {
+      const grid = document.getElementById('photoImgGrid');
+      const badge = document.getElementById('photoCountBadge');
+      if (!grid) return;
+
+      if (badge) badge.textContent = `${editorPhotos.length}장`;
+
+      if (editorPhotos.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: 24px 8px; text-align: center; color: var(--text-muted); font-size: 0.78rem;">
+            등록된 사진이 없습니다.<br>위의 [+ 사진 불러오기]를 눌러보세요.
+          </div>
+        `;
+        updateMainThumbIndicator();
+        return;
+      }
+
+      grid.innerHTML = editorPhotos.map((photo, idx) => `
+        <div class="photo-item ${photo.src === mainThumbImg ? 'is-main' : ''}">
+          <button type="button" class="photo-del-btn" onclick="deletePhotoFromSidebar(${idx})" title="사진 삭제">✕</button>
+          <img src="${photo.src}" onclick="insertBodyImg('${photo.src}')" title="클릭 시 본문에 삽입">
+          <div class="photo-item-controls">
+            <button type="button" class="photo-btn photo-btn-ins" onclick="insertBodyImg('${photo.src}')">본문 삽입</button>
+            <button type="button" class="photo-btn photo-btn-rep ${photo.src === mainThumbImg ? 'active' : ''}" onclick="setAsMainThumb('${photo.src}')">
+              ${photo.src === mainThumbImg ? '⭐ 대표' : '대표 지정'}
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      updateMainThumbIndicator();
+    }
+
+    function deletePhotoFromSidebar(index) {
+      const removed = editorPhotos.splice(index, 1)[0];
+      if (removed && removed.src === mainThumbImg) {
+        mainThumbImg = editorPhotos.length > 0 ? editorPhotos[0].src : '';
+      }
+      renderPhotoSidebar();
+    }
+
+    function setAsMainThumb(src) {
+      mainThumbImg = src;
+      renderPhotoSidebar();
+    }
+
+    function updateMainThumbIndicator() {
+      const text = document.getElementById('editorMainThumbText');
+      if (!text) return;
+      if (mainThumbImg) {
+        text.innerHTML = `<span style="color: var(--accent-gold); font-weight: 800;">⭐ 대표사진 지정됨</span>`;
+      } else {
+        text.innerHTML = `<span style="color: var(--text-muted);">미지정 (좌측 보관함에서 지정)</span>`;
+      }
+    }
+
+    // 본문에 이미지 삽입
+    function insertBodyImg(src) {
+      const tag = `<img src="${src}" style="max-width:100%; border-radius:14px; margin:24px auto; display:block; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">`;
+      const editor = document.getElementById('editorContent');
+      editor.focus();
+      restoreEditorSelection();
+      document.execCommand('insertHTML', false, tag + '<p><br></p>');
+      saveEditorSelection();
+    }
 
     // 에디터 열기 (신규 작성 또는 기존 글 수정)
     function openTistoryEditor(articleId = null) {
       currentEditingArticleId = articleId;
+      editorPhotos = [];
+      mainThumbImg = "";
 
       const topTitle = document.querySelector('#tistoryEditorModal .editor-top-title');
       const publishBtn = document.querySelector('#tistoryEditorModal .btn-editor-publish');
@@ -3037,6 +3606,12 @@
         document.getElementById('editorIsFeatured').checked = !!target.isFeatured;
         document.getElementById('editorContent').innerHTML = target.content || '';
 
+        // 기존 대표사진이 있으면 보관함에 로드
+        if (target.image) {
+          mainThumbImg = target.image;
+          editorPhotos.push({ src: target.image });
+        }
+
         if (topTitle) topTitle.innerHTML = '<span>✏️</span> 여백의 서재 칼럼 수정';
         if (publishBtn) publishBtn.innerHTML = '<span>💾</span> 수정 내용 저장';
       } else {
@@ -3047,9 +3622,11 @@
         document.getElementById('editorCategory').selectedIndex = 0;
         document.getElementById('editorIsFeatured').checked = true;
 
-        if (topTitle) topTitle.innerHTML = '<span>✍️</span> 여백의 서재 칼럼 에디터';
+        if (topTitle) topTitle.innerHTML = '<span>✍️</span> 여백의 서재 프리미엄 에디터';
         if (publishBtn) publishBtn.innerHTML = '<span>🚀</span> 발행하기';
       }
+
+      renderPhotoSidebar();
 
       const modal = document.getElementById('tistoryEditorModal');
       if (modal) {
@@ -3073,6 +3650,8 @@
         return;
       }
       currentEditingArticleId = null;
+      editorPhotos = [];
+      mainThumbImg = "";
       const modal = document.getElementById('tistoryEditorModal');
       if (modal) {
         modal.classList.remove('open');
@@ -3090,7 +3669,9 @@
     function execEditorCmd(cmd, value = null) {
       const editor = document.getElementById('editorContent');
       editor.focus();
+      restoreEditorSelection();
       document.execCommand(cmd, false, value);
+      saveEditorSelection();
     }
 
     // 티스토리 시그니처 인용구 삽입
@@ -3119,9 +3700,180 @@
         selection.removeAllRanges();
         selection.addRange(range);
       }
+      saveEditorSelection();
     }
 
-    // 칼럼 발행 또는 수정 저장
+    // 글자색 변경 팝업 제어
+    function toggleColorPopup(e) {
+      e.stopPropagation();
+      saveEditorSelection();
+      const menu = document.getElementById('editorColorMenu');
+      const symbolMenu = document.getElementById('editorSymbolMenu');
+      if (symbolMenu) symbolMenu.style.display = 'none';
+      if (menu) {
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+      }
+    }
+
+    function execEditorColor(color) {
+      const editor = document.getElementById('editorContent');
+      editor.focus();
+      restoreEditorSelection();
+      document.execCommand('foreColor', false, color);
+      saveEditorSelection();
+      const menu = document.getElementById('editorColorMenu');
+      if (menu) menu.style.display = 'none';
+    }
+
+    // 특수기호 팝업 제어
+    function toggleSymbolPopup(e) {
+      e.stopPropagation();
+      saveEditorSelection();
+      const menu = document.getElementById('editorSymbolMenu');
+      const colorMenu = document.getElementById('editorColorMenu');
+      if (colorMenu) colorMenu.style.display = 'none';
+      if (menu) {
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+      }
+    }
+
+    function insertSymbolChar(sym) {
+      const editor = document.getElementById('editorContent');
+      editor.focus();
+      restoreEditorSelection();
+      document.execCommand('insertText', false, sym);
+      saveEditorSelection();
+      const menu = document.getElementById('editorSymbolMenu');
+      if (menu) menu.style.display = 'none';
+    }
+
+    // 외부 이미지 URL 삽입
+    function insertExternalImgPrompt() {
+      const url = prompt('삽입할 이미지의 웹 주소(URL)를 입력해주세요:');
+      if (url && url.trim()) {
+        const cleanUrl = url.trim();
+        insertBodyImg(cleanUrl);
+        addPhotoToSidebar(cleanUrl);
+        if (!mainThumbImg) setAsMainThumb(cleanUrl);
+      }
+    }
+
+    // 유튜브 영상 삽입
+    function insertYoutubeVideoPrompt() {
+      const url = prompt('YouTube 동영상 주소(URL)를 입력해주세요:');
+      if (!url) return;
+      const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^#&?]*)/);
+      if (match && match[1]) {
+        const embedHtml = `
+          <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 14px; margin: 24px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+            <iframe src="https://www.youtube.com/embed/${match[1]}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border-radius: 14px;"></iframe>
+          </div><p><br></p>
+        `;
+        const editor = document.getElementById('editorContent');
+        editor.focus();
+        restoreEditorSelection();
+        document.execCommand('insertHTML', false, embedHtml);
+        saveEditorSelection();
+      } else {
+        alert('올바른 유튜브 영상 주소가 아닙니다.');
+      }
+    }
+
+    // 링크 삽입
+    function insertLinkPrompt() {
+      const url = prompt('연결할 웹 주소(URL)를 입력해주세요 (예: https://...):');
+      if (url && url.trim()) {
+        const editor = document.getElementById('editorContent');
+        editor.focus();
+        restoreEditorSelection();
+        document.execCommand('createLink', false, url.trim());
+        saveEditorSelection();
+      }
+    }
+
+    // ================= 임시저장 및 불러오기 기능 =================
+    function saveEditorDraft() {
+      const title = document.getElementById('editorTitle').value.trim() || '제목 없는 임시글';
+      const content = document.getElementById('editorContent').innerHTML;
+      const excerpt = document.getElementById('editorExcerpt').value.trim();
+      const category = document.getElementById('editorCategory').value;
+      const isFeatured = document.getElementById('editorIsFeatured').checked;
+
+      const draft = {
+        id: 'draft_' + Date.now(),
+        title,
+        content,
+        excerpt,
+        category,
+        isFeatured,
+        mainThumb: mainThumbImg,
+        photos: editorPhotos,
+        updatedAt: new Date().toLocaleString()
+      };
+
+      const drafts = JSON.parse(localStorage.getItem('yebaek_editor_drafts') || '[]');
+      drafts.unshift(draft);
+      localStorage.setItem('yebaek_editor_drafts', JSON.stringify(drafts.slice(0, 10))); // 최근 10개
+      alert('현재 작성 중인 내용과 사진 보관함이 안전하게 임시 저장되었습니다.');
+    }
+
+    function openEditorDraftsModal() {
+      const drafts = JSON.parse(localStorage.getItem('yebaek_editor_drafts') || '[]');
+      const container = document.getElementById('draftListContainer');
+      const modal = document.getElementById('editorDraftsModal');
+      if (!container || !modal) return;
+
+      if (drafts.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding: 24px; color: var(--text-muted); font-size: 0.92rem;">임시 저장된 글이 없습니다.</div>`;
+      } else {
+        container.innerHTML = drafts.map((d, idx) => `
+          <div style="padding: 12px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+            <div style="cursor: pointer; flex: 1;" onclick="loadEditorDraft(${idx})">
+              <strong style="color: var(--text-primary); font-size: 0.95rem;">${escapeHtml(d.title)}</strong>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">${escapeHtml(d.updatedAt)} · [${escapeHtml(d.category)}]</div>
+            </div>
+            <button type="button" class="admin-btn-action admin-btn-delete" onclick="deleteEditorDraft(${idx}, event)" style="font-size: 0.75rem;">삭제</button>
+          </div>
+        `).join('');
+      }
+      modal.classList.add('open');
+    }
+
+    function closeEditorDraftsModal() {
+      const modal = document.getElementById('editorDraftsModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function closeDraftsOnOverlay(e) {
+      if (e.target.id === 'editorDraftsModal') closeEditorDraftsModal();
+    }
+
+    function loadEditorDraft(index) {
+      const drafts = JSON.parse(localStorage.getItem('yebaek_editor_drafts') || '[]');
+      const target = drafts[index];
+      if (!target) return;
+
+      document.getElementById('editorTitle').value = target.title || '';
+      document.getElementById('editorExcerpt').value = target.excerpt || '';
+      document.getElementById('editorCategory').value = target.category || '비움과 갈무리';
+      document.getElementById('editorIsFeatured').checked = !!target.isFeatured;
+      document.getElementById('editorContent').innerHTML = target.content || '';
+      mainThumbImg = target.mainThumb || '';
+      editorPhotos = Array.isArray(target.photos) ? target.photos : [];
+      renderPhotoSidebar();
+      closeEditorDraftsModal();
+      alert(`'${target.title}' 임시저장 글을 불러왔습니다.`);
+    }
+
+    function deleteEditorDraft(index, e) {
+      if (e) e.stopPropagation();
+      const drafts = JSON.parse(localStorage.getItem('yebaek_editor_drafts') || '[]');
+      drafts.splice(index, 1);
+      localStorage.setItem('yebaek_editor_drafts', JSON.stringify(drafts));
+      openEditorDraftsModal();
+    }
+
+    // 칼럼 발행 또는 수정 저장 (대표사진 image 필드 포함)
     function publishArticle() {
       const title = document.getElementById('editorTitle').value.trim();
       let excerpt = document.getElementById('editorExcerpt').value.trim();
@@ -3163,6 +3915,7 @@
           articles[targetIndex].content = contentHtml;
           articles[targetIndex].readTime = readTime;
           articles[targetIndex].isFeatured = isFeatured;
+          articles[targetIndex].image = mainThumbImg || articles[targetIndex].image || '';
           saveArticles(articles);
         }
         currentEditingArticleId = null;
@@ -3179,6 +3932,7 @@
           id: 'art_' + Date.now(),
           title: title,
           category: category,
+          image: mainThumbImg || '',
           excerpt: excerpt,
           content: contentHtml,
           readTime: readTime,
@@ -3191,7 +3945,9 @@
         alert(`'${title}' 칼럼이 성공적으로 발행되었습니다!\n` + (isFeatured ? '⭐ [메인 전면 서재]에 대표글로 등록되었습니다.' : '전체 글 목록에서 열람하실 수 있습니다.'));
       }
 
-      // 모달 닫기
+      // 에디터 상태 초기화 및 모달 닫기
+      editorPhotos = [];
+      mainThumbImg = "";
       const modal = document.getElementById('tistoryEditorModal');
       if (modal) {
         modal.classList.remove('open');
@@ -3208,11 +3964,29 @@
       }
     }
 
-    // 초기 실행
+    // 에디터 본문 커서 위치 리스너 등록
     document.addEventListener('DOMContentLoaded', () => {
+      const editorArea = document.getElementById('editorContent');
+      if (editorArea) {
+        editorArea.addEventListener('mouseup', saveEditorSelection);
+        editorArea.addEventListener('keyup', saveEditorSelection);
+      }
       renderFeaturedMagazine();
       updateAdminUI();
     });
+
+    // 외부 클릭 시 서식 팝업 닫기
+    document.addEventListener('click', (e) => {
+      const colorMenu = document.getElementById('editorColorMenu');
+      const symbolMenu = document.getElementById('editorSymbolMenu');
+      if (colorMenu && !e.target.closest('#editorColorMenu') && !e.target.closest('button[onclick*="toggleColorPopup"]')) {
+        colorMenu.style.display = 'none';
+      }
+      if (symbolMenu && !e.target.closest('#editorSymbolMenu') && !e.target.closest('button[onclick*="toggleSymbolPopup"]')) {
+        symbolMenu.style.display = 'none';
+      }
+    });
+
     // 즉시 실행
     renderFeaturedMagazine();
     updateAdminUI();
