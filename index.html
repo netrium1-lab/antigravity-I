@@ -2,55 +2,59 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>나를 소개합니다 | 개인 홈페이지</title>
-  <meta name="description" content="안녕하세요! 저의 소개, 보유 역량, 프로젝트를 한눈에 볼 수 있는 자기소개 홈페이지입니다.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>여백과 결, 리셋 아카이브 | 이야기와 공감이 머무는 공간</title>
+  <meta name="description" content="지나온 삶의 이야기를 편안하게 읽고, 서로의 마음에 공감하며, 남은 인생을 함께 리셋해가는 따뜻한 웰라이프 커뮤니티입니다.">
   
-  <!-- 웹 폰트 (Pretendard - 한글 최적화 폰트) -->
+  <!-- 웹 폰트 (Pretendard) -->
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
   <style>
-    /* -------------------- 색상 테마 변수 -------------------- */
+    /* -------------------- 색상 테마 변수 (따뜻하고 편안한 내추럴 린넨 & 세이지 톤) -------------------- */
     :root {
-      --bg-primary: #ffffff;
-      --bg-secondary: #f8fafc;
+      --bg-primary: #faf8f5;
+      --bg-secondary: #f4efe8;
       --bg-card: #ffffff;
-      --text-primary: #0f172a;
-      --text-secondary: #475569;
-      --text-muted: #94a3b8;
-      --accent: #4f46e5;
-      --accent-hover: #4338ca;
-      --accent-light: #eef2ff;
-      --border-color: #e2e8f0;
-      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+      --text-primary: #24221f;
+      --text-secondary: #5a564e;
+      --text-muted: #8e897e;
+      --accent: #5e6d50; /* 편안한 세이지 그린 */
+      --accent-hover: #4a573e;
+      --accent-light: #edf2ea;
+      --accent-warm: #d97746; /* 공감/하트용 따뜻한 코랄 톤 */
+      --accent-gold: #c59d3f;
+      --border-color: #e5ded4;
+      --shadow-sm: 0 2px 6px rgba(40, 35, 25, 0.04);
+      --shadow-md: 0 6px 18px rgba(40, 35, 25, 0.07);
+      --shadow-lg: 0 16px 32px rgba(40, 35, 25, 0.09);
       --transition: all 0.25s ease;
-      --radius: 16px;
+      --radius: 18px;
+      --max-width: 1040px;
     }
 
-    /* 다크 모드 (어두운 화면) */
     [data-theme="dark"] {
-      --bg-primary: #0f172a;
-      --bg-secondary: #1e293b;
-      --bg-card: #1e293b;
-      --text-primary: #f8fafc;
-      --text-secondary: #cbd5e1;
-      --text-muted: #64748b;
-      --accent: #818cf8;
-      --accent-hover: #6366f1;
-      --accent-light: rgba(99, 102, 241, 0.15);
-      --border-color: #334155;
-      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+      --bg-primary: #181715;
+      --bg-secondary: #22201c;
+      --bg-card: #292723;
+      --text-primary: #f6f3ee;
+      --text-secondary: #c9c4b8;
+      --text-muted: #7e796e;
+      --accent: #95a786;
+      --accent-hover: #b3c5a4;
+      --accent-light: rgba(149, 167, 134, 0.16);
+      --accent-warm: #e88d60;
+      --accent-gold: #dbb358;
+      --border-color: #38352f;
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
+      --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.45);
+      --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.55);
     }
 
-    /* 기본 스타일 초기화 */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html {
@@ -59,12 +63,13 @@
     }
 
     body {
-      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
       background-color: var(--bg-primary);
       color: var(--text-primary);
-      line-height: 1.75;
+      line-height: 1.8;
       letter-spacing: -0.3px;
       transition: background-color 0.3s ease, color 0.3s ease;
+      padding-bottom: 70px; /* 모바일 하단바 공간 확보 */
     }
 
     a {
@@ -77,47 +82,94 @@
     }
 
     .container {
-      max-width: 1040px;
+      max-width: var(--max-width);
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 20px;
     }
 
-    /* -------------------- 상단 메뉴바 (헤더) -------------------- */
+    /* -------------------- 상단 헤더 & 모바일 내비게이션 -------------------- */
     header {
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      background-color: rgba(255, 255, 255, 0.88);
-      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background-color: rgba(250, 248, 245, 0.94);
+      border-bottom: 1px solid rgba(229, 222, 212, 0.85);
       transition: var(--transition);
+      box-shadow: 0 1px 8px rgba(40, 35, 25, 0.03);
     }
 
     [data-theme="dark"] header {
-      background-color: rgba(15, 23, 42, 0.88);
+      background-color: rgba(24, 23, 21, 0.94);
+      border-bottom-color: rgba(56, 53, 47, 0.85);
+      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
     }
 
     .nav-container {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 70px;
+      height: 74px;
     }
 
-    .logo {
+    .logo-area {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      transition: var(--transition);
+    }
+
+    .logo-area:hover {
+      opacity: 0.88;
+    }
+
+    .logo-main {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-emblem {
       font-size: 1.25rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--accent), #ec4899);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -0.5px;
+      line-height: 1;
+      filter: drop-shadow(0 1px 2px rgba(94, 109, 80, 0.2));
     }
 
+    .logo-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.6px;
+      font-family: inherit;
+    }
+
+    .logo-badge {
+      font-size: 0.72rem;
+      padding: 3px 9px;
+      border-radius: 9999px;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 700;
+      border: 1px solid rgba(94, 109, 80, 0.22);
+      letter-spacing: -0.2px;
+      vertical-align: middle;
+    }
+
+    .logo-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      font-weight: 500;
+      padding-left: 2px;
+    }
+
+    /* 데스크톱 메뉴: 가독성과 품격을 높인 캡슐형 링크 */
     .nav-menu {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 8px;
     }
 
     .nav-link {
@@ -125,100 +177,656 @@
       font-weight: 600;
       color: var(--text-secondary);
       transition: var(--transition);
+      padding: 9px 16px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       position: relative;
     }
 
     .nav-link:hover {
       color: var(--accent);
+      background: var(--accent-light);
+      transform: translateY(-1px);
+    }
+
+    .nav-link.active {
+      color: var(--accent);
+      background: var(--accent-light);
+      font-weight: 700;
+    }
+
+    .nav-icon {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .nav-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent-warm);
+      background: rgba(217, 119, 70, 0.12);
+      padding: 1px 6px;
+      border-radius: 6px;
+      margin-left: 2px;
     }
 
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
-    /* 화면 모드 전환 버튼 */
-    .theme-toggle {
-      background: var(--bg-secondary);
+    .theme-toggle, .mobile-menu-btn {
+      background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: var(--text-primary);
       transition: var(--transition);
+      box-shadow: var(--shadow-sm);
     }
 
-    .theme-toggle:hover {
-      background: var(--accent-light);
+    .theme-toggle:hover, .mobile-menu-btn:hover {
       border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-light);
+      transform: scale(1.05);
     }
 
-    /* -------------------- 메인 첫 화면 (히어로) -------------------- */
-    .hero {
-      padding: 90px 0 80px;
+    .mobile-menu-btn {
+      display: none;
+      font-size: 1.25rem;
+    }
+
+    /* -------------------- 모바일 슬라이드 드로어 메뉴 -------------------- */
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -280px;
+      width: 270px;
+      height: 100vh;
+      background: var(--bg-card);
+      border-left: 1px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
+      z-index: 200;
+      padding: 30px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: right 0.3s ease;
+    }
+
+    .mobile-drawer.open {
+      right: 0;
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+      display: none;
+      backdrop-filter: blur(4px);
+    }
+
+    .drawer-overlay.open {
+      display: block;
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 16px;
+    }
+
+    .drawer-menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .drawer-link {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 48px;
+      gap: 10px;
+      padding: 6px 0;
     }
 
-    .hero-content {
-      flex: 1;
+    /* -------------------- 모바일 전용 하단 퀵 내비게이션 바 -------------------- */
+    .mobile-bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 62px;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+      display: none;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 90;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
-    .badge {
-      display: inline-block;
-      padding: 6px 14px;
+    .bottom-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .bottom-nav-item.active, .bottom-nav-item:hover {
+      color: var(--accent);
+    }
+
+    .bottom-nav-icon {
+      font-size: 1.25rem;
+    }
+
+    /* -------------------- 히어로 섹션 (따뜻한 초대) -------------------- */
+    .hero {
+      padding: 60px 0 40px;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
       background: var(--accent-light);
       color: var(--accent);
       border-radius: 9999px;
       font-size: 0.85rem;
       font-weight: 700;
       margin-bottom: 20px;
+      border: 1px solid rgba(94, 109, 80, 0.2);
     }
 
     .hero-title {
-      font-size: 2.6rem;
+      font-size: 2.5rem;
       font-weight: 800;
       line-height: 1.35;
       letter-spacing: -1px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       word-break: keep-all;
     }
 
     .hero-title .highlight {
-      background: linear-gradient(135deg, var(--accent), #a855f7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--accent);
+      text-decoration: underline;
+      text-decoration-color: rgba(94, 109, 80, 0.3);
+      text-underline-offset: 6px;
     }
 
     .hero-desc {
       font-size: 1.1rem;
       color: var(--text-secondary);
-      margin-bottom: 32px;
-      max-width: 540px;
+      margin-bottom: 30px;
+      line-height: 1.8;
       word-break: keep-all;
     }
 
-    .hero-buttons {
+    .hero-chips {
       display: flex;
-      gap: 14px;
+      justify-content: center;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
+    .chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-light);
+      transform: translateY(-2px);
+    }
+
+    /* -------------------- 1. 여백의 서재 (자유로운 콘텐츠 소비 창구) -------------------- */
+    section {
+      padding: 60px 0;
+    }
+
+    .section-header {
+      margin-bottom: 36px;
+    }
+
+    .section-tag {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      font-size: 1.95rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      word-break: keep-all;
+    }
+
+    /* 아티클 필터 탭 */
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 24px;
+      scrollbar-width: none;
+    }
+
+    .filter-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* 매거진 카드 그리드 */
+    .magazine-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 22px;
+    }
+
+    .magazine-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .magazine-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+
+    .mag-badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .mag-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.45;
+      margin-bottom: 10px;
+      word-break: keep-all;
+    }
+
+    .mag-excerpt {
+      font-size: 0.94rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 20px;
+      word-break: keep-all;
+    }
+
+    .mag-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-color);
+      padding-top: 14px;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    .mag-reactions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .reaction-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* -------------------- 2. 공감 라운지 (서로 이야기를 나누고 공감하는 소통 창구) -------------------- */
+    .lounge-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 22px;
+      padding: 36px 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .lounge-intro {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+
+    .unburden-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+
+    .unburden-textarea {
+      width: 100%;
+      height: 80px;
+      border: none;
+      background: transparent;
+      outline: none;
+      resize: none;
+      font-family: inherit;
+      font-size: 0.98rem;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .unburden-textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    .unburden-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 12px;
+      margin-top: 10px;
+    }
+
+    .anonymous-tag {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-submit {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-submit:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    /* 실시간 공감 피드 */
+    .feed-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .feed-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      transition: var(--transition);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .feed-card:hover {
+      border-color: var(--accent);
+      background: var(--bg-card);
+    }
+
+    .feed-body {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      line-height: 1.65;
+      word-break: keep-all;
+    }
+
+    .feed-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 10px;
+      font-size: 0.82rem;
+    }
+
+    .feed-author {
+      color: var(--text-muted);
+    }
+
+    .feed-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .heart-btn, .leaf-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: var(--transition);
+    }
+
+    .heart-btn { color: var(--accent-warm); }
+    .leaf-btn { color: var(--accent); }
+
+    .heart-btn:hover, .leaf-btn:hover {
+      transform: scale(1.08);
+      background: var(--accent-light);
+    }
+
+    /* -------------------- 3. 자연스러운 유료 서비스 브릿지 배너 -------------------- */
+    .funnel-bridge {
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--accent-light) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 22px;
+      padding: 44px 32px;
+      margin: 40px auto 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .funnel-bridge h3 {
+      font-size: 1.55rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      line-height: 1.4;
+      word-break: keep-all;
+    }
+
+    .funnel-bridge p {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      max-width: 620px;
+      margin-left: auto;
+      margin-right: auto;
+      word-break: keep-all;
+    }
+
+    /* -------------------- 4. 리셋 프로그램 (유료 서비스 카드) -------------------- */
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 24px;
+    }
+
+    .program-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+
+    .program-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent);
+    }
+
+    .program-card.highlight {
+      border: 2px solid var(--accent);
+    }
+
+    .program-badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      margin-bottom: 14px;
+    }
+
+    .program-badge.cohort { background: var(--accent); color: #fff; }
+    .program-badge.concierge { background: var(--accent-gold); color: #fff; }
+    .program-badge.workbook { background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-color); }
+
+    .program-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+
+    .program-desc {
+      font-size: 0.94rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    .program-list {
+      margin-bottom: 24px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+    }
+
+    .program-list li {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .program-list li::before {
+      content: "✓";
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .btn-full {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+      padding: 14px 20px;
+      font-size: 0.96rem;
+    }
+
+    /* -------------------- 공통 버튼 서식 -------------------- */
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 12px 24px;
       border-radius: 12px;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.95rem;
       cursor: pointer;
       transition: var(--transition);
@@ -227,8 +835,8 @@
 
     .btn-primary {
       background: var(--accent);
-      color: #ffffff;
-      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(94, 109, 80, 0.25);
     }
 
     .btn-primary:hover {
@@ -236,560 +844,320 @@
       transform: translateY(-2px);
     }
 
+    .btn-gold {
+      background: var(--accent-gold);
+      color: #fff;
+    }
+
+    .btn-gold:hover {
+      background: #ad872f;
+      transform: translateY(-2px);
+    }
+
     .btn-secondary {
       background: var(--bg-card);
-      color: var(--text-primary);
       border-color: var(--border-color);
+      color: var(--text-primary);
     }
 
     .btn-secondary:hover {
+      border-color: var(--accent);
       background: var(--bg-secondary);
-      border-color: var(--accent);
-      transform: translateY(-2px);
     }
 
-    .hero-image-wrapper {
-      position: relative;
-    }
-
-    .hero-avatar {
-      width: 250px;
-      height: 250px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #e0e7ff, #fce7f3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 6rem;
-      box-shadow: var(--shadow-lg);
-      border: 4px solid var(--bg-card);
-      overflow: hidden;
-      user-select: none;
-    }
-
-    .hero-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* -------------------- 공통 섹션 서식 -------------------- */
-    section {
-      padding: 80px 0;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 52px;
-    }
-
-    .section-tag {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--accent);
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-
-    .section-title {
-      font-size: 2.1rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-
-    /* -------------------- 자기소개 섹션 -------------------- */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-    }
-
-    .about-card {
-      background: var(--bg-card);
-      padding: 32px;
-      border-radius: var(--radius);
-      border: 1px solid var(--border-color);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .about-card h3 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-      color: var(--text-primary);
-    }
-
-    .about-card p {
-      color: var(--text-secondary);
-      margin-bottom: 16px;
-      word-break: keep-all;
-    }
-
-    .info-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 24px;
-    }
-
-    .info-item {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .info-label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 2px;
-    }
-
-    .info-value {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    /* -------------------- 보유 역량 (기술 스택) -------------------- */
-    .skills-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-
-    .skill-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      padding: 28px;
-      box-shadow: var(--shadow-sm);
-      transition: var(--transition);
-    }
-
-    .skill-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-      border-color: var(--accent);
-    }
-
-    .skill-icon {
-      font-size: 2rem;
-      margin-bottom: 14px;
-    }
-
-    .skill-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .skill-subtitle {
+    /* -------------------- 푸터 -------------------- */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      padding: 50px 0 30px;
       font-size: 0.88rem;
       color: var(--text-muted);
-      margin-bottom: 16px;
     }
 
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .tag {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-    }
-
-    /* -------------------- 프로젝트 섹션 -------------------- */
-    .projects-grid {
+    .footer-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 28px;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 36px;
+      margin-bottom: 30px;
     }
 
-    .project-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-      display: flex;
-      flex-direction: column;
-      transition: var(--transition);
-    }
-
-    .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-lg);
-      border-color: var(--accent);
-    }
-
-    .project-preview {
-      height: 180px;
-      background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      color: white;
-    }
-
-    .project-preview.alt1 {
-      background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
-    }
-
-    .project-preview.alt2 {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    }
-
-    .project-body {
-      padding: 24px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-title {
-      font-size: 1.25rem;
-      font-weight: 700;
+    .footer-brand h4 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-primary);
       margin-bottom: 8px;
     }
 
-    .project-desc {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      margin-bottom: 18px;
-      flex: 1;
-      word-break: keep-all;
-    }
-
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 20px;
-    }
-
-    .project-links {
-      display: flex;
-      gap: 16px;
-    }
-
-    .project-links a {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--accent);
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .project-links a:hover {
-      text-decoration: underline;
-    }
-
-    /* -------------------- 연락처 섹션 -------------------- */
-    .contact-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      padding: 48px 32px;
-      text-align: center;
-      box-shadow: var(--shadow-md);
-      max-width: 680px;
-      margin: 0 auto;
-    }
-
-    .contact-title {
-      font-size: 1.7rem;
-      font-weight: 800;
+    .footer-links h5 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-primary);
       margin-bottom: 12px;
     }
 
-    .contact-desc {
-      color: var(--text-secondary);
-      margin-bottom: 32px;
-      word-break: keep-all;
+    .footer-links ul li {
+      margin-bottom: 6px;
     }
 
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .contact-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 22px;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: var(--text-primary);
-      transition: var(--transition);
-    }
-
-    .contact-item:hover {
-      background: var(--accent-light);
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    /* -------------------- 하단 푸터 -------------------- */
-    footer {
+    .footer-bottom {
       border-top: 1px solid var(--border-color);
-      padding: 36px 0;
+      padding-top: 20px;
       text-align: center;
-      color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.8rem;
     }
 
-    /* -------------------- 모바일 화면 반응형 스타일 -------------------- */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* -------------------- 스마트폰 모바일 반응형 미디어 쿼리 -------------------- */
     @media (max-width: 768px) {
-      .hero {
-        flex-direction: column-reverse;
-        text-align: center;
-        padding: 50px 0;
-        gap: 32px;
-      }
-
       .hero-title {
-        font-size: 2.1rem;
+        font-size: 2.05rem;
       }
-
       .hero-desc {
-        margin: 0 auto 28px;
+        font-size: 0.98rem;
       }
-
-      .hero-buttons {
-        justify-content: center;
+      .nav-container {
+        height: 64px;
       }
-
-      .hero-avatar {
-        width: 180px;
-        height: 180px;
-        font-size: 4.5rem;
-        margin: 0 auto;
+      .logo-title {
+        font-size: 1.15rem;
       }
-
-      .about-grid {
-        grid-template-columns: 1fr;
+      .logo-badge {
+        font-size: 0.65rem;
+        padding: 2px 7px;
       }
-
+      .logo-sub {
+        font-size: 0.62rem;
+      }
       .nav-menu {
-        display: none; /* 모바일 단순화를 위해 메뉴 감춤 */
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: flex;
+      }
+      .mobile-bottom-nav {
+        display: flex;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .lounge-container {
+        padding: 24px 18px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- 상단 네비게이션 헤더 -->
+  <!-- 1. 상단 내비게이션 헤더 -->
   <header>
     <div class="container nav-container">
-      <a href="#" class="logo">홍길동의 홈페이지</a>
+      <a href="#home" class="logo-area" aria-label="여백과 결 홈으로 이동">
+        <div class="logo-main">
+          <span class="logo-emblem">🌿</span>
+          <span class="logo-title">여백과 결</span>
+          <span class="logo-badge">리셋 아카이브</span>
+        </div>
+        <div class="logo-sub">YEBAEK & GEOL · LIFE RESET ARCHIVE</div>
+      </a>
+
+      <!-- 데스크톱 메뉴 (캡슐형 디자인 & 아이콘 + 태그 뱃지) -->
       <ul class="nav-menu">
-        <li><a href="#about" class="nav-link">소개</a></li>
-        <li><a href="#skills" class="nav-link">보유 기술</a></li>
-        <li><a href="#projects" class="nav-link">프로젝트</a></li>
-        <li><a href="#contact" class="nav-link">연락처</a></li>
+        <li>
+          <a href="#magazine" class="nav-link">
+            <span class="nav-icon">📖</span>
+            <span>여백의 서재</span>
+            <span class="nav-tag">칼럼</span>
+          </a>
+        </li>
+        <li>
+          <a href="#lounge" class="nav-link">
+            <span class="nav-icon">💬</span>
+            <span>공감 라운지</span>
+            <span class="nav-tag">소통</span>
+          </a>
+        </li>
+        <li>
+          <a href="#programs" class="nav-link">
+            <span class="nav-icon">🎓</span>
+            <span>리셋 프로그램</span>
+          </a>
+        </li>
+        <li>
+          <a href="#archive" class="nav-link">
+            <span class="nav-icon">📚</span>
+            <span>나의 서재</span>
+          </a>
+        </li>
       </ul>
+
       <div class="nav-actions">
-        <!-- 화면 테마 변경 버튼 -->
+        <!-- 화면 모드 전환 -->
         <button class="theme-toggle" id="themeToggle" aria-label="화면 모드 변경" title="화면 모드 변경">🌙</button>
+        <!-- 모바일 햄버거 메뉴 버튼 -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="메뉴 열기">☰</button>
       </div>
     </div>
   </header>
 
+  <!-- 모바일 슬라이드 드로어 메뉴 -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <aside class="mobile-drawer" id="mobileDrawer">
+    <div>
+      <div class="drawer-header">
+        <span style="font-weight: 800; font-size: 1.1rem; color: var(--text-primary);">전체 메뉴</span>
+        <button id="closeDrawerBtn" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-muted);">✕</button>
+      </div>
+      <nav class="drawer-menu-list">
+        <a href="#home" class="drawer-link" onclick="closeDrawer()">🏠 처음으로</a>
+        <a href="#magazine" class="drawer-link" onclick="closeDrawer()">📖 여백의 서재 (칼럼)</a>
+        <a href="#lounge" class="drawer-link" onclick="closeDrawer()">💬 공감 라운지 (이야기 나눔)</a>
+        <a href="#programs" class="drawer-link" onclick="closeDrawer()">🎓 리셋 프로그램 (유료 서비스)</a>
+        <a href="#concierge" class="drawer-link" onclick="closeDrawer()">🏠 방문 컨시어지 상담</a>
+        <a href="#archive" class="drawer-link" onclick="closeDrawer()">📚 나의 서재</a>
+      </nav>
+    </div>
+    <div style="font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 14px;">
+      지나온 삶의 결을 다듬는 따뜻한 연대
+    </div>
+  </aside>
+
+  <!-- 모바일 전용 하단 퀵 내비게이션 바 -->
+  <nav class="mobile-bottom-nav">
+    <a href="#home" class="bottom-nav-item active">
+      <span class="bottom-nav-icon">🏠</span>
+      <span>홈</span>
+    </a>
+    <a href="#magazine" class="bottom-nav-item">
+      <span class="bottom-nav-icon">📖</span>
+      <span>서재(칼럼)</span>
+    </a>
+    <a href="#lounge" class="bottom-nav-item">
+      <span class="bottom-nav-icon">💬</span>
+      <span>공감나눔</span>
+    </a>
+    <a href="#programs" class="bottom-nav-item">
+      <span class="bottom-nav-icon">🎓</span>
+      <span>프로그램</span>
+    </a>
+    <a href="#archive" class="bottom-nav-item">
+      <span class="bottom-nav-icon">👤</span>
+      <span>내 서재</span>
+    </a>
+  </nav>
+
   <main>
-    <!-- 첫인사 및 메인 소개 (히어로) -->
-    <div class="container">
+    <!-- 2. 메인 히어로: 편안한 초대 -->
+    <div class="container" id="home">
       <section class="hero">
-        <div class="hero-content">
-          <span class="badge">👋 반갑습니다!</span>
-          <h1 class="hero-title">
-            배움을 즐기며 성장하는<br>
-            <span class="highlight">홍길동</span>입니다.
-          </h1>
-          <p class="hero-desc">
-            복잡한 문제를 직관적이고 편리하게 해결하는 것을 좋아합니다.<br>
-            새로운 지식을 빠르게 습득하고, 사람들에게 실질적인 도움을 주는 결과물을 만듭니다.
-          </p>
-          <div class="hero-buttons">
-            <a href="#contact" class="btn btn-primary">✉️ 연락하기</a>
-            <a href="#projects" class="btn btn-secondary">📂 프로젝트 구경하기</a>
-          </div>
-        </div>
-        <div class="hero-image-wrapper">
-          <!-- 사용자 사진이 있다면 아래 <span> 대신 <img src="내사진.jpg" alt="프로필 사진"> 태그로 교체 가능합니다 -->
-          <div class="hero-avatar">
-            <span>🧑‍💻</span>
-          </div>
+        <div class="hero-badge">🌿 이야기와 공감이 머무는 공간</div>
+        <h1 class="hero-title">
+          지나온 삶의 <span class="highlight">이야기</span>를 나누고,<br>
+          남은 인생의 <span class="highlight">여백</span>을 함께 채워갑니다
+        </h1>
+        <p class="hero-desc">
+          바쁘게 달려온 전반전의 짐을 잠시 내려놓으세요.<br>
+          자유롭게 글을 읽고, 서로의 마음에 공감하며, 나만의 고유한 서사를 다듬어가는 따뜻한 쉼터입니다.
+        </p>
+        <div class="hero-chips">
+          <a href="#magazine" class="chip">📖 인기 칼럼 읽기</a>
+          <a href="#lounge" class="chip">💬 오늘 내 마음 한 줄 털어놓기</a>
+          <a href="#programs" class="chip">🌱 4주 라이프 리셋 알아보기</a>
         </div>
       </section>
     </div>
 
-    <!-- 자기소개 섹션 -->
-    <section id="about" style="background-color: var(--bg-secondary);">
+    <!-- 3. [최우선 배치 1] 여백의 서재: 유저가 자유롭게 소비하는 매거진/칼럼 -->
+    <section id="magazine" style="background-color: var(--bg-secondary);">
       <div class="container">
         <div class="section-header">
-          <p class="section-tag">소개</p>
-          <h2 class="section-title">저를 소개합니다</h2>
+          <p class="section-tag">Free Insights & Stories</p>
+          <h2 class="section-title">여백의 서재 (칼럼 & 이야기)</h2>
+          <p class="section-desc">일본의 선진 웰라이프·종활 문화와 삶을 가볍게 비우고 건강하게 채우는 지혜를 자유롭게 읽어보세요.</p>
         </div>
-        <div class="about-grid">
-          <div class="about-card">
-            <h3>💡 저는 이런 사람입니다</h3>
-            <p>
-              궁금한 점이 생기면 깊이 파고들어 원리를 이해하고, 이를 바탕으로 실생활의 불편함을 개선하는 것을 즐깁니다.
-            </p>
-            <p>
-              함께 일하는 동료들과의 적극적인 소통과 신뢰를 가장 중요하게 생각하며,
-              사용자 관점에서 한 번 더 생각하고 꼼꼼하게 완성도를 높여갑니다.
-            </p>
-          </div>
-          <div class="about-card">
-            <h3>📋 기본 정보</h3>
-            <p>언제든 편하게 연락 주시면 기쁜 마음으로 답변드리겠습니다.</p>
-            <div class="info-list">
-              <div class="info-item">
-                <span class="info-label">이름</span>
-                <span class="info-value">홍길동</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">거주지</span>
-                <span class="info-value">대한민국 서울</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">이메일</span>
-                <span class="info-value">your-email@example.com</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">관심 분야</span>
-                <span class="info-value">웹 개발, AI 활용, 자동화</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- 보유 기술 및 역량 섹션 -->
-    <section id="skills">
-      <div class="container">
-        <div class="section-header">
-          <p class="section-tag">보유 기술</p>
-          <h2 class="section-title">다룰 수 있는 기술 및 도구</h2>
+        <!-- 주제별 필터 탭 -->
+        <div class="filter-tabs">
+          <button class="tab-btn active" onclick="filterArticles('all', this)">전체 이야기</button>
+          <button class="tab-btn" onclick="filterArticles('shukatsu', this)">비움 & 종활</button>
+          <button class="tab-btn" onclick="filterArticles('wellness', this)">세포 건강 & 대사</button>
+          <button class="tab-btn" onclick="filterArticles('party', this)">생전 장례 & 엔딩투어</button>
         </div>
-        <div class="skills-container">
-          <div class="skill-card">
-            <div class="skill-icon">🎨</div>
-            <h3 class="skill-title">화면 구현 (프론트엔드)</h3>
-            <p class="skill-subtitle">사용자가 마주하는 직관적인 웹 화면을 만듭니다.</p>
-            <div class="skill-tags">
-              <span class="tag">HTML5</span>
-              <span class="tag">CSS3</span>
-              <span class="tag">자바스크립트</span>
-              <span class="tag">반응형 웹 디자인</span>
-            </div>
-          </div>
-          <div class="skill-card">
-            <div class="skill-icon">⚙️</div>
-            <h3 class="skill-title">데이터 및 로직 (백엔드)</h3>
-            <p class="skill-subtitle">데이터 처리와 안정적인 기능을 구현합니다.</p>
-            <div class="skill-tags">
-              <span class="tag">파이썬</span>
-              <span class="tag">데이터베이스</span>
-              <span class="tag">REST API 연동</span>
-              <span class="tag">업무 자동화</span>
-            </div>
-          </div>
-          <div class="skill-card">
-            <div class="skill-icon">🛠️</div>
-            <h3 class="skill-title">협업 및 도구</h3>
-            <p class="skill-subtitle">원활한 소통과 효율적인 협업을 위한 도구입니다.</p>
-            <div class="skill-tags">
-              <span class="tag">Git & GitHub</span>
-              <span class="tag">VS Code</span>
-              <span class="tag">피그마(Figma)</span>
-              <span class="tag">노션 / 슬랙</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- 프로젝트 섹션 -->
-    <section id="projects" style="background-color: var(--bg-secondary);">
-      <div class="container">
-        <div class="section-header">
-          <p class="section-tag">프로젝트</p>
-          <h2 class="section-title">주요 활동 및 작업물</h2>
-        </div>
-        <div class="projects-grid">
-          <!-- 첫 번째 프로젝트 -->
-          <article class="project-card">
-            <div class="project-preview">💻</div>
-            <div class="project-body">
-              <h3 class="project-title">개인 소개 홈페이지</h3>
-              <p class="project-desc">
-                다크 모드와 반응형 화면을 지원하여 누구나 편하게 볼 수 있는 순수 웹 표준 자기소개 사이트입니다.
+        <!-- 칼럼 목록 그리드 -->
+        <div class="magazine-grid">
+          <!-- 칼럼 1 -->
+          <article class="magazine-card" data-category="shukatsu" onclick="location.href='#lounge'">
+            <div>
+              <span class="mag-badge">비움 & 종활</span>
+              <h3 class="mag-title">스마트폰 속 사진 3만 장, 사후에는 어떻게 정리될까?</h3>
+              <p class="mag-excerpt">
+                가족들에게 남겨질 내 디지털 흔적을 생전에 미리 안전하고 깔끔하게 갈무리하는 '디지털 유세거니(Digital Legacy)' 실전 팁.
               </p>
-              <div class="project-tech">
-                <span class="tag">HTML5</span>
-                <span class="tag">CSS3</span>
-                <span class="tag">자바스크립트</span>
-              </div>
-              <div class="project-links">
-                <a href="#" target="_blank" rel="noopener noreferrer">🔗 바로가기</a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer">📂 코드 보기</a>
+            </div>
+            <div class="mag-meta">
+              <span>읽는 시간 3분</span>
+              <div class="mag-reactions">
+                <span class="reaction-item">❤️ 86</span>
+                <span class="reaction-item">💬 24</span>
               </div>
             </div>
           </article>
 
-          <!-- 두 번째 프로젝트 -->
-          <article class="project-card">
-            <div class="project-preview alt1">📝</div>
-            <div class="project-body">
-              <h3 class="project-title">할 일 관리 웹 어플리케이션</h3>
-              <p class="project-desc">
-                일정을 간편하게 등록하고 완료 상태를 관리할 수 있는 가볍고 직관적인 웹 도구입니다.
+          <!-- 칼럼 2 -->
+          <article class="magazine-card" data-category="party" onclick="location.href='#lounge'">
+            <div>
+              <span class="mag-badge">생전 장례 & 축제</span>
+              <h3 class="mag-title">눈물 대신 웃음으로 건네는 인사, 일본의 '생전 장례식'</h3>
+              <p class="mag-excerpt">
+                살아있을 때 사랑하는 사람들을 초대해 맛있는 밥을 나누고 고마움을 전하는 품격 있는 인생 감사 파티의 미학.
               </p>
-              <div class="project-tech">
-                <span class="tag">웹 저장소(LocalStorage)</span>
-                <span class="tag">화면 반응형 UI</span>
-              </div>
-              <div class="project-links">
-                <a href="#" target="_blank" rel="noopener noreferrer">🔗 바로가기</a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer">📂 코드 보기</a>
+            </div>
+            <div class="mag-meta">
+              <span>읽는 시간 4분</span>
+              <div class="mag-reactions">
+                <span class="reaction-item">❤️ 142</span>
+                <span class="reaction-item">💬 39</span>
               </div>
             </div>
           </article>
 
-          <!-- 세 번째 프로젝트 -->
-          <article class="project-card">
-            <div class="project-preview alt2">☀️</div>
-            <div class="project-body">
-              <h3 class="project-title">실시간 날씨 정보 알리미</h3>
-              <p class="project-desc">
-                외부 공공/오픈 날씨 데이터를 연동하여 현재 위치의 기온과 미세먼지 정보를 실시간으로 제공합니다.
+          <!-- 칼럼 3 -->
+          <article class="magazine-card" data-category="wellness" onclick="location.href='#lounge'">
+            <div>
+              <span class="mag-badge">세포 건강 & 활력</span>
+              <h3 class="mag-title">미래의 병원비를 아끼는 '소버 큐리어스'와 세포 대사 루틴</h3>
+              <p class="mag-excerpt">
+                무리한 금욕이 아닌 미네랄 밸런스와 일상 대사 회복을 통해 남은 후반전을 가뿐하게 달릴 수 있는 신체 자산 만들기.
               </p>
-              <div class="project-tech">
-                <span class="tag">외부 데이터 연동(API)</span>
-                <span class="tag">비동기 데이터 처리</span>
+            </div>
+            <div class="mag-meta">
+              <span>읽는 시간 5분</span>
+              <div class="mag-reactions">
+                <span class="reaction-item">❤️ 95</span>
+                <span class="reaction-item">💬 18</span>
               </div>
-              <div class="project-links">
-                <a href="#" target="_blank" rel="noopener noreferrer">🔗 바로가기</a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer">📂 코드 보기</a>
+            </div>
+          </article>
+
+          <!-- 칼럼 4 -->
+          <article class="magazine-card" data-category="shukatsu" onclick="location.href='#lounge'">
+            <div>
+              <span class="mag-badge">비움 & 종활</span>
+              <h3 class="mag-title">10년 동안 입지 않은 정장을 버리지 못하는 진짜 이유</h3>
+              <p class="mag-excerpt">
+                물건을 비우는 것은 물건을 버리는 것이 아니라, 지나간 시간에 대한 미련을 품위 있게 털어내는 마음의 여백 훈련입니다.
+              </p>
+            </div>
+            <div class="mag-meta">
+              <span>읽는 시간 3분</span>
+              <div class="mag-reactions">
+                <span class="reaction-item">❤️ 118</span>
+                <span class="reaction-item">💬 42</span>
               </div>
             </div>
           </article>
@@ -797,43 +1165,197 @@
       </div>
     </section>
 
-    <!-- 연락처 섹션 -->
-    <section id="contact">
+    <!-- 4. [최우선 배치 2] 공감 라운지: 유저들이 자유롭게 소통하고 위로를 주고받는 곳 -->
+    <section id="lounge">
       <div class="container">
-        <div class="contact-card">
-          <h2 class="contact-title">언제든 편하게 연락 주세요!</h2>
-          <p class="contact-desc">
-            새로운 아이디어 나눔, 프로젝트 제안, 궁금한 점 등 무엇이든 환영합니다.<br>
-            아래 링크를 통해 바로 연락하실 수 있습니다.
+        <div class="section-header" style="text-align: center;">
+          <p class="section-tag">Community & Empathy</p>
+          <h2 class="section-title">공감 라운지 : 오늘의 비움 한 줄</h2>
+          <p class="section-desc">
+            오늘 당신의 마음과 일상에서 가볍게 내려놓은 짐 하나는 무엇인가요?<br>
+            익명으로 편하게 적어보세요. 다른 회원들이 따뜻한 공감과 응원을 보냅니다.
           </p>
-          <div class="contact-links">
-            <a href="mailto:your-email@example.com" class="contact-item">
-              📧 이메일 보내기
-            </a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="contact-item">
-              🐙 깃허브 (GitHub)
-            </a>
-            <a href="https://velog.io" target="_blank" rel="noopener noreferrer" class="contact-item">
-              ✍️ 개인 블로그
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="contact-item">
-              💼 링크드인 (LinkedIn)
-            </a>
+        </div>
+
+        <div class="lounge-container">
+          <!-- 비움 입력 상자 -->
+          <div class="unburden-box">
+            <textarea id="unburdenInput" class="unburden-textarea" placeholder="여기에 당신의 마음을 가볍게 적어보세요...&#10;(예: 10년 된 명함들을 오늘 정리했습니다. / 남의 기대에 맞추려던 부담을 내려놓습니다.)"></textarea>
+            <div class="unburden-bottom">
+              <span class="anonymous-tag">🔒 100% 익명으로 안전하게 공유됩니다</span>
+              <button class="btn-submit" onclick="addUnburden()">가볍게 비워내기</button>
+            </div>
+          </div>
+
+          <!-- 실시간 공감 피드 -->
+          <div class="feed-grid" id="unburdenFeed">
+            <div class="feed-card">
+              <p class="feed-body">"오랫동안 서랍 속에 묵혀두었던 옛 직장의 서류들을 모두 파쇄했습니다. 비우고 나니 참 묘하게 시원합니다."</p>
+              <div class="feed-actions">
+                <span class="feed-author">익명의 여행자 · 10분 전</span>
+                <div class="feed-buttons">
+                  <button class="heart-btn" onclick="cheerCount(this)">❤️ 공감 <span>34</span></button>
+                  <button class="leaf-btn" onclick="cheerCount(this)">🌿 응원 <span>19</span></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="feed-card">
+              <p class="feed-body">"자식들에게 짐이 되지 않으려면 내 물건부터 줄여야겠다고 생각만 하다가, 오늘 서랍 한 칸을 비웠습니다. 작은 첫걸음입니다."</p>
+              <div class="feed-actions">
+                <span class="feed-author">여백의 시작 · 1시간 전</span>
+                <div class="feed-buttons">
+                  <button class="heart-btn" onclick="cheerCount(this)">❤️ 공감 <span>58</span></button>
+                  <button class="leaf-btn" onclick="cheerCount(this)">🌿 응원 <span>41</span></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="feed-card">
+              <p class="feed-body">"내가 떠난 후의 장례는 슬픈 날이 아니라, 지인들에게 감사를 전하는 따뜻한 차 한 잔의 자리였으면 좋겠습니다."</p>
+              <div class="feed-actions">
+                <span class="feed-author">솔직한 결 · 3시간 전</span>
+                <div class="feed-buttons">
+                  <button class="heart-btn" onclick="cheerCount(this)">❤️ 공감 <span>82</span></button>
+                  <button class="leaf-btn" onclick="cheerCount(this)">🌿 응원 <span>65</span></button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- 5. 유저가 자연스럽게 유료 서비스로 넘어가는 연결 브릿지 배너 -->
+    <div class="container">
+      <div class="funnel-bridge">
+        <h3>혼자 비우고 정리하기가 여전히 막막하신가요?</h3>
+        <p>
+          수많은 글을 읽고 마음을 다잡았지만, 어디서부터 손대야 할지 막막할 때가 있습니다.<br>
+          전담 코칭스태프가 온라인에서 4주간 손을 잡아드리고, 필요할 때는 집으로 직접 찾아와 함께 비워드립니다.
+        </p>
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+          <a href="#programs" class="btn btn-primary">4주 코호트 프로그램 알아보기</a>
+          <a href="#concierge" class="btn btn-gold">🏠 1:1 방문 컨시어지 무료 상담</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. 리셋 프로그램 (유료 서비스 안내) -->
+    <section id="programs" style="background-color: var(--bg-secondary);">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-tag">Paid Programs & Care</p>
+          <h2 class="section-title">리셋 프로그램 (밀착 코칭 & 케어)</h2>
+          <p class="section-desc">충분히 공감하고 신뢰가 쌓였을 때, 당신의 두 번째 황금기를 위한 전문 서비스를 선택하세요.</p>
+        </div>
+
+        <div class="programs-grid">
+          <!-- 상품 1: 4주 코호트 -->
+          <div class="program-card highlight">
+            <div>
+              <span class="program-badge cohort">온라인 밀착 코칭</span>
+              <h3 class="program-title">[여백과 결] 4주 라이프 리셋 코호트</h3>
+              <p class="program-desc">전담 코칭스태프와 동반자들이 함께 4주간 온라인 미션을 완주하며 내 삶의 서사와 일상을 재정비합니다.</p>
+              <ul class="program-list">
+                <li>1주차: 마음의 짐 비우기 & 디지털 유세거니</li>
+                <li>2주차: 세포 건강과 대사 루틴 점검</li>
+                <li>3주차: 추억 순례 엔딩투어 & 버킷리스트</li>
+                <li>4주차: 생전 장례식 기획 & 감사 편지</li>
+              </ul>
+            </div>
+            <div>
+              <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 14px;">월 350,000원 <span style="font-size: 0.85rem; font-weight: 500; color: var(--text-muted);">(밀착 코칭 포함)</span></div>
+              <button onclick="alert('4주 코호트 신청 안내 창으로 연결됩니다.')" class="btn btn-primary btn-full">1기 코호트 신청하기</button>
+            </div>
+          </div>
+
+          <!-- 상품 2: 오프라인 방문 컨시어지 (핵심 고수익) -->
+          <div class="program-card highlight" id="concierge" style="border-color: var(--accent-gold);">
+            <div>
+              <span class="program-badge concierge">프리미엄 가정 방문</span>
+              <h3 class="program-title">공간 & 디지털 유산 1:1 방문 정리 서비스</h3>
+              <p class="program-desc">전문 코칭스태프가 직접 자택을 방문하여 옷장/서재의 물건을 정서적으로 비워내고 스마트폰/클라우드를 안전하게 정리합니다.</p>
+              <ul class="program-list">
+                <li>공간 & 물건 미니멀 리셋 (정서적 정리 테라피)</li>
+                <li>스마트폰 사진, 계정, 인증서 안전 백업 대행</li>
+                <li>전문 코치 2인 배정 및 맞춤형 일정 조율</li>
+              </ul>
+            </div>
+            <div>
+              <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 14px;">맞춤 견적 <span style="font-size: 0.85rem; font-weight: 500; color: var(--text-muted);">(사전 무료 방문 상담)</span></div>
+              <button onclick="alert('방문 컨시어지 1:1 무료 상담 예약이 완료되었습니다. 담당 코치가 곧 연락드립니다.')" class="btn btn-gold btn-full">무료 방문 상담 예약하기</button>
+            </div>
+          </div>
+
+          <!-- 상품 3: 워크북 -->
+          <div class="program-card">
+            <div>
+              <span class="program-badge workbook">디지털 자습형</span>
+              <h3 class="program-title">나의 결 서사 30일 워크북 (PDF)</h3>
+              <p class="program-desc">혼자서 조용히 20년의 삶을 자서전처럼 써내려가고 싶은 분들을 위한 30일 단계별 질문 워크북입니다.</p>
+              <ul class="program-list">
+                <li>30일 질문 가이드북 전자책 즉시 다운로드</li>
+                <li>인터랙티브 웹 서사 템플릿 제공</li>
+              </ul>
+            </div>
+            <div>
+              <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 14px;">49,000원</div>
+              <button onclick="alert('워크북 다운로드 준비 중입니다.')" class="btn btn-secondary btn-full">워크북 구매하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. 나의 서재 안내 -->
+    <section id="archive">
+      <div class="container" style="text-align: center; max-width: 640px;">
+        <div style="font-size: 3rem; margin-bottom: 12px;">📚</div>
+        <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 10px;">나의 서재 (개인 아카이브)</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.7;">
+          내가 남긴 비움의 한 줄, 작성한 서사 노트, 코칭스태프의 응원 편지를 한곳에 모아두는 나만의 소중한 보관함입니다.
+        </p>
+        <button onclick="alert('로그인 기능을 준비 중입니다. 현재는 로그인 없이 자유롭게 글을 읽고 비움 한 줄을 남기실 수 있습니다!')" class="btn btn-primary">내 서재 열기 (로그인)</button>
       </div>
     </section>
   </main>
 
-  <!-- 하단 저작권 푸터 -->
+  <!-- 푸터 -->
   <footer>
     <div class="container">
-      <p>© 2026 홍길동. 모든 권리 보유.</p>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>여백과 결 : 리셋 아카이브</h4>
+          <p>지나온 세월의 결을 다듬고, 남은 인생의 여백을 내 손으로 그리는 따뜻한 웰라이프 & 라이프 아카이브 커뮤니티입니다.</p>
+        </div>
+        <div class="footer-links">
+          <h5>바로가기</h5>
+          <ul>
+            <li><a href="#magazine">여백의 서재 (칼럼)</a></li>
+            <li><a href="#lounge">공감 라운지</a></li>
+            <li><a href="#programs">리셋 프로그램</a></li>
+            <li><a href="#concierge">방문 컨시어지 상담</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h5>안내</h5>
+          <ul>
+            <li>이메일: contact@reset-archive.kr</li>
+            <li>상담 문의: 1:1 방문 상담 신청</li>
+            <li>모바일 친화적 반응형 플랫폼</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 여백과 결, 리셋 아카이브 (Yebaek & Geol : Reset Archive). 모든 권리 보유.</p>
+      </div>
     </div>
   </footer>
 
-  <!-- 화면 모드 전환 스크립트 -->
+  <!-- 자바스크립트 (인터랙션 & 모바일 제어) -->
   <script>
+    // 1. 테마 전환 (다크/라이트)
     const themeToggleBtn = document.getElementById('themeToggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const savedTheme = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
@@ -842,24 +1364,107 @@
       if (theme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         themeToggleBtn.textContent = '☀️';
-        themeToggleBtn.title = '밝은 화면으로 전환';
       } else {
         document.documentElement.removeAttribute('data-theme');
         themeToggleBtn.textContent = '🌙';
-        themeToggleBtn.title = '어두운 화면으로 전환';
       }
       localStorage.setItem('theme', theme);
     }
-
-    // 처음 접속 시 테마 적용
     applyTheme(savedTheme);
 
-    // 버튼 클릭 시 테마 전환
     themeToggleBtn.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      applyTheme(newTheme);
+      applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
     });
+
+    // 2. 모바일 드로어 메뉴 제어
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+
+    function openDrawer() {
+      mobileDrawer.classList.add('open');
+      drawerOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      mobileDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    mobileMenuBtn.addEventListener('click', openDrawer);
+    closeDrawerBtn.addEventListener('click', closeDrawer);
+    drawerOverlay.addEventListener('click', closeDrawer);
+
+    // 3. 칼럼 필터 기능
+    function filterArticles(category, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cards = document.querySelectorAll('.magazine-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // 4. 오늘의 비움 한 줄 실시간 등록
+    function addUnburden() {
+      const input = document.getElementById('unburdenInput');
+      const text = input.value.trim();
+      if (!text) {
+        alert('마음이나 일상에서 비우고 싶은 내용을 한 줄 적어주세요.');
+        return;
+      }
+
+      const feed = document.getElementById('unburdenFeed');
+      const newCard = document.createElement('div');
+      newCard.className = 'feed-card';
+      newCard.innerHTML = `
+        <p class="feed-body">"${escapeHtml(text)}"</p>
+        <div class="feed-actions">
+          <span class="feed-author">새로운 여백 · 방금 전</span>
+          <div class="feed-buttons">
+            <button class="heart-btn" onclick="cheerCount(this)">❤️ 공감 <span>1</span></button>
+            <button class="leaf-btn" onclick="cheerCount(this)">🌿 응원 <span>1</span></button>
+          </div>
+        </div>
+      `;
+
+      feed.insertBefore(newCard, feed.firstChild);
+      input.value = '';
+      alert('소중한 마음이 안전하게 비워졌습니다. 공감 라운지에 등록되었습니다!');
+    }
+
+    // 공감/응원 카운터
+    function cheerCount(btn) {
+      const span = btn.querySelector('span');
+      let count = parseInt(span.textContent, 10);
+      span.textContent = count + 1;
+      btn.style.transform = 'scale(1.15)';
+      setTimeout(() => btn.style.transform = 'scale(1)', 180);
+    }
+
+    function escapeHtml(string) {
+      return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;',
+          '/': '&#x2F;',
+          '`': '&#x60;',
+          '=': '&#x3D;'
+        }[s];
+      });
+    }
   </script>
 </body>
 </html>
