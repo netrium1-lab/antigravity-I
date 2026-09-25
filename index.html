@@ -2977,13 +2977,13 @@
 
       <!-- 우측 그룹: 카테고리 메뉴 + 나의 아카이브 옆 로그인 버튼 -->
       <div class="nav-right-group">
-        <!-- 실버 친화적 크고 굵은 카테고리 메뉴 (5개) -->
+        <!-- 실버 친화적 크고 굵은 카테고리 메뉴 (6개) -->
         <ul class="nav-menu">
           <li><a href="#home" class="nav-link active">홈</a></li>
           <li><a href="#magazine" class="nav-link">여백의 서재</a></li>
+          <li><a href="#lounge" class="nav-link">비움 한 줄</a></li>
           <li><a href="#test" class="nav-link">자가진단</a></li>
           <li><a href="#memoir" class="nav-link" style="color: var(--accent); font-weight: 800;">디지털 자서전</a></li>
-          <li><a href="#lounge" class="nav-link">참여라운지</a></li>
           <li><a href="#archive" class="nav-link">나의 아카이브</a></li>
         </ul>
 
@@ -3013,9 +3013,9 @@
       <nav class="drawer-nav-list">
         <a href="#home" class="drawer-nav-item" onclick="closeMobileDrawer()">🏠 <strong>홈</strong></a>
         <a href="#magazine" class="drawer-nav-item" onclick="closeMobileDrawer()">📖 <strong>여백의 서재</strong></a>
+        <a href="#lounge" class="drawer-nav-item" onclick="closeMobileDrawer()">💬 <strong>오늘의 비움 한 줄</strong></a>
         <a href="#test" class="drawer-nav-item" onclick="closeMobileDrawer()">🧭 <strong>1분 자가진단</strong></a>
         <a href="#memoir" class="drawer-nav-item" onclick="closeMobileDrawer()" style="color: var(--accent);">✍️ <strong>디지털 자서전</strong></a>
-        <a href="#lounge" class="drawer-nav-item" onclick="closeMobileDrawer()">💬 <strong>참여라운지</strong></a>
         <a href="#archive" class="drawer-nav-item" onclick="closeMobileDrawer()">📚 <strong>나의 아카이브</strong></a>
         <a href="#login" class="drawer-nav-item drawer-login-btn" onclick="closeMobileDrawer(); openLoginModal(event)">👤 <strong>로그인</strong></a>
       </nav>
@@ -3099,8 +3099,55 @@
       </div>
     </section>
 
-    <!-- 3. [2단계] 1분 여백 자가진단 (참여 유도 위젯) -->
-    <section id="test">
+    <!-- 3. [2단계] 참여 라운지 (오늘의 비움 한 줄 - 따뜻한 커뮤니티 형성) -->
+    <section id="lounge">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-tag">Community Lounge</p>
+          <h2 class="section-title">오늘의 비움 한 줄</h2>
+          <p class="section-desc">
+            오늘 당신의 마음과 일상에서 가볍게 내려놓은 짐 하나는 무엇인가요?<br>
+            익명으로 편안하게 적어보세요. 다른 회원들의 따뜻한 응원이 기다립니다.
+          </p>
+        </div>
+        <div class="lounge-wrap">
+          <!-- 비움 입력 폼 -->
+          <div class="unburden-form">
+            <input type="text" id="unburdenInput" class="unburden-input" placeholder="예: 10년 동안 입지 않던 정장을 오늘 비웠습니다. / 남의 시선에 대한 걱정을 내려놓습니다." />
+            <button class="btn btn-primary" onclick="addUnburden()">가볍게 비워내기</button>
+          </div>
+
+          <!-- 피드 목록 -->
+          <div class="unburden-feed" id="unburdenFeed">
+            <!-- 기본 샘플 피드 카드들 -->
+            <div class="feed-card">
+              <p class="feed-text">"오랫동안 서랍 구석에 넣어두었던 옛 명함들과 서류들을 정리했습니다. 홀가분한 여백이 생겼네요."</p>
+              <div class="feed-meta">
+                <span>익명의 여행자 · 방금 전</span>
+                <button class="cheer-btn" onclick="cheerUp(this)">🌿 응원해요 <span>12</span></button>
+              </div>
+            </div>
+            <div class="feed-card">
+              <p class="feed-text">"스마트폰에서 쓰지 않는 앱 20개와 중복 사진 500장을 지웠습니다. 손가락 하나로 가벼워진 기분입니다."</p>
+              <div class="feed-meta">
+                <span>자유로운 결 · 1시간 전</span>
+                <button class="cheer-btn" onclick="cheerUp(this)">🌿 응원해요 <span>28</span></button>
+              </div>
+            </div>
+            <div class="feed-card">
+              <p class="feed-text">"완벽해야 한다는 강박을 내려놓았습니다. 남은 후반전은 온전히 나의 속도대로 살아가기로 했습니다."</p>
+              <div class="feed-meta">
+                <span>세컨드윈드 · 3시간 전</span>
+                <button class="cheer-btn" onclick="cheerUp(this)">🌿 응원해요 <span>34</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. [3단계] 1분 여백 자가진단 (참여 유도 위젯) -->
+    <section id="test" style="background-color: var(--bg-secondary);">
       <div class="container">
         <div class="section-header">
           <p class="section-tag">Self Diagnosis</p>
@@ -3349,54 +3396,7 @@
       </div>
     </section>
 
-    <!-- 4. [3단계] 참여 라운지 (오늘의 비움 한 줄 - 따뜻한 커뮤니티 형성) -->
-    <section id="lounge" style="background-color: var(--bg-secondary);">
-      <div class="container">
-        <div class="section-header">
-          <p class="section-tag">Community Lounge</p>
-          <h2 class="section-title">오늘의 비움 한 줄</h2>
-          <p class="section-desc">
-            오늘 당신의 마음과 일상에서 가볍게 내려놓은 짐 하나는 무엇인가요?<br>
-            익명으로 편안하게 적어보세요. 다른 회원들의 따뜻한 응원이 기다립니다.
-          </p>
-        </div>
-        <div class="lounge-wrap">
-          <!-- 비움 입력 폼 -->
-          <div class="unburden-form">
-            <input type="text" id="unburdenInput" class="unburden-input" placeholder="예: 10년 동안 입지 않던 정장을 오늘 비웠습니다. / 남의 시선에 대한 걱정을 내려놓습니다." />
-            <button class="btn btn-primary" onclick="addUnburden()">가볍게 비워내기</button>
-          </div>
-
-          <!-- 피드 목록 -->
-          <div class="unburden-feed" id="unburdenFeed">
-            <!-- 기본 샘플 피드 카드들 -->
-            <div class="feed-card">
-              <p class="feed-text">"오랫동안 서랍 구석에 넣어두었던 옛 명함들과 서류들을 정리했습니다. 홀가분한 여백이 생겼네요."</p>
-              <div class="feed-meta">
-                <span>익명의 여행자 · 방금 전</span>
-                <button class="cheer-btn" onclick="cheerUp(this)">🌿 응원해요 <span>12</span></button>
-              </div>
-            </div>
-            <div class="feed-card">
-              <p class="feed-text">"스마트폰에서 쓰지 않는 앱 20개와 중복 사진 500장을 지웠습니다. 손가락 하나로 가벼워진 기분입니다."</p>
-              <div class="feed-meta">
-                <span>자유로운 결 · 1시간 전</span>
-                <button class="cheer-btn" onclick="cheerUp(this)">🌿 응원해요 <span>28</span></button>
-              </div>
-            </div>
-            <div class="feed-card">
-              <p class="feed-text">"완벽해야 한다는 강박을 내려놓았습니다. 남은 후반전은 온전히 나의 속도대로 살아가기로 했습니다."</p>
-              <div class="feed-meta">
-                <span>세컨드윈드 · 3시간 전</span>
-                <button class="cheer-btn" onclick="cheerUp(this)">🌿 응원해요 <span>34</span></button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5. [4단계] 리셋 프로그램 소개 (온라인 코호트 & 오프라인 방문 컨시어지 - 마케팅 전환) -->
+    <!-- 6. [5단계] 리셋 프로그램 소개 (온라인 코호트 & 오프라인 방문 컨시어지 - 마케팅 전환) -->
     <section id="programs">
       <div class="container">
         <div class="section-header">
@@ -3464,7 +3464,7 @@
       </div>
     </section>
 
-    <!-- 6. [5단계] 나의 아카이브 안내 (개인 서재) -->
+    <!-- 7. [6단계] 나의 아카이브 안내 (개인 서재) -->
     <section id="archive" style="background-color: var(--bg-secondary);">
       <div class="container">
         <div class="section-header">
@@ -3496,9 +3496,10 @@
           <h5>카테고리</h5>
           <ul>
             <li><a href="#magazine">여백의 서재</a></li>
-            <li><a href="#programs">4주 코호트 프로그램</a></li>
-            <li><a href="#concierge">오프라인 방문 컨시어지</a></li>
             <li><a href="#lounge">오늘의 비움 한 줄</a></li>
+            <li><a href="#test">1분 여백 자가진단</a></li>
+            <li><a href="#memoir">디지털 자서전</a></li>
+            <li><a href="#programs">라이프 리셋 프로그램</a></li>
           </ul>
         </div>
         <div class="footer-links">
