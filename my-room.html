@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>나만의 고유한 서재 | 여백과 결 리셋 아카이브</title>
+  <meta name="description" content="지나온 삶의 궤적이 품격 있는 문학이 되는 곳. 김순옥 어르신의 프라이빗 온라인 서재 (디지털 자서전, 기억 복원 갤러리, 비움 일기, 엔딩 금고).">
+
+  <!-- 웹폰트: 기본 Pretendard(고딕) + 감성 포인트 Noto Serif KR(명조) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;900&family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* 우드 & 서재 전용 내추럴 팔레트 */
+      --wood-dark: #2c221e;
+      --wood-base: #4a3b32;
+      --wood-light: #8d7363;
+      --paper-warm: #fcf9f2;
+      --paper-card: #ffffff;
+      --paper-border: #e8e1d5;
+      
+      --accent-gold: #c59b27;
+      --accent-gold-light: #fef7e6;
+      --accent-green: #2b6a38;
+      --accent-green-light: #eaf4ed;
+      
+      --text-main: #241e1b;
+      --text-sub: #574d46;
+      --text-muted: #8c7e75;
+
+      --shadow-soft: 0 4px 20px rgba(44, 34, 30, 0.06);
+      --shadow-lift: 0 12px 32px rgba(44, 34, 30, 0.12);
+      
+      --font-scale: 1;
+    }
+
+    [data-theme="dark"] {
+      --wood-dark: #120e0c;
+      --wood-base: #241b16;
+      --wood-light: #524036;
+      --paper-warm: #181412;
+      --paper-card: #231d19;
+      --paper-border: #382e28;
+      
+      --accent-gold: #e2b73e;
+      --accent-gold-light: #2b220d;
+      --accent-green: #48bb78;
+      --accent-green-light: #162b1d;
+      
+      --text-main: #f5f0ec;
+      --text-sub: #c9bfb8;
+      --text-muted: #8f837b;
+
+      --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.3);
+      --shadow-lift: 0 12px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', Roboto, sans-serif;
+      background-color: var(--paper-warm);
+      color: var(--text-main);
+      line-height: 1.75;
+      word-break: keep-all;
+      letter-spacing: -0.3px;
+      font-size: calc(16px * var(--font-scale));
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* 상단 헤더 */
+    .room-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(252, 249, 242, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--paper-border);
+      transition: background-color 0.3s ease;
+    }
+    [data-theme="dark"] .room-header {
+      background-color: rgba(24, 20, 18, 0.94);
+    }
+
+    .header-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: var(--paper-card);
+      border: 1px solid var(--paper-border);
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-back-home:hover {
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+      transform: translateX(-2px);
+    }
+
+    .room-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      background: var(--accent-gold-light);
+      border: 1px solid rgba(197, 155, 39, 0.3);
+      color: var(--accent-gold);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .font-ctrl-btn, .theme-toggle-btn {
+      background: var(--paper-card);
+      border: 1px solid var(--paper-border);
+      color: var(--text-sub);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    .font-ctrl-btn:hover, .theme-toggle-btn:hover {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+    }
+
+    .btn-share {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: var(--accent-gold);
+      color: #ffffff;
+      border: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(197, 155, 39, 0.25);
+      transition: transform 0.2s, background-color 0.2s;
+    }
+    .btn-share:hover {
+      background: #ab851e;
+      transform: translateY(-1px);
+    }
+
+    /* 서재 인트로 배너 */
+    .room-hero {
+      position: relative;
+      background: linear-gradient(135deg, rgba(74, 59, 50, 0.05) 0%, rgba(197, 155, 39, 0.08) 100%);
+      border-bottom: 1px solid var(--paper-border);
+      padding: 48px 20px 36px;
+    }
+    .room-hero-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .room-owner-profile {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .owner-avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d3c4b5 0%, #a48f7d 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      border: 3px solid #ffffff;
+      flex-shrink: 0;
+    }
+
+    .owner-info h1 {
+      font-family: 'Noto Serif KR', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+    .owner-info p {
+      color: var(--text-sub);
+      font-size: 1rem;
+    }
+    .owner-quote {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 4px 12px;
+      background: rgba(197, 155, 39, 0.12);
+      border-left: 3px solid var(--accent-gold);
+      border-radius: 0 4px 4px 0;
+      color: var(--text-main);
+      font-size: 0.92rem;
+      font-style: italic;
+    }
+
+    .hero-stat-cards {
+      display: flex;
+      gap: 12px;
+    }
+    .hero-stat {
+      background: var(--paper-card);
+      border: 1px solid var(--paper-border);
+      padding: 14px 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      min-width: 110px;
+    }
+    .hero-stat .num {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--accent-gold);
+    }
+    .hero-stat .label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* 서재 탭 네비게이션 */
+    .room-tabs-bar {
+      background: var(--paper-card);
+      border-bottom: 1px solid var(--paper-border);
+      position: sticky;
+      top: 65px;
+      z-index: 90;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .room-tabs-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      gap: 8px;
+    }
+    .room-tabs-container::-webkit-scrollbar {
+      display: none;
+    }
+    .room-tab-btn {
+      padding: 16px 20px;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .room-tab-btn:hover {
+      color: var(--text-main);
+    }
+    .room-tab-btn.active {
+      color: var(--accent-gold);
+      border-bottom-color: var(--accent-gold);
+    }
+    .tab-counter {
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: var(--paper-warm);
+      color: var(--text-muted);
+      font-weight: 800;
+    }
+    .room-tab-btn.active .tab-counter {
+      background: var(--accent-gold-light);
+      color: var(--accent-gold);
+    }
+
+    /* 메인 컨테이너 */
+    .room-content {
+      max-width: 1240px;
+      margin: 36px auto 80px;
+      padding: 0 20px;
+    }
+
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 서가 공통 섹션 헤더 */
+    .shelf-header {
+      margin-bottom: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 16px;
+      border-bottom: 2px solid var(--paper-border);
+      padding-bottom: 16px;
+    }
+    .shelf-title {
+      font-family: 'Noto Serif KR', Georgia, serif;
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .shelf-desc {
+      color: var(--text-sub);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    /* 서가 1: 디지털 자서전 e-Book 쇼케이스 */
+    .memoir-showcase {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 36px;
+      background: var(--paper-card);
+      border: 1px solid var(--paper-border);
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: var(--shadow-lift);
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 900px) {
+      .memoir-showcase {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .memoir-book-mockup {
+      background: linear-gradient(135deg, #1f2720 0%, #303d32 100%);
+      border-radius: 14px;
+      padding: 40px 24px;
+      color: #f7f5ed;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: -10px 12px 28px rgba(0, 0, 0, 0.25), inset 4px 0 8px rgba(255, 255, 255, 0.15);
+      border-left: 12px solid #161c17;
+      min-height: 440px;
+      position: relative;
+    }
+    .book-spine-line {
+      position: absolute;
+      top: 0;
+      left: 16px;
+      bottom: 0;
+      width: 2px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .book-category {
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      color: var(--accent-gold);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .book-title {
+      font-family: 'Noto Serif KR', Georgia, serif;
+      font-size: 1.9rem;
+      line-height: 1.4;
+      margin: 18px 0 10px;
+      font-weight: 900;
+      color: #ffffff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    }
+    .book-subtitle {
+      font-size: 0.95rem;
+      color: #ccd6ce;
+      line-height: 1.5;
+    }
+    .book-author {
+      margin-top: auto;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .book-author-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .book-edition {
+      font-size: 0.78rem;
+      color: #a4b3a6;
+    }
+
+    .memoir-details {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* 제작 및 배송 트래커 */
+    .delivery-tracker {
+      background: var(--paper-warm);
+      border: 1px solid var(--paper-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .tracker-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .tracker-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tracker-status-tag {
+      padding: 4px 10px;
+      background: var(--accent-green);
+      color: #ffffff;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .tracker-steps {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin-top: 12px;
+    }
+    .tracker-steps::before {
+      content: "";
+      position: absolute;
+      top: 14px;
+      left: 20px;
+      right: 20px;
+      height: 3px;
+      background: var(--paper-border);
+      z-index: 1;
+    }
+    .tracker-step {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      flex: 1;
+    }
+    .step-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--paper-card);
+      border: 3px solid var(--paper-border);
+      margin: 0 auto 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+    .tracker-step.completed .step-circle {
+      background: var(--accent-green);
+      border-color: var(--accent-green);
+      color: #ffffff;
+    }
+    .tracker-step.current .step-circle {
+      background: var(--accent-gold);
+      border-color: var(--accent-gold);
+      color: #ffffff;
+      box-shadow: 0 0 0 4px var(--accent-gold-light);
+    }
+    .step-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-sub);
+    }
+
+    /* 1분 육성 회고 오디오 플레이어 */
+    .audio-player-box {
+      background: linear-gradient(135deg, rgba(197, 155, 39, 0.08) 0%, rgba(43, 106, 56, 0.08) 100%);
+      border: 1px solid rgba(197, 155, 39, 0.25);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .audio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .audio-title {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .btn-audio-play {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      border: none;
+      color: #ffffff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(197, 155, 39, 0.3);
+      transition: transform 0.2s, background-color 0.2s;
+    }
+    .btn-audio-play:hover {
+      transform: scale(1.05);
+      background: #aa841e;
+    }
+    .audio-progress-bar {
+      flex: 1;
+      height: 8px;
+      background: var(--paper-border);
+      border-radius: 999px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+    .audio-progress-fill {
+      width: 35%;
+      height: 100%;
+      background: var(--accent-gold);
+      border-radius: 999px;
+      transition: width 0.3s;
+    }
+    .audio-time {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      min-width: 70px;
+      text-align: right;
+    }
+    .audio-subtitle {
+      font-size: 0.92rem;
+      color: var(--text-sub);
+      background: var(--paper-card);
+      padding: 10px 14px;
+      border-radius: 8px;
+      border-left: 3px solid var(--accent-green);
+      line-height: 1.6;
+    }
+
+    /* e-Book 챕터 리더기 */
+    .memoir-chapters {
+      background: var(--paper-card);
+      border: 1px solid var(--paper-border);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: var(--shadow-soft);
+    }
+    .chapter-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--paper-border);
+    }
+    .chapter-tab {
+      padding: 8px 16px;
+      background: var(--paper-warm);
+      border: 1px solid var(--paper-border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .chapter-tab.active {
+      background: var(--accent-green);
+      color: #ffffff;
+      border-color: var(--accent-green);
+    }
+    .chapter-content-box {
+      font-family: 'Noto Serif KR', Georgia, serif;
+      font-size: 1.12rem;
+      line-height: 2;
+      color: var(--text-main);
+      padding: 20px;
+      background: var(--paper-warm);
+      border-radius: 12px;
+      max-height: 480px;
+      overflow-y: auto;
+      border: 1px solid var(--paper-border);
+    }
+    .chapter-content-box p {
+      margin-bottom: 18px;
+      text-indent: 1em;
+    }
+
+    /* 서가 2: 빛바랜 기억 복원 갤러리 */
+    .memory-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+    }
+    .memory-card {
+      background: var(--paper-card);
+      border: 1px solid var(--paper-border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .memory-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lift);
+    }
+    .photo-compare-container {
+      position: relative;
+      height: 250px;
+      background: #2a2420;
+      overflow: hidden;
+    }
+    .photo-compare-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .restore-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .photo-year-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--accent-gold);
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+    .memory-card-body {
+      padding: 20px;
+    }
+    .memory-card-title {
+      font-family: 'Noto Serif KR', Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+    .memory-card-memo {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      line-height: 1.6;
+      background: var(--paper-warm);
+      padding: 12px;
+      border-radius: 8px;
+      border-left: 3px solid var(--accent-gold);
+      margin-top: 10px;
+    }
+    .memory-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--paper-border);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* 서가 3: 마음의 여백과 비움 일기장 */
+    .empty-notes-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 28px;
+    }
+    @media (max-width: 900px) {
+      .empty-notes-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    .note-card {
+      background: var(--paper-card);
+      border: 1px solid var(--paper-border);
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+    }
+    .note-tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .note-tag.public {
+      background: var(--accent-green-light);
+      color: var(--accent-green);
+    }
+    .note-tag.private {
+      background: rgba(197, 155, 39, 0.15);
+      color: var(--accent-gold);
+    }
+    .note-text {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--text-main);
+      margin-bottom: 12px;
+    }
+    .note-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .new-note-box {
+      background: var(--paper-card);
+      border: 1px solid var(--paper-border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      position: sticky;
+      top: 140px;
+    }
+    .new-note-box h4 {
+      font-family: 'Noto Serif KR', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .note-textarea {
+      width: 100%;
+      height: 140px;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid var(--paper-border);
+      background: var(--paper-warm);
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.95rem;
+      resize: vertical;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .note-textarea:focus {
+      outline: none;
+      border-color: var(--accent-gold);
+    }
+    .btn-save-note {
+      width: 100%;
+      padding: 12px;
+      background: var(--accent-gold);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-save-note:hover {
+      background: #aa841e;
+    }
+
+    /* 서가 4: 가족에게 남기는 엔딩 금고 */
+    .ending-vault-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 24px;
+    }
+    .vault-card {
+      background: var(--paper-card);
+      border: 1px solid var(--paper-border);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    .vault-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-gold), var(--accent-green));
+      border-radius: 16px 16px 0 0;
+    }
+    .vault-icon {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+    }
+    .vault-title {
+      font-family: 'Noto Serif KR', Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .vault-desc {
+      color: var(--text-sub);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .vault-meta-list {
+      list-style: none;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .vault-meta-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      padding: 8px 12px;
+      background: var(--paper-warm);
+      border-radius: 6px;
+    }
+    .vault-meta-label {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .vault-meta-val {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .btn-vault-action {
+      width: 100%;
+      padding: 10px;
+      background: var(--paper-warm);
+      border: 1px solid var(--paper-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-vault-action:hover {
+      background: var(--paper-card);
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+    }
+
+    /* 서가 5: 전담 코칭스태프 케어 리포트 */
+    .coach-report-card {
+      background: var(--paper-card);
+      border: 1px solid var(--paper-border);
+      border-radius: 18px;
+      padding: 32px;
+      box-shadow: var(--shadow-lift);
+      margin-bottom: 24px;
+    }
+    .coach-profile-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--paper-border);
+    }
+    .coach-img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-green), var(--accent-gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: #ffffff;
+      flex-shrink: 0;
+    }
+    .coach-title-area h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+    .coach-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      background: var(--accent-green-light);
+      color: var(--accent-green);
+      font-size: 0.78rem;
+      font-weight: 700;
+      border-radius: 4px;
+      margin-top: 4px;
+    }
+
+    .report-timeline {
+      position: relative;
+      padding-left: 28px;
+    }
+    .report-timeline::before {
+      content: "";
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      left: 8px;
+      width: 2px;
+      background: var(--paper-border);
+    }
+    .report-item {
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .report-dot {
+      position: absolute;
+      left: -28px;
+      top: 6px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      border: 3px solid var(--paper-card);
+      box-shadow: 0 0 0 2px var(--accent-green);
+    }
+    .report-date {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      margin-bottom: 4px;
+    }
+    .report-heading {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .report-memo {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      line-height: 1.6;
+      background: var(--paper-warm);
+      padding: 14px;
+      border-radius: 8px;
+      border-left: 3px solid var(--accent-green);
+    }
+
+    /* 시니어 간편 로그인/서재 전환 모달 */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+    .login-modal-card {
+      background: var(--paper-card);
+      border: 1px solid var(--paper-border);
+      border-radius: 20px;
+      max-width: 460px;
+      width: 100%;
+      padding: 36px 28px;
+      box-shadow: var(--shadow-lift);
+      text-align: center;
+      animation: popIn 0.25s ease;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .login-modal-card h2 {
+      font-family: 'Noto Serif KR', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .login-modal-card p {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      margin-bottom: 24px;
+    }
+    .login-input-group {
+      text-align: left;
+      margin-bottom: 16px;
+    }
+    .login-input-group label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+    .login-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--paper-border);
+      border-radius: 10px;
+      background: var(--paper-warm);
+      color: var(--text-main);
+      font-size: 1.05rem;
+      font-weight: 600;
+      box-sizing: border-box;
+    }
+    .login-input:focus {
+      outline: none;
+      border-color: var(--accent-gold);
+    }
+    .btn-login-submit {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      background: var(--accent-gold);
+      color: #ffffff;
+      border: none;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 4px 12px rgba(197, 155, 39, 0.3);
+    }
+    .btn-demo-quick {
+      margin-top: 12px;
+      width: 100%;
+      padding: 12px;
+      background: var(--paper-warm);
+      border: 1px solid var(--paper-border);
+      border-radius: 10px;
+      color: var(--accent-green);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-demo-quick:hover {
+      background: var(--accent-green-light);
+    }
+
+    /* 푸터 */
+    .room-footer {
+      border-top: 1px solid var(--paper-border);
+      padding: 40px 20px;
+      background: var(--paper-card);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+    .room-footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .room-footer-links a {
+      color: var(--text-sub);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .room-footer-links a:hover {
+      color: var(--accent-gold);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 상단 고정 헤더 -->
+  <header class="room-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <a href="index.html" class="btn-back-home" title="메인 포털로 이동">
+          ← 메인광장
+        </a>
+        <span class="room-badge">🏛️ 프라이빗 서재 룸</span>
+      </div>
+
+      <div class="header-actions">
+        <!-- 글자 크기 조절 (시니어 편의) -->
+        <button class="font-ctrl-btn" onclick="adjustFontSize(-0.1)" title="글자 작게">가-</button>
+        <button class="font-ctrl-btn" onclick="adjustFontSize(0.1)" title="글자 크게">가+</button>
+        
+        <!-- 다크모드 토글 -->
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="다크/라이트 모드">🌙</button>
+
+        <!-- 가족 공유 버튼 -->
+        <button class="btn-share" onclick="shareMyRoom()">
+          💌 가족 공유
+        </button>
+
+        <!-- 서재 변경 / 로그인 -->
+        <button class="btn-back-home" onclick="openLoginModal()" style="font-weight: 700;">
+          👤 다른 서재 열기
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 서재 인트로 히어로 -->
+  <section class="room-hero">
+    <div class="room-hero-inner">
+      <div class="room-owner-profile">
+        <div class="owner-avatar" id="ownerAvatar">👵</div>
+        <div class="owner-info">
+          <h1 id="ownerTitle"><strong class="point-bold">김순옥</strong> 어르신의 고유한 서재</h1>
+          <p id="ownerDesc">일생의 궤적이 단정히 꽂혀있는 온전한 나만의 기록 보관소</p>
+          <div class="owner-quote">
+            "인생의 황혼은 저무는 시간이 아니라, 가장 아름다운 결을 모으는 축제의 시간입니다."
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-stat-cards">
+        <div class="hero-stat">
+          <div class="num" id="statBookPages">184</div>
+          <div class="label">자서전 총 페이지</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num" id="statPhotos">12</div>
+          <div class="label">복원된 추억 사진</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num" id="statNotes">28</div>
+          <div class="label">비움 일기장</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5대 보물 서가 탭 바 -->
+  <nav class="room-tabs-bar">
+    <div class="room-tabs-container">
+      <button class="room-tab-btn active" onclick="switchTab('tab-memoir')">
+        📖 디지털 자서전 e-Book <span class="tab-counter">1권</span>
+      </button>
+      <button class="room-tab-btn" onclick="switchTab('tab-gallery')">
+        🎞️ 빛바랜 추억 복원관 <span class="tab-counter">12장</span>
+      </button>
+      <button class="room-tab-btn" onclick="switchTab('tab-diary')">
+        💬 마음의 비움 일기장 <span class="tab-counter">28편</span>
+      </button>
+      <button class="room-tab-btn" onclick="switchTab('tab-vault')">
+        💌 가족을 위한 엔딩 금고 <span class="tab-counter">안심보관</span>
+      </button>
+      <button class="room-tab-btn" onclick="switchTab('tab-coach')">
+        🌿 전담 코칭 케어 리포트 <span class="tab-counter">최신</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- 서재 메인 컨텐츠 영역 -->
+  <main class="room-content">
+
+    <!-- [서가 1] 디지털 자서전 e-Book 뷰어 -->
+    <div id="tab-memoir" class="tab-pane active">
+      <div class="shelf-header">
+        <div>
+          <h2 class="shelf-title">📖 내 인생의 디지털 자서전</h2>
+          <p class="shelf-desc">전문 구술 인터뷰와 교정을 거쳐 완성된 김순옥 어르신의 인생 평전입니다.</p>
+        </div>
+        <button class="btn-share" onclick="alert('가족 전용 디지털 e-Book 풀버전 PDF를 다운로드합니다.')">
+          📥 자서전 전체 PDF 받기
+        </button>
+      </div>
+
+      <!-- 책 쇼케이스 & 제작/배송 현황 -->
+      <div class="memoir-showcase">
+        <!-- 3D 입체 북커버 -->
+        <div class="memoir-book-mockup">
+          <div class="book-spine-line"></div>
+          <div>
+            <div class="book-category">LIFE CHRONICLE ARCHIVE</div>
+            <h3 class="book-title">지리산 자락에서<br>피워낸 꽃 한 송이</h3>
+            <p class="book-subtitle">세월의 모진 바람을 품고 향기를 남긴 여인, 김순옥의 구술 생애사</p>
+          </div>
+          <div class="book-author">
+            <div>
+              <div class="book-author-name">김순옥 지음</div>
+              <div class="book-edition">여백과 결 아카이브 2026 한정판</div>
+            </div>
+            <div style="font-size: 1.8rem;">🌿</div>
+          </div>
+        </div>
+
+        <!-- 우측 상세: 실물 양장본 배송 조회 & 육성 오디오 -->
+        <div class="memoir-details">
+          <!-- 양장본 실물 책 배송 현황 트래커 -->
+          <div class="delivery-tracker">
+            <div class="tracker-title-row">
+              <span class="tracker-title">📦 최고급 패브릭 양장본 제작 & 배송 상태</span>
+              <span class="tracker-status-tag">발송 완료 (배송중)</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 12px;">
+              우체국 등기택배 송장번호: <strong>6892-4112-9011</strong> (내일 오후 도착 예정)
+            </p>
+            <div class="tracker-steps">
+              <div class="tracker-step completed">
+                <div class="step-circle">✓</div>
+                <div class="step-label">구술 인터뷰</div>
+              </div>
+              <div class="tracker-step completed">
+                <div class="step-circle">✓</div>
+                <div class="step-label">교정 & 감수</div>
+              </div>
+              <div class="tracker-step completed">
+                <div class="step-circle">✓</div>
+                <div class="step-label">양장 제본 인쇄</div>
+              </div>
+              <div class="tracker-step current">
+                <div class="step-circle">4</div>
+                <div class="step-label">안심 패키징 발송</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 1분 육성 회고록 플레이어 -->
+          <div class="audio-player-box">
+            <div class="audio-header">
+              <span class="audio-title">🎙️ 김순옥 어르신의 1분 육성 회고록</span>
+              <span style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 700;">자녀에게 들려주는 목소리</span>
+            </div>
+            <div class="audio-controls">
+              <button class="btn-audio-play" id="btnAudioToggle" onclick="toggleAudioDemo()">▶</button>
+              <div class="audio-progress-bar" onclick="seekAudio(event)">
+                <div class="audio-progress-fill" id="audioProgress"></div>
+              </div>
+              <div class="audio-time" id="audioTimer">00:24 / 01:15</div>
+            </div>
+            <div class="audio-subtitle" id="audioSubtitle">
+              "얘들아, 엄마는 고단했던 젊은 날도 참 보람찼단다. 너희들이 바르게 자라준 것만으로도 내 생애는 넘치도록 고마운 봄날이었어..."
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 목차별 본문 미리보기 리더기 -->
+      <div class="memoir-chapters">
+        <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.25rem; font-weight: 800; margin-bottom: 16px;">
+          📚 목차별 대표 구절 읽기
+        </h3>
+        <div class="chapter-nav">
+          <button class="chapter-tab active" onclick="loadChapter(1, this)">제1장. 섬진강 모래톱과 순천 여고 시절</button>
+          <button class="chapter-tab" onclick="loadChapter(2, this)">제2장. 첫 월급으로 사드린 빨간 내복</button>
+          <button class="chapter-tab" onclick="loadChapter(3, this)">제3장. 흙 묻은 앞치마로 키워낸 삼남매</button>
+          <button class="chapter-tab" onclick="loadChapter(4, this)">제4장. 이제야 비로소 맞이한 황금빛 여백</button>
+        </div>
+
+        <div class="chapter-content-box" id="chapterReader">
+          <p>
+            봄이면 섬진강 둑방길을 따라 벚꽃이 하얗게 흩날렸습니다. 열일곱 살의 나는 고무신을 벗어 쥐고 차가운 물속에 발을 담그며 끝도 없이 넓은 세상을 꿈꾸곤 했습니다. 어머니는 늘 부엌에서 보리밥을 안치며 "순옥아, 사람은 모름지기 가슴에 꽃 한 송이를 품고 살아야 한단다"라고 말씀하셨지요.
+          </p>
+          <p>
+            그때는 그 꽃이 무엇인지 잘 알지 못했습니다. 넉넉하지 못했던 살림에 동생들 교복을 다려 입히고, 저녁이면 헌 양말을 꿰매던 그 시간들이 모두 내 가슴속에 심어지던 질긴 꽃씨였다는 것을, 칠순이 훌쩍 넘은 오늘에야 비로소 깨닫게 됩니다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- [서가 2] 빛바랜 기억 복원 갤러리 -->
+    <div id="tab-gallery" class="tab-pane">
+      <div class="shelf-header">
+        <div>
+          <h2 class="shelf-title">🎞️ 빛바랜 추억 복원관</h2>
+          <p class="shelf-desc">헤지고 긁힌 흑백 사진을 최첨단 화질 개선 기법으로 선명하게 복원하고, 그날의 사연을 기록했습니다.</p>
+        </div>
+        <button class="btn-share" onclick="alert('가족 앨범으로 등록할 새 사진을 업로드합니다.')">
+          📷 새 추억 사진 추가
+        </button>
+      </div>
+
+      <div class="memory-gallery-grid">
+        <!-- 사진 카드 1 -->
+        <div class="memory-card">
+          <div class="photo-compare-container">
+            <img src="images/hero-bg.jpg" alt="1968년 섬진강 둑방길" class="photo-compare-img">
+            <span class="restore-badge">✨ AI 컬러·해상도 복원</span>
+            <span class="photo-year-tag">1968년 봄</span>
+          </div>
+          <div class="memory-card-body">
+            <h3 class="memory-card-title">섬진강 둑방길 여고 졸업식 날</h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">전남 순천 · 단짝 친구 영희, 정숙이와 함께</p>
+            <div class="memory-card-memo">
+              "졸업장을 품에 안고 엉엉 울던 친구들의 얼굴이 엊그제 같은데 벌써 반세기가 지났습니다. 그 순수했던 눈망울만큼은 아직 내 가슴에 선명합니다."
+            </div>
+            <div class="memory-card-footer">
+              <span>원본: 흑백 인화지 (훼손도 중)</span>
+              <strong style="color: var(--accent-green);">복원율 98%</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- 사진 카드 2 -->
+        <div class="memory-card">
+          <div class="photo-compare-container">
+            <img src="images/coach-academy-banner.jpg" alt="1974년 종로 예식장 결혼식" class="photo-compare-img">
+            <span class="restore-badge">✨ AI 컬러·해상도 복원</span>
+            <span class="photo-year-tag">1974년 가을</span>
+          </div>
+          <div class="memory-card-body">
+            <h3 class="memory-card-title">종로 예식장에서의 결혼식</h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">서울 종로 · 평생의 반려자 故 이종수 님과</p>
+            <div class="memory-card-memo">
+              "어색해서 굳은 표정으로 카메라를 응시하던 영감의 젊은 날 모습입니다. 가난했지만 서로 눈빛만 봐도 든든했던 그 시절이 그립습니다."
+            </div>
+            <div class="memory-card-footer">
+              <span>원본: 빛바랜 컬러 필름</span>
+              <strong style="color: var(--accent-green);">복원율 95%</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- 사진 카드 3 -->
+        <div class="memory-card">
+          <div class="photo-compare-container">
+            <img src="images/hero-bg.jpg" alt="1982년 큰아이 초등학교 입학식" class="photo-compare-img">
+            <span class="restore-badge">✨ 스크래치 복원</span>
+            <span class="photo-year-tag">1982년 봄</span>
+          </div>
+          <div class="memory-card-body">
+            <h3 class="memory-card-title">큰아이 준호의 국민학교 입학식</h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">서울 마포 · 가슴에 손수건을 달고 서 있던 날</p>
+            <div class="memory-card-memo">
+              "가슴팍에 하얀 손수건과 이름표를 달고 씩씩하게 서 있던 우리 큰아들. 이제는 그 아이가 오십 줄에 들어서서 손주를 데리고 오네요."
+            </div>
+            <div class="memory-card-footer">
+              <span>원본: 곰팡이 오염 복원 완료</span>
+              <strong style="color: var(--accent-green);">복원율 97%</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- [서가 3] 마음의 여백과 비움 일기장 -->
+    <div id="tab-diary" class="tab-pane">
+      <div class="shelf-header">
+        <div>
+          <h2 class="shelf-title">💬 마음의 비움 일기장</h2>
+          <p class="shelf-desc">메인 광장의 '오늘의 비움 한 줄'에 띄웠던 글과 나만의 비밀 비움 노트를 모아두었습니다.</p>
+        </div>
+      </div>
+
+      <div class="empty-notes-layout">
+        <!-- 저장된 비움 일기 목록 -->
+        <div id="notesListContainer">
+          <!-- 노트 1 (공개 글) -->
+          <div class="note-card">
+            <span class="note-tag public">🌐 메인 광장 공개 글</span>
+            <p class="note-text">
+              "30년 동안 장롱 깊숙이 걸려있던 옛 정장 세 벌을 이웃 나눔함에 넣고 왔습니다. 옷걸이 세 개가 텅 비었을 뿐인데, 내 마음의 어깨가 이토록 가벼워질 줄 몰랐습니다."
+            </p>
+            <div class="note-meta">
+              <span>2026. 09. 21 기록</span>
+              <span>공감 142회 · 응원 댓글 18개</span>
+            </div>
+          </div>
+
+          <!-- 노트 2 (비밀 글) -->
+          <div class="note-card">
+            <span class="note-tag private">🔒 나만의 비밀 일기</span>
+            <p class="note-text">
+              "자식들이 바쁘다고 주말에 못 온다는 전화를 받고 잠시 서운함이 차올랐다. 하지만 저녁 산책길에 바람을 맞으며 생각해보니, 아이들이 제 몫의 삶을 치열하게 살아내고 있다는 것이 감사한 일이다. 서운함을 바람에 날려 보냈다."
+            </p>
+            <div class="note-meta">
+              <span>2026. 09. 14 기록</span>
+              <span>비공개 안전 보관</span>
+            </div>
+          </div>
+
+          <!-- 노트 3 -->
+          <div class="note-card">
+            <span class="note-tag public">🌐 메인 광장 공개 글</span>
+            <p class="note-text">
+              "화장대 서랍을 정리하며 유통기한 지난 옛 화장품들을 비워냈습니다. 박지은 코치님이 알려주신 수분 크림 하나만 단정하게 남기니 아침 거울 보는 시간이 한결 즐겁습니다."
+            </p>
+            <div class="note-meta">
+              <span>2026. 09. 08 기록</span>
+              <span>공감 98회</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 새 비움 일기 쓰기 사이드 박스 -->
+        <div>
+          <div class="new-note-box">
+            <h4>✍️ 오늘 마음 비워내기</h4>
+            <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 12px;">
+              오늘 내려놓고 싶은 물건, 서운했던 감정, 비워낸 생각을 자유롭게 적어보세요.
+            </p>
+            <textarea id="inputNewNote" class="note-textarea" placeholder="예: 오늘 다용도실의 쓰지 않던 냄비들을 정리했습니다..."></textarea>
+            
+            <div style="display: flex; gap: 8px; margin-bottom: 12px; font-size: 0.85rem;">
+              <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                <input type="radio" name="noteScope" value="private" checked> 나만 보기
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                <input type="radio" name="noteScope" value="public"> 광장 공유
+              </label>
+            </div>
+
+            <button class="btn-save-note" onclick="saveNewNote()">서재에 정갈하게 보관하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- [서가 4] 가족을 위한 엔딩 금고 (웰다잉) -->
+    <div id="tab-vault" class="tab-pane">
+      <div class="shelf-header">
+        <div>
+          <h2 class="shelf-title">💌 가족에게 남기는 엔딩 금고</h2>
+          <p class="shelf-desc">내가 사랑하는 자녀와 가족들에게 남기는 마지막 당부와 아름다운 마무리 안내서입니다.</p>
+        </div>
+        <span class="room-badge" style="background: rgba(43, 106, 56, 0.12); color: var(--accent-green); border-color: rgba(43, 106, 56, 0.3);">
+          🔒 AES-256 안심 암호화 보관 중
+        </span>
+      </div>
+
+      <div class="ending-vault-grid">
+        <!-- 금고 항목 1: 사랑의 편지 -->
+        <div class="vault-card">
+          <div>
+            <div class="vault-icon">📜</div>
+            <h3 class="vault-title">자녀들에게 남기는 사랑의 편지</h3>
+            <p class="vault-desc">큰아들 준호, 작은딸 서연이, 그리고 사랑하는 손주들에게 전하는 따뜻한 마지막 고백입니다.</p>
+            <ul class="vault-meta-list">
+              <li class="vault-meta-item">
+                <span class="vault-meta-label">보관 형태</span>
+                <span class="vault-meta-val">육성 녹음본 + 자필 편지 사본</span>
+              </li>
+              <li class="vault-meta-item">
+                <span class="vault-meta-label">열람 조건</span>
+                <span class="vault-meta-val">유고 시 지정 대리인 열람</span>
+              </li>
+            </ul>
+          </div>
+          <button class="btn-vault-action" onclick="alert('김순옥 어르신의 자필 편지 스캔본 및 녹음본을 미리 확인합니다.')">
+            👁️ 편지 내용 미리보기
+          </button>
+        </div>
+
+        <!-- 금고 항목 2: 사전연명의료의향서 & 장례 희망서 -->
+        <div class="vault-card">
+          <div>
+            <div class="vault-icon">🕊️</div>
+            <h3 class="vault-title">사전의료 & 장례 희망서 (웰다잉)</h3>
+            <p class="vault-desc">자녀들에게 짐이 되지 않고, 나다운 존엄을 지키며 떠나기 위한 사전 지정서입니다.</p>
+            <ul class="vault-meta-list">
+              <li class="vault-meta-item">
+                <span class="vault-meta-label">연명의료의향서</span>
+                <span class="vault-meta-val" style="color: var(--accent-green);">국립기관 등록 완료</span>
+              </li>
+              <li class="vault-meta-item">
+                <span class="vault-meta-label">희망 장례 형태</span>
+                <span class="vault-meta-val">조용한 가족장 (양평 수목장)</span>
+              </li>
+            </ul>
+          </div>
+          <button class="btn-vault-action" onclick="alert('등록된 연명의료 등록증 및 장례 희망 노트를 확인합니다.')">
+            📄 희망서 상세 열람
+          </button>
+        </div>
+
+        <!-- 금고 항목 3: 애착 유품 정리 목록 -->
+        <div class="vault-card">
+          <div>
+            <div class="vault-icon">🎁</div>
+            <h3 class="vault-title">애착 유품 분배 & 상속 메모</h3>
+            <p class="vault-desc">평생 소중히 여긴 자개 경대, 은가락지, 결혼 앨범을 누구에게 전할지 기록해 두었습니다.</p>
+            <ul class="vault-meta-list">
+              <li class="vault-meta-item">
+                <span class="vault-meta-label">전담 유품 정리사</span>
+                <span class="vault-meta-val">리셋 아카이브 전문팀 연계</span>
+              </li>
+              <li class="vault-meta-item">
+                <span class="vault-meta-label">기증 희망 품목</span>
+                <span class="vault-meta-val">도서 120권 (지역 도서관)</span>
+              </li>
+            </ul>
+          </div>
+          <button class="btn-vault-action" onclick="alert('유품 분배 메모 리스트를 확인합니다.')">
+            📦 유품 인계 메모장
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- [서가 5] 전담 코칭 케어 리포트 -->
+    <div id="tab-coach" class="tab-pane">
+      <div class="shelf-header">
+        <div>
+          <h2 class="shelf-title">🌿 전담 코칭스태프 케어 리포트</h2>
+          <p class="shelf-desc">어르신의 라이프 리셋을 돕는 전문 코칭스태프의 정기 방문 관리 일지와 응원 메시지입니다.</p>
+        </div>
+        <a href="academy.html" class="btn-back-home" style="border-color: var(--accent-green); color: var(--accent-green);">
+          🎓 전문 코치 양성과정 알아보기 ➔
+        </a>
+      </div>
+
+      <div class="coach-report-card">
+        <div class="coach-profile-row">
+          <div class="coach-img">👩‍💼</div>
+          <div class="coach-title-area">
+            <h3>전담 코치: <strong class="point-bold">박지은 수석코치</strong></h3>
+            <span class="coach-badge">시니어 뷰티 & 공간 리셋 1급 공인코치</span>
+            <p style="font-size: 0.88rem; color: var(--text-sub); margin-top: 4px;">
+              "어르신의 거울 앞 미소와 방 안의 맑은 공기를 함께 가꾸어 드립니다."
+            </p>
+          </div>
+        </div>
+
+        <div class="report-timeline">
+          <!-- 3회차 리포트 -->
+          <div class="report-item">
+            <div class="report-dot"></div>
+            <div class="report-date">2026. 09. 22 (방문 3회차)</div>
+            <h4 class="report-heading">자서전 최종 교정본 낭독 및 표지 감수</h4>
+            <div class="report-memo">
+              "순옥 어르신께서 제1장 '섬진강 모래톱' 구절을 직접 읽으실 때 눈시울이 붉어지셨습니다. 그 고운 목소리를 오디오로 온전히 담아내어 서재에 탑재해 드렸습니다. 표지도 어르신이 가장 좋아하시는 깊은 쑥색 패브릭으로 제본 발주를 완료했습니다."
+            </div>
+          </div>
+
+          <!-- 2회차 리포트 -->
+          <div class="report-item">
+            <div class="report-dot"></div>
+            <div class="report-date">2026. 09. 15 (방문 2회차)</div>
+            <h4 class="report-heading">침실 옷장 비움 & 안전 동선 확보</h4>
+            <div class="report-memo">
+              "발에 걸리던 바닥의 묵은 상자들을 정리하고, 자주 입으시는 편안한 옷 위주로 손닿기 쉬운 높이에 재배치했습니다. 어르신께서 '아침에 일어날 때 방이 훤해서 기분이 상쾌하다'고 활짝 웃으셔서 참 뿌듯했습니다."
+            </div>
+          </div>
+
+          <!-- 1회차 리포트 -->
+          <div class="report-item">
+            <div class="report-dot"></div>
+            <div class="report-date">2026. 09. 08 (방문 1회차)</div>
+            <h4 class="report-heading">첫 만남 상담 & 퍼스널 컬러 생기 뷰티 코칭</h4>
+            <div class="report-memo">
+              "순옥 어르신은 따뜻한 웜톤의 피부 결을 지니고 계십니다. 칙칙한 검정 옷보다는 은은한 베이지와 화사한 스카프를 매치해 드렸더니 10년은 더 젊어 보이셨어요. 앞으로의 서재 구축 계획을 차근차근 나누었습니다."
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 시니어 간편 로그인 / 다른 서재 열기 모달 -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="login-modal-card">
+      <div style="font-size: 3rem; margin-bottom: 12px;">🗝️</div>
+      <h2>내 서재 열기</h2>
+      <p>복잡한 아이디와 비밀번호 대신, <strong>성함</strong>과 <strong>전화번호 뒤 4자리</strong>로 간편하게 들어오세요.</p>
+
+      <form onsubmit="handleSeniorLogin(event)">
+        <div class="login-input-group">
+          <label for="inputSeniorName">어르신 성함</label>
+          <input type="text" id="inputSeniorName" class="login-input" placeholder="예: 김순옥" required>
+        </div>
+        <div class="login-input-group">
+          <label for="inputSeniorPhone">전화번호 뒤 4자리</label>
+          <input type="tel" id="inputSeniorPhone" class="login-input" placeholder="예: 1234" maxlength="4" required>
+        </div>
+        <button type="submit" class="btn-login-submit">내 서재 입장하기 ➔</button>
+      </form>
+
+      <div style="margin: 20px 0 10px; border-top: 1px dashed var(--paper-border);"></div>
+
+      <button type="button" class="btn-demo-quick" onclick="loadSampleRoom()">
+        ✨ 김순옥 어르신의 보물 서재 둘러보기 (샘플 체험)
+      </button>
+      <button type="button" onclick="closeLoginModal()" style="background: none; border: none; color: var(--text-muted); font-size: 0.88rem; margin-top: 14px; cursor: pointer;">
+        닫기
+      </button>
+    </div>
+  </div>
+
+  <!-- 푸터 -->
+  <footer class="room-footer">
+    <div class="room-footer-links">
+      <a href="index.html">🏠 메인 포털 홈</a>
+      <a href="index.html#memoir">✍️ 디지털 자서전 신청</a>
+      <a href="academy.html">🎓 전문 코치 아카데미</a>
+      <a href="javascript:void(0)" onclick="openLoginModal()">🔑 내 서재 접속</a>
+    </div>
+    <p>© 2026 여백과 결, 리셋 아카이브 (Yebaek & Geol : Reset Archive). 모든 권리 보유.</p>
+  </footer>
+
+  <script>
+    // 탭 전환
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.room-tab-btn').forEach(el => el.classList.remove('active'));
+
+      const targetPane = document.getElementById(tabId);
+      if (targetPane) targetPane.classList.add('active');
+
+      const activeBtn = Array.from(document.querySelectorAll('.room-tab-btn')).find(btn => 
+        btn.getAttribute('onclick').includes(tabId)
+      );
+      if (activeBtn) activeBtn.classList.add('active');
+
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+    }
+
+    // e-Book 챕터 읽기 데이터
+    const chapterData = {
+      1: {
+        title: "제1장. 섬진강 모래톱과 순천 여고 시절",
+        p1: "봄이면 섬진강 둑방길을 따라 벚꽃이 하얗게 흩날렸습니다. 열일곱 살의 나는 고무신을 벗어 쥐고 차가운 물속에 발을 담그며 끝도 없이 넓은 세상을 꿈꾸곤 했습니다. 어머니는 늘 부엌에서 보리밥을 안치며 '순옥아, 사람은 모름지기 가슴에 꽃 한 송이를 품고 살아야 한단다'라고 말씀하셨지요.",
+        p2: "그때는 그 꽃이 무엇인지 잘 알지 못했습니다. 넉넉하지 못했던 살림에 동생들 교복을 다려 입히고, 저녁이면 헌 양말을 꿰매던 그 시간들이 모두 내 가슴속에 심어지던 질긴 꽃씨였다는 것을, 칠순이 훌쩍 넘은 오늘에야 비로소 깨닫게 됩니다."
+      },
+      2: {
+        title: "제2장. 첫 월급으로 사드린 빨간 내복",
+        p1: "스물둘, 처음으로 서울 방직공장에 취직해 한 달 내내 기계 소리를 들으며 일했습니다. 손끝이 짓무르고 눈이 뻑뻑했던 첫 월급날, 노란 봉투에 든 돈을 받아 쥐고 가장 먼저 달려간 곳은 동대문 시장의 메리야스 가게였습니다.",
+        p2: "시골에 계신 어머니 아버지께 부쳐드린 빨간 내복 한 벌. 편지에 '아버지 추위 타지 마시고 오래오래 사세요'라고 적으며 흘렸던 눈물은 고단함이 아니라 효도를 시작했다는 벅찬 안도였습니다."
+      },
+      3: {
+        title: "제3장. 흙 묻은 앞치마로 키워낸 삼남매",
+        p1: "결혼하고 아이 셋이 줄줄이 태어났습니다. 영감의 작은 월급봉투로는 빠듯해 골목길에서 채소 장사도 하고, 남의 집 뜨개질도 마다하지 않았습니다. 앞치마에선 늘 흙냄새와 물비린내가 났지만, 학교에서 돌아온 아이들이 '엄마!' 하고 부르면 세상 부러울 것이 없었습니다.",
+        p2: "밤마다 잠든 아이들의 발가락을 만지작거리며 기도했습니다. '하느님, 이 아이들이 세상에서 상처받지 않고 곧은 나무처럼 자라게 해 주십시오.' 그 기도가 오늘의 기적을 만들었습니다."
+      },
+      4: {
+        title: "제4장. 이제야 비로소 맞이한 황금빛 여백",
+        p1: "자식들을 다 출가시키고 영감마저 먼저 떠나보낸 뒤, 텅 빈 거실에서 한동안 시계 초침 소리만 듣고 살았습니다. 하지만 리셋 아카이브를 만나 내 지나온 삶을 한 줄 한 줄 적어 내려가면서 비로소 깨달았습니다.",
+        p2: "내 삶은 비워진 것이 아니라, 가장 맑고 눈부신 여백으로 채워지고 있다는 것을 말입니다. 이제 나는 가벼운 발걸음으로 내일의 태양을 맞이합니다."
+      }
+    };
+
+    function loadChapter(num, btn) {
+      document.querySelectorAll('.chapter-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const box = document.getElementById('chapterReader');
+      const data = chapterData[num];
+      if (data) {
+        box.innerHTML = `<p>${data.p1}</p><p>${data.p2}</p>`;
+      }
+    }
+
+    // 1분 오디오 시뮬레이션
+    let isPlaying = false;
+    let audioInterval = null;
+    let currentSec = 24;
+    const totalSec = 75;
+
+    function toggleAudioDemo() {
+      const btn = document.getElementById('btnAudioToggle');
+      if (!isPlaying) {
+        isPlaying = true;
+        btn.textContent = '❚❚';
+        audioInterval = setInterval(() => {
+          if (currentSec < totalSec) {
+            currentSec++;
+            updateAudioUI();
+          } else {
+            currentSec = 0;
+            toggleAudioDemo();
+          }
+        }, 1000);
+      } else {
+        isPlaying = false;
+        btn.textContent = '▶';
+        clearInterval(audioInterval);
+      }
+    }
+
+    function updateAudioUI() {
+      const progress = document.getElementById('audioProgress');
+      const timer = document.getElementById('audioTimer');
+      const percent = (currentSec / totalSec) * 100;
+      progress.style.width = percent + '%';
+      
+      const curM = String(Math.floor(currentSec / 60)).padStart(2, '0');
+      const curS = String(currentSec % 60).padStart(2, '0');
+      const totM = String(Math.floor(totalSec / 60)).padStart(2, '0');
+      const totS = String(totalSec % 60).padStart(2, '0');
+      timer.textContent = `${curM}:${curS} / ${totM}:${totS}`;
+    }
+
+    function seekAudio(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const width = rect.width;
+      currentSec = Math.floor((clickX / width) * totalSec);
+      updateAudioUI();
+    }
+
+    // 비움 일기 쓰기 & 로컬스토리지 저장
+    function saveNewNote() {
+      const textarea = document.getElementById('inputNewNote');
+      const text = textarea.value.trim();
+      if (!text) {
+        alert('비워낼 마음이나 일상의 사연을 입력해 주세요.');
+        return;
+      }
+
+      const scopeRadio = document.querySelector('input[name="noteScope"]:checked');
+      const scope = scopeRadio ? scopeRadio.value : 'private';
+
+      const container = document.getElementById('notesListContainer');
+      const newCard = document.createElement('div');
+      newCard.className = 'note-card';
+
+      const tagClass = scope === 'public' ? 'public' : 'private';
+      const tagText = scope === 'public' ? '🌐 메인 광장 공개 글' : '🔒 나만의 비밀 일기';
+
+      newCard.innerHTML = `
+        <span class="note-tag ${tagClass}">${tagText}</span>
+        <p class="note-text">"${text}"</p>
+        <div class="note-meta">
+          <span>방금 전 기록</span>
+          <span>${scope === 'public' ? '광장 전송 완료' : '서재 안심 보관'}</span>
+        </div>
+      `;
+
+      container.prepend(newCard);
+      textarea.value = '';
+      alert('어르신의 소중한 비움 노트가 서재에 정갈하게 기록되었습니다.');
+    }
+
+    // 글자 크기 조절
+    let currentScale = 1;
+    function adjustFontSize(delta) {
+      currentScale += delta;
+      if (currentScale < 0.85) currentScale = 0.85;
+      if (currentScale > 1.35) currentScale = 1.35;
+      document.documentElement.style.setProperty('--font-scale', currentScale);
+    }
+
+    // 다크모드 토글
+    function toggleTheme() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const newTheme = isDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      document.getElementById('themeToggleBtn').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+      localStorage.setItem('theme', newTheme);
+    }
+
+    // 모달 제어
+    function openLoginModal() {
+      document.getElementById('loginModal').classList.add('open');
+    }
+    function closeLoginModal() {
+      document.getElementById('loginModal').classList.remove('open');
+    }
+
+    // 시니어 간편 로그인 처리
+    function handleSeniorLogin(e) {
+      e.preventDefault();
+      const name = document.getElementById('inputSeniorName').value.trim();
+      const phone = document.getElementById('inputSeniorPhone').value.trim();
+
+      if (!name || phone.length < 4) {
+        alert('성함과 전화번호 뒤 4자리를 정확히 입력해 주세요.');
+        return;
+      }
+
+      document.getElementById('ownerTitle').innerHTML = `<strong class="point-bold">${name}</strong> 어르신의 고유한 서재`;
+      document.getElementById('ownerAvatar').textContent = '👤';
+      document.getElementById('ownerDesc').textContent = `등록번호 [****-${phone}] 님의 프라이빗 라이프 아카이브`;
+
+      closeLoginModal();
+      alert(`환영합니다! ${name} 어르신의 전용 서재가 열렸습니다.`);
+    }
+
+    // 김순옥 어르신 샘플 서재 로드
+    function loadSampleRoom() {
+      document.getElementById('ownerTitle').innerHTML = `<strong class="point-bold">김순옥</strong> 어르신의 고유한 서재`;
+      document.getElementById('ownerAvatar').textContent = '👵';
+      document.getElementById('ownerDesc').textContent = '일생의 궤적이 단정히 꽂혀있는 온전한 나만의 기록 보관소';
+      closeLoginModal();
+      alert('김순옥 어르신의 보물 서재 둘러보기 모드로 전환되었습니다.');
+    }
+
+    // 가족 공유 링크 복사
+    function shareMyRoom() {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        alert('💌 어르신의 고유한 서재 주소가 복사되었습니다!\n카카오톡이나 문자로 자녀와 손주들에게 링크를 보내보세요.');
+      }).catch(() => {
+        prompt('아래 서재 주소를 복사하여 가족들에게 보내주세요:', url);
+      });
+    }
+
+    // 초기 테마 로드
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggleBtn').textContent = '☀️';
+      }
+    });
+  </script>
+</body>
+</html>

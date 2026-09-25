@@ -3556,7 +3556,7 @@
           <li><a href="#test" class="nav-link">자가진단</a></li>
           <li><a href="#memoir" class="nav-link" style="color: var(--accent); font-weight: 800;">디지털 자서전</a></li>
           <li><a href="academy.html" class="nav-link" style="color: var(--accent-gold); font-weight: 800;" title="시니어 라이프 리셋 코치 양성 아카데미">🎓 코치 아카데미</a></li>
-          <li><a href="#archive" class="nav-link">나의 아카이브</a></li>
+          <li><a href="my-room.html" class="nav-link" style="font-weight: 800;" title="나만의 고유한 서재 (개인 온라인룸)">🏛️ 고유한 서재</a></li>
         </ul>
 
         <!-- 나의 아카이브 바로 옆의 독립 로그인 버튼 및 테마 토글 -->
@@ -3589,7 +3589,7 @@
         <a href="#test" class="drawer-nav-item" onclick="closeMobileDrawer()">🧭 <strong>1분 자가진단</strong></a>
         <a href="#memoir" class="drawer-nav-item" onclick="closeMobileDrawer()" style="color: var(--accent);">✍️ <strong>디지털 자서전</strong></a>
         <a href="academy.html" class="drawer-nav-item" style="color: var(--accent-gold);">🎓 <strong>코치 양성 아카데미</strong></a>
-        <a href="#archive" class="drawer-nav-item" onclick="closeMobileDrawer()">📚 <strong>나의 아카이브</strong></a>
+        <a href="my-room.html" class="drawer-nav-item" style="color: var(--accent-gold);">🏛️ <strong>나만의 고유한 서재</strong></a>
         <a href="#login" class="drawer-nav-item drawer-login-btn" onclick="closeMobileDrawer(); openLoginModal(event)">👤 <strong>로그인</strong></a>
       </nav>
     </div>
@@ -4010,21 +4010,85 @@
       </div>
     </section>
 
-    <!-- 7. [6단계] 나의 아카이브 안내 (개인 서재) -->
-    <section id="archive" style="background-color: var(--bg-secondary);">
+    <!-- 7. [6단계] 나의 아카이브 안내 (개인 고유한 서재 온라인룸) -->
+    <section id="archive" style="background-color: var(--bg-secondary); padding: 80px 0;">
       <div class="container">
         <div class="section-header">
-          <p class="section-tag">My Archive</p>
-          <h2 class="section-title">나의 고유한 서재</h2>
-          <p class="section-desc">내가 작성한 서사 노트, 비워낸 기록, 코칭 피드백이 안전하게 보관되는 나만의 공간입니다.</p>
+          <p class="section-tag">Private Online Room & Sacred Shelf</p>
+          <h2 class="section-title">나만의 고유한 서재 <span style="font-size: 1.3rem; font-weight: 600; color: var(--accent-gold);">(온라인룸)</span></h2>
+          <p class="section-desc">오픈된 광장을 벗어나, 오직 나와 나의 가족만을 위해 열리는 독립된 프라이빗 인생 보관소입니다.</p>
         </div>
-        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 48px 32px; text-align: center; max-width: 680px; margin: 0 auto; box-shadow: var(--shadow-sm);">
-          <div style="font-size: 3.5rem; margin-bottom: 16px;">📚</div>
-          <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 12px;">나만의 인생 아카이브 열기</h3>
-          <p style="color: var(--text-secondary); margin-bottom: 28px; word-break: keep-all;">
-            4주 코호트 및 워크북 참여 회원은 로그인 후 나만의 기록과 전담 코치의 피드백을 확인하실 수 있습니다.
-          </p>
-          <button onclick="openLoginModal(event)" class="btn btn-primary">내 서재 로그인하기</button>
+
+        <!-- 대형 프리미엄 서재 안내 쇼케이스 카드 -->
+        <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 24px; padding: 48px 36px; box-shadow: var(--shadow-md); max-width: 1040px; margin: 0 auto; position: relative; overflow: hidden;">
+          <!-- 장식용 배경 하이라이트 -->
+          <div style="position: absolute; top: -50px; right: -50px; width: 220px; height: 220px; background: radial-gradient(circle, rgba(197, 155, 39, 0.12) 0%, transparent 70%); border-radius: 50%; pointer-events: none;"></div>
+
+          <div style="text-align: center; max-width: 740px; margin: 0 auto 40px;">
+            <div style="display: inline-flex; align-items: center; justify-content: center; width: 68px; height: 68px; border-radius: 50%; background: linear-gradient(135deg, rgba(94, 107, 82, 0.16) 0%, rgba(197, 155, 39, 0.22) 100%); border: 1.5px solid rgba(197, 155, 39, 0.4); font-size: 2.2rem; margin-bottom: 18px;">
+              🏛️
+            </div>
+            <h3 style="font-family: 'Noto Serif KR', Georgia, serif; font-size: 1.85rem; font-weight: 800; margin-bottom: 14px; letter-spacing: -0.5px;">
+              당신의 지나온 삶이 한 편의 <span style="color: var(--accent-gold);">고귀한 문학</span>이 되는 곳
+            </h3>
+            <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8; word-break: keep-all;">
+              복잡한 메뉴나 광고 없이, 큰 글씨와 따뜻한 원목 감성으로 채워진 시니어 전용 독립 룸입니다. 
+              가족들에게 링크 하나로 당당하고 품격 있게 선물할 수 있습니다.
+            </p>
+          </div>
+
+          <!-- 4대 보물 서가 + 코칭 리포트 핵심 5대 기능 그리드 -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px;">
+            <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 16px; padding: 22px; transition: transform 0.2s;">
+              <div style="font-size: 1.6rem; margin-bottom: 10px;">📖</div>
+              <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; color: var(--text-primary);">디지털 자서전 e-Book</h4>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                180여 쪽의 회고록 본문 열람, 1분 손주 육성 오디오 회고록, 실물 최고급 패브릭 양장본 배송 실시간 조회.
+              </p>
+            </div>
+
+            <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 16px; padding: 22px; transition: transform 0.2s;">
+              <div style="font-size: 1.6rem; margin-bottom: 10px;">🎞️</div>
+              <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; color: var(--text-primary);">빛바랜 추억 복원관</h4>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                AI 첨단 기술로 복원한 흑백·오염 사진과 그 시절 어르신의 생생한 한 줄 구술 회상 메모 카드.
+              </p>
+            </div>
+
+            <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 16px; padding: 22px; transition: transform 0.2s;">
+              <div style="font-size: 1.6rem; margin-bottom: 10px;">💬</div>
+              <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; color: var(--text-primary);">마음의 비움 일기장</h4>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                광장에 나눈 비움 기록 모음과 누구에게도 말하지 못한 나만의 비밀 비움 노트를 안전하게 기록.
+              </p>
+            </div>
+
+            <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 16px; padding: 22px; transition: transform 0.2s;">
+              <div style="font-size: 1.6rem; margin-bottom: 10px;">💌</div>
+              <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; color: var(--text-primary);">가족을 위한 엔딩 금고</h4>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                유고 시 열리는 사랑의 마지막 유언 편지, 존엄한 웰다잉 사전연명의료의향서, 애착 유품 정리 상속 메모.
+              </p>
+            </div>
+
+            <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 16px; padding: 22px; transition: transform 0.2s;">
+              <div style="font-size: 1.6rem; margin-bottom: 10px;">🌿</div>
+              <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; color: var(--text-primary);">전담 코치 케어 리포트</h4>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+                뷰티 및 미니멀 라이프 전담 수석코치의 정기 방문 일지와 어르신 맞춤형 감수 피드백 보관.
+              </p>
+            </div>
+          </div>
+
+          <!-- 입장 버튼 그룹 -->
+          <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+            <a href="my-room.html" class="btn btn-primary" style="background: var(--accent-gold); border-color: var(--accent-gold); font-size: 1.05rem; padding: 14px 28px; box-shadow: 0 4px 14px rgba(197, 155, 39, 0.35);">
+              ✨ 김순옥 어르신 보물 서재 둘러보기 (샘플 체험) ➔
+            </a>
+            <button onclick="window.location.href='my-room.html'" class="btn" style="background: var(--bg-primary); border: 1.5px solid var(--border-color); color: var(--text-primary); font-size: 1.05rem; padding: 14px 24px; font-weight: 700;">
+              🗝️ 내 고유 서재 입장하기
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -4046,6 +4110,7 @@
             <li><a href="#test">1분 여백 자가진단</a></li>
             <li><a href="#memoir">디지털 자서전</a></li>
             <li><a href="academy.html" style="color: var(--accent-gold); font-weight: 700;">🎓 코치 양성 아카데미</a></li>
+            <li><a href="my-room.html" style="color: var(--accent); font-weight: 700;">🏛️ 나만의 고유한 서재</a></li>
           </ul>
         </div>
         <div class="footer-links">
