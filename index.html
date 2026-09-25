@@ -351,6 +351,48 @@
       box-shadow: 0 5px 14px rgba(194, 155, 56, 0.3);
     }
 
+    /* ✍️ 디지털 자서전 버튼 (따뜻한 로즈 마호가니) */
+    .nav-memoir-pill {
+      background: rgba(184, 80, 66, 0.1);
+      color: #9c3b28 !important;
+      border: 1.8px solid #c25946;
+      box-shadow: 0 2px 8px rgba(184, 80, 66, 0.16);
+    }
+
+    [data-theme="dark"] .nav-memoir-pill {
+      color: #e88676 !important;
+      background: rgba(220, 110, 95, 0.16);
+      border-color: #e88676;
+    }
+
+    .nav-memoir-pill:hover {
+      background: #b54a35;
+      color: #ffffff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 14px rgba(184, 80, 66, 0.3);
+    }
+
+    /* 🎓 코치 아카데미 버튼 (지적이고 전문적인 로열 인디고 블루) */
+    .nav-academy-pill {
+      background: rgba(41, 98, 153, 0.1);
+      color: #1e5a8f !important;
+      border: 1.8px solid #296299;
+      box-shadow: 0 2px 8px rgba(41, 98, 153, 0.16);
+    }
+
+    [data-theme="dark"] .nav-academy-pill {
+      color: #6ba9e6 !important;
+      background: rgba(77, 144, 209, 0.16);
+      border-color: #6ba9e6;
+    }
+
+    .nav-academy-pill:hover {
+      background: #245b8e;
+      color: #ffffff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 14px rgba(41, 98, 153, 0.3);
+    }
+
     /* 나의 아카이브 옆 독립 로그인 버튼 (줄바꿈 방지) */
     .nav-login-btn {
       display: inline-flex;
@@ -679,6 +721,28 @@
       border-color: #b08a28;
     }
 
+    /* 3. ✍️ 디지털 자서전 카드 */
+    .hero-action-card.memoir-card {
+      border: 2px solid #c25946;
+      box-shadow: 0 6px 20px rgba(184, 80, 66, 0.14);
+    }
+
+    .hero-action-card.memoir-card:hover {
+      box-shadow: 0 10px 28px rgba(184, 80, 66, 0.28);
+      border-color: #a33e2b;
+    }
+
+    /* 4. 🎓 코치 아카데미 카드 */
+    .hero-action-card.academy-card {
+      border: 2px solid #296299;
+      box-shadow: 0 6px 20px rgba(41, 98, 153, 0.14);
+    }
+
+    .hero-action-card.academy-card:hover {
+      box-shadow: 0 10px 28px rgba(41, 98, 153, 0.28);
+      border-color: #1a4f82;
+    }
+
     .hero-card-icon {
       width: 54px;
       height: 54px;
@@ -703,6 +767,16 @@
     .hero-card-icon.room-bg {
       background: rgba(194, 155, 56, 0.15);
       border: 1px solid rgba(194, 155, 56, 0.35);
+    }
+
+    .hero-card-icon.memoir-bg {
+      background: rgba(184, 80, 66, 0.12);
+      border: 1px solid rgba(184, 80, 66, 0.35);
+    }
+
+    .hero-card-icon.academy-bg {
+      background: rgba(41, 98, 153, 0.12);
+      border: 1px solid rgba(41, 98, 153, 0.35);
     }
 
     .hero-card-body {
@@ -736,6 +810,16 @@
       color: #ffffff;
     }
 
+    .hero-mini-badge.rose {
+      background: #c25946;
+      color: #ffffff;
+    }
+
+    .hero-mini-badge.blue {
+      background: #296299;
+      color: #ffffff;
+    }
+
     .hero-card-hint {
       font-size: 0.8rem;
       color: var(--text-muted);
@@ -762,6 +846,14 @@
 
     .hero-action-card.room-card .hero-card-arrow {
       color: var(--accent-gold);
+    }
+
+    .hero-action-card.memoir-card .hero-card-arrow {
+      color: #c25946;
+    }
+
+    .hero-action-card.academy-card .hero-card-arrow {
+      color: #296299;
     }
 
     .hero-action-card:hover .hero-card-arrow {
@@ -3851,8 +3943,18 @@
               <span class="nav-pulse-badge" title="지금 진단 가능"></span>
             </a>
           </li>
-          <li><a href="#memoir" class="nav-link" style="color: var(--accent); font-weight: 800;">디지털 자서전</a></li>
-          <li><a href="academy.html" class="nav-link" style="color: var(--accent-gold); font-weight: 800;" title="시니어 라이프 리셋 코치 양성 아카데미">🎓 코치 아카데미</a></li>
+          <li>
+            <a href="#memoir" class="nav-highlight-btn nav-memoir-pill" title="내 인생의 서사 기록, 디지털 자서전">
+              <span>✍️</span>
+              <span>디지털 자서전</span>
+            </a>
+          </li>
+          <li>
+            <a href="academy.html" class="nav-highlight-btn nav-academy-pill" title="시니어 라이프 리셋 코치 양성 아카데미">
+              <span>🎓</span>
+              <span>코치 아카데미</span>
+            </a>
+          </li>
           <li>
             <a href="my-room.html" class="nav-highlight-btn nav-room-pill" title="어르신 전용 프라이빗 온라인룸 입장">
               <span>🏛️</span>
@@ -3892,8 +3994,14 @@
           <span>🎯 <strong>1분 자가진단</strong></span>
           <span style="font-size: 0.72rem; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 999px;">무료진단</span>
         </a>
-        <a href="#memoir" class="drawer-nav-item" onclick="closeMobileDrawer()" style="color: var(--accent);">✍️ <strong>디지털 자서전</strong></a>
-        <a href="academy.html" class="drawer-nav-item" style="color: var(--accent-gold);">🎓 <strong>코치 양성 아카데미</strong></a>
+        <a href="#memoir" class="drawer-nav-item" onclick="closeMobileDrawer()" style="background: rgba(184, 80, 66, 0.12); color: #9c3b28; border: 1.5px solid #c25946; font-weight: 850;">
+          <span>✍️ <strong>디지털 자서전</strong></span>
+          <span style="font-size: 0.72rem; background: #c25946; color: #fff; padding: 2px 8px; border-radius: 999px;">자서전</span>
+        </a>
+        <a href="academy.html" class="drawer-nav-item" style="background: rgba(41, 98, 153, 0.12); color: #1e5a8f; border: 1.5px solid #296299; font-weight: 850;">
+          <span>🎓 <strong>코치 아카데미</strong></span>
+          <span style="font-size: 0.72rem; background: #296299; color: #fff; padding: 2px 8px; border-radius: 999px;">자격과정</span>
+        </a>
         <a href="my-room.html" class="drawer-nav-item" style="background: rgba(194, 155, 56, 0.14); color: #8c6610; border: 1.5px solid var(--accent-gold); font-weight: 850;">
           <span>🏛️ <strong>나의 고유한 서재</strong></span>
           <span style="font-size: 0.72rem; background: var(--accent-gold); color: #fff; padding: 2px 8px; border-radius: 999px;">온라인룸</span>
@@ -3948,7 +4056,7 @@
           전담 코칭스태프와 함께 온라인과 오프라인에서 당신만의 라이프 아카이브를 완성합니다.
         </p>
 
-        <!-- 🚀 고객 관심 집중 & 유저 모집 핵심 진입 듀얼 액션 카드 -->
+        <!-- 🚀 고객 관심 집중 & 유저 모집 4대 핵심 서비스 퀵 액션 카드 -->
         <div class="hero-cta-banner-wrap">
           <!-- 1) 🎯 1분 인생진단 카드 -->
           <a href="#test" class="hero-action-card test-card" title="1분 만에 나의 인생 후반전 준비도 무료 진단">
@@ -3966,7 +4074,39 @@
             </div>
           </a>
 
-          <!-- 2) 🏛️ 나의 고유한 서재 카드 -->
+          <!-- 2) ✍️ 디지털 자서전 카드 -->
+          <a href="#memoir" class="hero-action-card memoir-card" title="내 인생의 서사 기록, 디지털 자서전 둘러보기">
+            <div class="hero-card-icon memoir-bg">✍️</div>
+            <div class="hero-card-body">
+              <div class="hero-card-badge-row">
+                <span class="hero-mini-badge rose">📖 인생의 서사 기록</span>
+                <span class="hero-card-hint">육성 오디오북 & 양장본</span>
+              </div>
+              <div class="hero-card-title">
+                <span>✍️ 디지털 자서전 알아보기</span>
+                <span class="hero-card-arrow">→</span>
+              </div>
+              <p class="hero-card-desc">전문 코칭스태프와 함께 일생의 궤적을 명작 회고록으로 남기세요</p>
+            </div>
+          </a>
+
+          <!-- 3) 🎓 코치 아카데미 카드 -->
+          <a href="academy.html" class="hero-action-card academy-card" title="시니어 라이프 리셋 코치 양성 아카데미">
+            <div class="hero-card-icon academy-bg">🎓</div>
+            <div class="hero-card-body">
+              <div class="hero-card-badge-row">
+                <span class="hero-mini-badge blue">📜 전문 코치 자격과정</span>
+                <span class="hero-card-hint">일본 4대 선진 자격 도입</span>
+              </div>
+              <div class="hero-card-title">
+                <span>🎓 코치 아카데미 입학상담</span>
+                <span class="hero-card-arrow">→</span>
+              </div>
+              <p class="hero-card-desc">뷰티·정리·유품·자서전 4대 전문 코치로 제2의 보람찬 커리어를 시작하세요</p>
+            </div>
+          </a>
+
+          <!-- 4) 🏛️ 나의 고유한 서재 카드 -->
           <a href="my-room.html" class="hero-action-card room-card" title="나만의 독립된 프라이빗 온라인 서재 입장">
             <div class="hero-card-icon room-bg">🏛️</div>
             <div class="hero-card-body">
