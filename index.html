@@ -1074,9 +1074,21 @@
       opacity: 1;
     }
 
-    /* 에디터와 서브 모달 z-index 계층 분리 (겹침 원천 차단) */
-    #tistoryEditorModal {
+    /* 모달 계층별 z-index 완벽 분리 (상위 모달이 항상 맨 위에 확실히 노출되도록 보장) */
+    #adminAuthModal {
       z-index: 10000;
+    }
+    #adminDashboardModal {
+      z-index: 10010;
+    }
+    #boardListModal {
+      z-index: 10020;
+    }
+    #articleReaderModal {
+      z-index: 10030;
+    }
+    #tistoryEditorModal {
+      z-index: 10040;
     }
     #editorDraftsModal {
       z-index: 10050;
@@ -2037,8 +2049,22 @@
       background: var(--bg-card);
     }
 
+    .admin-table tr {
+      transition: var(--transition);
+    }
+
     .admin-table tr:hover td {
       background: var(--accent-light);
+    }
+
+    .admin-cell-title {
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .admin-cell-title:hover .admin-article-title-text span:first-child {
+      color: var(--accent);
+      text-decoration: underline;
     }
 
     .admin-btn-action {
@@ -2913,13 +2939,16 @@
         </div>
       </div>
 
-      <!-- 관리 액션 툴바 (새 글 쓰기, 카테고리 필터) -->
+      <!-- 관리 액션 툴바 (새 글 쓰기, 전체 게시판 열기, 카테고리 필터) -->
       <div class="admin-action-toolbar">
         <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
           <button class="btn btn-primary" onclick="openTistoryEditor()" style="display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; font-size: 0.92rem;">
             <span>✍️</span> 새 칼럼 작성하기
           </button>
-          <span style="font-size: 0.86rem; color: var(--text-muted);">티스토리 스타일 에디터로 작성 및 발행</span>
+          <button class="btn btn-secondary" onclick="openBoardModal()" style="display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; font-size: 0.92rem;" title="전체 게시판 목록으로 이동">
+            <span>📖</span> 전체 서재 게시판 보기
+          </button>
+          <span style="font-size: 0.84rem; color: var(--text-muted);">게시글 클릭 시 본문 및 수정·삭제 메뉴로 바로 연결됩니다</span>
         </div>
         <div style="display: flex; align-items: center; gap: 8px;">
           <label for="adminFilterCategory" style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);">카테고리:</label>
@@ -3323,7 +3352,11 @@
       const modal = document.getElementById('articleReaderModal');
       if (modal) {
         modal.classList.remove('open');
-        document.body.style.overflow = '';
+        if (document.querySelectorAll('.cms-modal-overlay.open').length > 0) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
       }
     }
 
@@ -3367,7 +3400,11 @@
       const modal = document.getElementById('boardListModal');
       if (modal) {
         modal.classList.remove('open');
-        document.body.style.overflow = '';
+        if (document.querySelectorAll('.cms-modal-overlay.open').length > 0) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
       }
     }
 
@@ -3609,14 +3646,15 @@
           <td>
             <span class="mag-tag" style="font-size: 0.82rem; font-weight: 800;">[${escapeHtml(a.category)}]</span>
           </td>
-          <td>
+          <td class="admin-cell-title" onclick="openArticleReader('${a.id}')" title="클릭하여 칼럼 본문 열람 및 수정/삭제" style="cursor: pointer;">
             <div style="display: flex; align-items: center; gap: 12px;">
               ${a.image ? `
                 <img src="${escapeHtml(a.image)}" alt="썸네일" style="width: 52px; height: 40px; object-fit: cover; border-radius: 8px; flex-shrink: 0; border: 1px solid var(--border-color);">
               ` : ''}
               <div style="min-width: 0; flex: 1;">
-                <div style="font-weight: 800; font-size: 1rem; color: var(--text-primary); margin-bottom: 3px; cursor: pointer;" onclick="openArticleReader('${a.id}')" title="클릭하여 전문 읽기">
-                  ${escapeHtml(a.title)}
+                <div class="admin-article-title-text" style="font-weight: 800; font-size: 1rem; color: var(--text-primary); margin-bottom: 3px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                  <span>${escapeHtml(a.title)}</span>
+                  <span style="font-size: 0.72rem; font-weight: 700; color: var(--accent); background: rgba(94, 107, 82, 0.12); border: 1px solid rgba(94, 107, 82, 0.25); padding: 2px 7px; border-radius: 6px;">클릭하여 열람/수정</span>
                 </div>
                 <div style="font-size: 0.84rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                   ${escapeHtml(a.excerpt || '')}
@@ -3894,7 +3932,11 @@
       const modal = document.getElementById('tistoryEditorModal');
       if (modal) {
         modal.classList.remove('open');
-        document.body.style.overflow = '';
+        if (document.querySelectorAll('.cms-modal-overlay.open').length > 0) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
       }
     }
 
@@ -4190,7 +4232,11 @@
       const modal = document.getElementById('tistoryEditorModal');
       if (modal) {
         modal.classList.remove('open');
-        document.body.style.overflow = '';
+        if (document.querySelectorAll('.cms-modal-overlay.open').length > 0) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
       }
 
       // 화면들 갱신
