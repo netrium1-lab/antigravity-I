@@ -1252,6 +1252,22 @@
       font-weight: 700;
       cursor: pointer;
     }
+    .quick-year-btn {
+      background: var(--paper-warm);
+      border: 1px solid var(--paper-border);
+      border-radius: 6px;
+      padding: 4px 9px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .quick-year-btn:hover {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      background: var(--accent-gold-light);
+    }
     .category-chip-group {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -2339,19 +2355,42 @@
           </label>
         </div>
 
-        <!-- 3. 제목 & 시기 -->
-        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-bottom: 14px;">
-          <div>
-            <label for="inputMemTitle" style="display: block; font-size: 0.88rem; font-weight: 750; margin-bottom: 4px;">
-              3. 어떤 추억이나 이야기인가요?
-            </label>
-            <input type="text" id="inputMemTitle" class="login-input" placeholder="예: 막내 돌잔치 날 / 오늘 아침 산책" required style="font-size: 0.98rem; padding: 10px 14px;">
+        <!-- 3. 제목 입력 -->
+        <div style="margin-bottom: 14px;">
+          <label for="inputMemTitle" style="display: block; font-size: 0.88rem; font-weight: 750; margin-bottom: 4px;">
+            3. 어떤 추억이나 이야기인가요? (제목) *
+          </label>
+          <input type="text" id="inputMemTitle" class="login-input" placeholder="예: 막내 돌잔치 날 / 오늘 아침 산책" required style="font-size: 0.98rem; padding: 10px 14px;">
+        </div>
+
+        <!-- 4. 추억의 시기 / 날짜 선택 (달력 피커 + 연도 입력 + 빠른 연대 칩) -->
+        <div style="margin-bottom: 16px;">
+          <label style="display: flex; justify-content: space-between; align-items: center; font-size: 0.88rem; font-weight: 750; margin-bottom: 6px;">
+            <span>📅 4. 추억의 시기 / 날짜 선택</span>
+            <span style="font-size: 0.78rem; color: var(--accent-gold); font-weight: normal;">(달력 또는 연도 직접 입력)</span>
+          </label>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+            <!-- 달력 선택기 -->
+            <div>
+              <input type="date" id="inputMemDatePicker" class="login-input" onchange="syncDateToYearInput(this.value)" style="font-size: 0.92rem; padding: 9px 12px; cursor: pointer; width: 100%; box-sizing: border-box;" title="달력에서 정확한 날짜 선택">
+            </div>
+
+            <!-- 시기/연도 텍스트 (달력 연동 및 직접 수정 가능) -->
+            <div>
+              <input type="text" id="inputMemYear" class="login-input" placeholder="예: 1985년 가을 / 1992년 5월" style="font-size: 0.92rem; padding: 9px 12px; width: 100%; box-sizing: border-box;">
+            </div>
           </div>
-          <div>
-            <label for="inputMemYear" style="display: block; font-size: 0.88rem; font-weight: 750; margin-bottom: 4px;">
-              시기/연도 <span style="font-size: 0.75rem; color: var(--text-muted);">(선택)</span>
-            </label>
-            <input type="text" id="inputMemYear" class="login-input" placeholder="예: 1985년 가을" style="font-size: 0.98rem; padding: 10px 14px;">
+
+          <!-- 어르신 편의 빠른 연대 선택 칩 (스크롤 번거로움 해소) -->
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <button type="button" onclick="setQuickYear('오늘')" class="quick-year-btn">📅 오늘</button>
+            <button type="button" onclick="setQuickYear('2020년대')" class="quick-year-btn">2020년대</button>
+            <button type="button" onclick="setQuickYear('2010년대')" class="quick-year-btn">2010년대</button>
+            <button type="button" onclick="setQuickYear('2000년대')" class="quick-year-btn">2000년대</button>
+            <button type="button" onclick="setQuickYear('1990년대')" class="quick-year-btn">1990년대</button>
+            <button type="button" onclick="setQuickYear('1980년대')" class="quick-year-btn">1980년대</button>
+            <button type="button" onclick="setQuickYear('1970년대 이전')" class="quick-year-btn">1970년대 이전</button>
           </div>
         </div>
 
@@ -3700,8 +3739,41 @@
       // 입력 폼 초기화
       document.getElementById('inputMemTitle').value = '';
       document.getElementById('inputMemYear').value = '';
+      const picker = document.getElementById('inputMemDatePicker');
+      if (picker) picker.value = '';
       document.getElementById('inputMemStory').value = '';
       removeSelectedImage();
+    }
+
+    // 📅 날짜 선택기(달력) 연동 및 빠른 연대 선택 함수
+    function syncDateToYearInput(val) {
+      if (!val) return;
+      const parts = val.split('-');
+      if (parts.length === 3) {
+        const y = parts[0];
+        const m = parseInt(parts[1], 10);
+        const d = parseInt(parts[2], 10);
+        const target = document.getElementById('inputMemYear');
+        if (target) {
+          target.value = `${y}년 ${m}월 ${d}일`;
+        }
+      }
+    }
+
+    function setQuickYear(str) {
+      const yearInput = document.getElementById('inputMemYear');
+      const picker = document.getElementById('inputMemDatePicker');
+      if (str === '오늘') {
+        const now = new Date();
+        const y = now.getFullYear();
+        const m = String(now.getMonth() + 1).padStart(2, '0');
+        const d = String(now.getDate()).padStart(2, '0');
+        if (picker) picker.value = `${y}-${m}-${d}`;
+        if (yearInput) yearInput.value = `${y}년 ${now.getMonth() + 1}월 ${now.getDate()}일`;
+      } else {
+        if (yearInput) yearInput.value = str;
+        if (picker) picker.value = '';
+      }
     }
 
     function closeUploadModalOnOverlay(e) {
