@@ -1980,11 +1980,15 @@
         <button type="submit" class="btn-login-submit">내 서재 입장하기 ➔</button>
       </form>
 
-      <div style="margin: 20px 0 10px; border-top: 1px dashed var(--paper-border);"></div>
-
       <button type="button" class="btn-demo-quick" onclick="loadSampleRoom()">
         ✨ 김순옥 어르신의 보물 서재 둘러보기 (샘플 체험)
       </button>
+      <button type="button" onclick="closeLoginModal()" style="background: none; border: none; color: var(--text-muted); font-size: 0.88rem; margin-top: 14px; cursor: pointer;">
+        닫기
+      </button>
+    </div>
+  </div>
+
   <!-- 👁️ 엔딩 금고 내용 열람 모달 (편지지 뷰어) -->
   <div class="modal-overlay" id="viewVaultModal" onclick="closeVaultReaderOnOverlay(event)">
     <div class="login-modal-card" style="max-width: 600px; text-align: left;" onclick="event.stopPropagation()">
@@ -2400,11 +2404,30 @@
         list = [];
       }
 
-      list.unshift(newMemory);
-      localStorage.setItem('reset_custom_memories', JSON.stringify(list));
+      if (category === 'vault') {
+        let vaultList = [];
+        try {
+          const savedVault = localStorage.getItem('reset_custom_vault_items');
+          if (savedVault) vaultList = JSON.parse(savedVault);
+        } catch(err) { vaultList = []; }
 
-      // 화면에 즉시 반영
-      renderCustomMemories();
+        const newVaultItem = {
+          id: Date.now(),
+          category: 'letter',
+          target: '사랑하는 가족에게',
+          title: title,
+          body: story,
+          image: currentUploadedBase64,
+          dateStr: new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })
+        };
+        vaultList.unshift(newVaultItem);
+        localStorage.setItem('reset_custom_vault_items', JSON.stringify(vaultList));
+        renderCustomVaultItems();
+      } else {
+        list.unshift(newMemory);
+        localStorage.setItem('reset_custom_memories', JSON.stringify(list));
+        renderCustomMemories();
+      }
 
       // 모달 닫기
       closeUploadModal();
