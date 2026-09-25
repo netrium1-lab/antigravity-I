@@ -2042,9 +2042,9 @@
     }
 
     .admin-btn-action {
-      padding: 5px 11px;
-      border-radius: 6px;
-      font-size: 0.82rem;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
       font-weight: 700;
       cursor: pointer;
       border: 1px solid var(--border-color);
@@ -2054,24 +2054,107 @@
       font-family: inherit;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
+      white-space: nowrap;
     }
 
     .admin-btn-action:hover {
+      transform: translateY(-1px);
+    }
+
+    /* ✏️ 수정 버튼: 눈에 확 띄는 세이지 그린/골드 포인트 */
+    .admin-btn-edit {
+      background: rgba(94, 107, 82, 0.14);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .admin-btn-edit:hover {
       background: var(--accent);
       border-color: var(--accent);
       color: #fff;
     }
 
+    /* 👁️ 보기 버튼: 깔끔한 뉴트럴 톤 */
+    .admin-btn-view {
+      background: var(--bg-secondary);
+      border-color: var(--border-color);
+      color: var(--text-secondary);
+    }
+
+    .admin-btn-view:hover {
+      background: var(--border-color);
+      color: var(--text-primary);
+    }
+
+    /* 🗑️ 삭제 버튼: 경고 레드 톤 */
     .admin-btn-delete {
+      background: rgba(217, 83, 79, 0.1);
       color: #d9534f;
-      border-color: rgba(217, 83, 79, 0.4);
+      border-color: rgba(217, 83, 79, 0.45);
+      font-weight: 800;
     }
 
     .admin-btn-delete:hover {
       background: #d9534f;
       border-color: #d9534f;
       color: #fff;
+    }
+
+    /* 본문 상세 뷰어 상단 관리자 툴바 */
+    .reader-admin-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(194, 155, 56, 0.12);
+      border: 1.5px solid rgba(194, 155, 56, 0.4);
+      border-radius: 14px;
+      padding: 12px 18px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* 📱 모바일(768px 이하)에서 테이블을 개별 카드로 전환 (수정/삭제 버튼이 절대 화면 밖으로 잘리지 않음) */
+    @media (max-width: 768px) {
+      .admin-table-wrap {
+        border: none;
+        overflow-x: visible;
+      }
+      .admin-table, .admin-table thead, .admin-table tbody, .admin-table th, .admin-table td, .admin-table tr {
+        display: block;
+      }
+      .admin-table thead {
+        display: none; /* 모바일에서는 헤더를 숨기고 보기 편한 카드로 렌더링 */
+      }
+      .admin-table tr {
+        background: var(--bg-card);
+        border: 1.5px solid var(--border-color);
+        border-radius: 14px;
+        margin-bottom: 16px;
+        padding: 16px 14px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      }
+      .admin-table td {
+        border: none;
+        padding: 6px 0;
+        background: transparent !important;
+      }
+      .admin-mobile-action-row {
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px dashed var(--border-color);
+        display: flex;
+        gap: 8px;
+        width: 100%;
+      }
+      .admin-mobile-action-row .admin-btn-action {
+        flex: 1;
+        justify-content: center;
+        padding: 10px 0;
+        font-size: 0.95rem;
+      }
     }
 
     /* 관리자 인증 비밀번호 모달 */
@@ -2672,6 +2755,21 @@
     <div class="reader-card">
       <button class="drawer-close" onclick="closeArticleReader()" aria-label="닫기" style="position: absolute; top: 24px; right: 24px; border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">✕</button>
       
+      <!-- 관리자 전용 글 수정/삭제 액션바 (관리자 로그인 시 노출) -->
+      <div id="readerAdminToolbar" class="reader-admin-toolbar" style="display: none;">
+        <div style="font-weight: 800; font-size: 0.9rem; color: var(--accent-gold); display: flex; align-items: center; gap: 6px;">
+          <span>👑 관리자 편집 모드</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="admin-btn-action admin-btn-edit" onclick="editCurrentArticleFromReader()" title="이 글 수정하기">
+            ✏️ 이 글 수정하기
+          </button>
+          <button type="button" class="admin-btn-action admin-btn-delete" onclick="deleteCurrentArticleFromReader()" title="이 글 영구 삭제">
+            🗑️ 삭제하기
+          </button>
+        </div>
+      </div>
+
       <div class="reader-header">
         <div class="reader-meta-top">
           <span class="mag-tag" id="readerCategory">[비움과 갈무리]</span>
@@ -2841,11 +2939,11 @@
         <table class="admin-table">
           <thead>
             <tr>
-              <th style="width: 140px; text-align: center;">메인 전면 노출</th>
-              <th style="width: 120px;">카테고리</th>
-              <th>칼럼 제목 / 요약</th>
-              <th style="width: 100px;">작성일</th>
-              <th style="width: 190px; text-align: center;">관리 액션</th>
+              <th style="width: 135px; text-align: center;">메인 전면 노출</th>
+              <th style="width: 115px;">카테고리</th>
+              <th>칼럼 제목 및 요약</th>
+              <th style="width: 95px;">작성일</th>
+              <th style="width: 215px; text-align: center;">수정 / 보기 / 삭제</th>
             </tr>
           </thead>
           <tbody id="adminArticleTableBody">
@@ -3148,7 +3246,14 @@
           <div>
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
               <span class="mag-tag">[${escapeHtml(article.category)}]</span>
-              <span class="mag-pin-badge">⭐ 메인 대표글</span>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span class="mag-pin-badge">⭐ 메인 대표글</span>
+                ${isAdminLoggedIn() ? `
+                  <button type="button" class="admin-btn-action admin-btn-edit" onclick="event.stopPropagation(); openTistoryEditor('${article.id}')" title="이 글 바로 수정" style="padding: 2px 7px; font-size: 0.72rem;">
+                    ✏️ 수정
+                  </button>
+                ` : ''}
+              </div>
             </div>
             <h3 class="mag-title">${escapeHtml(article.title)}</h3>
             <p class="mag-excerpt">
@@ -3165,13 +3270,23 @@
       `).join('');
     }
 
-    // ================= 모달 2) 글 본문 뷰어 =================
+    // ================= 모달 2) 글 본문 뷰어 (수정/삭제 툴바 연동) =================
+    let currentReadingArticleId = null;
+
     function openArticleReader(id) {
       const articles = getStoredArticles();
       const article = articles.find(a => a.id === id);
       if (!article) {
         alert('해당 게시글을 찾을 수 없습니다.');
         return;
+      }
+
+      currentReadingArticleId = id;
+
+      // 관리자 툴바 노출 제어 (관리자 로그인 시 ✏️ 수정 / 🗑️ 삭제 버튼 노출)
+      const adminToolbar = document.getElementById('readerAdminToolbar');
+      if (adminToolbar) {
+        adminToolbar.style.display = isAdminLoggedIn() ? 'flex' : 'none';
       }
 
       document.getElementById('readerCategory').textContent = `[${article.category}]`;
@@ -3204,6 +3319,7 @@
     }
 
     function closeArticleReader() {
+      currentReadingArticleId = null;
       const modal = document.getElementById('articleReaderModal');
       if (modal) {
         modal.classList.remove('open');
@@ -3214,6 +3330,24 @@
     function closeReaderOnOverlay(e) {
       if (e.target.id === 'articleReaderModal') {
         closeArticleReader();
+      }
+    }
+
+    // 본문 뷰어에서 바로 글 수정하기
+    function editCurrentArticleFromReader() {
+      if (currentReadingArticleId) {
+        const idToEdit = currentReadingArticleId;
+        closeArticleReader();
+        openTistoryEditor(idToEdit);
+      }
+    }
+
+    // 본문 뷰어에서 바로 글 삭제하기
+    function deleteCurrentArticleFromReader() {
+      if (currentReadingArticleId) {
+        const idToDelete = currentReadingArticleId;
+        closeArticleReader();
+        deleteArticle(idToDelete);
       }
     }
 
@@ -3284,10 +3418,18 @@
               ${escapeHtml(a.excerpt || '')}
             </div>
           </div>
-          <div class="board-item-right" onclick="event.stopPropagation()">
+          <div class="board-item-right" onclick="event.stopPropagation()" style="display: flex; align-items: center; gap: 6px;">
             <button class="btn-pin-toggle ${a.isFeatured ? 'pinned' : ''}" onclick="toggleArticleFeature('${a.id}', event)" title="${a.isFeatured ? '클릭 시 메인 전면 노출에서 제외됩니다' : '클릭 시 메인 전면 대표 카드로 노출됩니다'}">
               ${a.isFeatured ? '⭐ 메인 전면 노출 중' : '☆ 메인 전면 노출하기'}
             </button>
+            ${isAdminLoggedIn() ? `
+              <button class="admin-btn-action admin-btn-edit" onclick="closeBoardModal(); openTistoryEditor('${a.id}');" title="글 내용 수정" style="padding: 4px 9px; font-size: 0.78rem;">
+                ✏️ 수정
+              </button>
+              <button class="admin-btn-action admin-btn-delete" onclick="deleteArticle('${a.id}');" title="글 영구 삭제" style="padding: 4px 9px; font-size: 0.78rem;">
+                🗑️ 삭제
+              </button>
+            ` : ''}
           </div>
         </div>
       `).join('');
@@ -3461,36 +3603,36 @@
         <tr>
           <td style="text-align: center;">
             <button class="btn-pin-toggle ${a.isFeatured ? 'pinned' : ''}" onclick="toggleArticleFeatureFromAdmin('${a.id}')" title="${a.isFeatured ? '클릭 시 메인 전면 노출에서 해제됩니다' : '클릭 시 메인 전면 대표 카드로 노출됩니다'}">
-              ${a.isFeatured ? '⭐ 노출 중' : '☆ 미노출'}
+              ${a.isFeatured ? '⭐ 메인 노출 중' : '☆ 미노출'}
             </button>
           </td>
           <td>
-            <span class="mag-tag" style="font-size: 0.8rem;">[${escapeHtml(a.category)}]</span>
+            <span class="mag-tag" style="font-size: 0.82rem; font-weight: 800;">[${escapeHtml(a.category)}]</span>
           </td>
           <td>
-            <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
               ${a.image ? `
-                <img src="${escapeHtml(a.image)}" alt="썸네일" style="width: 44px; height: 34px; object-fit: cover; border-radius: 6px; flex-shrink: 0; border: 1px solid var(--border-color);">
+                <img src="${escapeHtml(a.image)}" alt="썸네일" style="width: 52px; height: 40px; object-fit: cover; border-radius: 8px; flex-shrink: 0; border: 1px solid var(--border-color);">
               ` : ''}
               <div style="min-width: 0; flex: 1;">
-                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 2px; cursor: pointer;" onclick="openArticleReader('${a.id}')" title="클릭하여 전문 읽기">
+                <div style="font-weight: 800; font-size: 1rem; color: var(--text-primary); margin-bottom: 3px; cursor: pointer;" onclick="openArticleReader('${a.id}')" title="클릭하여 전문 읽기">
                   ${escapeHtml(a.title)}
                 </div>
-                <div style="font-size: 0.82rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                <div style="font-size: 0.84rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                   ${escapeHtml(a.excerpt || '')}
                 </div>
               </div>
             </div>
           </td>
-          <td style="font-size: 0.84rem; color: var(--text-muted); white-space: nowrap;">
+          <td style="font-size: 0.85rem; color: var(--text-muted); white-space: nowrap;">
             ${escapeHtml(a.date || '')}
           </td>
           <td style="text-align: center; white-space: nowrap;">
-            <div style="display: inline-flex; gap: 6px;">
-              <button class="admin-btn-action" onclick="editArticle('${a.id}')" title="글 내용 및 설정 수정">
+            <div class="admin-mobile-action-row" style="display: inline-flex; gap: 6px;">
+              <button class="admin-btn-action admin-btn-edit" onclick="editArticle('${a.id}')" title="칼럼 내용 및 사진 수정">
                 ✏️ 수정
               </button>
-              <button class="admin-btn-action" onclick="openArticleReader('${a.id}')" title="본문 전문 미리보기">
+              <button class="admin-btn-action admin-btn-view" onclick="openArticleReader('${a.id}')" title="본문 전문 미리보기">
                 👁️ 보기
               </button>
               <button class="admin-btn-action admin-btn-delete" onclick="deleteArticle('${a.id}')" title="칼럼 영구 삭제">
