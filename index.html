@@ -3321,6 +3321,31 @@
     [data-theme="dark"] .consult-status-select.status-done {
       background: #052e16; color: #bbf7d0; border-color: #16a34a;
     }
+
+    /* 자서전 제작 단계 셀렉트 & 배지 */
+    .memoir-stage-select {
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .memoir-stage-select.stage-1 { background: #fef3c7; color: #92400e; border-color: #f59e0b; }
+    .memoir-stage-select.stage-2 { background: #e0e7ff; color: #3730a3; border-color: #818cf8; }
+    .memoir-stage-select.stage-3 { background: #fae8ff; color: #86198f; border-color: #c084fc; }
+    .memoir-stage-select.stage-4 { background: #dbeafe; color: #1e40af; border-color: #60a5fa; }
+    .memoir-stage-select.stage-5 { background: #dcfce7; color: #166534; border-color: #4ade80; }
+
+    [data-theme="dark"] .memoir-stage-select.stage-1 { background: #451a03; color: #fde68a; border-color: #b45309; }
+    [data-theme="dark"] .memoir-stage-select.stage-2 { background: #1e1b4b; color: #c7d2fe; border-color: #4338ca; }
+    [data-theme="dark"] .memoir-stage-select.stage-3 { background: #4a044e; color: #f5d0fe; border-color: #9333ea; }
+    [data-theme="dark"] .memoir-stage-select.stage-4 { background: #172554; color: #bfdbfe; border-color: #2563eb; }
+    [data-theme="dark"] .memoir-stage-select.stage-5 { background: #052e16; color: #bbf7d0; border-color: #16a34a; }
   </style>
 </head>
 <body>
@@ -4299,6 +4324,10 @@
           <span>📋</span> 1:1 상담 신청 접수 관리
           <span class="admin-tab-badge" id="adminConsultBadge">0</span>
         </button>
+        <button type="button" class="admin-nav-tab-btn" id="tabBtnMemoir" onclick="switchAdminTab('memoir')">
+          <span>📖</span> 디지털 자서전 제작 관리실
+          <span class="admin-tab-badge" id="adminMemoirBadge" style="background: #2563eb;">0</span>
+        </button>
         <button type="button" class="admin-nav-tab-btn" id="tabBtnUnburden" onclick="switchAdminTab('unburden')">
           <span>💬</span> 오늘의 비움 한 줄 관리
           <span class="admin-tab-badge" id="adminUnburdenBadge" style="background: var(--accent);">0</span>
@@ -4475,7 +4504,113 @@
         </div>
       </div>
 
-      <!-- ================= 탭 3: 오늘의 비움 한 줄 관리 영역 (NEW) ================= -->
+      <!-- ================= 탭 3: 디지털 자서전 제작 관리실 (NEW CRM 파이프라인) ================= -->
+      <div id="adminMemoirTabContent" style="display: none;">
+        <!-- 5단계 실시간 파이프라인 통계 카드 (클릭 시 해당 단계 빠른 필터) -->
+        <div class="consult-stat-grid" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
+          <div class="consult-stat-card active" id="statMemoirCardAll" onclick="filterMemoirByStage('all')">
+            <div>
+              <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 2px;">전체 프로젝트</div>
+              <div class="admin-stat-val" id="statMemoirTotal" style="font-size: 1.35rem;">0건</div>
+            </div>
+            <div style="font-size: 1.5rem;">📚</div>
+          </div>
+          <div class="consult-stat-card" id="statMemoirCardStage1" onclick="filterMemoirByStage('1_consult')">
+            <div>
+              <div style="font-size: 0.78rem; font-weight: 700; color: #92400e; margin-bottom: 2px;">🟡 1. 상담접수</div>
+              <div class="admin-stat-val" id="statMemoirStage1" style="font-size: 1.35rem; color: #d97706;">0건</div>
+            </div>
+            <div style="font-size: 1.5rem;">📞</div>
+          </div>
+          <div class="consult-stat-card" id="statMemoirCardStage2" onclick="filterMemoirByStage('2_interview')">
+            <div>
+              <div style="font-size: 0.78rem; font-weight: 700; color: #3730a3; margin-bottom: 2px;">🎙️ 2. 구술인터뷰</div>
+              <div class="admin-stat-val" id="statMemoirStage2" style="font-size: 1.35rem; color: #4f46e5;">0건</div>
+            </div>
+            <div style="font-size: 1.5rem;">🎙️</div>
+          </div>
+          <div class="consult-stat-card" id="statMemoirCardStage3" onclick="filterMemoirByStage('3_writing')">
+            <div>
+              <div style="font-size: 0.78rem; font-weight: 700; color: #86198f; margin-bottom: 2px;">✍️ 3. 원고집필</div>
+              <div class="admin-stat-val" id="statMemoirStage3" style="font-size: 1.35rem; color: #a21caf;">0건</div>
+            </div>
+            <div style="font-size: 1.5rem;">✍️</div>
+          </div>
+          <div class="consult-stat-card" id="statMemoirCardStage4" onclick="filterMemoirByStage('4_web')">
+            <div>
+              <div style="font-size: 0.78rem; font-weight: 700; color: #1e40af; margin-bottom: 2px;">📖 4. 서재등록</div>
+              <div class="admin-stat-val" id="statMemoirStage4" style="font-size: 1.35rem; color: #2563eb;">0건</div>
+            </div>
+            <div style="font-size: 1.5rem;">💻</div>
+          </div>
+          <div class="consult-stat-card" id="statMemoirCardStage5" onclick="filterMemoirByStage('5_published')">
+            <div>
+              <div style="font-size: 0.78rem; font-weight: 700; color: #166534; margin-bottom: 2px;">📦 5. 출판완료</div>
+              <div class="admin-stat-val" id="statMemoirStage5" style="font-size: 1.35rem; color: #15803d;">0건</div>
+            </div>
+            <div style="font-size: 1.5rem;">🏆</div>
+          </div>
+        </div>
+
+        <!-- 자서전 관리 툴바 -->
+        <div class="admin-action-toolbar">
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <label for="adminMemoirFilterStageSelect" style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);">제작단계:</label>
+            <select id="adminMemoirFilterStageSelect" class="editor-category-select" onchange="renderAdminMemoirTable()" style="padding: 6px 10px; font-size: 0.85rem;">
+              <option value="all">전체 단계</option>
+              <option value="1_consult">🟡 1. 상담접수</option>
+              <option value="2_interview">🎙️ 2. 구술인터뷰 진행중</option>
+              <option value="3_writing">✍️ 3. 원고집필·교정중</option>
+              <option value="4_web">📖 4. 디지털 서재등록 완료</option>
+              <option value="5_published">📦 5. 양장본 출판·배송완료</option>
+            </select>
+
+            <input 
+              type="text" 
+              id="adminMemoirSearchInput" 
+              placeholder="고객명, 연락처, 책제목 검색..." 
+              oninput="renderAdminMemoirTable()" 
+              style="padding: 6px 12px; font-size: 0.85rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-card); color: var(--text-primary); width: 190px;"
+            />
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="exportMemoirToCSV()" style="padding: 7px 14px; font-size: 0.86rem; display: inline-flex; align-items: center; gap: 5px;">
+              <span>📥</span> 엑셀(CSV) 저장
+            </button>
+            <button class="btn btn-primary" onclick="openAddMemoirModal()" style="padding: 7px 14px; font-size: 0.86rem; display: inline-flex; align-items: center; gap: 5px;">
+              <span>➕</span> 새 자서전 등록
+            </button>
+          </div>
+        </div>
+
+        <!-- 자서전 관리 파이프라인 테이블 -->
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width: 85px;">신청일시</th>
+                <th style="width: 120px;">고객 성함 / 구분</th>
+                <th style="width: 145px;">연락처 (통화)</th>
+                <th>희망 책 제목 & 기획 의도</th>
+                <th style="width: 110px; text-align: center;">사진·자료 수집</th>
+                <th style="width: 155px; text-align: center;">제작 진행 단계</th>
+                <th style="width: 160px;">진행 메모</th>
+                <th style="width: 60px; text-align: center;">삭제</th>
+              </tr>
+            </thead>
+            <tbody id="adminMemoirTableBody">
+              <!-- JS 동적 렌더링 -->
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top: 18px; font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
+          <span>💡</span>
+          <span>진행 단계를 변경하면 즉시 상단 파이프라인 현황에 반영됩니다. 메모를 클릭하면 실시간으로 진행 노트를 기록·수정할 수 있습니다.</span>
+        </div>
+      </div>
+
+      <!-- ================= 탭 4: 오늘의 비움 한 줄 관리 영역 (NEW) ================= -->
       <div id="adminUnburdenTabContent" style="display: none;">
         <!-- 비움 통계 요약 카드 -->
         <div class="consult-stat-grid">
@@ -4817,12 +4952,26 @@
       list.unshift(newRecord);
       saveConsultList(list);
 
+      // 만약 신청 카테고리가 '자서전'인 경우 자서전 CRM 파이프라인(1단계 상담접수)에도 자동 연동 등록
+      if (selectedConsultCategory && selectedConsultCategory.includes('자서전')) {
+        addMemoirFromConsult({
+          customerName: selectedConsultRole === '본인 어르신' ? '어르신 (본인)' : '가족 대리 신청',
+          role: selectedConsultRole,
+          phone: phoneVal,
+          title: '《내 인생의 여백과 결 (가제)》',
+          note: noteVal || '30일 서사 워크북 및 자서전 제작 상담 희망',
+          stage: '1_consult',
+          createdAt: dateStr
+        });
+      }
+
       // 알림 및 모달 닫기
       alert(`🌸 상담 신청이 정상 접수되었습니다!\n\n[상담 주제: ${selectedConsultCategory}]\n[신청 구분: ${selectedConsultRole}]\n[연락처: ${phoneVal}]\n\n회원가입 없이도 안심하세요!\n전담 코칭팀이 24시간 이내에 따뜻한 목소리로 편안하게 연락드리겠습니다.`);
       closeSeniorConsultModal();
 
       // 관리자 화면이 열려있다면 갱신
       renderConsultAdminTable();
+      renderAdminMemoirTable();
     }
 
     // 다른 주제 다시 선택하기
@@ -5545,6 +5694,7 @@
     function openAdminDashboardModal() {
       renderAdminDashboard();
       renderConsultAdminTable();
+      renderAdminMemoirTable();
       renderAdminUnburdenTable();
       const modal = document.getElementById('adminDashboardModal');
       if (modal) {
@@ -6225,20 +6375,23 @@
     // ================= 관리자 콘솔: 1:1 상담 신청 접수 관리 시스템 =================
     const CONSULT_STORAGE_KEY = 'reset_consult_list';
 
-    // 관리자 탭 전환 (칼럼 관리 vs 상담 접수 관리 vs 비움 한 줄 관리)
+    // 관리자 탭 전환 (칼럼 관리 vs 상담 접수 관리 vs 자서전 제작 관리 vs 비움 한 줄 관리)
     function switchAdminTab(tabName) {
       const tabArticles = document.getElementById('tabBtnArticles');
       const tabConsults = document.getElementById('tabBtnConsults');
+      const tabMemoir = document.getElementById('tabBtnMemoir');
       const tabUnburden = document.getElementById('tabBtnUnburden');
       const contentArticles = document.getElementById('adminArticlesTabContent');
       const contentConsults = document.getElementById('adminConsultsTabContent');
+      const contentMemoir = document.getElementById('adminMemoirTabContent');
       const contentUnburden = document.getElementById('adminUnburdenTabContent');
 
       // 탭 버튼 비활성화
-      [tabArticles, tabConsults, tabUnburden].forEach(btn => btn && btn.classList.remove('active'));
+      [tabArticles, tabConsults, tabMemoir, tabUnburden].forEach(btn => btn && btn.classList.remove('active'));
       // 컨텐츠 숨김
       if (contentArticles) contentArticles.style.display = 'none';
       if (contentConsults) contentConsults.style.display = 'none';
+      if (contentMemoir) contentMemoir.style.display = 'none';
       if (contentUnburden) contentUnburden.style.display = 'none';
 
       if (tabName === 'articles') {
@@ -6249,6 +6402,10 @@
         if (tabConsults) tabConsults.classList.add('active');
         if (contentConsults) contentConsults.style.display = 'block';
         renderConsultAdminTable();
+      } else if (tabName === 'memoir') {
+        if (tabMemoir) tabMemoir.classList.add('active');
+        if (contentMemoir) contentMemoir.style.display = 'block';
+        renderAdminMemoirTable();
       } else if (tabName === 'unburden') {
         if (tabUnburden) tabUnburden.classList.add('active');
         if (contentUnburden) contentUnburden.style.display = 'block';
@@ -6545,6 +6702,364 @@
       if (badge) badge.textContent = waiting;
     }
 
+    // ================= 관리자 콘솔: 디지털 자서전 제작 관리실 (5단계 CRM 파이프라인) =================
+    const MEMOIR_STORAGE_KEY = 'reset_memoir_list';
+
+    // 자서전 목록 로컬스토리지 로드 (초기 데이터 없으면 기본 4건 샘플 주입)
+    function getMemoirList() {
+      const stored = localStorage.getItem(MEMOIR_STORAGE_KEY);
+      if (stored) {
+        try {
+          return JSON.parse(stored);
+        } catch (e) {
+          console.error('자서전 목록 파싱 실패:', e);
+        }
+      }
+      // 초기 기본 샘플 데이터 (5단계 파이프라인 체감용)
+      const defaultSamples = [
+        {
+          id: 'mem_sample_1',
+          customerName: '김순옥 어르신',
+          role: '본인 어르신',
+          phone: '010 - 9944 - 1234',
+          title: '《지리산 자락에서 피워낸 꽃 한 송이》',
+          photoStatus: '📷 사진 42장 수집 완료',
+          stage: '3_writing',
+          note: '어린 시절 남원 이야기와 4남매 키운 일화 중심 집필 중 (초고 70% 완성)',
+          createdAt: '09/22 14:20'
+        },
+        {
+          id: 'mem_sample_2',
+          customerName: '박영태 옹',
+          role: '자녀/가족 대리',
+          phone: '010 - 3321 - 7789',
+          title: '《새벽을 여는 자전거: 평생의 땀방울》',
+          photoStatus: '📸 사진 18장 수집 중',
+          stage: '2_interview',
+          note: '2차 구술 녹취 완료. 3차 심층 인터뷰 방문 예정 (9/28)',
+          createdAt: '09/24 11:30'
+        },
+        {
+          id: 'mem_sample_3',
+          customerName: '이정숙 어르신',
+          role: '본인 어르신',
+          phone: '010 - 5512 - 8800',
+          title: '《여백으로 채운 어머니의 바느질》',
+          photoStatus: '✨ 65장 디지털 복원 완료',
+          stage: '5_published',
+          note: '디지털 서재 웹 등록 및 고급 가죽 양장본 10권 가족 배송 완료',
+          createdAt: '09/15 09:10'
+        },
+        {
+          id: 'mem_sample_4',
+          customerName: '정해원 선생님',
+          role: '본인 어르신',
+          phone: '010 - 7711 - 2244',
+          title: '《교단 40년, 아이들과 함께 쓴 시》',
+          photoStatus: '⏳ 자료 수집 준비 중',
+          stage: '1_consult',
+          note: '10월 은퇴 기념 자서전 제작 희망 상담 대기 중',
+          createdAt: '09/25 10:15'
+        }
+      ];
+      localStorage.setItem(MEMOIR_STORAGE_KEY, JSON.stringify(defaultSamples));
+      return defaultSamples;
+    }
+
+    function saveMemoirList(list) {
+      localStorage.setItem(MEMOIR_STORAGE_KEY, JSON.stringify(list));
+      updateMemoirBadges();
+    }
+
+    // 단계별 이름 및 CSS 클래스 반환
+    function getMemoirStageInfo(stage) {
+      switch (stage) {
+        case '1_consult':
+          return { name: '🟡 1. 상담접수', class: 'stage-1' };
+        case '2_interview':
+          return { name: '🎙️ 2. 구술인터뷰', class: 'stage-2' };
+        case '3_writing':
+          return { name: '✍️ 3. 원고집필·교정', class: 'stage-3' };
+        case '4_web':
+          return { name: '📖 4. 디지털 서재등록', class: 'stage-4' };
+        case '5_published':
+          return { name: '📦 5. 양장본 출판완료', class: 'stage-5' };
+        default:
+          return { name: '🟡 1. 상담접수', class: 'stage-1' };
+      }
+    }
+
+    // 상단 5단계 카드 클릭 시 빠른 필터링
+    function filterMemoirByStage(stageName) {
+      const select = document.getElementById('adminMemoirFilterStageSelect');
+      if (select) {
+        select.value = stageName;
+        renderAdminMemoirTable();
+      }
+    }
+
+    // 자서전 관리 테이블 렌더링 및 5단계 통계 집계
+    function renderAdminMemoirTable() {
+      const tbody = document.getElementById('adminMemoirTableBody');
+      const list = getMemoirList();
+
+      // 1. 5단계별 실시간 통계 카운트
+      let totalCount = list.length;
+      let stage1Count = 0;
+      let stage2Count = 0;
+      let stage3Count = 0;
+      let stage4Count = 0;
+      let stage5Count = 0;
+
+      list.forEach(m => {
+        if (m.stage === '1_consult') stage1Count++;
+        else if (m.stage === '2_interview') stage2Count++;
+        else if (m.stage === '3_writing') stage3Count++;
+        else if (m.stage === '4_web') stage4Count++;
+        else if (m.stage === '5_published') stage5Count++;
+      });
+
+      // 통계 카드 숫자 갱신
+      const statTotal = document.getElementById('statMemoirTotal');
+      const statStage1 = document.getElementById('statMemoirStage1');
+      const statStage2 = document.getElementById('statMemoirStage2');
+      const statStage3 = document.getElementById('statMemoirStage3');
+      const statStage4 = document.getElementById('statMemoirStage4');
+      const statStage5 = document.getElementById('statMemoirStage5');
+
+      if (statTotal) statTotal.textContent = `${totalCount}건`;
+      if (statStage1) statStage1.textContent = `${stage1Count}건`;
+      if (statStage2) statStage2.textContent = `${stage2Count}건`;
+      if (statStage3) statStage3.textContent = `${stage3Count}건`;
+      if (statStage4) statStage4.textContent = `${stage4Count}건`;
+      if (statStage5) statStage5.textContent = `${stage5Count}건`;
+
+      // 2. 필터링 (단계 & 검색어)
+      const stageFilterEl = document.getElementById('adminMemoirFilterStageSelect');
+      const searchInputEl = document.getElementById('adminMemoirSearchInput');
+      const selectedStage = stageFilterEl ? stageFilterEl.value : 'all';
+      const searchQuery = searchInputEl ? searchInputEl.value.trim().toLowerCase() : '';
+
+      // 상단 카드 active 클래스 토글
+      document.querySelectorAll('#adminMemoirTabContent .consult-stat-card').forEach(card => card.classList.remove('active'));
+      if (selectedStage === 'all') {
+        const c = document.getElementById('statMemoirCardAll');
+        if (c) c.classList.add('active');
+      } else if (selectedStage === '1_consult') {
+        const c = document.getElementById('statMemoirCardStage1');
+        if (c) c.classList.add('active');
+      } else if (selectedStage === '2_interview') {
+        const c = document.getElementById('statMemoirCardStage2');
+        if (c) c.classList.add('active');
+      } else if (selectedStage === '3_writing') {
+        const c = document.getElementById('statMemoirCardStage3');
+        if (c) c.classList.add('active');
+      } else if (selectedStage === '4_web') {
+        const c = document.getElementById('statMemoirCardStage4');
+        if (c) c.classList.add('active');
+      } else if (selectedStage === '5_published') {
+        const c = document.getElementById('statMemoirCardStage5');
+        if (c) c.classList.add('active');
+      }
+
+      const filtered = list.filter(item => {
+        let matchStage = true;
+        if (selectedStage !== 'all') {
+          matchStage = item.stage === selectedStage;
+        }
+        let matchSearch = true;
+        if (searchQuery) {
+          const targetStr = `${item.customerName || ''} ${item.phone || ''} ${item.title || ''} ${item.note || ''}`.toLowerCase();
+          matchSearch = targetStr.includes(searchQuery);
+        }
+        return matchStage && matchSearch;
+      });
+
+      if (!tbody) return;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" style="text-align: center; padding: 40px 16px; color: var(--text-muted);">
+              해당 조건의 디지털 자서전 프로젝트가 없습니다.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(item => {
+        const stageInfo = getMemoirStageInfo(item.stage);
+        const cleanPhone = (item.phone || '').replace(/[^0-9]/g, '');
+
+        return `
+          <tr>
+            <td style="font-size: 0.85rem; color: var(--text-muted); white-space: nowrap;">
+              ${escapeHtml(item.createdAt || '')}
+            </td>
+            <td>
+              <div style="font-weight: 750; font-size: 0.93rem; color: var(--text-primary); margin-bottom: 2px;">
+                ${escapeHtml(item.customerName || '고객님')}
+              </div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);">
+                ${item.role === '본인 어르신' ? '👴 본인' : '👨‍👩‍👧 가족 대리'}
+              </div>
+            </td>
+            <td style="white-space: nowrap;">
+              <a href="tel:${cleanPhone}" title="클릭 시 전화 연결" style="color: var(--accent); font-weight: 800; font-size: 0.90rem; text-decoration: underline; display: inline-flex; align-items: center; gap: 4px;">
+                <span>📞</span> ${escapeHtml(item.phone || '')}
+              </a>
+            </td>
+            <td>
+              <div style="font-weight: 700; font-size: 0.94rem; color: var(--text-primary); font-family: 'Noto Serif KR', serif; margin-bottom: 3px;">
+                ${escapeHtml(item.title || '제목 미정')}
+              </div>
+            </td>
+            <td style="text-align: center; font-size: 0.82rem; color: var(--text-secondary); white-space: nowrap;">
+              ${escapeHtml(item.photoStatus || '자료 준비중')}
+            </td>
+            <td style="text-align: center; white-space: nowrap;">
+              <select class="memoir-stage-select ${stageInfo.class}" onchange="updateMemoirStage('${item.id}', this.value)">
+                <option value="1_consult" ${item.stage === '1_consult' ? 'selected' : ''}>🟡 1. 상담접수</option>
+                <option value="2_interview" ${item.stage === '2_interview' ? 'selected' : ''}>🎙️ 2. 구술인터뷰</option>
+                <option value="3_writing" ${item.stage === '3_writing' ? 'selected' : ''}>✍️ 3. 원고집필</option>
+                <option value="4_web" ${item.stage === '4_web' ? 'selected' : ''}>📖 4. 서재등록</option>
+                <option value="5_published" ${item.stage === '5_published' ? 'selected' : ''}>📦 5. 출판완료</option>
+              </select>
+            </td>
+            <td style="font-size: 0.85rem; color: var(--text-primary); cursor: pointer; max-width: 200px; line-height: 1.4;" onclick="updateMemoirNote('${item.id}')" title="클릭하여 메모 수정">
+              <span style="border-bottom: 1px dashed var(--text-muted); display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                📝 ${escapeHtml(item.note || '메모 없음 (클릭하여 입력)')}
+              </span>
+            </td>
+            <td style="text-align: center; white-space: nowrap;">
+              <button onclick="deleteMemoir('${item.id}')" title="프로젝트 삭제" style="background: none; border: none; font-size: 1.1rem; cursor: pointer; opacity: 0.6; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+                🗑️
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // 자서전 제작 단계 실시간 변경
+    function updateMemoirStage(id, newStage) {
+      const list = getMemoirList();
+      const target = list.find(item => item.id === id);
+      if (target) {
+        target.stage = newStage;
+        saveMemoirList(list);
+        renderAdminMemoirTable();
+      }
+    }
+
+    // 자서전 진행 메모 수정
+    function updateMemoirNote(id) {
+      const list = getMemoirList();
+      const target = list.find(item => item.id === id);
+      if (!target) return;
+      const newNote = prompt(`[${target.customerName}] 자서전 진행 메모를 입력하세요:`, target.note || '');
+      if (newNote !== null) {
+        target.note = newNote.trim();
+        saveMemoirList(list);
+        renderAdminMemoirTable();
+      }
+    }
+
+    // 자서전 프로젝트 삭제
+    function deleteMemoir(id) {
+      if (!confirm('정말 이 자서전 제작 프로젝트를 삭제하시겠습니까?')) return;
+      let list = getMemoirList();
+      list = list.filter(item => item.id !== id);
+      saveMemoirList(list);
+      renderAdminMemoirTable();
+    }
+
+    // 새 자서전 직접 등록 모달/프롬프트
+    function openAddMemoirModal() {
+      const name = prompt('고객 성함을 입력하세요:\n(예: 김순옥 어르신)', '');
+      if (!name) return;
+      const phone = prompt('연락처를 입력하세요:\n(예: 010-1234-5678)', '010-');
+      if (!phone) return;
+      const title = prompt('희망 자서전 가제 또는 주제를 입력하세요:\n(예: 《나의 삶, 나의 가족 이야기》)', '《내 인생의 여백과 결》');
+      const note = prompt('초기 진행 메모를 입력하세요:', '방문 인터뷰 일정 조율 중');
+
+      const now = new Date();
+      const dateStr = `${now.getMonth() + 1}/${now.getDate()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+      const newRecord = {
+        id: 'mem_' + Date.now(),
+        customerName: name.trim(),
+        role: '본인 어르신',
+        phone: phone.trim(),
+        title: title ? title.trim() : '제목 미정',
+        photoStatus: '⏳ 자료 수집 준비 중',
+        stage: '1_consult',
+        note: note ? note.trim() : '신규 프로젝트 접수',
+        createdAt: dateStr
+      };
+
+      const list = getMemoirList();
+      list.unshift(newRecord);
+      saveMemoirList(list);
+      renderAdminMemoirTable();
+      alert(`📖 [${name}] 고객님의 디지털 자서전 프로젝트가 등록되었습니다.\n1단계(상담접수) 파이프라인에서 확인하실 수 있습니다.`);
+    }
+
+    // 상담 신청 접수 시 자서전 카테고리 자동 연동 등록
+    function addMemoirFromConsult(data) {
+      const list = getMemoirList();
+      const newRecord = {
+        id: 'mem_' + Date.now(),
+        customerName: data.customerName || '어르신 고객',
+        role: data.role || '본인 어르신',
+        phone: data.phone || '',
+        title: data.title || '《내 인생의 여백과 결 (가제)》',
+        photoStatus: '⏳ 자료 준비 중',
+        stage: '1_consult',
+        note: data.note || '온라인 간편 상담 신청 접수',
+        createdAt: data.createdAt || ''
+      };
+      list.unshift(newRecord);
+      saveMemoirList(list);
+    }
+
+    // 자서전 목록 엑셀(CSV) 다운로드
+    function exportMemoirToCSV() {
+      const list = getMemoirList();
+      if (!list.length) {
+        alert('내보낼 자서전 프로젝트 데이터가 없습니다.');
+        return;
+      }
+
+      let csvContent = '\uFEFF신청일시,고객성함,신청구분,연락처,희망책제목,사진자료현황,제작단계,진행메모\n';
+      list.forEach(item => {
+        const cleanTitle = (item.title || '').replace(/"/g, '""');
+        const cleanNote = (item.note || '').replace(/"/g, '""');
+        const stageName = getMemoirStageInfo(item.stage).name;
+        csvContent += `"${item.createdAt}","${item.customerName}","${item.role}","${item.phone}","${cleanTitle}","${item.photoStatus}","${stageName}","${cleanNote}"\n`;
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      const now = new Date();
+      const filename = `여백과결_자서전제작관리대장_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}.csv`;
+      link.setAttribute('href', url);
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // 뱃지 숫자 갱신 (진행 중인 1~4단계 프로젝트 수)
+    function updateMemoirBadges() {
+      const list = getMemoirList();
+      const inProgress = list.filter(item => item.stage !== '5_published').length;
+      const badge = document.getElementById('adminMemoirBadge');
+      if (badge) badge.textContent = inProgress;
+    }
+
     // ================= 관리자 콘솔: 오늘의 비움 한 줄 관리 시스템 =================
     // 비움 관리 테이블 렌더링 및 통계 집계
     function renderAdminUnburdenTable() {
@@ -6726,6 +7241,7 @@
       renderFeaturedMagazine();
       updateAdminUI();
       updateConsultBadges();
+      updateMemoirBadges();
       renderUnburdenFeed();
       updateUnburdenAdminBadge();
     });
@@ -6746,6 +7262,7 @@
     renderFeaturedMagazine();
     updateAdminUI();
     updateConsultBadges();
+    updateMemoirBadges();
     renderUnburdenFeed();
     updateUnburdenAdminBadge();
   </script>
