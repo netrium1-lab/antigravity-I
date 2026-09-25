@@ -288,163 +288,128 @@
       font-size: 1.25rem;
     }
 
-    /* -------------------- 웰라이프 & 웰다잉 에디토리얼 히어로 -------------------- */
-    .hero-editorial {
-      padding: 50px 0 60px;
+    /* -------------------- 웰라이프 & 웰다잉 감성 배경 히어로 -------------------- */
+    .hero-banner {
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      margin: 20px auto 48px;
+      padding: 90px 24px;
+      text-align: center;
+      background: url('images/hero-bg.jpg') center 40% / cover no-repeat;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.95fr;
-      gap: 40px;
-      align-items: center;
+    /* 따뜻하고 은은한 오버레이로 이미지의 평온함을 살리면서 글자 가독성 극대화 */
+    .hero-banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(250, 248, 245, 0.83) 0%,
+        rgba(250, 248, 245, 0.88) 50%,
+        rgba(250, 248, 245, 0.94) 100%
+      );
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 1;
     }
 
-    .hero-content {
-      display: flex;
-      flex-direction: column;
+    [data-theme="dark"] .hero-banner::before {
+      background: linear-gradient(
+        180deg,
+        rgba(24, 23, 21, 0.85) 0%,
+        rgba(24, 23, 21, 0.90) 50%,
+        rgba(24, 23, 21, 0.96) 100%
+      );
     }
 
-    .hero-badge-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 14px;
-      background: var(--accent-light);
+      padding: 7px 18px;
+      background: rgba(255, 255, 255, 0.92);
       color: var(--accent);
       border-radius: 9999px;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 700;
-      border: 1px solid rgba(94, 109, 80, 0.2);
+      margin-bottom: 22px;
+      border: 1px solid rgba(94, 109, 80, 0.25);
+      box-shadow: var(--shadow-sm);
     }
 
-    .hero-badge.gold {
-      background: rgba(197, 157, 63, 0.12);
-      color: var(--accent-gold);
-      border-color: rgba(197, 157, 63, 0.25);
+    [data-theme="dark"] .hero-badge {
+      background: rgba(41, 39, 35, 0.92);
     }
 
     .hero-title {
-      font-size: 2.35rem;
+      font-size: 2.65rem;
       font-weight: 800;
       line-height: 1.35;
       letter-spacing: -1px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       word-break: keep-all;
+      color: var(--text-primary);
     }
 
-    .hero-title .highlight-dying {
+    .hero-title .highlight {
       color: var(--accent);
       text-decoration: underline;
       text-decoration-color: rgba(94, 109, 80, 0.35);
-      text-underline-offset: 6px;
-    }
-
-    .hero-title .highlight-life {
-      color: var(--accent-gold);
+      text-underline-offset: 8px;
     }
 
     .hero-desc {
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       color: var(--text-secondary);
-      line-height: 1.8;
-      margin-bottom: 24px;
+      margin-bottom: 34px;
+      line-height: 1.85;
       word-break: keep-all;
     }
 
-    /* 웰다잉 & 웰라이프 2대 가치 미니 카드 */
-    .hero-philosophy-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-
-    .philosophy-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 16px;
-      box-shadow: var(--shadow-sm);
-      transition: var(--transition);
-    }
-
-    .philosophy-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .philosophy-card.well-dying {
-      border-left: 4px solid var(--accent);
-    }
-
-    .philosophy-card.well-life {
-      border-left: 4px solid var(--accent-gold);
-    }
-
-    .philosophy-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      margin-bottom: 4px;
+    .hero-chips {
       display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--border-color);
+      padding: 11px 22px;
+      border-radius: 9999px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
       align-items: center;
       gap: 6px;
+      box-shadow: var(--shadow-sm);
     }
 
-    .philosophy-desc {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      line-height: 1.5;
+    [data-theme="dark"] .chip {
+      background: rgba(41, 39, 35, 0.92);
     }
 
-    /* 히어로 이미지 프레임 */
-    .hero-image-frame {
-      position: relative;
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: var(--shadow-lg);
-      border: 1px solid var(--border-color);
-      aspect-ratio: 4 / 3;
-      background: var(--bg-secondary);
-    }
-
-    .hero-image-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-      display: block;
-    }
-
-    .hero-image-frame:hover img {
-      transform: scale(1.03);
-    }
-
-    .image-overlay-caption {
-      position: absolute;
-      bottom: 16px;
-      left: 16px;
-      right: 16px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      background: rgba(24, 23, 21, 0.75);
-      color: #f5f2ed;
-      padding: 12px 18px;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      font-size: 0.85rem;
-      line-height: 1.5;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
     }
 
     .hero-chips {
@@ -969,29 +934,22 @@
     }
 
     /* -------------------- 스마트폰 모바일 반응형 미디어 쿼리 -------------------- */
-    @media (max-width: 900px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-      .hero-image-frame {
-        order: -1; /* 모바일에서 사진이 상단에 감성적으로 먼저 노출 */
-        aspect-ratio: 16 / 10;
+    @media (max-width: 768px) {
+      .hero-banner {
+        padding: 55px 18px;
+        margin: 14px auto 36px;
+        border-radius: 20px;
       }
       .hero-title {
-        font-size: 1.95rem;
-      }
-      .hero-philosophy-cards {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .hero-editorial {
-        padding: 30px 0 40px;
+        font-size: 2.05rem;
       }
       .hero-desc {
-        font-size: 0.98rem;
+        font-size: 1rem;
+        margin-bottom: 26px;
+      }
+      .chip {
+        padding: 9px 16px;
+        font-size: 0.86rem;
       }
       .nav-menu {
         display: none;
@@ -1090,47 +1048,22 @@
   <main>
     <!-- 2. 메인 히어로: 웰라이프 & 웰다잉 에디토리얼 섹션 -->
     <div class="container" id="home">
-      <section class="hero-editorial">
-        <div class="hero-grid">
-          <div class="hero-content">
-            <div class="hero-badge-wrap">
-              <span class="hero-badge">🕊️ 웰다잉(Well-Dying)의 품격</span>
-              <span class="hero-badge gold">☀️ 웰라이프(Well-Life)의 완성</span>
-            </div>
-            <h1 class="hero-title">
-              삶의 끝을 온전히 <span class="highlight-dying">내 손으로 갈무리</span>할 때,<br>
-              비로소 오늘 하루가 <span class="highlight-life">가장 눈부시게</span> 빛납니다
-            </h1>
-            <p class="hero-desc">
-              무겁고 두려운 죽음의 준비가 아닙니다. 지나온 삶의 결을 정돈하고, 남겨질 짐과 디지털 흔적을 미리 비워내며, 남은 날들을 온전히 나의 로망으로 채워가는 가장 주체적인 인생 후반전 리셋의 쉼터입니다.
-            </p>
-
-            <!-- 웰다잉 & 웰라이프 2대 가치 미니 카드 -->
-            <div class="hero-philosophy-cards">
-              <div class="philosophy-card well-dying">
-                <div class="philosophy-title">🕊️ 아름다운 갈무리 (Well-Dying)</div>
-                <p class="philosophy-desc">유품·디지털 흔적 정리, 생전 감사 파티, 후회 없는 평온한 매듭</p>
-              </div>
-              <div class="philosophy-card well-life">
-                <div class="philosophy-title">☀️ 주체적인 오늘 (Well-Life)</div>
-                <p class="philosophy-desc">세포 건강과 활력, 버킷리스트 엔딩투어, 나만의 두 번째 황금기</p>
-              </div>
-            </div>
-
-            <div class="hero-chips">
-              <a href="#magazine" class="chip">📖 서재의 지혜 읽기</a>
-              <a href="#lounge" class="chip">💬 오늘 내 마음 비워내기</a>
-              <a href="#programs" class="chip">🌱 4주 라이프 리셋 알아보기</a>
-            </div>
-          </div>
-
-          <!-- 감성 히어로 이미지 액자 프레임 -->
-          <div class="hero-image-frame">
-            <img src="images/hero-bg.jpg" alt="여백과 결을 마주하는 평온한 서재 풍경" />
-            <div class="image-overlay-caption">
-              <span class="icon">🌿</span>
-              <span>지나온 세월의 결을 다듬고, 남은 인생의 여백을 마주하는 시간</span>
-            </div>
+      <!-- 2. 메인 히어로: 웰라이프 & 웰다잉 감성 배경 배너 -->
+      <section class="hero-banner">
+        <div class="hero-inner">
+          <div class="hero-badge">🌿 이야기와 공감이 머무는 공간</div>
+          <h1 class="hero-title">
+            지나온 삶의 <span class="highlight">이야기</span>를 나누고,<br>
+            남은 인생의 <span class="highlight">여백</span>을 함께 채워갑니다
+          </h1>
+          <p class="hero-desc">
+            바쁘게 달려온 전반전의 짐을 잠시 내려놓으세요.<br>
+            자유롭게 글을 읽고, 서로의 마음에 공감하며, 나만의 고유한 서사를 다듬어가는 따뜻한 쉼터입니다.
+          </p>
+          <div class="hero-chips">
+            <a href="#magazine" class="chip">📖 인기 칼럼 읽기</a>
+            <a href="#lounge" class="chip">💬 오늘 내 마음 한 줄 털어놓기</a>
+            <a href="#programs" class="chip">🌱 4주 라이프 리셋 알아보기</a>
           </div>
         </div>
       </section>
