@@ -6,6 +6,33 @@
   <title>나만의 고유한 서재 | 여백과 결 리셋 아카이브</title>
   <meta name="description" content="지나온 삶의 궤적이 품격 있는 문학이 되는 곳. 김순옥 어르신의 프라이빗 온라인 서재 (디지털 자서전, 기억 복원 갤러리, 비움 일기, 엔딩 금고).">
 
+  <!-- Google tag (gtag.js) - Google Ads: 121-057-0886 (여백과 결) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1210570886"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-1210570886');
+
+    // 구글 애즈 전환 추적 헬퍼 함수
+    function trackGoogleAdsConversion(conversionName, details) {
+      try {
+        if (typeof gtag === 'function') {
+          gtag('event', 'conversion', {
+            'send_to': 'AW-1210570886',
+            'event_category': 'GoogleAds',
+            'event_label': conversionName,
+            ...(details || {})
+          });
+        }
+        console.log('[Google Ads Conversion]:', conversionName, details);
+      } catch (err) {
+        console.error('[Google Ads Error]:', err);
+      }
+    }
+  </script>
+
   <!-- 웹폰트: 기본 Pretendard(고딕) + 감성 포인트 Noto Serif KR(명조) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2270,7 +2297,7 @@
               방문 컨시어지 1:1 상담 문의 환영
             </div>
             <div>
-              <a href="https://open.kakao.com/o/p79YYjPi" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; gap: 7px; background: #FEE500; color: #191919; padding: 8px 16px; border-radius: 8px; font-weight: 800; font-size: 0.86rem; text-decoration: none; box-shadow: 0 2px 6px rgba(0,0,0,0.12); width: 100%; box-sizing: border-box;">
+              <a href="https://open.kakao.com/o/p79YYjPi" target="_blank" rel="noopener noreferrer" onclick="trackGoogleAdsConversion('kakaotalk_myroom_footer_click')" style="display: inline-flex; align-items: center; justify-content: center; gap: 7px; background: #FEE500; color: #191919; padding: 8px 16px; border-radius: 8px; font-weight: 800; font-size: 0.86rem; text-decoration: none; box-shadow: 0 2px 6px rgba(0,0,0,0.12); width: 100%; box-sizing: border-box;">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="#3C1E1E"><path d="M12 3C6.48 3 2 6.58 2 11c0 2.84 1.87 5.33 4.71 6.73-.21.78-.77 2.83-.88 3.26-.14.54.2.53.42.39.29-.19 3.42-2.34 3.99-2.73.57.08 1.16.12 1.76.12 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/></svg>
                 <span>💬 카카오톡 오픈채팅 실시간 상담</span>
               </a>
@@ -2298,7 +2325,7 @@
   </footer>
 
   <!-- 💬 카카오톡 오픈채팅 실시간 1:1 상담 플로팅 버튼 (서재 좌하단 배치) -->
-  <a href="https://open.kakao.com/o/p79YYjPi" target="_blank" rel="noopener noreferrer" class="kakao-float-btn" title="카카오톡 오픈채팅 실시간 1:1 상담 열기">
+  <a href="https://open.kakao.com/o/p79YYjPi" target="_blank" rel="noopener noreferrer" onclick="trackGoogleAdsConversion('kakaotalk_floating_click')" class="kakao-float-btn" title="카카오톡 오픈채팅 실시간 1:1 상담 열기">
     <svg viewBox="0 0 24 24" fill="#3C1E1E">
       <path d="M12 3C6.48 3 2 6.58 2 11c0 2.84 1.87 5.33 4.71 6.73-.21.78-.77 2.83-.88 3.26-.14.54.2.53.42.39.29-.19 3.42-2.34 3.99-2.73.57.08 1.16.12 1.76.12 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/>
     </svg>

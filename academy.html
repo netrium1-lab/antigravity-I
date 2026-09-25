@@ -6,6 +6,33 @@
   <title>여백과 결 코칭 아카데미 | 시니어 라이프 리셋 전문 코치 양성</title>
   <meta name="description" content="타인의 삶에 여백과 결을 선물하는 시니어 라이프 리셋 코치 양성 아카데미. 일본 초고령사회 4대 선진 공인 자격 체계 도입 (뷰티, 옷장정리, 유품정리, 디지털 자서전).">
   
+  <!-- Google tag (gtag.js) - Google Ads: 121-057-0886 (여백과 결) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1210570886"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-1210570886');
+
+    // 구글 애즈 전환 추적 헬퍼 함수
+    function trackGoogleAdsConversion(conversionName, details) {
+      try {
+        if (typeof gtag === 'function') {
+          gtag('event', 'conversion', {
+            'send_to': 'AW-1210570886',
+            'event_category': 'GoogleAds',
+            'event_label': conversionName,
+            ...(details || {})
+          });
+        }
+        console.log('[Google Ads Conversion]:', conversionName, details);
+      } catch (err) {
+        console.error('[Google Ads Error]:', err);
+      }
+    }
+  </script>
+  
   <!-- 구글 웹폰트: 기본 베이스 Pretendard(고딕) + 감성 포인트 Noto Serif KR(명조) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1358,7 +1385,7 @@
               1기 코칭스태프 지원서 제출
             </button>
             <div style="margin-top: 14px;">
-              <a href="https://open.kakao.com/o/p79YYjPi" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 7px; background: #FEE500; color: #191919; padding: 10px 20px; border-radius: 999px; font-weight: 800; font-size: 0.92rem; text-decoration: none; box-shadow: 0 4px 12px rgba(254, 229, 0, 0.4);">
+              <a href="https://open.kakao.com/o/p79YYjPi" target="_blank" rel="noopener noreferrer" onclick="trackGoogleAdsConversion('kakaotalk_academy_apply_click')" style="display: inline-flex; align-items: center; gap: 7px; background: #FEE500; color: #191919; padding: 10px 20px; border-radius: 999px; font-weight: 800; font-size: 0.92rem; text-decoration: none; box-shadow: 0 4px 12px rgba(254, 229, 0, 0.4);">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="#3C1E1E"><path d="M12 3C6.48 3 2 6.58 2 11c0 2.84 1.87 5.33 4.71 6.73-.21.78-.77 2.83-.88 3.26-.14.54.2.53.42.39.29-.19 3.42-2.34 3.99-2.73.57.08 1.16.12 1.76.12 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/></svg>
                 <span>지원 전 카톡으로 1:1 입학 문의하기</span>
               </a>
@@ -1436,7 +1463,7 @@
         <strong>회사명: 메타큐 라이프</strong> | 사업자등록번호: <strong>432-08-03705</strong> | 고객지원: <a href="mailto:cjh6630@naver.com" style="color: inherit; text-decoration: underline;">cjh6630@naver.com</a>
       </p>
       <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;">
-        <a href="https://open.kakao.com/o/p79YYjPi" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: #FEE500; color: #191919; padding: 7px 18px; border-radius: 999px; font-weight: 800; font-size: 0.86rem; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+        <a href="https://open.kakao.com/o/p79YYjPi" target="_blank" rel="noopener noreferrer" onclick="trackGoogleAdsConversion('kakaotalk_academy_footer_click')" style="display: inline-flex; align-items: center; gap: 6px; background: #FEE500; color: #191919; padding: 7px 18px; border-radius: 999px; font-weight: 800; font-size: 0.86rem; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#3C1E1E"><path d="M12 3C6.48 3 2 6.58 2 11c0 2.84 1.87 5.33 4.71 6.73-.21.78-.77 2.83-.88 3.26-.14.54.2.53.42.39.29-.19 3.42-2.34 3.99-2.73.57.08 1.16.12 1.76.12 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/></svg>
           <span>💬 카카오톡 오픈채팅 실시간 입학상담</span>
         </a>
@@ -1456,7 +1483,7 @@
   </footer>
 
   <!-- 💬 카카오톡 오픈채팅 실시간 1:1 상담 플로팅 버튼 -->
-  <a href="https://open.kakao.com/o/p79YYjPi" target="_blank" rel="noopener noreferrer" class="kakao-float-btn" title="카카오톡 오픈채팅 실시간 1:1 상담 열기">
+  <a href="https://open.kakao.com/o/p79YYjPi" target="_blank" rel="noopener noreferrer" onclick="trackGoogleAdsConversion('kakaotalk_floating_click')" class="kakao-float-btn" title="카카오톡 오픈채팅 실시간 1:1 상담 열기">
     <svg viewBox="0 0 24 24" fill="#3C1E1E">
       <path d="M12 3C6.48 3 2 6.58 2 11c0 2.84 1.87 5.33 4.71 6.73-.21.78-.77 2.83-.88 3.26-.14.54.2.53.42.39.29-.19 3.42-2.34 3.99-2.73.57.08 1.16.12 1.76.12 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/>
     </svg>
@@ -1560,6 +1587,15 @@
         localStorage.setItem(CONSULT_STORAGE_KEY, JSON.stringify(consultList));
       } catch (err) {
         console.error(err);
+      }
+
+      // 구글 애즈 전환(Conversion) 이벤트 추적
+      if (typeof trackGoogleAdsConversion === 'function') {
+        trackGoogleAdsConversion('coach_apply_submit', {
+          'applicant_name': name,
+          'track': track,
+          'region': region || '전국'
+        });
       }
 
       // 제출 완료 알림
