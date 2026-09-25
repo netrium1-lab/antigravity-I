@@ -1,23 +1,24 @@
 @echo off
-chcp 65001 > nul
-echo ==============================================
-echo       깃허브(GitHub) 즉시 배포 진행 중...
-echo ==============================================
+set "PATH=%PATH%;C:\Program Files\Git\cmd"
 
+echo ==============================================
+echo   [Reset Archive] GitHub Deploy
+echo ==============================================
+echo.
+
+echo [1/3] Staging changes...
 git add .
-git commit -m "홈페이지 업데이트"
-git push origin main
 
-if %ERRORLEVEL% EQU 0 (
-    echo.
-    echo ==============================================
-    echo [성공] 수정된 내용이 깃허브에 배포되었습니다!
-    echo ==============================================
-) else (
-    echo.
-    echo ==============================================
-    echo [오류] 깃허브 연결(원격 저장소 주소) 또는 로그인을 확인해 주세요.
-    echo ==============================================
-)
+echo [2/3] Committing changes...
+git commit -m "Update: Reset Archive"
 
+echo [3/3] Pushing to GitHub...
+git push -u origin main
+
+echo.
+echo ==============================================
+echo   Deploy Process Finished!
+echo   Site URL: https://netrium1-lab.github.io/antigravity-I/
+echo ==============================================
+echo.
 pause
