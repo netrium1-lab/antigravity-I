@@ -1554,9 +1554,187 @@
         font-size: 0.62rem;
         padding: 1px 5px;
       }
-      .logo-sub {
-        display: none; /* 초소형 기기에서는 영문 서브타이틀을 숨겨 메인 로고 가독성 극대화 */
-      }
+    /* ================= 관리자 홈 (Admin Console) 스타일 ================= */
+    .admin-modal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      max-width: 1000px;
+      width: 100%;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+      padding: 32px 28px;
+      position: relative;
+      animation: modalSlideUp 0.3s ease;
+    }
+
+    .admin-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 18px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .admin-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .admin-badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.05em;
+    }
+
+    .admin-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .admin-stat-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .admin-stat-val {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .admin-action-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px 18px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* 관리자 칼럼 관리 테이블 */
+    .admin-table-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      min-width: 680px;
+    }
+
+    .admin-table th {
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      font-weight: 700;
+      text-align: left;
+      padding: 14px 14px;
+      border-bottom: 2px solid var(--border-color);
+      white-space: nowrap;
+    }
+
+    .admin-table td {
+      padding: 14px 14px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-primary);
+      vertical-align: middle;
+      background: var(--bg-card);
+    }
+
+    .admin-table tr:hover td {
+      background: var(--accent-light);
+    }
+
+    .admin-btn-action {
+      padding: 5px 11px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      transition: var(--transition);
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .admin-btn-action:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .admin-btn-delete {
+      color: #d9534f;
+      border-color: rgba(217, 83, 79, 0.4);
+    }
+
+    .admin-btn-delete:hover {
+      background: #d9534f;
+      border-color: #d9534f;
+      color: #fff;
+    }
+
+    /* 관리자 인증 비밀번호 모달 */
+    .admin-auth-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+      padding: 36px 28px;
+      text-align: center;
+      position: relative;
+      animation: modalSlideUp 0.3s ease;
+    }
+
+    .admin-pwd-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      font-size: 1.35rem;
+      text-align: center;
+      letter-spacing: 6px;
+      margin: 18px 0 16px;
+      outline: none;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      font-family: inherit;
+      transition: var(--transition);
+    }
+
+    .admin-pwd-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(94, 107, 82, 0.2);
     }
   </style>
 </head>
@@ -1665,6 +1843,11 @@
       <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 18px;">
         첫 방문이신가요? 간편 로그인 시 자동으로 안전하게 가입됩니다.
       </p>
+      <div style="margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--border-color); text-align: center;">
+        <button onclick="closeLoginModal(); openAdminAuthModal();" style="background: none; border: none; color: var(--accent); font-size: 0.84rem; font-weight: 700; cursor: pointer; text-decoration: underline; font-family: inherit;">
+          ⚙️ 서재 관리자 홈으로 이동 (인증번호 1223)
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1698,8 +1881,12 @@
             <button class="btn-mag-action" onclick="openBoardModal()" title="전체 게시글 목록을 열람합니다">
               <span>📋</span> 전체 글 목록 보기
             </button>
-            <button class="btn-mag-action btn-mag-write" onclick="openTistoryEditor()" title="티스토리 스타일 에디터로 새 글을 작성합니다">
-              <span>✍️</span> 칼럼 글쓰기
+            <!-- 관리자 모드 활성화 시 노출되는 전용 액션 버튼들 -->
+            <div id="adminControlsOnMagazine" style="display: inline-flex; gap: 8px;">
+              <!-- JS에서 관리자 로그인 상태에 따라 렌더링 -->
+            </div>
+            <button class="btn-mag-action" onclick="openAdminAuthModal()" title="관리자 비밀번호(1223)를 입력하여 관리자 홈으로 이동합니다" style="background: var(--bg-card); color: var(--accent); border-color: var(--accent);">
+              <span>⚙️</span> 관리자 홈
             </button>
           </div>
         </div>
@@ -1921,8 +2108,11 @@
           </ul>
         </div>
       </div>
-      <div class="footer-bottom">
+      <div class="footer-bottom" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
         <p>© 2026 여백과 결, 리셋 아카이브 (Yebaek & Geol : Reset Archive). 모든 권리 보유.</p>
+        <button onclick="openAdminAuthModal()" style="background: none; border: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.78rem; padding: 4px 10px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-family: inherit; transition: var(--transition);">
+          <span>⚙️ 관리자 홈</span>
+        </button>
       </div>
     </div>
   </footer>
@@ -2058,6 +2248,121 @@
       <!-- 게시글 리스트 컨테이너 -->
       <div id="boardItemList" style="margin-top: 10px;">
         <!-- JS로 동적 렌더링 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 모달 4) 관리자 인증 비밀번호 모달 (비밀번호: 1223) ================= -->
+  <div class="cms-modal-overlay" id="adminAuthModal" onclick="closeAdminAuthOnOverlay(event)">
+    <div class="admin-auth-card">
+      <button class="modal-close-btn" onclick="closeAdminAuthModal()" aria-label="닫기">✕</button>
+      <div style="font-size: 2.2rem; margin-bottom: 8px;">🔐</div>
+      <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin-bottom: 6px;">
+        서재 관리자 홈 인증
+      </h3>
+      <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;">
+        칼럼 작성·수정·삭제 및 메인 전면 노출을 관리하는 전용 관리자 홈입니다.<br>
+        관리자 비밀번호를 입력해주세요.
+      </p>
+
+      <form onsubmit="handleAdminLoginSubmit(event)">
+        <input type="password" id="adminPasswordInput" class="admin-pwd-input" placeholder="비밀번호 4자리" maxlength="8" autocomplete="current-password" required>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1rem; border-radius: 12px; font-weight: 700;">
+          관리자 홈 입장하기
+        </button>
+      </form>
+      <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 14px;">
+        (설정된 기본 관리자 비밀번호: 1223)
+      </p>
+    </div>
+  </div>
+
+  <!-- ================= 모달 5) 여백의 서재 종합 관리자 홈 (Admin Console) ================= -->
+  <div class="cms-modal-overlay" id="adminDashboardModal" onclick="closeAdminDashboardOnOverlay(event)">
+    <div class="admin-modal-card">
+      <!-- 관리자 홈 상단 헤더 -->
+      <div class="admin-header-row">
+        <div class="admin-title-group">
+          <span style="font-size: 1.5rem;">⚙️</span>
+          <h2 style="font-family: 'Noto Serif KR', serif; font-size: 1.45rem; font-weight: 800; color: var(--text-primary); margin: 0;">
+            여백의 서재 · 관리자 홈
+          </h2>
+          <span class="admin-badge">👑 최고 관리자 모드</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button class="btn-mag-action" onclick="logoutAdmin()" style="font-size: 0.82rem; color: #d9534f; border-color: rgba(217, 83, 79, 0.4);">
+            🚪 관리자 로그아웃
+          </button>
+          <button class="drawer-close" onclick="closeAdminDashboardModal()" aria-label="닫기" style="border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">✕</button>
+        </div>
+      </div>
+
+      <!-- 관리자 통계 요약 카드 -->
+      <div class="admin-stat-grid">
+        <div class="admin-stat-card">
+          <div>
+            <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;">전체 등록 칼럼</div>
+            <div class="admin-stat-val" id="statTotalArticles">0</div>
+          </div>
+          <div style="font-size: 1.8rem;">📚</div>
+        </div>
+        <div class="admin-stat-card">
+          <div>
+            <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;">메인 전면 노출 중</div>
+            <div class="admin-stat-val" id="statFeaturedArticles" style="color: var(--accent-gold);">0</div>
+          </div>
+          <div style="font-size: 1.8rem;">⭐</div>
+        </div>
+        <div class="admin-stat-card">
+          <div>
+            <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;">서재 보관 목록</div>
+            <div class="admin-stat-val" id="statArchivedArticles" style="color: var(--text-muted);">0</div>
+          </div>
+          <div style="font-size: 1.8rem;">📁</div>
+        </div>
+      </div>
+
+      <!-- 관리 액션 툴바 (새 글 쓰기, 카테고리 필터) -->
+      <div class="admin-action-toolbar">
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <button class="btn btn-primary" onclick="openTistoryEditor()" style="display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; font-size: 0.92rem;">
+            <span>✍️</span> 새 칼럼 작성하기
+          </button>
+          <span style="font-size: 0.86rem; color: var(--text-muted);">티스토리 스타일 에디터로 작성 및 발행</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <label for="adminFilterCategory" style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);">카테고리:</label>
+          <select id="adminFilterCategory" class="editor-category-select" onchange="renderAdminTable()" style="padding: 6px 12px; font-size: 0.85rem;">
+            <option value="all">전체보기</option>
+            <option value="비움과 갈무리">비움과 갈무리</option>
+            <option value="로망과 축제">로망과 축제</option>
+            <option value="몸과 웰니스">몸과 웰니스</option>
+            <option value="인생 서사">인생 서사</option>
+            <option value="마음과 영성">마음과 영성</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 칼럼 관리 목록 테이블 -->
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th style="width: 140px; text-align: center;">메인 전면 노출</th>
+              <th style="width: 120px;">카테고리</th>
+              <th>칼럼 제목 / 요약</th>
+              <th style="width: 100px;">작성일</th>
+              <th style="width: 190px; text-align: center;">관리 액션</th>
+            </tr>
+          </thead>
+          <tbody id="adminArticleTableBody">
+            <!-- JS 동적 렌더링 -->
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top: 18px; font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
+        <span>💡</span>
+        <span>[메인 전면 노출] 버튼을 클릭하면 메인 화면 상단 대문에 띄울 대표 칼럼을 실시간으로 켜고 끌 수 있습니다. (3~4개 권장)</span>
       </div>
     </div>
   </div>
@@ -2481,17 +2786,270 @@
         saveArticles(articles);
         renderFeaturedMagazine();
         renderBoardList();
+        if (isAdminLoggedIn()) {
+          renderAdminDashboard();
+        }
       }
     }
 
-    // ================= 모달 1) 티스토리 감성 글작성 에디터 =================
-    function openTistoryEditor() {
-      // 폼 초기화
-      document.getElementById('editorTitle').value = '';
-      document.getElementById('editorExcerpt').value = '';
-      document.getElementById('editorContent').innerHTML = '';
-      document.getElementById('editorCategory').selectedIndex = 0;
-      document.getElementById('editorIsFeatured').checked = true;
+    // =========================================================================
+    // 7. 관리자 인증 시스템 & 관리자 홈 (Admin Console) 제어
+    // =========================================================================
+    
+    // 관리자 로그인 여부 확인 (세션 스토리지 기반)
+    function isAdminLoggedIn() {
+      return sessionStorage.getItem('yebaek_is_admin') === 'true';
+    }
+
+    // 관리자 인증 모달 열기
+    function openAdminAuthModal() {
+      if (isAdminLoggedIn()) {
+        openAdminDashboardModal();
+        return;
+      }
+      const pwdInput = document.getElementById('adminPasswordInput');
+      if (pwdInput) pwdInput.value = '';
+      const modal = document.getElementById('adminAuthModal');
+      if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+          if (pwdInput) pwdInput.focus();
+        }, 150);
+      }
+    }
+
+    function closeAdminAuthModal() {
+      const modal = document.getElementById('adminAuthModal');
+      if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function closeAdminAuthOnOverlay(e) {
+      if (e.target.id === 'adminAuthModal') {
+        closeAdminAuthModal();
+      }
+    }
+
+    // 관리자 비밀번호 검증 (비밀번호: 1223)
+    function handleAdminLoginSubmit(e) {
+      e.preventDefault();
+      const pwdInput = document.getElementById('adminPasswordInput');
+      const enteredPwd = pwdInput.value.trim();
+
+      if (enteredPwd === '1223') {
+        sessionStorage.setItem('yebaek_is_admin', 'true');
+        closeAdminAuthModal();
+        updateAdminUI();
+        openAdminDashboardModal();
+        alert('🌿 관리자 홈에 성공적으로 접속되었습니다.');
+      } else {
+        alert('비밀번호가 올바르지 않습니다. 다시 입력해주세요.\n(설정된 관리자 비밀번호: 1223)');
+        pwdInput.value = '';
+        pwdInput.focus();
+      }
+    }
+
+    // 관리자 로그아웃
+    function logoutAdmin() {
+      sessionStorage.removeItem('yebaek_is_admin');
+      closeAdminDashboardModal();
+      updateAdminUI();
+      alert('관리자 모드에서 로그아웃되었습니다.');
+    }
+
+    // 메인 화면 관리자 UI 갱신 (관리자 로그인 시 메인 서재에도 글쓰기 버튼 노출)
+    function updateAdminUI() {
+      const adminContainer = document.getElementById('adminControlsOnMagazine');
+      if (!adminContainer) return;
+
+      if (isAdminLoggedIn()) {
+        adminContainer.innerHTML = `
+          <button class="btn-mag-action btn-mag-write" onclick="openTistoryEditor()" title="관리자 전용 새 칼럼 작성">
+            <span>✍️</span> 칼럼 글쓰기
+          </button>
+        `;
+      } else {
+        adminContainer.innerHTML = '';
+      }
+    }
+
+    // ================= 관리자 홈 대시보드 모달 제어 =================
+    function openAdminDashboardModal() {
+      renderAdminDashboard();
+      const modal = document.getElementById('adminDashboardModal');
+      if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeAdminDashboardModal() {
+      const modal = document.getElementById('adminDashboardModal');
+      if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function closeAdminDashboardOnOverlay(e) {
+      if (e.target.id === 'adminDashboardModal') {
+        closeAdminDashboardModal();
+      }
+    }
+
+    // 관리자 대시보드 통계 및 테이블 렌더링
+    function renderAdminDashboard() {
+      const articles = getStoredArticles();
+      const featuredCount = articles.filter(a => a.isFeatured).length;
+      const archivedCount = articles.filter(a => !a.isFeatured).length;
+
+      const statTotal = document.getElementById('statTotalArticles');
+      const statFeatured = document.getElementById('statFeaturedArticles');
+      const statArchived = document.getElementById('statArchivedArticles');
+
+      if (statTotal) statTotal.textContent = `${articles.length}편`;
+      if (statFeatured) statFeatured.textContent = `${featuredCount}편`;
+      if (statArchived) statArchived.textContent = `${archivedCount}편`;
+
+      renderAdminTable();
+    }
+
+    // 관리자 테이블 렌더링 (카테고리 필터링 지원)
+    function renderAdminTable() {
+      const tbody = document.getElementById('adminArticleTableBody');
+      if (!tbody) return;
+
+      const categorySelect = document.getElementById('adminFilterCategory');
+      const selectedCategory = categorySelect ? categorySelect.value : 'all';
+
+      const articles = getStoredArticles();
+      const filtered = selectedCategory === 'all'
+        ? articles
+        : articles.filter(a => a.category === selectedCategory);
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" style="text-align: center; padding: 36px; color: var(--text-muted);">
+              등록된 칼럼이 없습니다. 상단의 [✍️ 새 칼럼 작성하기]를 눌러 첫 글을 발행해보세요.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(a => `
+        <tr>
+          <td style="text-align: center;">
+            <button class="btn-pin-toggle ${a.isFeatured ? 'pinned' : ''}" onclick="toggleArticleFeatureFromAdmin('${a.id}')" title="${a.isFeatured ? '클릭 시 메인 전면 노출에서 해제됩니다' : '클릭 시 메인 전면 대표 카드로 노출됩니다'}">
+              ${a.isFeatured ? '⭐ 노출 중' : '☆ 미노출'}
+            </button>
+          </td>
+          <td>
+            <span class="mag-tag" style="font-size: 0.8rem;">[${escapeHtml(a.category)}]</span>
+          </td>
+          <td>
+            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 4px; cursor: pointer;" onclick="openArticleReader('${a.id}')" title="클릭하여 전문 읽기">
+              ${escapeHtml(a.title)}
+            </div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); max-width: 380px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              ${escapeHtml(a.excerpt || '')}
+            </div>
+          </td>
+          <td style="font-size: 0.84rem; color: var(--text-muted); white-space: nowrap;">
+            ${escapeHtml(a.date || '')}
+          </td>
+          <td style="text-align: center; white-space: nowrap;">
+            <div style="display: inline-flex; gap: 6px;">
+              <button class="admin-btn-action" onclick="editArticle('${a.id}')" title="글 내용 및 설정 수정">
+                ✏️ 수정
+              </button>
+              <button class="admin-btn-action" onclick="openArticleReader('${a.id}')" title="본문 전문 미리보기">
+                👁️ 보기
+              </button>
+              <button class="admin-btn-action admin-btn-delete" onclick="deleteArticle('${a.id}')" title="칼럼 영구 삭제">
+                🗑️ 삭제
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // 관리자 테이블에서 메인 노출 토글
+    function toggleArticleFeatureFromAdmin(id) {
+      const articles = getStoredArticles();
+      const target = articles.find(a => a.id === id);
+      if (target) {
+        target.isFeatured = !target.isFeatured;
+        saveArticles(articles);
+        renderFeaturedMagazine();
+        renderAdminDashboard();
+        if (document.getElementById('boardListModal').classList.contains('open')) {
+          renderBoardList();
+        }
+      }
+    }
+
+    // 칼럼 삭제 기능
+    function deleteArticle(id) {
+      const articles = getStoredArticles();
+      const target = articles.find(a => a.id === id);
+      if (!target) return;
+
+      if (confirm(`'${target.title}' 칼럼을 정말로 삭제하시겠습니까?\n삭제된 칼럼은 복구할 수 없습니다.`)) {
+        const updated = articles.filter(a => a.id !== id);
+        saveArticles(updated);
+        renderFeaturedMagazine();
+        renderAdminDashboard();
+        if (document.getElementById('boardListModal').classList.contains('open')) {
+          renderBoardList();
+        }
+        alert('칼럼이 안전하게 삭제되었습니다.');
+      }
+    }
+
+    // ================= 모달 1) 티스토리 감성 글작성 및 수정 에디터 =================
+    let currentEditingArticleId = null; // 수정 중인 글 ID (null이면 신규 작성)
+
+    // 에디터 열기 (신규 작성 또는 기존 글 수정)
+    function openTistoryEditor(articleId = null) {
+      currentEditingArticleId = articleId;
+
+      const topTitle = document.querySelector('#tistoryEditorModal .editor-top-title');
+      const publishBtn = document.querySelector('#tistoryEditorModal .btn-editor-publish');
+
+      if (articleId) {
+        // 기존 글 수정 모드
+        const articles = getStoredArticles();
+        const target = articles.find(a => a.id === articleId);
+        if (!target) {
+          alert('수정할 글을 찾을 수 없습니다.');
+          return;
+        }
+
+        document.getElementById('editorTitle').value = target.title || '';
+        document.getElementById('editorExcerpt').value = target.excerpt || '';
+        document.getElementById('editorCategory').value = target.category || '비움과 갈무리';
+        document.getElementById('editorIsFeatured').checked = !!target.isFeatured;
+        document.getElementById('editorContent').innerHTML = target.content || '';
+
+        if (topTitle) topTitle.innerHTML = '<span>✏️</span> 여백의 서재 칼럼 수정';
+        if (publishBtn) publishBtn.innerHTML = '<span>💾</span> 수정 내용 저장';
+      } else {
+        // 신규 작성 모드
+        document.getElementById('editorTitle').value = '';
+        document.getElementById('editorExcerpt').value = '';
+        document.getElementById('editorContent').innerHTML = '';
+        document.getElementById('editorCategory').selectedIndex = 0;
+        document.getElementById('editorIsFeatured').checked = true;
+
+        if (topTitle) topTitle.innerHTML = '<span>✍️</span> 여백의 서재 칼럼 에디터';
+        if (publishBtn) publishBtn.innerHTML = '<span>🚀</span> 발행하기';
+      }
 
       const modal = document.getElementById('tistoryEditorModal');
       if (modal) {
@@ -2503,12 +3061,18 @@
       }
     }
 
+    // 관리자 테이블에서 수정 버튼 클릭 시
+    function editArticle(id) {
+      openTistoryEditor(id);
+    }
+
     function closeTistoryEditor() {
       const title = document.getElementById('editorTitle').value.trim();
       const content = document.getElementById('editorContent').innerText.trim();
       if ((title || content) && !confirm('작성 중인 내용이 저장되지 않을 수 있습니다. 창을 닫으시겠습니까?')) {
         return;
       }
+      currentEditingArticleId = null;
       const modal = document.getElementById('tistoryEditorModal');
       if (modal) {
         modal.classList.remove('open');
@@ -2557,7 +3121,7 @@
       }
     }
 
-    // 새 칼럼 발행하기
+    // 칼럼 발행 또는 수정 저장
     function publishArticle() {
       const title = document.getElementById('editorTitle').value.trim();
       let excerpt = document.getElementById('editorExcerpt').value.trim();
@@ -2587,26 +3151,45 @@
       const estimatedMinutes = Math.max(1, Math.ceil(contentText.length / 320));
       const readTime = `읽는 시간 ${estimatedMinutes}분`;
 
-      const now = new Date();
-      const yyyy = now.getFullYear();
-      const mm = String(now.getMonth() + 1).padStart(2, '0');
-      const dd = String(now.getDate()).padStart(2, '0');
-      const dateStr = `${yyyy}.${mm}.${dd}`;
-
-      const newArticle = {
-        id: 'art_' + Date.now(),
-        title: title,
-        category: category,
-        excerpt: excerpt,
-        content: contentHtml,
-        readTime: readTime,
-        date: dateStr,
-        isFeatured: isFeatured
-      };
-
       const articles = getStoredArticles();
-      articles.unshift(newArticle); // 새 글을 맨 위에 추가
-      saveArticles(articles);
+
+      if (currentEditingArticleId) {
+        // 기존 글 수정
+        const targetIndex = articles.findIndex(a => a.id === currentEditingArticleId);
+        if (targetIndex !== -1) {
+          articles[targetIndex].title = title;
+          articles[targetIndex].excerpt = excerpt;
+          articles[targetIndex].category = category;
+          articles[targetIndex].content = contentHtml;
+          articles[targetIndex].readTime = readTime;
+          articles[targetIndex].isFeatured = isFeatured;
+          saveArticles(articles);
+        }
+        currentEditingArticleId = null;
+        alert(`'${title}' 칼럼 수정이 완료되었습니다.`);
+      } else {
+        // 신규 글 발행
+        const now = new Date();
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        const dateStr = `${yyyy}.${mm}.${dd}`;
+
+        const newArticle = {
+          id: 'art_' + Date.now(),
+          title: title,
+          category: category,
+          excerpt: excerpt,
+          content: contentHtml,
+          readTime: readTime,
+          date: dateStr,
+          isFeatured: isFeatured
+        };
+
+        articles.unshift(newArticle); // 새 글을 맨 위에 추가
+        saveArticles(articles);
+        alert(`'${title}' 칼럼이 성공적으로 발행되었습니다!\n` + (isFeatured ? '⭐ [메인 전면 서재]에 대표글로 등록되었습니다.' : '전체 글 목록에서 열람하실 수 있습니다.'));
+      }
 
       // 모달 닫기
       const modal = document.getElementById('tistoryEditorModal');
@@ -2615,21 +3198,24 @@
         document.body.style.overflow = '';
       }
 
-      // 메인 전면 및 게시판 화면 갱신
+      // 화면들 갱신
       renderFeaturedMagazine();
       if (document.getElementById('boardListModal').classList.contains('open')) {
         renderBoardList();
       }
-
-      alert(`'${title}' 칼럼이 성공적으로 발행되었습니다!\n` + (isFeatured ? '⭐ [메인 전면 서재]에 대표글로 등록되었습니다.' : '전체 글 목록에서 열람하실 수 있습니다.'));
+      if (isAdminLoggedIn()) {
+        renderAdminDashboard();
+      }
     }
 
     // 초기 실행
     document.addEventListener('DOMContentLoaded', () => {
       renderFeaturedMagazine();
+      updateAdminUI();
     });
     // 즉시 실행
     renderFeaturedMagazine();
+    updateAdminUI();
   </script>
 </body>
 </html>
