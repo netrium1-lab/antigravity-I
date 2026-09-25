@@ -3390,13 +3390,14 @@
 
       <!-- 우측 그룹: 카테고리 메뉴 + 나의 아카이브 옆 로그인 버튼 -->
       <div class="nav-right-group">
-        <!-- 실버 친화적 크고 굵은 카테고리 메뉴 (6개) -->
+        <!-- 실버 친화적 크고 굵은 카테고리 메뉴 (7개) -->
         <ul class="nav-menu">
           <li><a href="#home" class="nav-link active">홈</a></li>
           <li><a href="#magazine" class="nav-link">여백의 서재</a></li>
           <li><a href="#lounge" class="nav-link">비움 한 줄</a></li>
           <li><a href="#test" class="nav-link">자가진단</a></li>
           <li><a href="#memoir" class="nav-link" style="color: var(--accent); font-weight: 800;">디지털 자서전</a></li>
+          <li><a href="academy.html" class="nav-link" style="color: var(--accent-gold); font-weight: 800;" title="시니어 라이프 리셋 코치 양성 아카데미">🎓 코치 아카데미</a></li>
           <li><a href="#archive" class="nav-link">나의 아카이브</a></li>
         </ul>
 
@@ -3429,6 +3430,7 @@
         <a href="#lounge" class="drawer-nav-item" onclick="closeMobileDrawer()">💬 <strong>오늘의 비움 한 줄</strong></a>
         <a href="#test" class="drawer-nav-item" onclick="closeMobileDrawer()">🧭 <strong>1분 자가진단</strong></a>
         <a href="#memoir" class="drawer-nav-item" onclick="closeMobileDrawer()" style="color: var(--accent);">✍️ <strong>디지털 자서전</strong></a>
+        <a href="academy.html" class="drawer-nav-item" style="color: var(--accent-gold);">🎓 <strong>코치 양성 아카데미</strong></a>
         <a href="#archive" class="drawer-nav-item" onclick="closeMobileDrawer()">📚 <strong>나의 아카이브</strong></a>
         <a href="#login" class="drawer-nav-item drawer-login-btn" onclick="closeMobileDrawer(); openLoginModal(event)">👤 <strong>로그인</strong></a>
       </nav>
@@ -3795,70 +3797,88 @@
       </div>
     </section>
 
-    <!-- 6. [5단계] 리셋 프로그램 소개 (온라인 코호트 & 오프라인 방문 컨시어지 - 마케팅 전환) -->
-    <section id="programs">
+    <!-- 6. [코치 양성 아카데미] 우아한 라이프 리셋 코칭 아카데미 소개 & 독립 사이트 연동 -->
+    <section id="programs" style="background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 90px 0;">
       <div class="container">
         <div class="section-header">
-          <p class="section-tag">Programs & Services</p>
-          <h2 class="section-title">우아한 라이프 리셋 프로그램</h2>
-          <p class="section-desc">혼자가 아닌 전담 코칭스태프와 함께 온라인과 오프라인에서 실제로 삶을 변화시킵니다.</p>
+          <p class="section-tag" style="color: var(--accent-gold); letter-spacing: 2px;">Coach Academy & Partnership</p>
+          <h2 class="section-title">우아한 라이프 리셋 코칭 아카데미</h2>
+          <p class="section-desc">
+            타인의 삶에 여백과 결을 찾아주는 일, 인생 2막 가장 품격 있는 전문 코치가 되다.<br>
+            초고령사회 일본의 4대 공인 자격 체계를 벤치마킹한 실전형 시니어 라이프 케어 전문가 양성 과정입니다.
+          </p>
         </div>
-        <div class="programs-grid">
-          <!-- 1번 상품: 4주 코호트 -->
-          <div class="program-card featured">
-            <span class="featured-badge">모집 중</span>
-            <div class="program-header">
-              <span class="program-type">온라인 코호트 (기수제)</span>
-              <h3 class="program-title">[여백과 결] 4주 라이프 리셋 기수제 코칭</h3>
-              <p class="program-summary">전담 코칭스태프와 함께 주차별 미션을 수행하며 삶의 서사를 기록하고 일상을 리셋하는 4주 완성 과정.</p>
-            </div>
-            <div class="program-body">
-              <div class="program-curriculum">
-                <div class="curriculum-item"><strong>1주차</strong> 마음의 짐 비우기 & 디지털 유세거니</div>
-                <div class="curriculum-item"><strong>2주차</strong> 세포 건강과 대사 루틴 점검</div>
-                <div class="curriculum-item"><strong>3주차</strong> 추억 순례 엔딩투어 & 버킷리스트</div>
-                <div class="curriculum-item"><strong>4주차</strong> 생전 장례식 기획 & 감사 편지</div>
-              </div>
-              <div class="program-price">월 350,000원 <span>(밀착 코칭 포함)</span></div>
-              <a href="#lounge" class="btn btn-primary" style="justify-content: center;">1기 코호트 신청하기</a>
+
+        <!-- 4대 전문 트랙 미리보기 그리드 -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-bottom: 36px;">
+          <!-- Track 1: 뷰티 -->
+          <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 18px; padding: 26px 22px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">💄</div>
+            <span style="font-size: 0.76rem; font-weight: 800; color: #db2777; background: #fdf2f8; padding: 3px 8px; border-radius: 4px; width: fit-content; margin-bottom: 8px;">Track 01 · 뷰티 테라피</span>
+            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; color: var(--text-primary);">시니어 웰니스 & 뷰티 코치</h3>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; flex-grow: 1;">
+              시니어 피부학, 터치 테라피, 내추럴 메이크업으로 어르신의 생기와 자존감을 회복시키는 뷰티 케어 전문가.
+            </p>
+            <div style="font-size: 0.80rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 10px;">
+              🇯🇵 일본 개호미용 세라피스트 모델
             </div>
           </div>
 
-          <!-- 2번 상품: 오프라인 컨시어지 (핵심 고수익) -->
-          <div class="program-card featured" id="concierge" style="border-color: var(--accent-gold);">
-            <span class="featured-badge offline">프리미엄 방문</span>
-            <div class="program-header">
-              <span class="program-type" style="color: var(--accent-gold);">오프라인 방문 컨시어지</span>
-              <h3 class="program-title">공간 & 디지털 유산 맞춤형 방문 정리 서비스</h3>
-              <p class="program-summary">전문 코칭스태프가 직접 자택을 방문해 물건을 품위 있게 비워내고 스마트폰/디지털 흔적을 깔끔하게 정리해 드립니다.</p>
-            </div>
-            <div class="program-body">
-              <div class="program-curriculum">
-                <div class="curriculum-item"><strong>서비스 A</strong> 공간 & 옷장 미니멀 리셋 (정서적 정리 테라피)</div>
-                <div class="curriculum-item"><strong>서비스 B</strong> 스마트폰 사진/계정/클라우드 안전 백업 대행</div>
-                <div class="curriculum-item"><strong>사전 절차</strong> 1:1 심층 상담 ➔ 일정 조율 ➔ 코치 2인 방문</div>
-              </div>
-              <div class="program-price">맞춤형 견적 안내 <span>(사전 무료 상담)</span></div>
-              <button onclick="openSeniorConsultModal('🌿 오프라인 방문 컨시어지', '공간 및 디지털 유산 맞춤형 방문 정리 상담 희망')" class="btn btn-gold" style="justify-content: center;">무료 방문 상담 예약하기</button>
+          <!-- Track 2: 공간/옷장 -->
+          <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 18px; padding: 26px 22px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">👗</div>
+            <span style="font-size: 0.76rem; font-weight: 800; color: #4f46e5; background: #eef2ff; padding: 3px 8px; border-radius: 4px; width: fit-content; margin-bottom: 8px;">Track 02 · 공간 & 비움</span>
+            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; color: var(--text-primary);">라이프 공간 & 비움 코디네이터</h3>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; flex-grow: 1;">
+              비움의 심리학과 안전 동선 재배치를 통해 안락하고 평온한 일상 공간을 창조하는 시니어 수납 큐레이터.
+            </p>
+            <div style="font-size: 0.80rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 10px;">
+              🇯🇵 일본 정리수납 어드바이저 모델
             </div>
           </div>
 
-          <!-- 3번 상품: 디지털 워크북 -->
-          <div class="program-card">
-            <div class="program-header">
-              <span class="program-type">디지털 자습형</span>
-              <h3 class="program-title">나의 결 서사 30일 워크북 (PDF & 인터랙티브)</h3>
-              <p class="program-summary">혼자서 조용히 20년의 삶을 자서전처럼 써내려가고 싶은 분들을 위한 30일 단계별 질문 워크북.</p>
-            </div>
-            <div class="program-body">
-              <div class="program-curriculum">
-                <div class="curriculum-item"><strong>포함 내역</strong> 30일 질문 가이드북 + 서사 템플릿</div>
-                <div class="curriculum-item"><strong>형태</strong> 전자책 즉시 다운로드 + 웹 폼 작성</div>
-              </div>
-              <div class="program-price">49,000원</div>
-              <button onclick="alert('워크북 다운로드 준비 중입니다.')" class="btn btn-secondary" style="justify-content: center;">워크북 구매하기</button>
+          <!-- Track 3: 생전정리/유품 -->
+          <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 18px; padding: 26px 22px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">📦</div>
+            <span style="font-size: 0.76rem; font-weight: 800; color: #d97706; background: #fef3c7; padding: 3px 8px; border-radius: 4px; width: fit-content; margin-bottom: 8px;">Track 03 · 엔딩 라이프</span>
+            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; color: var(--text-primary);">생전정리 & 엔딩 라이프 플래너</h3>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; flex-grow: 1;">
+              생전정리, 디지털 유산 정리, 엔딩노트 작성 및 유족 애도(Grief) 케어를 담당하는 인생 갈무리 컨설턴트.
+            </p>
+            <div style="font-size: 0.80rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 10px;">
+              🇯🇵 일본 생전정리 어드바이저 · 유품정리사 모델
             </div>
           </div>
+
+          <!-- Track 4: 자서전/생애사 -->
+          <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 18px; padding: 26px 22px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">✍️</div>
+            <span style="font-size: 0.76rem; font-weight: 800; color: #2563eb; background: #dbeafe; padding: 3px 8px; border-radius: 4px; width: fit-content; margin-bottom: 8px;">Track 04 · 생애사 에디팅</span>
+            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 8px; color: var(--text-primary);">디지털 생애사 채록 에디터</h3>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; flex-grow: 1;">
+              회상요법 질문법으로 삶의 기억을 채록하고 옛 사진을 복원해 품격 있는 디지털 자서전과 책을 엮는 작가.
+            </p>
+            <div style="font-size: 0.80rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 10px;">
+              🇯🇵 일본 자신사 활용 어드바이저 모델
+            </div>
+          </div>
+        </div>
+
+        <!-- 독립 아카데미 사이트 이동 프리미엄 배너 카드 -->
+        <div style="background: var(--bg-card); border: 2px solid var(--accent-gold); border-radius: 20px; padding: 36px 32px; text-align: center; box-shadow: var(--shadow-md); max-width: 880px; margin: 0 auto;">
+          <span style="display: inline-block; font-size: 0.82rem; font-weight: 800; color: #ffffff; background: var(--accent-gold); padding: 5px 14px; border-radius: 20px; margin-bottom: 14px;">
+            🎓 2026년 [여백과 결] 코칭스태프 1기 수강생 모집 중
+          </span>
+          <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.55rem; font-weight: 800; margin-bottom: 12px; color: var(--text-primary);">
+            수료 즉시 [여백과 결] 공식 코칭스태프 현장 파견 파트너십 활동
+          </h3>
+          <p style="color: var(--text-secondary); font-size: 0.96rem; line-height: 1.7; margin-bottom: 24px; max-width: 680px; margin-left: auto; margin-right: auto;">
+            단순 수료증 발급에 그치지 않고, 본사 플랫폼으로 유입되는 전국 고객의 1:1 방문 맞춤 케어 서비스 전담 코치로 위촉되어 활동합니다.<br>
+            자세한 주차별 상세 커리큘럼과 수강 혜택, 1기 지원서는 전용 아카데미 홈페이지에서 확인하실 수 있습니다.
+          </p>
+          <a href="academy.html" class="btn btn-gold" style="padding: 14px 34px; font-size: 1.05rem; font-weight: 800; box-shadow: 0 4px 16px rgba(197, 155, 39, 0.4); text-decoration: none;">
+            <span>🎓</span> 코칭 아카데미 공식 웹사이트 바로가기 ➔
+          </a>
         </div>
       </div>
     </section>
@@ -3898,7 +3918,7 @@
             <li><a href="#lounge">오늘의 비움 한 줄</a></li>
             <li><a href="#test">1분 여백 자가진단</a></li>
             <li><a href="#memoir">디지털 자서전</a></li>
-            <li><a href="#programs">라이프 리셋 프로그램</a></li>
+            <li><a href="academy.html" style="color: var(--accent-gold); font-weight: 700;">🎓 코치 양성 아카데미</a></li>
           </ul>
         </div>
         <div class="footer-links">
