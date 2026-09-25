@@ -1050,16 +1050,17 @@
       margin-bottom: 8px;
     }
 
-    /* ================= 티스토리 감성 글작성 에디터 모달 ================= */
+    /* ================= 티스토리 & fitflunce 스타일 프리미엄 블랙 에디터 모달 ================= */
     .cms-modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(15, 14, 12, 0.65);
-      backdrop-filter: blur(6px);
-      z-index: 400;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 9999;
       display: none;
       align-items: center;
       justify-content: center;
@@ -1073,21 +1074,170 @@
       opacity: 1;
     }
 
-    .tistory-editor-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      max-width: 1060px;
-      width: 100%;
-      max-height: 92vh;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
-      overflow: hidden;
-      animation: modalSlideUp 0.3s ease;
+    /* 에디터와 서브 모달 z-index 계층 분리 (겹침 원천 차단) */
+    #tistoryEditorModal {
+      z-index: 10000;
+    }
+    #editorDraftsModal {
+      z-index: 10050;
     }
 
-    /* 사진 보관함 사이드바 및 이미지 관리 레이아웃 */
+    /* 프리미엄 딥 블랙 에디터 메인 카드 (#fitflunce 프리미엄 에디터 기반) */
+    .tistory-editor-card {
+      background: #0c0e12;
+      border: 1px solid #252a35;
+      border-radius: 20px;
+      max-width: 1080px;
+      width: 100%;
+      height: 90vh;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95);
+      overflow: hidden;
+      animation: modalSlideUp 0.3s ease;
+      color: #f1f3f7;
+    }
+
+    /* 에디터 상단 헤더바 */
+    .editor-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-bottom: 1px solid #202531;
+      background: #141720;
+      flex-shrink: 0;
+    }
+
+    .editor-top-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.16rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .editor-top-badge {
+      background: linear-gradient(135deg, #d4af37, #aa8210);
+      color: #0b0c0e;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 999px;
+      letter-spacing: 0.05em;
+    }
+
+    .editor-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-editor-action {
+      background: #1c212b;
+      border: 1px solid #303746;
+      color: #e2e8f0;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-editor-action:hover {
+      background: #272e3c;
+      border-color: #d4af37;
+      color: #d4af37;
+    }
+
+    .btn-editor-publish {
+      background: linear-gradient(135deg, #e5c158 0%, #c29b38 100%);
+      color: #0f1012;
+      border: none;
+      padding: 8px 22px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      box-shadow: 0 4px 14px rgba(194, 155, 56, 0.45);
+    }
+
+    .btn-editor-publish:hover {
+      background: linear-gradient(135deg, #f0cf6f 0%, #d4af37 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(194, 155, 56, 0.6);
+    }
+
+    /* 에디터 설정 옵션바 (카테고리, 메인 전면 노출 여부, 대표사진 뱃지) */
+    .editor-settings-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      border-bottom: 1px solid #202531;
+      background: #10131a;
+      flex-wrap: wrap;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .editor-category-select {
+      padding: 7px 14px;
+      border: 1px solid #2e3544;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: #1a1e27;
+      color: #f1f3f7;
+      outline: none;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .editor-category-select:focus {
+      border-color: #d4af37;
+    }
+
+    .editor-featured-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #e5c158;
+      background: rgba(212, 175, 55, 0.12);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .editor-featured-toggle:hover {
+      background: rgba(212, 175, 55, 0.2);
+    }
+
+    .editor-featured-toggle input {
+      accent-color: #d4af37;
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* 사진 보관함 사이드바 및 본문 레이아웃 */
     .editor-body-layout {
       display: flex;
       flex: 1;
@@ -1095,10 +1245,11 @@
       min-height: 0;
     }
 
+    /* 📸 좌측 사진 보관함 (다크 프리미엄) */
     .editor-photo-sidebar {
       width: 250px;
-      background: var(--bg-secondary);
-      border-right: 1px solid var(--border-color);
+      background: #11141c;
+      border-right: 1px solid #202531;
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
@@ -1106,7 +1257,7 @@
 
     .photo-sidebar-header {
       padding: 14px 16px;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid #202531;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -1115,7 +1266,7 @@
     .photo-sidebar-title {
       font-size: 0.88rem;
       font-weight: 800;
-      color: var(--accent);
+      color: #e5c158;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -1123,15 +1274,15 @@
 
     .btn-photo-upload {
       width: 100%;
-      background: var(--bg-card);
-      color: var(--accent);
-      border: 1.5px dashed var(--accent);
+      background: #171b24;
+      color: #e5c158;
+      border: 1.5px dashed #c29b38;
       padding: 9px;
       border-radius: 8px;
       cursor: pointer;
       font-size: 0.82rem;
       font-weight: 700;
-      transition: var(--transition);
+      transition: all 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1140,7 +1291,8 @@
     }
 
     .btn-photo-upload:hover {
-      background: var(--accent-light);
+      background: rgba(194, 155, 56, 0.15);
+      border-color: #e5c158;
     }
 
     .photo-img-grid {
@@ -1154,19 +1306,19 @@
     }
 
     .photo-item {
-      background: var(--bg-card);
+      background: #171b24;
       border-radius: 8px;
       overflow: hidden;
-      border: 2px solid var(--border-color);
+      border: 2px solid #272d3a;
       position: relative;
-      transition: var(--transition);
+      transition: all 0.2s ease;
       display: flex;
       flex-direction: column;
     }
 
     .photo-item.is-main {
-      border-color: var(--accent-gold);
-      box-shadow: 0 0 12px rgba(194, 155, 56, 0.45);
+      border-color: #e5c158;
+      box-shadow: 0 0 14px rgba(229, 193, 88, 0.45);
     }
 
     .photo-item img {
@@ -1179,10 +1331,10 @@
 
     .photo-item-controls {
       display: flex;
-      background: var(--bg-secondary);
+      background: #0e1117;
       padding: 4px;
       gap: 3px;
-      border-top: 1px solid var(--border-color);
+      border-top: 1px solid #202531;
     }
 
     .photo-btn {
@@ -1194,35 +1346,36 @@
       cursor: pointer;
       font-weight: 700;
       font-family: inherit;
-      transition: var(--transition);
+      transition: all 0.15s ease;
       text-align: center;
     }
 
     .photo-btn-ins {
-      background: var(--accent-light);
-      color: var(--accent);
+      background: #202735;
+      color: #93c5fd;
     }
 
     .photo-btn-ins:hover {
-      background: var(--accent);
+      background: #3b82f6;
       color: #fff;
     }
 
     .photo-btn-rep {
-      background: var(--border-color);
-      color: var(--text-primary);
+      background: #1c212c;
+      color: #9ca3af;
     }
 
     .photo-btn-rep.active {
-      background: var(--accent-gold);
-      color: #fff;
+      background: #c29b38;
+      color: #0b0c0e;
+      font-weight: 800;
     }
 
     .photo-del-btn {
       position: absolute;
       top: 3px;
       right: 3px;
-      background: rgba(0, 0, 0, 0.65);
+      background: rgba(0, 0, 0, 0.75);
       color: #fff;
       border: none;
       width: 18px;
@@ -1241,12 +1394,13 @@
       background: #d9534f;
     }
 
+    /* ✍️ 우측 메인 에디터 패널 (완전 검정색 바탕) */
     .editor-main-panel {
       flex: 1;
       display: flex;
       flex-direction: column;
       min-width: 0;
-      background: var(--bg-card);
+      background: #08090c;
     }
 
     /* 서재 카드 대표사진 썸네일 스타일 */
@@ -1290,124 +1444,35 @@
         width: 100%;
         max-height: 165px;
         border-right: none;
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: 1px solid #202531;
       }
       .photo-img-grid {
         grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
       }
     }
 
-    /* 에디터 상단 헤더바 */
-    .editor-top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 24px;
-      border-bottom: 1px solid var(--border-color);
-      background: var(--bg-secondary);
-    }
-
-    .editor-top-title {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .editor-btn-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .btn-editor-publish {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 8px 22px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-family: inherit;
-    }
-
-    .btn-editor-publish:hover {
-      background: var(--accent-hover);
-      transform: translateY(-1px);
-    }
-
-    /* 에디터 설정 옵션바 (카테고리, 메인 전면 노출 여부) */
-    .editor-settings-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 24px;
-      border-bottom: 1px solid var(--border-color);
-      background: var(--bg-card);
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .editor-category-select {
-      padding: 8px 14px;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      font-size: 0.92rem;
-      font-weight: 600;
-      background: var(--bg-secondary);
-      color: var(--text-primary);
-      outline: none;
-      font-family: inherit;
-    }
-
-    .editor-featured-toggle {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      background: var(--accent-light);
-      padding: 6px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(94, 107, 82, 0.3);
-    }
-
-    .editor-featured-toggle input {
-      accent-color: var(--accent);
-      cursor: pointer;
-    }
-
-    /* 서식 툴바 (티스토리 스타일) */
+    /* 서식 툴바 (티스토리 + fitflunce 확장 도구 다크 테마) */
     .editor-toolbar {
       display: flex;
       align-items: center;
-      gap: 4px;
-      padding: 10px 24px;
-      background: var(--bg-secondary);
-      border-bottom: 1px solid var(--border-color);
+      gap: 5px;
+      padding: 9px 24px;
+      background: #13161f;
+      border-bottom: 1px solid #202531;
       flex-wrap: wrap;
+      flex-shrink: 0;
     }
 
     .tool-btn {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
+      background: #1c212b;
+      border: 1px solid #2b3240;
       border-radius: 6px;
       padding: 6px 10px;
       font-size: 0.88rem;
       font-weight: 700;
-      color: var(--text-primary);
+      color: #e2e8f0;
       cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.15s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1416,15 +1481,15 @@
     }
 
     .tool-btn:hover {
-      background: var(--accent-light);
-      border-color: var(--accent);
-      color: var(--accent);
+      background: #28303f;
+      border-color: #d4af37;
+      color: #d4af37;
     }
 
     .tool-separator {
       width: 1px;
       height: 20px;
-      background: var(--border-color);
+      background: #2b3240;
       margin: 0 4px;
     }
 
@@ -1433,17 +1498,17 @@
       position: absolute;
       top: 40px;
       left: 0;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
+      background: #171b24;
+      border: 1px solid #2f3747;
       padding: 14px;
       border-radius: 12px;
       z-index: 1000;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7);
     }
 
     .popup-menu-title {
       font-size: 0.78rem;
-      color: var(--accent);
+      color: #e5c158;
       margin-bottom: 8px;
       display: block;
       font-weight: 800;
@@ -1460,7 +1525,7 @@
       height: 24px;
       border-radius: 4px;
       cursor: pointer;
-      border: 1px solid rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       transition: transform 0.15s ease;
     }
 
@@ -1483,34 +1548,36 @@
       justify-content: center;
       cursor: pointer;
       border-radius: 6px;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
+      background: #1c212b;
+      border: 1px solid #2b3240;
+      color: #e2e8f0;
       font-size: 0.88rem;
-      transition: var(--transition);
+      transition: all 0.15s ease;
     }
 
     .symbol-chip:hover {
-      background: var(--accent);
-      color: #fff;
+      background: #d4af37;
+      color: #0b0c0e;
     }
 
-    /* 에디터 본문 작성 영역 */
+    /* 에디터 본문 작성 영역 (완전 검정색 바탕) */
     .editor-scroll-body {
       flex: 1;
       overflow-y: auto;
-      padding: 30px 28px;
+      padding: 32px 36px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 20px;
+      background: #08090c;
     }
 
     .editor-title-input {
       font-family: 'Noto Serif KR', serif;
-      font-size: 1.85rem;
+      font-size: 1.95rem;
       font-weight: 800;
-      color: var(--text-primary);
+      color: #ffffff;
       border: none;
-      border-bottom: 2px solid var(--border-color);
+      border-bottom: 2px solid #242a36;
       padding: 10px 0 16px;
       outline: none;
       width: 100%;
@@ -1518,27 +1585,67 @@
       letter-spacing: -0.5px;
     }
 
+    .editor-title-input::placeholder {
+      color: #555d6e;
+    }
+
     .editor-title-input:focus {
-      border-bottom-color: var(--accent);
+      border-bottom-color: #d4af37;
+    }
+
+    .editor-excerpt-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #252b37;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      color: #e5e7eb;
+      background: #10131a;
+      outline: none;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 60px;
+      line-height: 1.6;
+    }
+
+    .editor-excerpt-input::placeholder {
+      color: #555d6e;
+    }
+
+    .editor-excerpt-input:focus {
+      border-color: #d4af37;
     }
 
     .editor-content-area {
-      min-height: 280px;
-      font-size: 1.1rem;
-      line-height: 1.9;
-      color: var(--text-primary);
+      min-height: 320px;
+      font-size: 1.12rem;
+      line-height: 2.0;
+      color: #f3f5f8;
       outline: none;
       font-family: inherit;
       word-break: keep-all;
+      background: #08090c;
     }
 
     .editor-content-area:empty::before {
       content: attr(data-placeholder);
-      color: var(--text-muted);
+      color: #555d6e;
     }
 
-    /* 티스토리 스타일 인용구 블록 */
-    blockquote, .editor-content-area blockquote, .reader-body blockquote {
+    /* 티스토리 스타일 인용구 블록 (프리미엄 골드 포인트) */
+    .editor-content-area blockquote {
+      border-left: 4px solid #d4af37;
+      padding: 14px 22px;
+      margin: 20px 0;
+      background: rgba(212, 175, 55, 0.08);
+      border-radius: 0 12px 12px 0;
+      font-style: italic;
+      color: #e8dfc8;
+      font-weight: 600;
+    }
+
+    /* 본문 뷰어 및 사이트 전역 인용구 */
+    blockquote, .reader-body blockquote {
       border-left: 4px solid var(--accent);
       padding: 14px 20px;
       margin: 18px 0;
@@ -1547,20 +1654,6 @@
       font-style: italic;
       color: var(--text-primary);
       font-weight: 600;
-    }
-
-    .editor-excerpt-input {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      font-size: 0.92rem;
-      color: var(--text-primary);
-      background: var(--bg-secondary);
-      outline: none;
-      font-family: inherit;
-      resize: vertical;
-      min-height: 60px;
     }
 
     /* ================= 글 본문 상세 뷰어 모달 ================= */
@@ -1830,19 +1923,22 @@
         font-size: 0.62rem;
         padding: 1px 5px;
       }
-    /* ================= 관리자 홈 (Admin Console) 스타일 ================= */
+    }
+
+    /* ================= 관리자 홈 (Admin Console) 스타일 - 메인 화면 격리 ================= */
     .admin-modal-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 20px;
-      max-width: 1000px;
+      max-width: 1040px;
       width: 100%;
       max-height: 92vh;
       overflow-y: auto;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
-      padding: 32px 28px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65);
+      padding: 34px 30px;
       position: relative;
       animation: modalSlideUp 0.3s ease;
+      z-index: 10;
     }
 
     .admin-header-row {
@@ -2400,15 +2496,16 @@
       <div class="editor-top-bar">
         <div class="editor-top-title">
           <span>✍️</span> 여백의 서재 프리미엄 에디터
+          <span class="editor-top-badge">PREMIUM BLACK</span>
         </div>
         <div class="editor-btn-group">
-          <button type="button" class="btn-mag-action" onclick="saveEditorDraft()" title="작성 중인 내용을 임시 저장합니다" style="font-size: 0.84rem;">
-            💾 임시저장
+          <button type="button" class="btn-editor-action" onclick="saveEditorDraft()" title="작성 중인 내용을 임시 저장합니다">
+            <span>💾</span> 임시저장
           </button>
-          <button type="button" class="btn-mag-action" onclick="openEditorDraftsModal()" title="임시 저장된 글 목록을 불러옵니다" style="font-size: 0.84rem;">
-            📂 불러오기
+          <button type="button" class="btn-editor-action" onclick="openEditorDraftsModal()" title="임시 저장된 글 목록을 불러옵니다">
+            <span>📂</span> 불러오기
           </button>
-          <button type="button" class="btn-mag-action" onclick="closeTistoryEditor()">취소</button>
+          <button type="button" class="btn-editor-action" onclick="closeTistoryEditor()">취소</button>
           <button type="button" class="btn-editor-publish" onclick="publishArticle()">
             <span>🚀</span> 발행하기
           </button>
@@ -3612,7 +3709,7 @@
           editorPhotos.push({ src: target.image });
         }
 
-        if (topTitle) topTitle.innerHTML = '<span>✏️</span> 여백의 서재 칼럼 수정';
+        if (topTitle) topTitle.innerHTML = '<span>✏️</span> 여백의 서재 칼럼 수정 <span class="editor-top-badge">EDIT</span>';
         if (publishBtn) publishBtn.innerHTML = '<span>💾</span> 수정 내용 저장';
       } else {
         // 신규 작성 모드
@@ -3622,7 +3719,7 @@
         document.getElementById('editorCategory').selectedIndex = 0;
         document.getElementById('editorIsFeatured').checked = true;
 
-        if (topTitle) topTitle.innerHTML = '<span>✍️</span> 여백의 서재 프리미엄 에디터';
+        if (topTitle) topTitle.innerHTML = '<span>✍️</span> 여백의 서재 프리미엄 에디터 <span class="editor-top-badge">PREMIUM BLACK</span>';
         if (publishBtn) publishBtn.innerHTML = '<span>🚀</span> 발행하기';
       }
 
