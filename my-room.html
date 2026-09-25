@@ -1252,9 +1252,51 @@
       display: none;
     }
     .category-chip.active {
-      border-color: var(--accent-gold);
-      background: var(--accent-gold-light);
-      color: var(--accent-gold);
+    /* 엔딩 금고 카드 하단 버튼 2열 배치 */
+    .vault-card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .btn-vault-write {
+      padding: 10px;
+      background: var(--accent-gold);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 750;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+    .btn-vault-write:hover {
+      background: #aa841e;
+    }
+
+    /* 편지지 뷰어 스타일 */
+    .letter-paper-wrap {
+      background: #fdfaf3;
+      border: 1px solid #e2dac9;
+      border-radius: 12px;
+      padding: 28px 24px;
+      font-family: 'Noto Serif KR', Georgia, serif;
+      line-height: 2.1;
+      font-size: 1.12rem;
+      color: #2b241e;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.02);
+      max-height: 480px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+    }
+    [data-theme="dark"] .letter-paper-wrap {
+      background: #1c1815;
+      border-color: #382e28;
+      color: #f3ede8;
     }
 
     /* 푸터 */
@@ -1639,12 +1681,17 @@
           <h2 class="shelf-title">💌 가족에게 남기는 엔딩 금고</h2>
           <p class="shelf-desc">내가 사랑하는 자녀와 가족들에게 남기는 마지막 당부와 아름다운 마무리 안내서입니다.</p>
         </div>
-        <span class="room-badge" style="background: rgba(43, 106, 56, 0.12); color: var(--accent-green); border-color: rgba(43, 106, 56, 0.3);">
-          🔒 AES-256 안심 암호화 보관 중
-        </span>
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <button class="btn-share" onclick="openVaultWriteModal()" style="background: var(--accent-green); padding: 9px 18px;">
+            ✍️+💌 금고에 새 글/문서 보관하기
+          </button>
+          <span class="room-badge" style="background: rgba(43, 106, 56, 0.12); color: var(--accent-green); border-color: rgba(43, 106, 56, 0.3);">
+            🔒 AES-256 안심 보관 중
+          </span>
+        </div>
       </div>
 
-      <div class="ending-vault-grid">
+      <div class="ending-vault-grid" id="endingVaultGrid">
         <!-- 금고 항목 1: 사랑의 편지 -->
         <div class="vault-card">
           <div>
@@ -1662,9 +1709,14 @@
               </li>
             </ul>
           </div>
-          <button class="btn-vault-action" onclick="alert('김순옥 어르신의 자필 편지 스캔본 및 녹음본을 미리 확인합니다.')">
-            👁️ 편지 내용 미리보기
-          </button>
+          <div class="vault-card-actions">
+            <button class="btn-vault-action" onclick="openVaultReader('letter')">
+              👁️ 편지 읽기
+            </button>
+            <button class="btn-vault-write" onclick="openVaultWriteModal('letter')">
+              ✍️ 새 편지 쓰기
+            </button>
+          </div>
         </div>
 
         <!-- 금고 항목 2: 사전연명의료의향서 & 장례 희망서 -->
@@ -1684,9 +1736,14 @@
               </li>
             </ul>
           </div>
-          <button class="btn-vault-action" onclick="alert('등록된 연명의료 등록증 및 장례 희망 노트를 확인합니다.')">
-            📄 희망서 상세 열람
-          </button>
+          <div class="vault-card-actions">
+            <button class="btn-vault-action" onclick="openVaultReader('medical')">
+              📄 희망서 열람
+            </button>
+            <button class="btn-vault-write" onclick="openVaultWriteModal('medical')">
+              ✍️ 수정/작성
+            </button>
+          </div>
         </div>
 
         <!-- 금고 항목 3: 애착 유품 정리 목록 -->
@@ -1706,9 +1763,41 @@
               </li>
             </ul>
           </div>
-          <button class="btn-vault-action" onclick="alert('유품 분배 메모 리스트를 확인합니다.')">
-            📦 유품 인계 메모장
-          </button>
+          <div class="vault-card-actions">
+            <button class="btn-vault-action" onclick="openVaultReader('heritage')">
+              📦 유품 메모 열람
+            </button>
+            <button class="btn-vault-write" onclick="openVaultWriteModal('heritage')">
+              ✍️ 메모 추가
+            </button>
+          </div>
+        </div>
+
+        <!-- 금고 항목 4: 디지털 계정 & 비상 금고 노트 -->
+        <div class="vault-card">
+          <div>
+            <div class="vault-icon">🔑</div>
+            <h3 class="vault-title">디지털 계정 & 비상 인계 노트</h3>
+            <p class="vault-desc">스마트폰 사진 보관 위치, 소셜 계정 추모 전환, 통장 및 보험 증서 보관 장소입니다.</p>
+            <ul class="vault-meta-list">
+              <li class="vault-meta-item">
+                <span class="vault-meta-label">스마트폰 사진</span>
+                <span class="vault-meta-val">클라우드 백업 링크 보관</span>
+              </li>
+              <li class="vault-meta-item">
+                <span class="vault-meta-label">보안 수준</span>
+                <span class="vault-meta-val" style="color: var(--accent-gold);">이중 암호화 잠금</span>
+              </li>
+            </ul>
+          </div>
+          <div class="vault-card-actions">
+            <button class="btn-vault-action" onclick="openVaultReader('digital')">
+              🗝️ 계정 안내 열람
+            </button>
+            <button class="btn-vault-write" onclick="openVaultWriteModal('digital')">
+              ✍️ 정보 작성
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -1896,9 +1985,115 @@
       <button type="button" class="btn-demo-quick" onclick="loadSampleRoom()">
         ✨ 김순옥 어르신의 보물 서재 둘러보기 (샘플 체험)
       </button>
-      <button type="button" onclick="closeLoginModal()" style="background: none; border: none; color: var(--text-muted); font-size: 0.88rem; margin-top: 14px; cursor: pointer;">
-        닫기
-      </button>
+  <!-- 👁️ 엔딩 금고 내용 열람 모달 (편지지 뷰어) -->
+  <div class="modal-overlay" id="viewVaultModal" onclick="closeVaultReaderOnOverlay(event)">
+    <div class="login-modal-card" style="max-width: 600px; text-align: left;" onclick="event.stopPropagation()">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h2 id="viewVaultTitle" style="font-family: 'Noto Serif KR', Georgia, serif; font-size: 1.55rem; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-bottom: 0;">
+          📜 자녀들에게 남기는 사랑의 편지
+        </h2>
+        <button onclick="closeVaultReader()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+      </div>
+      <div id="viewVaultMeta" style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 14px;">
+        안심 보관일: 2026. 09. 20 · 열람 권한: 유고 시 지정 대리인
+      </div>
+
+      <div class="letter-paper-wrap" id="viewVaultBody">
+        <!-- 동적으로 들어감 -->
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px;">
+        <button type="button" class="btn-vault-write" id="btnEditCurrentVault" onclick="editCurrentVaultItem()" style="padding: 10px 18px;">
+          ✍️ 이 내용 수정/추가하기
+        </button>
+        <button type="button" class="btn-vault-action" onclick="closeVaultReader()" style="padding: 10px 18px; width: auto;">
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✍️+💌 엔딩 금고 전용 카테고리별 글/문서 작성 모달 -->
+  <div class="modal-overlay" id="writeVaultModal" onclick="closeVaultWriteModalOnOverlay(event)">
+    <div class="login-modal-card" style="max-width: 580px; text-align: left;" onclick="event.stopPropagation()">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h2 style="font-family: 'Noto Serif KR', Georgia, serif; font-size: 1.55rem; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-bottom: 0;">
+          <span>💌</span> 엔딩 금고에 마음과 당부 남기기
+        </h2>
+        <button onclick="closeVaultWriteModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+      </div>
+      <p style="font-size: 0.92rem; color: var(--text-sub); margin-bottom: 18px;">
+        가족들에게 짐이 되지 않고, 나다운 존엄을 지키며 전하고 싶은 말씀이나 유품 인계 메모를 안전하게 보관하세요.
+      </p>
+
+      <form onsubmit="handleSaveVaultItem(event)">
+        <!-- 1. 엔딩 금고 카테고리 선택 -->
+        <label style="display: block; font-size: 0.88rem; font-weight: 750; margin-bottom: 6px; color: var(--text-main);">
+          1. 어떤 종류의 글을 보관할까요?
+        </label>
+        <div class="category-chip-group" style="grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 16px;">
+          <label class="category-chip active" id="vaultChipLetter" onclick="switchVaultCategory('letter')">
+            <input type="radio" name="vaultCategoryRadio" value="letter" checked>
+            <span style="font-size: 1.2rem;">📜</span>
+            <span style="font-size: 0.8rem;">사랑의 편지</span>
+          </label>
+          <label class="category-chip" id="vaultChipMedical" onclick="switchVaultCategory('medical')">
+            <input type="radio" name="vaultCategoryRadio" value="medical">
+            <span style="font-size: 1.2rem;">🕊️</span>
+            <span style="font-size: 0.8rem;">사전의료·장례</span>
+          </label>
+          <label class="category-chip" id="vaultChipHeritage" onclick="switchVaultCategory('heritage')">
+            <input type="radio" name="vaultCategoryRadio" value="heritage">
+            <span style="font-size: 1.2rem;">🎁</span>
+            <span style="font-size: 0.8rem;">애착 유품</span>
+          </label>
+          <label class="category-chip" id="vaultChipDigital" onclick="switchVaultCategory('digital')">
+            <input type="radio" name="vaultCategoryRadio" value="digital">
+            <span style="font-size: 1.2rem;">🔑</span>
+            <span style="font-size: 0.8rem;">디지털·비상</span>
+          </label>
+        </div>
+
+        <!-- 2. 받는 사람 / 대상 -->
+        <div style="margin-bottom: 14px;" id="vaultTargetWrap">
+          <label for="inputVaultTarget" style="display: block; font-size: 0.88rem; font-weight: 750; margin-bottom: 4px;" id="labelVaultTarget">
+            2. 누구에게 남기는 글인가요?
+          </label>
+          <input type="text" id="inputVaultTarget" class="login-input" placeholder="예: 큰아들 준호에게 / 사랑하는 딸 서연이에게 / 가족 모두에게" style="font-size: 0.98rem; padding: 10px 14px;">
+        </div>
+
+        <!-- 3. 제목 -->
+        <div style="margin-bottom: 14px;">
+          <label for="inputVaultTitle" style="display: block; font-size: 0.88rem; font-weight: 750; margin-bottom: 4px;">
+            3. 제목
+          </label>
+          <input type="text" id="inputVaultTitle" class="login-input" placeholder="예: 엄마가 우리 준호에게 남기는 마지막 편지" required style="font-size: 0.98rem; padding: 10px 14px;">
+        </div>
+
+        <!-- 4. 상세 내용/당부의 말씀 -->
+        <div style="margin-bottom: 18px;">
+          <label for="inputVaultBody" style="display: block; font-size: 0.88rem; font-weight: 750; margin-bottom: 4px;" id="labelVaultBody">
+            4. 마음을 담은 편지 글 또는 당부 말씀
+          </label>
+          <textarea id="inputVaultBody" class="note-textarea" placeholder="아이들에게 미처 다 하지 못했던 사랑한다는 말, 고마웠던 마음, 또는 꼭 부탁하고 싶은 것들을 자유롭게 적어보세요..." style="height: 140px; margin-bottom: 0;" required></textarea>
+        </div>
+
+        <!-- 사진이나 손편지 스캔본 첨부 (선택) -->
+        <div style="margin-bottom: 18px;">
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; color: var(--text-muted);">
+            📎 손편지 사진 또는 관련 서류 첨부 (선택)
+          </label>
+          <input type="file" id="vaultFileInput" accept="image/*" onchange="handleVaultImageSelected(event)" style="font-size: 0.88rem;">
+          <div id="vaultImgPreviewWrap" style="display: none; margin-top: 8px;">
+            <img src="" id="vaultImgPreview" style="max-height: 140px; border-radius: 8px; border: 1px solid var(--paper-border);">
+          </div>
+        </div>
+
+        <!-- 저장 버튼 -->
+        <button type="submit" class="btn-login-submit" style="background: var(--accent-gold); font-size: 1.1rem; padding: 14px;">
+          💖 엔딩 금고에 안전하게 보관하기
+        </button>
+      </form>
     </div>
   </div>
 
@@ -2315,7 +2510,344 @@
       }
     }
 
-    // 초기 테마 및 사용자 메모리 로드
+    // ==========================================
+    // 💌 엔딩 금고 전용 카테고리별 열람 & 작성 시스템
+    // ==========================================
+    let currentReadingVaultType = 'letter';
+    let currentVaultImageBase64 = null;
+
+    const vaultSampleTexts = {
+      letter: {
+        title: "📜 자녀들에게 남기는 사랑의 편지",
+        meta: "수신: 큰아들 준호, 작은딸 서연이에게 · 보관일: 2026. 09. 20",
+        body: `사랑하는 준호야, 서연아.
+너희들이 이 글을 읽고 있을 때쯤이면 엄마는 아마 이 세상의 모든 고단함을 내려놓고 하늘의 맑은 별이 되어 있을 게다.
+
+돌아보면 너희들을 키우던 시간들이 엄마의 인생에서 가장 눈부신 봄날이었단다.
+흙 묻은 앞치마를 두르고 장사를 하면서도 너희들이 학교 다녀와 문을 열며 '엄마!' 부르던 목소리 하나에 세상의 모든 피로가 봄눈 녹듯 사라졌단다.
+
+너희들에게 더 넉넉하게 해주지 못해 가슴 한구석 늘 미안함이 남았지만, 단 한 번도 원망 없이 바르고 성실하게 자라준 것만으로도 엄마는 이미 세상에서 가장 큰 복을 받은 사람이었다.
+
+엄마가 떠나더라도 너무 슬퍼하거나 눈물 흘리지 말아라. 서로 우애 있게 의지하고, 밥 굶지 말고, 봄날 햇살처럼 따뜻하게 살아가거라.
+엄마는 언제나 바람결에, 햇살 속에 너희들의 곁에 머물고 있을 테니 말이다.
+
+내 아들, 내 딸로 태어나 주어 참으로 고맙고 사랑한다.
+
+2026년 가을, 너희들의 엄마 김순옥 남김`
+      },
+      medical: {
+        title: "🕊️ 사전연명의료의향서 및 장례 희망서 (웰다잉)",
+        meta: "국립연명의료관리기관 등록 완료 · 희망 형태: 3일 가족 수목장",
+        body: `사랑하는 가족들에게 당부하는 아름다운 마무리(웰다잉) 안내서입니다.
+
+1. [사전연명의료결정]
+- 심폐소생술, 인공호흡기 착용, 혈액투석, 항암제 투여 등 임종기의 무의미한 연명치료를 일절 받지 않기로 국립연명의료관리기관에 정식 등록을 마쳤습니다.
+- 고통스러운 기계 장치에 의지하지 않고, 사랑하는 너희들의 따뜻한 손을 잡으며 평온하게 눈감을 수 있도록 엄마의 결정을 온전히 존중해 주길 바란다.
+
+2. [희망하는 장례 형태]
+- 번잡하고 형식적인 일반 장례식 대신, 가까운 일가친척과 가족들만 모여 추억을 나누는 조용한 3일 가족장을 원한다.
+- 부의금은 정중히 사양하고, 검은 옷 대신 평소 엄마가 좋아하던 은은한 꽃 한 송이씩 꽂아주렴.
+- 장지는 양평 수목원의 햇살 잘 드는 나무 아래에 자연으로 돌아가게 묻어다오.
+
+너희들의 짐을 덜어주고자 엄마가 맑은 정신으로 미리 정해둔 것이니, 아무 걱정 없이 이 뜻을 따라주면 참 고맙겠다.`
+      },
+      heritage: {
+        title: "🎁 애착 유품 분배 & 상속 인계 메모",
+        meta: "상속 집행인: 큰아들 준호 · 자택 안방 보관 목록",
+        body: `평생 아끼고 손때 묻은 소중한 물건들을 다음과 같이 전합니다.
+
+1. [어머니께 물려받은 자개 경대와 화장대]
+➔ 작은딸 서연이에게 전한다. 40년 전 네 외할머니가 엄마 시집올 때 주신 귀한 물건이니, 네 딸에게도 세월의 결을 이어 전해주면 좋겠구나.
+
+2. [선친의 은가락지와 결혼 앨범, 구술 자서전 원본]
+➔ 큰아들 준호에게 전한다. 우리 집안의 뿌리와 지나온 발자취를 잊지 않고 장남으로서 가정을 든든히 지켜주길 바란다.
+
+3. [평생 모은 문학 및 교양 서적 120권]
+➔ 순천시립도서관과 지역 실버복지관에 '김순옥 문고'로 기증하여 이웃들과 나누어 주길 바란다.
+
+물건에 집착하기보다 서로를 사랑하는 마음을 가장 큰 유산으로 여겨다오.`
+      },
+      digital: {
+        title: "🔑 디지털 계정 & 비상 금고 인계 노트",
+        meta: "보안 등급: 256-bit 이중 암호화 보관 · 인계 대리인: 큰아들 준호",
+        body: `스마트폰과 디지털 기록 및 비상 금융 안내입니다.
+
+1. [스마트폰 사진첩 백업]
+- 스마트폰 속 손주들 사진과 가족 여행 사진 1,200장은 네이버 MYBOX 클라우드와 외장하드에 날짜별로 정리해 두었다.
+- 잠금 패턴은 준호 네 생일 네 자리(0918)로 설정되어 있단다.
+
+2. [통장 및 보험 증서 보관 장소]
+- 안방 장롱 맨 위 칸, 나무 상자 안에 농협 통장과 상조보험 가입 증서, 인감도장이 함께 단정히 들어있다.
+- 장례비용과 긴급 예비금으로 쓰도록 정리해 두었으니 참고하렴.
+
+모든 것을 단정하게 정돈해 두었으니 마음 편히 열어보아라.`
+      }
+    };
+
+    // 1. 엔딩 금고 내용 열람
+    function openVaultReader(type) {
+      currentReadingVaultType = type;
+      const data = vaultSampleTexts[type] || vaultSampleTexts.letter;
+      document.getElementById('viewVaultTitle').textContent = data.title;
+      document.getElementById('viewVaultMeta').textContent = data.meta;
+      
+      const bodyHtml = data.body.split('\n\n').map(para => `<p style="margin-bottom: 14px; text-indent: 1em;">${para.replace(/\n/g, '<br>')}</p>`).join('');
+      document.getElementById('viewVaultBody').innerHTML = bodyHtml;
+      document.getElementById('viewVaultModal').classList.add('open');
+    }
+
+    function closeVaultReader() {
+      document.getElementById('viewVaultModal').classList.remove('open');
+    }
+
+    function closeVaultReaderOnOverlay(e) {
+      if (e.target.id === 'viewVaultModal') {
+        closeVaultReader();
+      }
+    }
+
+    function editCurrentVaultItem() {
+      closeVaultReader();
+      openVaultWriteModal(currentReadingVaultType);
+    }
+
+    // 2. 엔딩 금고 카테고리별 작성 모달
+    function openVaultWriteModal(category = 'letter') {
+      document.getElementById('writeVaultModal').classList.add('open');
+      switchVaultCategory(category);
+    }
+
+    function closeVaultWriteModal() {
+      document.getElementById('writeVaultModal').classList.remove('open');
+      document.getElementById('inputVaultTarget').value = '';
+      document.getElementById('inputVaultTitle').value = '';
+      document.getElementById('inputVaultBody').value = '';
+      document.getElementById('vaultFileInput').value = '';
+      document.getElementById('vaultImgPreview').src = '';
+      document.getElementById('vaultImgPreviewWrap').style.display = 'none';
+      currentVaultImageBase64 = null;
+    }
+
+    function closeVaultWriteModalOnOverlay(e) {
+      if (e.target.id === 'writeVaultModal') {
+        closeVaultWriteModal();
+      }
+    }
+
+    // 카테고리 전환 시 입력 안내문 동적 변경
+    function switchVaultCategory(cat) {
+      document.querySelectorAll('#writeVaultModal .category-chip').forEach(c => c.classList.remove('active'));
+      
+      const chipMap = {
+        letter: 'vaultChipLetter',
+        medical: 'vaultChipMedical',
+        heritage: 'vaultChipHeritage',
+        digital: 'vaultChipDigital'
+      };
+      const activeChip = document.getElementById(chipMap[cat] || 'vaultChipLetter');
+      if (activeChip) {
+        activeChip.classList.add('active');
+        const radio = activeChip.querySelector('input');
+        if (radio) radio.checked = true;
+      }
+
+      const targetLabel = document.getElementById('labelVaultTarget');
+      const targetInput = document.getElementById('inputVaultTarget');
+      const titleInput = document.getElementById('inputVaultTitle');
+      const bodyLabel = document.getElementById('labelVaultBody');
+      const bodyText = document.getElementById('inputVaultBody');
+
+      if (cat === 'letter') {
+        targetLabel.textContent = "2. 누구에게 남기는 편지인가요?";
+        targetInput.placeholder = "예: 큰아들 준호에게 / 사랑하는 딸 서연이에게 / 가족 모두에게";
+        titleInput.placeholder = "예: 사랑하는 내 딸 서연이에게 전하는 엄마의 편지";
+        bodyLabel.textContent = "4. 마음을 담은 편지 본문";
+        bodyText.placeholder = "아이들에게 전하고 싶었던 사랑의 말, 미안했던 기억, 고마웠던 마음을 편안하게 적어보세요...";
+      } else if (cat === 'medical') {
+        targetLabel.textContent = "2. 의료 결정 대리인 / 가족";
+        targetInput.placeholder = "예: 장남 준호 및 직계 가족";
+        titleInput.placeholder = "예: 사전연명의료의향 및 조용한 가족 수목장 희망서";
+        bodyLabel.textContent = "4. 연명의료 결정 및 희망 장례 절차";
+        bodyText.placeholder = "무의미한 연명치료 거부 의사, 희망하는 장례 형태(가족장, 수목장 등), 가족들에게 당부하고 싶은 사항을 적어주세요...";
+      } else if (cat === 'heritage') {
+        targetLabel.textContent = "2. 물려받을 분 / 기증처";
+        targetInput.placeholder = "예: 작은딸 서연이 / 순천시립도서관 기증";
+        titleInput.placeholder = "예: 어머니 유품 자개 경대 및 손때 묻은 책 120권";
+        bodyLabel.textContent = "4. 유품에 얽힌 사연과 전달 당부 말씀";
+        bodyText.placeholder = "이 물건에 담긴 소중한 추억이나 사연, 그리고 어떻게 소중히 다루어 주었으면 하는지 적어보세요...";
+      } else if (cat === 'digital') {
+        targetLabel.textContent = "2. 계정 및 서류 인계 대리인";
+        targetInput.placeholder = "예: 큰아들 준호";
+        titleInput.placeholder = "예: 스마트폰 클라우드 사진 백업 및 은행 통장 보관처";
+        bodyLabel.textContent = "4. 디지털 계정 및 비상 물품 보관 안내";
+        bodyText.placeholder = "스마트폰 사진 백업 위치, 잠금 해제 안내, 통장이나 보험 증서가 보관된 장소를 메모해 두세요...";
+      }
+    }
+
+    // 금고 첨부 이미지
+    function handleVaultImageSelected(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        currentVaultImageBase64 = evt.target.result;
+        document.getElementById('vaultImgPreview').src = currentVaultImageBase64;
+        document.getElementById('vaultImgPreviewWrap').style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // 금고 글 저장 처리
+    function handleSaveVaultItem(e) {
+      e.preventDefault();
+      const radio = document.querySelector('input[name="vaultCategoryRadio"]:checked');
+      const category = radio ? radio.value : 'letter';
+      const target = document.getElementById('inputVaultTarget').value.trim() || '소중한 가족에게';
+      const title = document.getElementById('inputVaultTitle').value.trim();
+      const body = document.getElementById('inputVaultBody').value.trim();
+
+      if (!title || !body) {
+        alert('제목과 상세 내용을 입력해 주세요.');
+        return;
+      }
+
+      const newItem = {
+        id: Date.now(),
+        category: category,
+        target: target,
+        title: title,
+        body: body,
+        image: currentVaultImageBase64,
+        dateStr: new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })
+      };
+
+      let list = [];
+      try {
+        const saved = localStorage.getItem('reset_custom_vault_items');
+        if (saved) list = JSON.parse(saved);
+      } catch(err) {
+        list = [];
+      }
+
+      list.unshift(newItem);
+      localStorage.setItem('reset_custom_vault_items', JSON.stringify(list));
+
+      // 화면에 즉시 반영
+      renderCustomVaultItems();
+
+      // 모달 닫기
+      closeVaultWriteModal();
+
+      // 금고 탭으로 이동
+      switchTab('tab-vault');
+
+      alert(`✨ [${title}]이(가) 가족을 위한 엔딩 금고에 안전하게 보관되었습니다!`);
+    }
+
+    // 엔딩 금고 사용자 저장 카드 렌더링
+    function renderCustomVaultItems() {
+      let list = [];
+      try {
+        const saved = localStorage.getItem('reset_custom_vault_items');
+        if (saved) list = JSON.parse(saved);
+      } catch(err) {
+        list = [];
+      }
+
+      // 기존 동적 추가 금고 카드 제거
+      document.querySelectorAll('.custom-vault-card').forEach(el => el.remove());
+
+      const grid = document.getElementById('endingVaultGrid');
+      if (!grid) return;
+
+      const iconMap = {
+        letter: '📜',
+        medical: '🕊️',
+        heritage: '🎁',
+        digital: '🔑'
+      };
+      const catNameMap = {
+        letter: '사랑의 편지',
+        medical: '사전의료 & 장례 희망서',
+        heritage: '애착 유품 메모',
+        digital: '디지털 & 비상 노트'
+      };
+
+      list.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'vault-card custom-vault-card';
+        card.innerHTML = `
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div class="vault-icon">${iconMap[item.category] || '💌'}</div>
+              <span class="room-badge" style="background: rgba(197, 155, 39, 0.15); color: var(--accent-gold); font-size: 0.75rem;">
+                ✨ 내가 등록한 보관물
+              </span>
+            </div>
+            <h3 class="vault-title" style="margin-top: 4px;">${item.title}</h3>
+            <p class="vault-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+              "${item.body}"
+            </p>
+            <ul class="vault-meta-list">
+              <li class="vault-meta-item">
+                <span class="vault-meta-label">대상 / 수신</span>
+                <span class="vault-meta-val">${item.target}</span>
+              </li>
+              <li class="vault-meta-item">
+                <span class="vault-meta-label">보관 일자</span>
+                <span class="vault-meta-val">${item.dateStr}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="vault-card-actions">
+            <button class="btn-vault-action" onclick="viewCustomVaultItem(${item.id})">
+              👁️ 내용 열람
+            </button>
+            <button class="btn-vault-write" onclick="deleteVaultItem(${item.id})" style="background: #e53e3e;">
+              🗑️ 삭제
+            </button>
+          </div>
+        `;
+        grid.prepend(card);
+      });
+    }
+
+    // 동적 금고 아이템 열람
+    function viewCustomVaultItem(id) {
+      try {
+        const list = JSON.parse(localStorage.getItem('reset_custom_vault_items') || '[]');
+        const item = list.find(it => it.id === id);
+        if (!item) return;
+
+        document.getElementById('viewVaultTitle').textContent = item.title;
+        document.getElementById('viewVaultMeta').textContent = `수신: ${item.target} · 보관일: ${item.dateStr} · 256-bit 안심 보관`;
+        
+        let contentHtml = `<p style="margin-bottom: 14px; text-indent: 1em;">${item.body.replace(/\n/g, '<br>')}</p>`;
+        if (item.image) {
+          contentHtml += `<div style="margin-top: 20px; text-align: center;"><img src="${item.image}" style="max-width: 100%; border-radius: 8px; border: 1px solid #ddd;"></div>`;
+        }
+        document.getElementById('viewVaultBody').innerHTML = contentHtml;
+        document.getElementById('viewVaultModal').classList.add('open');
+      } catch(err) {
+        console.error(err);
+      }
+    }
+
+    // 동적 금고 아이템 삭제
+    function deleteVaultItem(id) {
+      if (!confirm('이 금고 보관 문서를 삭제하시겠습니까?')) return;
+      try {
+        let list = JSON.parse(localStorage.getItem('reset_custom_vault_items') || '[]');
+        list = list.filter(it => it.id !== id);
+        localStorage.setItem('reset_custom_vault_items', JSON.stringify(list));
+        renderCustomVaultItems();
+        alert('금고에서 안전하게 삭제되었습니다.');
+      } catch(err) {
+        console.error(err);
+      }
+    }
+
+    // 초기 테마 및 사용자 메모리/금고 로드
     window.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'dark') {
@@ -2324,6 +2856,8 @@
       }
       // 저장된 사용자 추억 렌더링
       renderCustomMemories();
+      // 저장된 사용자 엔딩 금고 렌더링
+      renderCustomVaultItems();
     });
   </script>
 </body>
