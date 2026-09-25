@@ -553,94 +553,337 @@
       transform: translateY(-2px);
     }
 
-    /* -------------------- 1분 라이프 리셋 자가진단 (참여 장치) -------------------- */
+    /* -------------------- 1분 라이프 리셋 자가진단 (5대 맞춤 테마 고도화) -------------------- */
     .self-test-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 36px 32px;
-      margin: 40px auto 70px;
-      box-shadow: var(--shadow-md);
+      border-radius: 24px;
+      padding: 38px 32px;
+      margin: 30px auto 60px;
+      box-shadow: var(--shadow-lg);
       position: relative;
       overflow: hidden;
-      border-left: 6px solid var(--accent);
+      border-top: 5px solid var(--accent);
     }
 
     .test-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
-      margin-bottom: 20px;
+      margin-bottom: 28px;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
+      border-bottom: 1px dashed var(--border-color);
+      padding-bottom: 20px;
     }
 
     .test-title-wrap h3 {
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       font-weight: 800;
-      margin-bottom: 4px;
-    }
-
-    .test-title-wrap p {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-    }
-
-    .test-body {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-      margin-top: 24px;
-    }
-
-    .test-option-btn {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 18px 20px;
-      text-align: left;
-      cursor: pointer;
-      transition: var(--transition);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .test-option-btn:hover {
-      border-color: var(--accent);
-      background: var(--accent-light);
-      transform: translateY(-2px);
-    }
-
-    .test-option-title {
-      font-weight: 700;
-      font-size: 1rem;
       color: var(--text-primary);
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .test-option-desc {
-      font-size: 0.85rem;
+    .test-title-wrap p {
+      font-size: 0.96rem;
       color: var(--text-secondary);
       line-height: 1.5;
     }
 
-    /* 자가진단 결과 박스 */
-    .test-result-box {
-      display: none;
+    .test-header-badge {
+      font-size: 0.82rem;
+      color: var(--accent);
       background: var(--accent-light);
-      border: 1px dashed var(--accent);
-      border-radius: 14px;
-      padding: 24px;
-      margin-top: 24px;
-      animation: fadeIn 0.4s ease;
+      border: 1px solid var(--accent);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
+    /* 5대 진단 테마 카드 그리드 */
+    .diag-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    /* 개별 진단 테마 카드 */
+    .diag-card {
+      background: var(--bg-secondary);
+      border: 1.5px solid var(--border-color);
+      border-radius: 20px;
+      padding: 26px 22px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      outline: none;
+      user-select: none;
+    }
+
+    .diag-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+      border-color: var(--accent);
+      background: var(--bg-card);
+    }
+
+    .diag-card.selected {
+      border-color: var(--accent);
+      box-shadow: 0 10px 26px rgba(179, 139, 89, 0.25);
+      background: var(--bg-card);
+    }
+
+    .diag-card.selected::after {
+      content: '✓ 선택됨';
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #fff;
+      background: var(--accent);
+      padding: 3px 9px;
+      border-radius: 999px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      letter-spacing: 0.5px;
+    }
+
+    .diag-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .diag-badge {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      padding: 4px 10px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .diag-num {
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: var(--text-muted);
+      opacity: 0.75;
+      font-family: var(--font-serif, 'MaruBuri', serif);
+    }
+
+    .diag-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      line-height: 1.38;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      word-break: keep-all;
+    }
+
+    /* 서브 카피 (부주제) 스타일 */
+    .diag-subcopy {
+      font-size: 0.90rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.55;
+      padding: 10px 13px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      border-left: 3.5px solid var(--accent);
+      background: rgba(0, 0, 0, 0.025);
+      font-family: var(--font-serif, 'MaruBuri', serif);
+      word-break: keep-all;
+    }
+
+    [data-theme="dark"] .diag-subcopy {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    /* 상세 설명 */
+    .diag-desc {
+      font-size: 0.89rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 18px;
+      flex-grow: 1;
+      word-break: keep-all;
+    }
+
+    /* 하단 액션 유도 */
+    .diag-action-guide {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border-color);
+      transition: gap 0.2s ease;
+    }
+
+    .diag-card:hover .diag-action-guide {
+      gap: 10px;
+    }
+
+    /* 5대 테마별 고유 감성 컬러 톤 */
+    /* 1. 웰니스 & 뷰티 케어 */
+    .diag-theme-beauty .diag-badge {
+      background: #fdf0f2;
+      color: #b73e56;
+      border: 1px solid #fad3da;
+    }
+    .diag-theme-beauty .diag-subcopy {
+      border-left-color: #d1516e;
+    }
+    [data-theme="dark"] .diag-theme-beauty .diag-badge {
+      background: #341820;
+      color: #f79aa9;
+      border-color: #5c2734;
+    }
+
+    /* 2. 일상과 비움의 미학 */
+    .diag-theme-wardrobe .diag-badge {
+      background: #eef7f2;
+      color: #2b7a4b;
+      border: 1px solid #c9ebd6;
+    }
+    .diag-theme-wardrobe .diag-subcopy {
+      border-left-color: #3b9760;
+    }
+    [data-theme="dark"] .diag-theme-wardrobe .diag-badge {
+      background: #152c1e;
+      color: #8be0ab;
+      border-color: #244b33;
+    }
+
+    /* 3. 기억의 계승 */
+    .diag-theme-legacy .diag-badge {
+      background: #faf3eb;
+      color: #9c5c24;
+      border: 1px solid #ebd4bc;
+    }
+    .diag-theme-legacy .diag-subcopy {
+      border-left-color: #ba763b;
+    }
+    [data-theme="dark"] .diag-theme-legacy .diag-badge {
+      background: #322214;
+      color: #f0b583;
+      border-color: #573a20;
+    }
+
+    /* 4. 디지털 자서전 */
+    .diag-theme-memoir .diag-badge {
+      background: #f0f4fa;
+      color: #2c5888;
+      border: 1px solid #cce0f5;
+    }
+    .diag-theme-memoir .diag-subcopy {
+      border-left-color: #3d72aa;
+    }
+    [data-theme="dark"] .diag-theme-memoir .diag-badge {
+      background: #172433;
+      color: #8db5e2;
+      border-color: #253e5c;
+    }
+
+    /* 5. 아름다운 마침표와 감사 */
+    .diag-theme-party .diag-badge {
+      background: #f7f1f9;
+      color: #79448a;
+      border: 1px solid #e7d3ed;
+    }
+    .diag-theme-party .diag-subcopy {
+      border-left-color: #9258a6;
+    }
+    [data-theme="dark"] .diag-theme-party .diag-badge {
+      background: #2b1830;
+      color: #d89ee8;
+      border-color: #4f2959;
+    }
+
+    /* 자가진단 결과 박스 고도화 */
+    .test-result-box {
+      display: none;
+      background: var(--bg-card);
+      border: 2px solid var(--accent);
+      border-radius: 20px;
+      padding: 32px 28px;
+      margin-top: 36px;
+      box-shadow: 0 16px 40px rgba(179, 139, 89, 0.16);
+      animation: testResultFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    @keyframes testResultFadeIn {
+      from { opacity: 0; transform: translateY(14px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    .test-result-badge-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .test-solution-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .test-solution-item {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .test-solution-item .sol-icon {
+      font-size: 1.25rem;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .test-solution-item .sol-title {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+
+    .test-solution-item .sol-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
     }
 
     /* -------------------- 공통 섹션 스타일 -------------------- */
@@ -2392,36 +2635,143 @@
           <div class="test-header">
             <div class="test-title-wrap">
               <h3>🧭 지금 나를 위한 맞춤 리셋 진단</h3>
-              <p>평소 가장 마음에 걸리거나 정리하고 싶었던 주제를 눌러보세요.</p>
+              <p>마음에 가장 와닿거나 지금 먼저 정리하고 싶은 주제를 선택해 보세요. 전문 코칭 솔루션을 즉시 처방해 드립니다.</p>
             </div>
-            <span style="font-size: 0.9rem; color: var(--accent); font-weight: 800;">3초 즉시 진단</span>
-          </div>
-          <div class="test-body">
-            <button class="test-option-btn" onclick="showTestResult('digital')">
-              <span class="test-option-title">📱 디지털 & 계정의 흔적</span>
-              <span class="test-option-desc">스마트폰 사진 수만 장과 쓰지 않는 계정들이 뒤엉켜 있어 막막합니다.</span>
-            </button>
-            <button class="test-option-btn" onclick="showTestResult('space')">
-              <span class="test-option-title">📦 옷장과 물건의 미련</span>
-              <span class="test-option-desc">수년째 손대지 않은 물건들이 공간을 차지하고 있어 가볍게 비우고 싶습니다.</span>
-            </button>
-            <button class="test-option-btn" onclick="showTestResult('tour')">
-              <span class="test-option-title">🗺️ 나만의 로망 & 엔딩투어</span>
-              <span class="test-option-desc">남은 생애 동안 꼭 가보고 싶었던 장소와 버킷리스트를 구체화하고 싶습니다.</span>
-            </button>
-            <button class="test-option-btn" onclick="showTestResult('story')">
-              <span class="test-option-title">✍️ 내 인생의 서사 기록</span>
-              <span class="test-option-desc">지나온 20~30년의 치열했던 삶의 궤적을 자서전처럼 품격 있게 남기고 싶습니다.</span>
-            </button>
+            <span class="test-header-badge">✨ 3초 즉시 맞춤 진단</span>
           </div>
 
-          <!-- 진단 결과 출력 박스 -->
+          <!-- 5대 맞춤 테마 카드 그리드 -->
+          <div class="diag-cards-grid" id="diagCardsGrid">
+            <!-- 1. 웰니스 & 뷰티 케어 -->
+            <div class="diag-card diag-theme-beauty" onclick="showTestResult('beauty', this)" id="diagCard_beauty" role="button" tabindex="0">
+              <div>
+                <div class="diag-card-top">
+                  <span class="diag-badge">💄 웰니스 & 뷰티 케어</span>
+                  <span class="diag-num">#01</span>
+                </div>
+                <h4 class="diag-title">💄 [특별한 날, 화려한 외출]</h4>
+                <div class="diag-subcopy">
+                  “거울을 보며 가장 나답고 품격 있던 시절의 내 모습을 되찾는 시간”
+                </div>
+                <p class="diag-desc">
+                  거동이 불편한 나를 위해 집으로 찾아와 헤어, 메이크업, 의상 코디를 완성하고, 인생의 가장 빛나는 순간의 기억을 선물합니다.
+                </p>
+              </div>
+              <div class="diag-action-guide">
+                <span>맞춤 솔루션 진단받기</span>
+                <span>➔</span>
+              </div>
+            </div>
+
+            <!-- 2. 일상과 비움의 미학 -->
+            <div class="diag-card diag-theme-wardrobe" onclick="showTestResult('wardrobe', this)" id="diagCard_wardrobe" role="button" tabindex="0">
+              <div>
+                <div class="diag-card-top">
+                  <span class="diag-badge">👗 일상과 비움의 미학</span>
+                  <span class="diag-num">#02</span>
+                </div>
+                <h4 class="diag-title">👗 [옷장 정리 및 수납]</h4>
+                <div class="diag-subcopy">
+                  “삶의 흔적을 정돈하고 비우는 일, 일상복과 외출복의 아름다운 구분”
+                </div>
+                <p class="diag-desc">
+                  수많은 세월이 담긴 옷장을 열어 현재의 나에게 꼭 맞는 옷을 추려내고, 공간과 마음에 쾌적한 '여백'을 만들어 드립니다.
+                </p>
+              </div>
+              <div class="diag-action-guide">
+                <span>맞춤 솔루션 진단받기</span>
+                <span>➔</span>
+              </div>
+            </div>
+
+            <!-- 3. 기억의 계승 -->
+            <div class="diag-card diag-theme-legacy" onclick="showTestResult('legacy', this)" id="diagCard_legacy" role="button" tabindex="0">
+              <div>
+                <div class="diag-card-top">
+                  <span class="diag-badge">📦 기억의 계승</span>
+                  <span class="diag-num">#03</span>
+                </div>
+                <h4 class="diag-title">📦 [오래된 짐 및 유품 정리]</h4>
+                <div class="diag-subcopy">
+                  “수십 년간 쌓인 짐을 비우고, 의미 있는 흔적은 유품으로 정돈하여 후대에 전한다.”
+                </div>
+                <p class="diag-desc">
+                  손때 든 물건들을 우아하게 처분하고, 후손들에게 물려줄 소중한 유산과 추억을 안전하게 분류하여 가치 있게 남깁니다.
+                </p>
+              </div>
+              <div class="diag-action-guide">
+                <span>맞춤 솔루션 진단받기</span>
+                <span>➔</span>
+              </div>
+            </div>
+
+            <!-- 4. 디지털 자서전 -->
+            <div class="diag-card diag-theme-memoir" onclick="showTestResult('memoir', this)" id="diagCard_memoir" role="button" tabindex="0">
+              <div>
+                <div class="diag-card-top">
+                  <span class="diag-badge">✍️ 디지털 자서전</span>
+                  <span class="diag-num">#04</span>
+                </div>
+                <h4 class="diag-title">✍️ [내 인생의 서사 기록]</h4>
+                <div class="diag-subcopy">
+                  “치열하게 살아온 삶의 궤적을 디지털 자서전으로 남겨 영원히 기억되게 한다.”
+                </div>
+                <p class="diag-desc">
+                  잊혀가는 기억과 사진, 발자취를 엮어 한 편의 영화 같은 디지털 아카이브로 구축하고, 세상에 단 하나뿐인 나의 역사책을 완성합니다.
+                </p>
+              </div>
+              <div class="diag-action-guide">
+                <span>맞춤 솔루션 진단받기</span>
+                <span>➔</span>
+              </div>
+            </div>
+
+            <!-- 5. 아름다운 마침표와 감사 -->
+            <div class="diag-card diag-theme-party" onclick="showTestResult('party', this)" id="diagCard_party" role="button" tabindex="0">
+              <div>
+                <div class="diag-card-top">
+                  <span class="diag-badge">💌 아름다운 마침표와 감사</span>
+                  <span class="diag-num">#05</span>
+                </div>
+                <h4 class="diag-title">💌 [생전 엔딩 파티를 위한 서사]</h4>
+                <div class="diag-subcopy">
+                  “고마운 사람들을 초대해 감사를 전하는 생전 엔딩 파티, 그 감동적인 여정을 함께 준비합니다.”
+                </div>
+                <p class="diag-desc">
+                  삶의 마지막을 스스로 디자인하며, 감사를 표해야 할 이들과 보고 싶은 이들의 명단을 정리하고 진심 어린 감사 편지를 작성하도록 돕습니다.
+                </p>
+              </div>
+              <div class="diag-action-guide">
+                <span>맞춤 솔루션 진단받기</span>
+                <span>➔</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 진단 결과 출력 박스 (고도화 처방전) -->
           <div class="test-result-box" id="testResultBox">
-            <h4 id="resultTitle" style="font-size: 1.2rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;"></h4>
-            <p id="resultDesc" style="font-size: 1.02rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px;"></p>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-              <a href="#lounge" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.95rem;">💬 오늘의 비움 한 줄 쓰기</a>
-              <a href="#programs" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.95rem;" id="resultActionBtn">추천 프로그램 보기</a>
+            <div class="test-result-badge-wrap">
+              <span id="resultCategoryBadge" class="diag-badge" style="font-size: 0.84rem; padding: 5px 12px; font-weight: 800;"></span>
+              <span style="font-size: 0.82rem; color: var(--accent); font-weight: 700;">🌱 여백의 1:1 맞춤 케어 처방전</span>
+            </div>
+            <h4 id="resultTitle" style="font-size: 1.3rem; font-weight: 800; color: var(--text-primary); margin-bottom: 10px; line-height: 1.45;"></h4>
+            <p id="resultDesc" style="font-size: 0.98rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 22px; word-break: keep-all;"></p>
+            
+            <!-- 3대 핵심 케어 솔루션 항목들 -->
+            <div class="test-solution-grid" id="resultSolutionGrid">
+              <!-- JS에서 동적 주입 -->
+            </div>
+
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center; padding-top: 10px;">
+              <button onclick="requestConsultationFromDiag()" class="btn btn-primary" style="padding: 12px 22px; font-size: 0.95rem; font-weight: 700;">
+                ✨ 1:1 방문 맞춤 상담 예약하기
+              </button>
+              <button onclick="openBoardModal()" class="btn btn-secondary" style="padding: 12px 20px; font-size: 0.92rem;">
+                📚 관련 여백 칼럼 읽기
+              </button>
+              <button onclick="resetTestSelection()" style="background: none; border: none; color: var(--text-muted); font-size: 0.86rem; cursor: pointer; padding: 8px 12px; text-decoration: underline;">
+                🔄 다른 주제 다시 선택하기
+              </button>
             </div>
           </div>
         </div>
@@ -3007,34 +3357,139 @@
       applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
     });
 
-    // 2. 1분 라이프 리셋 자가진단 인터랙션
-    function showTestResult(type) {
-      const resultBox = document.getElementById('testResultBox');
-      const resultTitle = document.getElementById('resultTitle');
-      const resultDesc = document.getElementById('resultDesc');
-      const resultBtn = document.getElementById('resultActionBtn');
+    // =========================================================================
+    // 2. 1분 라이프 리셋 자가진단 (5대 테마 맞춤 인터랙션)
+    // =========================================================================
+    const DIAGNOSIS_SOLUTIONS = {
+      beauty: {
+        badge: '💄 웰니스 & 뷰티 케어',
+        themeClass: 'diag-theme-beauty',
+        title: '💡 맞춤 진단 처방: [특별한 날, 화려한 외출] — 다시 빛나는 나를 만납니다',
+        desc: '거동이 조심스럽거나 혼자서의 준비가 망설여지는 날에도, 가장 나답고 품격 있는 모습은 포기할 수 없는 소중한 권리입니다. 여백의 전문 뷰티 아티스트와 스타일리스트가 댁으로 직접 찾아와 헤어·메이크업·의상 코디를 원스톱으로 완성해 드리며, 인생의 가장 찬란한 순간을 사진과 기억으로 남겨드립니다.',
+        solutions: [
+          { icon: '🪞', title: '찾아가는 리셋 살롱', desc: '전문 뷰티팀이 자택 방문 헤어·메이크업 완벽 스타일링' },
+          { icon: '👗', title: '인생 코디네이션', desc: '체형과 품격에 꼭 맞는 외출복 매칭 및 핏 조정' },
+          { icon: '📸', title: '빛나는 순간 아카이빙', desc: '가장 아름다운 오늘의 나를 기록하는 품격 프로필 촬영' }
+        ]
+      },
+      wardrobe: {
+        badge: '👗 일상과 비움의 미학',
+        themeClass: 'diag-theme-wardrobe',
+        title: '💡 맞춤 진단 처방: [옷장 정리 및 수납] — 공간과 마음에 쾌적한 여백을 선물합니다',
+        desc: '수많은 세월과 사연이 깃든 옷장을 열어 현재의 나에게 꼭 맞는 옷들만 우아하게 추려냅니다. 버리기 아까워 쌓아둔 짐에서 벗어나 일상복과 외출복의 황금 비율을 재정립하고, 아침마다 옷장을 열 때마다 산뜻한 설렘과 편안한 여백을 누릴 수 있도록 돕습니다.',
+        solutions: [
+          { icon: '🧺', title: '일상복/외출복 황금구분', desc: '현재 라이프스타일에 맞춘 실용적이고 우아한 의류 선별' },
+          { icon: '🌿', title: '동선 맞춤 수납 솔루션', desc: '손이 닿기 편한 인체공학적 구획 정리 및 라벨링' },
+          { icon: '🎁', title: '마음 편한 안심 비움', desc: '의류 기부·업사이클링·처분을 원스톱으로 깔끔하게 대행' }
+        ]
+      },
+      legacy: {
+        badge: '📦 기억의 계승',
+        themeClass: 'diag-theme-legacy',
+        title: '💡 맞춤 진단 처방: [오래된 짐 및 유품 정리] — 소중한 유산과 추억을 품격 있게 계승합니다',
+        desc: '수십 년간 삶의 터전에 쌓인 물건들은 단순한 짐이 아니라, 나의 치열했던 시간이 깃든 소중한 흔적입니다. 손때 묻은 물건들을 존중하며 우아하게 처분하고, 후손들에게 물려줄 소중한 가보와 추억을 안전하게 분류하여 가치 있게 남길 수 있도록 돕습니다.',
+        solutions: [
+          { icon: '📦', title: '추억 유품 선별 & 아카이빙', desc: '후대에 전할 핵심 유품과 보존 물품의 체계적 보관함 제작' },
+          { icon: '📜', title: '생애 물품 정돈 컨설팅', desc: '처분할 물건과 보존할 물건을 전문가와 함께 안심 분류' },
+          { icon: '🤝', title: '가족 공유 메모리얼', desc: '물건에 깃든 사연을 기록하여 자녀들에게 감동으로 전승' }
+        ]
+      },
+      memoir: {
+        badge: '✍️ 디지털 자서전',
+        themeClass: 'diag-theme-memoir',
+        title: '💡 맞춤 진단 처방: [내 인생의 서사 기록] — 한 편의 영화 같은 나의 역사책을 완성합니다',
+        desc: '누구도 대신 살아줄 수 없었던 당신만의 뜨거운 삶의 궤적은 세상에 단 하나뿐인 역사입니다. 잊혀가는 기억과 낡은 사진, 발자취를 엮어 한 편의 감동적인 디지털 자서전으로 구축하고, 소중한 가족과 후대에 영원히 기억될 위대한 유산을 전해드립니다.',
+        solutions: [
+          { icon: '🎙️', title: '1:1 구술 인터뷰', desc: '전문 작가가 편안한 대화로 삶의 지혜와 비화를 채록' },
+          { icon: '🎞️', title: '옛 사진 복원 & 아카이빙', desc: '빛바랜 앨범 디지털 스캔 및 고화질 디지털 화보집 구성' },
+          { icon: '📖', title: '디지털 자서전 & 양장본', desc: '온라인 아카이브와 함께 품격 있는 실물 책자로 출판' }
+        ]
+      },
+      party: {
+        badge: '💌 아름다운 마침표와 감사',
+        themeClass: 'diag-theme-party',
+        title: '💡 맞춤 진단 처방: [생전 엔딩 파티를 위한 서사] — 감사의 온기로 채우는 특별한 축제',
+        desc: '내가 살아있을 때 소중한 사람들을 초대해 맛있는 음식을 대접하고 고마움을 전하는 인생 감사 파티를 함께 준비합니다. 삶의 마지막을 스스로 디자인하며, 감사를 표해야 할 이들과 보고 싶은 이들의 명단을 정리하고 진심 어린 감사 편지를 작성할 수 있도록 동행합니다.',
+        solutions: [
+          { icon: '💌', title: '진심의 감사 편지 디렉팅', desc: '꼭 전하고 싶었던 사랑과 미안함을 담은 맞춤 편지 작성' },
+          { icon: '🥂', title: '생전 감사 파티 총괄 기획', desc: '초대장, 음악, 영상, 다과까지 웃음과 감동이 넘치는 연출' },
+          { icon: '🕊️', title: '사전 엔딩 노트 작성 지원', desc: '나의 뜻을 명확히 담는 사전의료의향 및 장례 방식 정돈' }
+        ]
+      }
+    };
 
-      resultBox.style.display = 'block';
+    let selectedDiagType = null;
 
-      if (type === 'digital') {
-        resultTitle.textContent = "💡 진단 결과: [디지털 유세거니 클린업]이 가장 시급합니다";
-        resultDesc.textContent = "스마트폰 속 수만 장의 사진과 잊힌 계정들이 마음에 무의식적인 피로를 주고 있습니다. 1주차 디지털 유산 정리 워크숍 또는 전문 코치의 1:1 방문 백업 지원을 권해드립니다.";
-        resultBtn.textContent = "1주차 디지털 정리 프로그램 보기";
-      } else if (type === 'space') {
-        resultTitle.textContent = "💡 진단 결과: [공간 미니멀 리셋]을 통한 정서적 해방이 필요합니다";
-        resultDesc.textContent = "물건을 비우는 것은 과거의 후회를 덜어내는 일입니다. 전문 코칭스태프가 함께 대화하며 소중한 물건만 남겨드리는 '방문 컨시어지 서비스'가 큰 도움이 될 것입니다.";
-        resultBtn.textContent = "방문 컨시어지 서비스 보기";
-      } else if (type === 'tour') {
-        resultTitle.textContent = "💡 진단 결과: [나만의 엔딩투어 & 로망 로드맵] 작성을 추천합니다";
-        resultDesc.textContent = "가장 가슴 뛰는 내일을 위해 지나온 추억의 장소들을 순례하고, 3개월 단위의 구체적인 버킷리스트를 코치와 함께 실행 계획으로 옮겨보세요.";
-        resultBtn.textContent = "3주차 엔딩투어 프로그램 보기";
-      } else if (type === 'story') {
-        resultTitle.textContent = "💡 진단 결과: [나의 결 서사 30일 워크북]이 최적의 솔루션입니다";
-        resultDesc.textContent = "20~30년간 쌓아오신 대체 불가능한 삶의 지혜와 이야기를 한 권의 자서전으로 남겨보세요. 가족과 세상에 남길 가장 빛나는 유산이 됩니다.";
-        resultBtn.textContent = "서사 워크북 보러가기";
+    function showTestResult(type, cardEl) {
+      selectedDiagType = type;
+      const data = DIAGNOSIS_SOLUTIONS[type];
+      if (!data) return;
+
+      // 카드 선택 UI 상태 갱신
+      const cards = document.querySelectorAll('.diag-card');
+      cards.forEach(c => c.classList.remove('selected'));
+      if (cardEl) {
+        cardEl.classList.add('selected');
+      } else {
+        const target = document.getElementById(`diagCard_${type}`);
+        if (target) target.classList.add('selected');
       }
 
-      resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      // 결과 박스 렌더링
+      const resultBox = document.getElementById('testResultBox');
+      const resultBadge = document.getElementById('resultCategoryBadge');
+      const resultTitle = document.getElementById('resultTitle');
+      const resultDesc = document.getElementById('resultDesc');
+      const solutionGrid = document.getElementById('resultSolutionGrid');
+
+      if (resultBadge) resultBadge.textContent = data.badge;
+      if (resultTitle) resultTitle.textContent = data.title;
+      if (resultDesc) resultDesc.textContent = data.desc;
+
+      if (solutionGrid) {
+        solutionGrid.innerHTML = data.solutions.map(s => `
+          <div class="test-solution-item">
+            <span class="sol-icon">${s.icon}</span>
+            <div>
+              <div class="sol-title">${escapeHtml(s.title)}</div>
+              <div class="sol-desc">${escapeHtml(s.desc)}</div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      if (resultBox) {
+        resultBox.style.display = 'block';
+        setTimeout(() => {
+          resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 60);
+      }
+    }
+
+    // 진단 결과에서 상담 신청 시 테마명과 함께 안내
+    function requestConsultationFromDiag() {
+      const topicName = selectedDiagType && DIAGNOSIS_SOLUTIONS[selectedDiagType]
+        ? `${DIAGNOSIS_SOLUTIONS[selectedDiagType].badge}`
+        : '맞춤형 라이프 리셋';
+      
+      const phoneOrEmail = prompt(`🌿 ${topicName} 1:1 방문 맞춤 상담 신청\n\n상담 받으실 연락처(휴대전화 번호)를 입력해 주시면, 전담 전문 코칭스태프가 24시간 이내에 따뜻하게 안내 연락드립니다:`);
+      if (phoneOrEmail && phoneOrEmail.trim()) {
+        alert(`감사합니다! ${topicName} 무료 맞춤 상담 신청이 정상 접수되었습니다.\n(연락처: ${phoneOrEmail.trim()})\n\n담당 코칭스태프가 곧 정성껏 안내해 드리겠습니다.`);
+      }
+    }
+
+    // 다른 주제 다시 선택하기
+    function resetTestSelection() {
+      selectedDiagType = null;
+      document.querySelectorAll('.diag-card').forEach(c => c.classList.remove('selected'));
+      const resultBox = document.getElementById('testResultBox');
+      if (resultBox) {
+        resultBox.style.display = 'none';
+      }
+      const grid = document.getElementById('diagCardsGrid');
+      if (grid) {
+        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
 
     // 3. 참여 라운지: 오늘의 비움 한 줄 추가 기능
