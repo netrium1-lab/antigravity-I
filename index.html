@@ -6,7 +6,10 @@
   <title>여백과 결, 리셋 아카이브 | 인생 후반전 라이프 리셋 플랫폼</title>
   <meta name="description" content="지나온 세월의 결을 다듬고, 남은 인생의 여백을 내 손으로 그리다. 우아한 종활과 라이프 아카이브, 4주 코호트 및 프리미엄 방문 컨시어지.">
   
-  <!-- 웹 폰트 (Pretendard) -->
+  <!-- 웹 폰트 (Pretendard & Noto Serif KR) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
   <style>
@@ -109,27 +112,79 @@
 
     .logo-area {
       display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .logo-area:hover {
+      transform: translateY(-1px);
+      opacity: 0.92;
+    }
+
+    .logo-symbol {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(94, 107, 82, 0.14) 0%, rgba(194, 155, 56, 0.16) 100%);
+      border: 1px solid rgba(94, 107, 82, 0.25);
+      box-shadow: 0 2px 6px rgba(45, 40, 30, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .logo-area:hover .logo-symbol {
+      transform: rotate(6deg) scale(1.06);
+    }
+
+    .logo-text-group {
+      display: flex;
       flex-direction: column;
+      gap: 3px;
+    }
+
+    .logo-main-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .logo-title {
-      font-size: 1.35rem;
-      font-weight: 800;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
       color: var(--text-primary);
-      letter-spacing: -0.5px;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
     }
 
-    .logo-title span {
+    .logo-badge {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
       color: var(--accent);
-      font-weight: 400;
-      font-size: 0.9rem;
-      margin-left: 6px;
+      background: var(--accent-light);
+      border: 1px solid rgba(94, 107, 82, 0.28);
+      padding: 2px 8px;
+      border-radius: 999px;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      white-space: nowrap;
     }
 
     .logo-sub {
-      font-size: 0.72rem;
+      font-family: 'Pretendard', -apple-system, sans-serif;
+      font-size: 0.68rem;
       color: var(--text-muted);
-      letter-spacing: 0.5px;
+      letter-spacing: 0.14em;
+      font-weight: 600;
+      text-transform: uppercase;
+      line-height: 1.2;
+      padding-left: 1px;
     }
 
     .nav-menu {
@@ -717,6 +772,21 @@
       .hero-desc {
         font-size: 1rem;
       }
+      .logo-title {
+        font-size: 1.25rem;
+      }
+      .logo-symbol {
+        width: 35px;
+        height: 35px;
+      }
+      .logo-badge {
+        font-size: 0.65rem;
+        padding: 1px 6px;
+      }
+      .logo-sub {
+        font-size: 0.62rem;
+        letter-spacing: 0.08em;
+      }
       .nav-menu {
         display: none;
       }
@@ -732,9 +802,20 @@
   <!-- 상단 네비게이션 헤더 -->
   <header>
     <div class="container nav-container">
-      <a href="#" class="logo-area">
-        <div class="logo-title">여백과 결 <span>리셋 아카이브</span></div>
-        <div class="logo-sub">Yebaek & Geol : Reset Archive</div>
+      <a href="#home" class="logo-area" aria-label="여백과 결 홈으로 이동">
+        <div class="logo-symbol" title="여백과 결 엠블럼">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C7 6 4 11 4 15.5C4 19 6.8 21.5 12 21.5C17.2 21.5 20 19 20 15.5C20 11 17 6 12 2Z" fill="var(--accent)" fill-opacity="0.2" stroke="var(--accent)" stroke-width="1.4"/>
+            <path d="M12 5V19M12 10C10.2 11.2 8.5 13 8.5 14.8M12 13C13.8 14.2 15.5 15.5 15.5 17" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="logo-text-group">
+          <div class="logo-main-row">
+            <span class="logo-title">여백과 결</span>
+            <span class="logo-badge">리셋 아카이브</span>
+          </div>
+          <span class="logo-sub">YEBAEK & GEOL · LIFE RESET ARCHIVE</span>
+        </div>
       </a>
       <ul class="nav-menu">
         <li><a href="#home" class="nav-link active">홈</a></li>
