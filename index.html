@@ -615,12 +615,11 @@
       margin-top: 10px;
     }
 
-    /* 개별 진단 테마 카드 */
+    /* 개별 진단 테마 카드 (주제별 엷은 파스텔 틴트 배경 적용) */
     .diag-card {
-      background: var(--bg-secondary);
       border: 1.5px solid var(--border-color);
-      border-radius: 20px;
-      padding: 26px 22px;
+      border-radius: 22px;
+      padding: 30px 26px;
       text-align: left;
       cursor: pointer;
       transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
@@ -631,33 +630,25 @@
       overflow: hidden;
       outline: none;
       user-select: none;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
     }
 
     .diag-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
-      border-color: var(--accent);
-      background: var(--bg-card);
-    }
-
-    .diag-card.selected {
-      border-color: var(--accent);
-      box-shadow: 0 10px 26px rgba(179, 139, 89, 0.25);
-      background: var(--bg-card);
+      transform: translateY(-5px);
     }
 
     .diag-card.selected::after {
       content: '✓ 선택됨';
       position: absolute;
-      top: 16px;
-      right: 18px;
-      font-size: 0.72rem;
-      font-weight: 800;
+      top: 18px;
+      right: 20px;
+      font-size: 0.78rem;
+      font-weight: 850;
       color: #fff;
       background: var(--accent);
-      padding: 3px 9px;
+      padding: 4px 11px;
       border-radius: 999px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
       letter-spacing: 0.5px;
     }
 
@@ -665,33 +656,39 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
+    /* 상단 카테고리 뱃지 (크고 굵직하게 강조: 웰니스 & 뷰티케어 ~ 디지탈자서전) */
     .diag-badge {
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.2px;
-      padding: 4px 10px;
-      border-radius: 8px;
+      font-size: 1.05rem;
+      font-weight: 850;
+      letter-spacing: -0.2px;
+      padding: 7px 15px;
+      border-radius: 11px;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 7px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+      line-height: 1.25;
     }
 
     .diag-num {
-      font-size: 0.85rem;
+      font-size: 0.92rem;
       font-weight: 900;
       color: var(--text-muted);
       opacity: 0.75;
       font-family: var(--font-serif, 'MaruBuri', serif);
     }
 
+    /* 메인 타이틀 */
     .diag-title {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 12px;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #111827;
+      margin-bottom: 14px;
       line-height: 1.38;
       display: flex;
       align-items: center;
@@ -699,127 +696,302 @@
       word-break: keep-all;
     }
 
-    /* 서브 카피 (부주제) 스타일 */
+    [data-theme="dark"] .diag-title {
+      color: #f9fafb;
+    }
+
+    /* 서브 카피 (부주제) 스타일 (크고 또렷하게 강조) */
     .diag-subcopy {
-      font-size: 0.90rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      line-height: 1.55;
-      padding: 10px 13px;
-      border-radius: 10px;
-      margin-bottom: 14px;
-      border-left: 3.5px solid var(--accent);
-      background: rgba(0, 0, 0, 0.025);
+      font-size: 1.12rem;
+      font-weight: 750;
+      color: #1f2937;
+      line-height: 1.6;
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      border-left: 4.5px solid var(--accent);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
       font-family: var(--font-serif, 'MaruBuri', serif);
       word-break: keep-all;
     }
 
     [data-theme="dark"] .diag-subcopy {
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(0, 0, 0, 0.35);
+      color: #f3f4f6;
     }
 
-    /* 상세 설명 */
+    /* 상세 설명 (글자 크기 및 굵기 확대, 또렷한 색상) */
     .diag-desc {
-      font-size: 0.89rem;
-      color: var(--text-secondary);
-      line-height: 1.65;
-      margin-bottom: 18px;
+      font-size: 1.04rem;
+      font-weight: 550;
+      color: #374151;
+      line-height: 1.72;
+      margin-bottom: 20px;
       flex-grow: 1;
       word-break: keep-all;
     }
 
+    [data-theme="dark"] .diag-desc {
+      color: #e5e7eb;
+    }
+
     /* 하단 액션 유도 */
     .diag-action-guide {
-      font-size: 0.82rem;
-      font-weight: 700;
+      font-size: 0.95rem;
+      font-weight: 800;
       color: var(--accent);
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 6px;
       margin-top: auto;
-      padding-top: 12px;
-      border-top: 1px dashed var(--border-color);
+      padding-top: 14px;
+      border-top: 1px dashed rgba(0, 0, 0, 0.12);
       transition: gap 0.2s ease;
     }
 
-    .diag-card:hover .diag-action-guide {
-      gap: 10px;
+    [data-theme="dark"] .diag-action-guide {
+      border-top-color: rgba(255, 255, 255, 0.15);
     }
 
-    /* 5대 테마별 고유 감성 컬러 톤 */
-    /* 1. 웰니스 & 뷰티 케어 */
+    .diag-card:hover .diag-action-guide {
+      color: #966e3b;
+    }
+
+    /* =========================================================================
+       5대 테마별 고유 감성 컬러 (박스 색상 엷은 파스텔 틴트 & 굵은 뱃지)
+       ========================================================================= */
+
+    /* 1. 💄 [특별한 날, 화려한 외출] — 웰니스 & 뷰티 케어 */
+    .diag-theme-beauty {
+      background: #fff5f6;
+      border-color: #f8c8d2;
+    }
+    .diag-theme-beauty:hover {
+      border-color: #d1516e;
+      box-shadow: 0 14px 30px rgba(209, 81, 110, 0.18);
+      background: #ffedf0;
+    }
+    .diag-theme-beauty.selected {
+      border-color: #d1516e;
+      box-shadow: 0 10px 28px rgba(209, 81, 110, 0.26);
+      background: #ffedf0;
+    }
     .diag-theme-beauty .diag-badge {
-      background: #fdf0f2;
-      color: #b73e56;
-      border: 1px solid #fad3da;
+      background: #ffdbe2;
+      color: #a31936;
+      border: 1.5px solid #f6b5c3;
     }
     .diag-theme-beauty .diag-subcopy {
       border-left-color: #d1516e;
     }
+    [data-theme="dark"] .diag-theme-beauty {
+      background: #28161b;
+      border-color: #552735;
+    }
+    [data-theme="dark"] .diag-theme-beauty:hover,
+    [data-theme="dark"] .diag-theme-beauty.selected {
+      border-color: #ff6b8b;
+      box-shadow: 0 12px 28px rgba(255, 107, 139, 0.22);
+      background: #321b22;
+    }
     [data-theme="dark"] .diag-theme-beauty .diag-badge {
-      background: #341820;
-      color: #f79aa9;
-      border-color: #5c2734;
+      background: #461824;
+      color: #ffa0b5;
+      border-color: #6d2639;
+    }
+    [data-theme="dark"] .diag-theme-beauty .diag-subcopy {
+      border-left-color: #ff6b8b;
     }
 
-    /* 2. 일상과 비움의 미학 */
+    /* 2. 👗 [옷장 정리 및 수납] — 일상과 비움의 미학 */
+    .diag-theme-wardrobe {
+      background: #f2f9f4;
+      border-color: #c7e8d3;
+    }
+    .diag-theme-wardrobe:hover {
+      border-color: #2b7a4b;
+      box-shadow: 0 14px 30px rgba(43, 122, 75, 0.18);
+      background: #e8f6ed;
+    }
+    .diag-theme-wardrobe.selected {
+      border-color: #2b7a4b;
+      box-shadow: 0 10px 28px rgba(43, 122, 75, 0.26);
+      background: #e8f6ed;
+    }
     .diag-theme-wardrobe .diag-badge {
-      background: #eef7f2;
-      color: #2b7a4b;
-      border: 1px solid #c9ebd6;
+      background: #d7f1e0;
+      color: #14592f;
+      border: 1.5px solid #b3e3c2;
     }
     .diag-theme-wardrobe .diag-subcopy {
-      border-left-color: #3b9760;
+      border-left-color: #2b7a4b;
+    }
+    [data-theme="dark"] .diag-theme-wardrobe {
+      background: #14241b;
+      border-color: #224731;
+    }
+    [data-theme="dark"] .diag-theme-wardrobe:hover,
+    [data-theme="dark"] .diag-theme-wardrobe.selected {
+      border-color: #42ba72;
+      box-shadow: 0 12px 28px rgba(66, 186, 114, 0.22);
+      background: #1a2f23;
     }
     [data-theme="dark"] .diag-theme-wardrobe .diag-badge {
-      background: #152c1e;
+      background: #193e28;
       color: #8be0ab;
-      border-color: #244b33;
+      border-color: #27623e;
+    }
+    [data-theme="dark"] .diag-theme-wardrobe .diag-subcopy {
+      border-left-color: #42ba72;
     }
 
-    /* 3. 기억의 계승 */
+    /* 3. 📦 [오래된 짐 및 유품 정리] — 기억의 계승 */
+    .diag-theme-legacy {
+      background: #fbf5ee;
+      border-color: #ebd9c5;
+    }
+    .diag-theme-legacy:hover {
+      border-color: #ba763b;
+      box-shadow: 0 14px 30px rgba(186, 118, 59, 0.18);
+      background: #f6ede0;
+    }
+    .diag-theme-legacy.selected {
+      border-color: #ba763b;
+      box-shadow: 0 10px 28px rgba(186, 118, 59, 0.26);
+      background: #f6ede0;
+    }
     .diag-theme-legacy .diag-badge {
-      background: #faf3eb;
-      color: #9c5c24;
-      border: 1px solid #ebd4bc;
+      background: #f5e2cc;
+      color: #7f4414;
+      border: 1.5px solid #e7cca9;
     }
     .diag-theme-legacy .diag-subcopy {
       border-left-color: #ba763b;
     }
+    [data-theme="dark"] .diag-theme-legacy {
+      background: #281c12;
+      border-color: #4f3621;
+    }
+    [data-theme="dark"] .diag-theme-legacy:hover,
+    [data-theme="dark"] .diag-theme-legacy.selected {
+      border-color: #e59955;
+      box-shadow: 0 12px 28px rgba(229, 153, 85, 0.22);
+      background: #332317;
+    }
     [data-theme="dark"] .diag-theme-legacy .diag-badge {
-      background: #322214;
-      color: #f0b583;
-      border-color: #573a20;
+      background: #422915;
+      color: #f5bc8a;
+      border-color: #653e1f;
+    }
+    [data-theme="dark"] .diag-theme-legacy .diag-subcopy {
+      border-left-color: #e59955;
     }
 
-    /* 4. 디지털 자서전 */
+    /* 4. ✍️ [내 인생의 서사 기록] — 디지털 자서전 */
+    .diag-theme-memoir {
+      background: #f0f6fc;
+      border-color: #cce0f5;
+    }
+    .diag-theme-memoir:hover {
+      border-color: #3b74b0;
+      box-shadow: 0 14px 30px rgba(59, 116, 176, 0.18);
+      background: #e4f0fa;
+    }
+    .diag-theme-memoir.selected {
+      border-color: #3b74b0;
+      box-shadow: 0 10px 28px rgba(59, 116, 176, 0.26);
+      background: #e4f0fa;
+    }
     .diag-theme-memoir .diag-badge {
-      background: #f0f4fa;
-      color: #2c5888;
-      border: 1px solid #cce0f5;
+      background: #d9e8fa;
+      color: #174574;
+      border: 1.5px solid #b7d6f5;
     }
     .diag-theme-memoir .diag-subcopy {
-      border-left-color: #3d72aa;
+      border-left-color: #3b74b0;
+    }
+    [data-theme="dark"] .diag-theme-memoir {
+      background: #131e2d;
+      border-color: #223c5d;
+    }
+    [data-theme="dark"] .diag-theme-memoir:hover,
+    [data-theme="dark"] .diag-theme-memoir.selected {
+      border-color: #5d9fe6;
+      box-shadow: 0 12px 28px rgba(93, 159, 230, 0.22);
+      background: #19273a;
     }
     [data-theme="dark"] .diag-theme-memoir .diag-badge {
-      background: #172433;
-      color: #8db5e2;
-      border-color: #253e5c;
+      background: #1a3453;
+      color: #9bc5f5;
+      border-color: #284d79;
+    }
+    [data-theme="dark"] .diag-theme-memoir .diag-subcopy {
+      border-left-color: #5d9fe6;
     }
 
-    /* 5. 아름다운 마침표와 감사 */
+    /* 5. 💌 [생전 엔딩 파티를 위한 서사] — 아름다운 마침표와 감사 */
+    .diag-theme-party {
+      background: #f8f1fb;
+      border-color: #e7d3f2;
+    }
+    .diag-theme-party:hover {
+      border-color: #9258a6;
+      box-shadow: 0 14px 30px rgba(146, 88, 166, 0.18);
+      background: #f3e4f9;
+    }
+    .diag-theme-party.selected {
+      border-color: #9258a6;
+      box-shadow: 0 10px 28px rgba(146, 88, 166, 0.26);
+      background: #f3e4f9;
+    }
     .diag-theme-party .diag-badge {
-      background: #f7f1f9;
-      color: #79448a;
-      border: 1px solid #e7d3ed;
+      background: #eed7f7;
+      color: #5d2671;
+      border: 1.5px solid #dfbdf0;
     }
     .diag-theme-party .diag-subcopy {
       border-left-color: #9258a6;
     }
+    [data-theme="dark"] .diag-theme-party {
+      background: #24152a;
+      border-color: #492455;
+    }
+    [data-theme="dark"] .diag-theme-party:hover,
+    [data-theme="dark"] .diag-theme-party.selected {
+      border-color: #be75d6;
+      box-shadow: 0 12px 28px rgba(190, 117, 214, 0.22);
+      background: #2f1c37;
+    }
     [data-theme="dark"] .diag-theme-party .diag-badge {
-      background: #2b1830;
-      color: #d89ee8;
-      border-color: #4f2959;
+      background: #3b1946;
+      color: #dfa4f5;
+      border-color: #5a266b;
+    }
+    [data-theme="dark"] .diag-theme-party .diag-subcopy {
+      border-left-color: #be75d6;
+    }
+
+    /* 모바일 가독성 보강 */
+    @media (max-width: 768px) {
+      .diag-card {
+        padding: 24px 20px;
+      }
+      .diag-badge {
+        font-size: 0.98rem;
+        padding: 6px 13px;
+      }
+      .diag-title {
+        font-size: 1.25rem;
+      }
+      .diag-subcopy {
+        font-size: 1.04rem;
+        padding: 12px 14px;
+      }
+      .diag-desc {
+        font-size: 1.0rem;
+      }
     }
 
     /* 자가진단 결과 박스 고도화 */
@@ -859,31 +1031,31 @@
     .test-solution-item {
       background: var(--bg-secondary);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 14px 16px;
+      border-radius: 14px;
+      padding: 16px 18px;
       display: flex;
       align-items: flex-start;
-      gap: 10px;
+      gap: 12px;
     }
 
     .test-solution-item .sol-icon {
-      font-size: 1.25rem;
+      font-size: 1.4rem;
       line-height: 1;
       flex-shrink: 0;
       margin-top: 2px;
     }
 
     .test-solution-item .sol-title {
-      font-weight: 700;
-      font-size: 0.92rem;
+      font-weight: 800;
+      font-size: 1.05rem;
       color: var(--text-primary);
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
 
     .test-solution-item .sol-desc {
-      font-size: 0.82rem;
-      color: var(--text-secondary);
-      line-height: 1.45;
+      font-size: 0.94rem;
+      color: var(--text-primary);
+      line-height: 1.55;
     }
 
     /* -------------------- 공통 섹션 스타일 -------------------- */
