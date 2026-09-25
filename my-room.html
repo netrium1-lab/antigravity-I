@@ -1469,6 +1469,248 @@
         font-size: 0.86rem;
       }
     }
+
+    /* -------------------- 🌿 전담 코칭스태프 서재 관리틀 (Coach Admin Deck) 스타일 -------------------- */
+    .btn-coach-admin {
+      background: var(--accent-green);
+      color: #ffffff;
+      border: 1.5px solid var(--accent-green);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(43, 106, 56, 0.25);
+    }
+    .btn-coach-admin:hover {
+      background: #1f4e29;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(43, 106, 56, 0.4);
+    }
+
+    .coach-admin-modal {
+      width: 100%;
+      max-width: 780px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--paper-card);
+      border: 1.5px solid var(--paper-border);
+      border-radius: 20px;
+      padding: 30px 28px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      position: relative;
+    }
+    .coach-admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1.5px solid var(--paper-border);
+      padding-bottom: 18px;
+      margin-bottom: 20px;
+    }
+    .coach-admin-title {
+      font-family: 'Noto Serif KR', Georgia, serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .coach-admin-desc {
+      font-size: 0.86rem;
+      color: var(--text-sub);
+      margin-top: 4px;
+    }
+    .coach-tabs-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      border-bottom: 1.5px solid var(--paper-border);
+      padding-bottom: 10px;
+      margin-bottom: 22px;
+    }
+    .coach-tab-btn {
+      padding: 9px 15px;
+      border-radius: 8px;
+      border: 1px solid var(--paper-border);
+      background: var(--paper-warm);
+      color: var(--text-sub);
+      font-size: 0.86rem;
+      font-weight: 750;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .coach-tab-btn:hover {
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+    }
+    .coach-tab-btn.active {
+      background: var(--accent-green);
+      color: #ffffff;
+      border-color: var(--accent-green);
+      box-shadow: 0 2px 8px rgba(43, 106, 56, 0.3);
+    }
+    .coach-panel {
+      display: none;
+    }
+    .coach-panel.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+    .coach-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .coach-form-group {
+      margin-bottom: 18px;
+    }
+    .coach-form-group.full {
+      grid-column: span 2;
+    }
+    .coach-form-label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+    .coach-form-label small {
+      font-weight: normal;
+      color: var(--text-muted);
+      font-size: 0.80rem;
+    }
+    .coach-form-input, .coach-form-select, .coach-form-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1.5px solid var(--paper-border);
+      background: var(--paper-warm);
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.90rem;
+      transition: border-color 0.2s;
+    }
+    .coach-form-input:focus, .coach-form-select:focus, .coach-form-textarea:focus {
+      outline: none;
+      border-color: var(--accent-green);
+      background: var(--paper-card);
+    }
+    .coach-form-textarea {
+      min-height: 110px;
+      line-height: 1.6;
+      resize: vertical;
+    }
+    .coach-dropzone {
+      border: 2px dashed var(--accent-green);
+      border-radius: 12px;
+      background: rgba(43, 106, 56, 0.04);
+      padding: 22px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 12px;
+    }
+    .coach-dropzone:hover {
+      background: rgba(43, 106, 56, 0.09);
+      border-color: #1f4e29;
+    }
+    .coach-file-status-box {
+      background: var(--paper-warm);
+      border: 1px solid var(--paper-border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .coach-stage-selector {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .coach-stage-item {
+      border: 1.5px solid var(--paper-border);
+      background: var(--paper-warm);
+      border-radius: 8px;
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 750;
+      color: var(--text-sub);
+      transition: all 0.2s;
+    }
+    .coach-stage-item.selected {
+      border-color: var(--accent-gold);
+      background: var(--accent-gold-light);
+      color: var(--accent-gold);
+    }
+    .coach-report-item-box {
+      border: 1.5px solid var(--paper-border);
+      border-radius: 12px;
+      background: var(--paper-warm);
+      padding: 16px;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .coach-modal-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1.5px solid var(--paper-border);
+      padding-top: 18px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .btn-coach-save {
+      background: var(--accent-green);
+      color: #ffffff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(43, 106, 56, 0.35);
+      transition: all 0.2s;
+    }
+    .btn-coach-save:hover {
+      background: #1f4e29;
+      transform: translateY(-2px);
+    }
+    .btn-coach-reset {
+      background: none;
+      border: 1px solid var(--paper-border);
+      color: var(--text-muted);
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-coach-reset:hover {
+      color: #e11d48;
+      border-color: #e11d48;
+    }
+    @media (max-width: 768px) {
+      .coach-form-grid { grid-template-columns: 1fr; }
+      .coach-form-group.full { grid-column: span 1; }
+      .coach-stage-selector { grid-template-columns: repeat(2, 1fr); }
+    }
   </style>
 </head>
 <body>
@@ -1499,6 +1741,11 @@
         <!-- 가족 공유 버튼 -->
         <button class="btn-share" onclick="shareMyRoom()">
           💌 가족 공유
+        </button>
+
+        <!-- 🌿 전담 코칭스태프 서재 관리홈 버튼 -->
+        <button class="btn-coach-admin" onclick="openCoachAdminModal()" title="전담 코칭스태프 서재 관리틀 열기">
+          🌿 코치 관리홈
         </button>
 
         <!-- 서재 변경 / 로그인 -->
@@ -1571,9 +1818,14 @@
           <h2 class="shelf-title">📖 내 인생의 디지털 자서전</h2>
           <p class="shelf-desc">전문 구술 인터뷰와 교정을 거쳐 완성된 김순옥 어르신의 인생 평전입니다.</p>
         </div>
-        <button class="btn-share" onclick="alert('가족 전용 디지털 e-Book 풀버전 PDF를 다운로드합니다.')">
-          📥 자서전 전체 PDF 받기
-        </button>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <button class="btn-share" id="btnMemoirPdfDownload" onclick="downloadMemoirPdf()" title="완성된 자서전 e-Book 전체 PDF 파일 다운로드">
+            📥 자서전 전체 PDF 받기
+          </button>
+          <button class="btn-coach-admin" onclick="openCoachAdminModal('pdf')" title="코치 전용: PDF 및 자서전 데이터 관리" style="font-size: 0.80rem; padding: 6px 12px;">
+            ⚙️ 관리
+          </button>
+        </div>
       </div>
 
       <!-- 책 쇼케이스 & 제작/배송 현황 -->
@@ -1583,12 +1835,12 @@
           <div class="book-spine-line"></div>
           <div>
             <div class="book-category">LIFE CHRONICLE ARCHIVE</div>
-            <h3 class="book-title">지리산 자락에서<br>피워낸 꽃 한 송이</h3>
-            <p class="book-subtitle">세월의 모진 바람을 품고 향기를 남긴 여인, 김순옥의 구술 생애사</p>
+            <h3 class="book-title" id="viewBookTitle">지리산 자락에서<br>피워낸 꽃 한 송이</h3>
+            <p class="book-subtitle" id="viewBookSubtitle">세월의 모진 바람을 품고 향기를 남긴 여인, 김순옥의 구술 생애사</p>
           </div>
           <div class="book-author">
             <div>
-              <div class="book-author-name">김순옥 지음</div>
+              <div class="book-author-name" id="viewBookAuthor">김순옥 지음</div>
               <div class="book-edition">여백과 결 아카이브 2026 한정판</div>
             </div>
             <div style="font-size: 1.8rem;">🌿</div>
@@ -1601,12 +1853,12 @@
           <div class="delivery-tracker">
             <div class="tracker-title-row">
               <span class="tracker-title">📦 최고급 패브릭 양장본 제작 & 배송 상태</span>
-              <span class="tracker-status-tag">발송 완료 (배송중)</span>
+              <span class="tracker-status-tag" id="viewDeliveryStatusTag">발송 완료 (배송중)</span>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 12px;">
-              우체국 등기택배 송장번호: <strong>6892-4112-9011</strong> (내일 오후 도착 예정)
+            <p id="viewDeliveryInfo" style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 12px;">
+              <span id="viewDeliveryCourier">우체국 등기택배</span> 송장번호: <strong id="viewDeliveryTrackingNo">6892-4112-9011</strong> (<span id="viewDeliveryEta">내일 오후 도착 예정</span>)
             </p>
-            <div class="tracker-steps">
+            <div class="tracker-steps" id="viewDeliverySteps">
               <div class="tracker-step completed">
                 <div class="step-circle">✓</div>
                 <div class="step-label">구술 인터뷰</div>
@@ -1629,33 +1881,40 @@
           <!-- 1분 육성 회고록 플레이어 -->
           <div class="audio-player-box">
             <div class="audio-header">
-              <span class="audio-title">🎙️ 김순옥 어르신의 1분 육성 회고록</span>
-              <span style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 700;">자녀에게 들려주는 목소리</span>
+              <span class="audio-title" id="viewAudioTitle">🎙️ 김순옥 어르신의 1분 육성 회고록</span>
+              <span id="viewAudioSubTag" style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 700;">자녀에게 들려주는 목소리</span>
             </div>
             <div class="audio-controls">
-              <button class="btn-audio-play" id="btnAudioToggle" onclick="toggleAudioDemo()">▶</button>
+              <button class="btn-audio-play" id="btnAudioToggle" onclick="toggleAudioPlayer()">▶</button>
               <div class="audio-progress-bar" onclick="seekAudio(event)">
                 <div class="audio-progress-fill" id="audioProgress"></div>
               </div>
-              <div class="audio-time" id="audioTimer">00:24 / 01:15</div>
+              <div class="audio-time" id="audioTimer">00:00 / 01:15</div>
             </div>
             <div class="audio-subtitle" id="audioSubtitle">
               "얘들아, 엄마는 고단했던 젊은 날도 참 보람찼단다. 너희들이 바르게 자라준 것만으로도 내 생애는 넘치도록 고마운 봄날이었어..."
             </div>
+            <!-- 실제 오디오 재생용 히든 엘리먼트 -->
+            <audio id="realAudioElement" style="display:none;" onended="onAudioEnded()" ontimeupdate="onAudioTimeUpdate()"></audio>
           </div>
         </div>
       </div>
 
       <!-- 목차별 본문 미리보기 리더기 -->
       <div class="memoir-chapters">
-        <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.25rem; font-weight: 800; margin-bottom: 16px;">
-          📚 목차별 대표 구절 읽기
-        </h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.25rem; font-weight: 800; margin: 0;">
+            📚 목차별 대표 구절 읽기
+          </h3>
+          <button class="btn-coach-admin" onclick="openCoachAdminModal('chapters')" style="font-size: 0.78rem; padding: 4px 10px;">
+            ✏️ 목차·구절 편집
+          </button>
+        </div>
         <div class="chapter-nav">
-          <button class="chapter-tab active" onclick="loadChapter(1, this)">제1장. 섬진강 모래톱과 순천 여고 시절</button>
-          <button class="chapter-tab" onclick="loadChapter(2, this)">제2장. 첫 월급으로 사드린 빨간 내복</button>
-          <button class="chapter-tab" onclick="loadChapter(3, this)">제3장. 흙 묻은 앞치마로 키워낸 삼남매</button>
-          <button class="chapter-tab" onclick="loadChapter(4, this)">제4장. 이제야 비로소 맞이한 황금빛 여백</button>
+          <button class="chapter-tab active" id="viewChapterTab1" onclick="loadChapter(1, this)">제1장. 섬진강 모래톱과 순천 여고 시절</button>
+          <button class="chapter-tab" id="viewChapterTab2" onclick="loadChapter(2, this)">제2장. 첫 월급으로 사드린 빨간 내복</button>
+          <button class="chapter-tab" id="viewChapterTab3" onclick="loadChapter(3, this)">제3장. 흙 묻은 앞치마로 키워낸 삼남매</button>
+          <button class="chapter-tab" id="viewChapterTab4" onclick="loadChapter(4, this)">제4장. 이제야 비로소 맞이한 황금빛 여백</button>
         </div>
 
         <div class="chapter-content-box" id="chapterReader">
@@ -1955,24 +2214,29 @@
           <h2 class="shelf-title">🌿 전담 코칭스태프 케어 리포트</h2>
           <p class="shelf-desc">어르신의 라이프 리셋을 돕는 전문 코칭스태프의 정기 방문 관리 일지와 응원 메시지입니다.</p>
         </div>
-        <a href="academy.html" class="btn-back-home" style="border-color: var(--accent-green); color: var(--accent-green);">
-          🎓 전문 코치 양성과정 알아보기 ➔
-        </a>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <button class="btn-coach-admin" onclick="openCoachAdminModal('report')" title="전담 코치: 방문 케어 리포트 작성 및 수정">
+            ✍️ 방문 리포트 작성/관리
+          </button>
+          <a href="academy.html" class="btn-back-home" style="border-color: var(--accent-green); color: var(--accent-green);">
+            🎓 코치 양성과정 ➔
+          </a>
+        </div>
       </div>
 
       <div class="coach-report-card">
         <div class="coach-profile-row">
           <div class="coach-img">👩‍💼</div>
           <div class="coach-title-area">
-            <h3>전담 코치: <strong class="point-bold">박지은 수석코치</strong></h3>
-            <span class="coach-badge">시니어 뷰티 & 공간 리셋 1급 공인코치</span>
-            <p style="font-size: 0.88rem; color: var(--text-sub); margin-top: 4px;">
+            <h3>전담 코치: <strong class="point-bold" id="viewCoachName">박지은 수석코치</strong></h3>
+            <span class="coach-badge" id="viewCoachBadge">시니어 뷰티 & 공간 리셋 1급 공인코치</span>
+            <p id="viewCoachQuote" style="font-size: 0.88rem; color: var(--text-sub); margin-top: 4px;">
               "어르신의 거울 앞 미소와 방 안의 맑은 공기를 함께 가꾸어 드립니다."
             </p>
           </div>
         </div>
 
-        <div class="report-timeline">
+        <div class="report-timeline" id="viewReportTimeline">
           <!-- 3회차 리포트 -->
           <div class="report-item">
             <div class="report-dot"></div>
@@ -2247,6 +2511,277 @@
     </div>
   </div>
 
+  <!-- ================= 🌿 전담 코칭스태프 서재 관리센터 (Coach Admin Deck) 모달 ================= -->
+  <div class="modal-overlay" id="coachAdminModal" onclick="closeCoachAdminModalOnOverlay(event)">
+    <div class="coach-admin-modal" onclick="event.stopPropagation()">
+      <!-- 모달 헤더 -->
+      <div class="coach-admin-header">
+        <div>
+          <h2 class="coach-admin-title">
+            <span>🌿</span> [여백과 결] 전담 코치 서재 관리센터
+          </h2>
+          <p class="coach-admin-desc">
+            고객 서재의 <strong>자서전 e-Book PDF, 1분 육성 회고록, 양장본 배송 송장, 목차 본문, 케어 리포트</strong>를 실시간으로 등록·편집합니다.
+          </p>
+        </div>
+        <button onclick="closeCoachAdminModal()" style="background: none; border: none; font-size: 1.6rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+      </div>
+
+      <!-- 5대 탭 네비게이션 -->
+      <div class="coach-tabs-nav">
+        <button class="coach-tab-btn active" id="btnCoachTabPdf" onclick="switchCoachTab('pdf')">
+          📄 1. e-Book PDF 등록
+        </button>
+        <button class="coach-tab-btn" id="btnCoachTabAudio" onclick="switchCoachTab('audio')">
+          🎙️ 2. 1분 육성 회고록
+        </button>
+        <button class="coach-tab-btn" id="btnCoachTabDelivery" onclick="switchCoachTab('delivery')">
+          📦 3. 양장본 배송 송장
+        </button>
+        <button class="coach-tab-btn" id="btnCoachTabChapters" onclick="switchCoachTab('chapters')">
+          📚 4. 목차별 본문 구절
+        </button>
+        <button class="coach-tab-btn" id="btnCoachTabReport" onclick="switchCoachTab('report')">
+          🌿 5. 케어 리포트 일지
+        </button>
+      </div>
+
+      <!-- 탭 1: 자서전 e-Book PDF 등록 -->
+      <div class="coach-panel active" id="coachPanelPdf">
+        <div style="background: var(--paper-warm); border-left: 4px solid var(--accent-green); padding: 12px 16px; border-radius: 6px; margin-bottom: 18px; font-size: 0.88rem; color: var(--text-sub);">
+          💡 <strong>PDF 업로드 연동 안내</strong>: 완성된 자서전 e-Book PDF 파일을 등록하시면, 서재 메인의 <strong>[📥 자서전 전체 PDF 받기]</strong> 버튼 클릭 시 고객(가족)이 실제 파일을 즉시 다운로드할 수 있습니다.
+        </div>
+
+        <div class="coach-form-group">
+          <label class="coach-form-label">
+            자서전 전자책 PDF 파일 선택 <small>(.pdf 형식 지원)</small>
+          </label>
+          <input type="file" id="inputCoachPdfFile" accept="application/pdf" style="display: none;" onchange="handleCoachPdfSelected(event)">
+          <div class="coach-dropzone" onclick="document.getElementById('inputCoachPdfFile').click()">
+            <div style="font-size: 2.2rem; margin-bottom: 6px;">📄</div>
+            <strong style="font-size: 1rem; color: var(--accent-green); display: block; margin-bottom: 4px;">
+              클릭하여 자서전 PDF 파일 선택 또는 변경
+            </strong>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">
+              컴퓨터나 모바일 기기에 보관된 최종 교정 인쇄본 PDF 파일 선택
+            </span>
+          </div>
+
+          <div class="coach-file-status-box" id="coachPdfStatusBox">
+            <div>
+              <strong id="coachPdfFileNameDisplay" style="font-size: 0.90rem; color: var(--text-main);">김순옥_어르신_인생평전_디지털_양장본.pdf</strong>
+              <div id="coachPdfFileSizeDisplay" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">18.4 MB (기본 표준 양장본)</div>
+            </div>
+            <button type="button" class="btn-coach-admin" onclick="downloadMemoirPdf()" style="font-size: 0.80rem; padding: 6px 12px;">
+              📥 다운로드 테스트
+            </button>
+          </div>
+        </div>
+
+        <div class="coach-form-grid">
+          <div class="coach-form-group">
+            <label class="coach-form-label">다운로드 파일명</label>
+            <input type="text" id="inputCoachPdfTitle" class="coach-form-input" placeholder="예: 김순옥_어르신_인생평전_디지털_양장본.pdf">
+          </div>
+          <div class="coach-form-group">
+            <label class="coach-form-label">총 페이지 수 표기</label>
+            <input type="text" id="inputCoachPdfPages" class="coach-form-input" placeholder="예: 184">
+          </div>
+        </div>
+      </div>
+
+      <!-- 탭 2: 1분 육성 회고록 관리 -->
+      <div class="coach-panel" id="coachPanelAudio">
+        <div style="background: var(--paper-warm); border-left: 4px solid var(--accent-gold); padding: 12px 16px; border-radius: 6px; margin-bottom: 18px; font-size: 0.88rem; color: var(--text-sub);">
+          🎙️ <strong>육성 오디오 연동 안내</strong>: 현장 인터뷰나 자택 방문 시 스마트폰 음성녹음기로 녹음한 어르신의 실제 음성 파일(MP3, M4A, WAV)을 등록하시면, 서재 플레이어에서 가족들이 생생한 목소리를 들을 수 있습니다.
+        </div>
+
+        <div class="coach-form-group">
+          <label class="coach-form-label">
+            어르신 육성 음성 파일 선택 <small>(.mp3, .m4a, .wav 오디오 파일)</small>
+          </label>
+          <input type="file" id="inputCoachAudioFile" accept="audio/*" style="display: none;" onchange="handleCoachAudioSelected(event)">
+          <div class="coach-dropzone" onclick="document.getElementById('inputCoachAudioFile').click()" style="border-color: var(--accent-gold); background: rgba(197, 155, 39, 0.05);">
+            <div style="font-size: 2.2rem; margin-bottom: 6px;">🎙️</div>
+            <strong style="font-size: 1rem; color: var(--accent-gold); display: block; margin-bottom: 4px;">
+              클릭하여 어르신 육성 녹음 파일 선택
+            </strong>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">
+              스마트폰 음성메모 녹음 파일(.mp3, .m4a) 또는 오디오 파일 첨부
+            </span>
+          </div>
+
+          <div class="coach-file-status-box" id="coachAudioStatusBox">
+            <div>
+              <strong id="coachAudioFileNameDisplay" style="font-size: 0.90rem; color: var(--text-main);">김순옥_어르신_1분_육성_회고록.mp3</strong>
+              <div id="coachAudioDurationDisplay" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">재생시간: 01:15</div>
+            </div>
+            <button type="button" class="btn-coach-admin" onclick="toggleAudioPlayer()" style="font-size: 0.80rem; padding: 6px 12px; background: var(--accent-gold); border-color: var(--accent-gold);">
+              ▶ 미리듣기
+            </button>
+          </div>
+        </div>
+
+        <div class="coach-form-grid">
+          <div class="coach-form-group">
+            <label class="coach-form-label">플레이어 타이틀</label>
+            <input type="text" id="inputCoachAudioTitle" class="coach-form-input" placeholder="예: 🎙️ 김순옥 어르신의 1분 육성 회고록">
+          </div>
+          <div class="coach-form-group">
+            <label class="coach-form-label">재생 시간 표기</label>
+            <input type="text" id="inputCoachAudioDuration" class="coach-form-input" placeholder="예: 01:15">
+          </div>
+          <div class="coach-form-group full">
+            <label class="coach-form-label">
+              어르신 육성 낭독 자막 / 대표 메시지
+              <small>(플레이어 하단에 함께 표시되어 감동을 배가시킵니다)</small>
+            </label>
+            <textarea id="inputCoachAudioSubtitle" class="coach-form-textarea" placeholder="어르신께서 자녀들에게 남기신 따뜻한 한마디를 적어주세요."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 탭 3: 양장본 제작 & 배송 상태 관리 -->
+      <div class="coach-panel" id="coachPanelDelivery">
+        <div class="coach-form-group">
+          <label class="coach-form-label">현재 제작 및 배송 진행 단계</label>
+          <div class="coach-stage-selector">
+            <div class="coach-stage-item" id="stageOption1" onclick="selectCoachStage(1)">
+              <div style="font-size: 1.1rem; margin-bottom: 2px;">🎙️ 1단계</div>
+              <div>구술 인터뷰</div>
+            </div>
+            <div class="coach-stage-item" id="stageOption2" onclick="selectCoachStage(2)">
+              <div style="font-size: 1.1rem; margin-bottom: 2px;">✍️ 2단계</div>
+              <div>교정 & 감수</div>
+            </div>
+            <div class="coach-stage-item" id="stageOption3" onclick="selectCoachStage(3)">
+              <div style="font-size: 1.1rem; margin-bottom: 2px;">🖨️ 3단계</div>
+              <div>양장 제본 인쇄</div>
+            </div>
+            <div class="coach-stage-item selected" id="stageOption4" onclick="selectCoachStage(4)">
+              <div style="font-size: 1.1rem; margin-bottom: 2px;">📦 4단계</div>
+              <div>안심 패키징 발송</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="coach-form-grid">
+          <div class="coach-form-group">
+            <label class="coach-form-label">배송 상태 뱃지 텍스트</label>
+            <input type="text" id="inputCoachDeliveryStatus" class="coach-form-input" placeholder="예: 발송 완료 (배송중), 제작 인쇄중 등">
+          </div>
+          <div class="coach-form-group">
+            <label class="coach-form-label">택배사 선택</label>
+            <select id="inputCoachDeliveryCourier" class="coach-form-select">
+              <option value="우체국 등기택배">우체국 등기택배</option>
+              <option value="CJ대한통운">CJ대한통운</option>
+              <option value="한진택배">한진택배</option>
+              <option value="로젠택배">로젠택배</option>
+              <option value="전담 코치 안심 직접배송">전담 코치 안심 직접배송</option>
+            </select>
+          </div>
+          <div class="coach-form-group">
+            <label class="coach-form-label">등기 송장번호</label>
+            <input type="text" id="inputCoachDeliveryTracking" class="coach-form-input" placeholder="예: 6892-4112-9011">
+          </div>
+          <div class="coach-form-group">
+            <label class="coach-form-label">도착 예정 안내 문구</label>
+            <input type="text" id="inputCoachDeliveryEta" class="coach-form-input" placeholder="예: 내일 오후 도착 예정">
+          </div>
+        </div>
+      </div>
+
+      <!-- 탭 4: 목차별 본문 구절 관리 -->
+      <div class="coach-panel" id="coachPanelChapters">
+        <div style="background: var(--paper-warm); border-left: 4px solid var(--accent-green); padding: 12px 16px; border-radius: 6px; margin-bottom: 18px; font-size: 0.88rem; color: var(--text-sub);">
+          📖 <strong>목차 리더기 편집</strong>: 1장부터 4장까지의 목차 제목과 서재 방문자가 가장 먼저 읽어볼 대표 본문 발췌문을 편집합니다.
+        </div>
+
+        <!-- 1장 -->
+        <div class="coach-report-item-box">
+          <label class="coach-form-label">제1장 목차 제목</label>
+          <input type="text" id="inputCoachCh1Title" class="coach-form-input" style="margin-bottom: 10px;">
+          <label class="coach-form-label">제1장 대표 발췌 본문</label>
+          <textarea id="inputCoachCh1Content" class="coach-form-textarea" style="min-height: 80px;"></textarea>
+        </div>
+
+        <!-- 2장 -->
+        <div class="coach-report-item-box">
+          <label class="coach-form-label">제2장 목차 제목</label>
+          <input type="text" id="inputCoachCh2Title" class="coach-form-input" style="margin-bottom: 10px;">
+          <label class="coach-form-label">제2장 대표 발췌 본문</label>
+          <textarea id="inputCoachCh2Content" class="coach-form-textarea" style="min-height: 80px;"></textarea>
+        </div>
+
+        <!-- 3장 -->
+        <div class="coach-report-item-box">
+          <label class="coach-form-label">제3장 목차 제목</label>
+          <input type="text" id="inputCoachCh3Title" class="coach-form-input" style="margin-bottom: 10px;">
+          <label class="coach-form-label">제3장 대표 발췌 본문</label>
+          <textarea id="inputCoachCh3Content" class="coach-form-textarea" style="min-height: 80px;"></textarea>
+        </div>
+
+        <!-- 4장 -->
+        <div class="coach-report-item-box">
+          <label class="coach-form-label">제4장 목차 제목</label>
+          <input type="text" id="inputCoachCh4Title" class="coach-form-input" style="margin-bottom: 10px;">
+          <label class="coach-form-label">제4장 대표 발췌 본문</label>
+          <textarea id="inputCoachCh4Content" class="coach-form-textarea" style="min-height: 80px;"></textarea>
+        </div>
+      </div>
+
+      <!-- 탭 5: 케어 리포트 일지 관리 -->
+      <div class="coach-panel" id="coachPanelReport">
+        <div style="background: var(--paper-warm); border-left: 4px solid var(--accent-green); padding: 12px 16px; border-radius: 6px; margin-bottom: 18px; font-size: 0.88rem; color: var(--text-sub);">
+          🌿 <strong>전담 코치 케어 일지</strong>: 담당 코치의 프로필과 회차별 현장 방문 리포트를 작성하면, 고객 서재의 [서가 5] 타임라인에 실시간으로 기록됩니다.
+        </div>
+
+        <div class="coach-form-grid">
+          <div class="coach-form-group">
+            <label class="coach-form-label">전담 코치 성함</label>
+            <input type="text" id="inputCoachName" class="coach-form-input" placeholder="예: 박지은 수석코치">
+          </div>
+          <div class="coach-form-group">
+            <label class="coach-form-label">공인 코치 자격</label>
+            <input type="text" id="inputCoachBadge" class="coach-form-input" placeholder="예: 시니어 뷰티 & 공간 리셋 1급 공인코치">
+          </div>
+          <div class="coach-form-group full">
+            <label class="coach-form-label">코치 한 줄 각오 / 메시지</label>
+            <input type="text" id="inputCoachQuote" class="coach-form-input" placeholder="예: 어르신의 거울 앞 미소와 방 안의 맑은 공기를 함께 가꾸어 드립니다.">
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0 12px;">
+          <h4 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">
+            📅 회차별 방문 케어 일지 목록
+          </h4>
+          <button type="button" class="btn-coach-admin" onclick="addCoachReportItem()" style="font-size: 0.80rem; padding: 6px 12px;">
+            + 새 방문 일지 추가
+          </button>
+        </div>
+
+        <div id="coachReportsEditList">
+          <!-- 동적으로 생성되는 리포트 아이템들 -->
+        </div>
+      </div>
+
+      <!-- 모달 푸터 버튼 -->
+      <div class="coach-modal-footer">
+        <button type="button" class="btn-coach-reset" onclick="resetCoachDataToDefault()">
+          ↺ 초기 샘플로 되돌리기
+        </button>
+        <div style="display: flex; gap: 10px;">
+          <button type="button" class="btn-back-home" onclick="closeCoachAdminModal()" style="padding: 10px 18px;">
+            닫기
+          </button>
+          <button type="button" class="btn-coach-save" onclick="saveCoachAdminData()">
+            💾 서재에 실시간 반영하기
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- 푸터 -->
   <footer class="room-footer">
     <div class="footer-inner">
@@ -2373,62 +2908,647 @@
       }
     };
 
+    // ================= 🌿 전담 코칭스태프 서재 관리센터 (Coach Admin Deck) 데이터 및 로직 =================
+    const COACH_STORAGE_KEY = 'yebaek_coach_room_data';
+
+    // 기본 초기 데이터 (샘플)
+    const defaultCoachData = {
+      // 1. PDF 데이터
+      pdfFileName: "김순옥_어르신_인생평전_디지털_양장본.pdf",
+      pdfDataUrl: "", // 실제 업로드된 base64 PDF
+      pdfFileSize: "18.4 MB (기본 표준 양장본)",
+      pdfPages: "184",
+
+      // 2. 육성 오디오 회고록
+      audioFileName: "김순옥_어르신_1분_육성_회고록.mp3",
+      audioDataUrl: "", // 실제 업로드된 base64 오디오
+      audioTitle: "🎙️ 김순옥 어르신의 1분 육성 회고록",
+      audioSubTag: "자녀에게 들려주는 목소리",
+      audioDuration: "01:15",
+      audioSubtitle: "얘들아, 엄마는 고단했던 젊은 날도 참 보람찼단다. 너희들이 바르게 자라준 것만으로도 내 생애는 넘치도록 고마운 봄날이었어...",
+
+      // 3. 배송 트래커
+      deliveryStage: 4, // 1:구술, 2:교정, 3:제본, 4:발송
+      deliveryStatus: "발송 완료 (배송중)",
+      deliveryCourier: "우체국 등기택배",
+      deliveryTrackingNo: "6892-4112-9011",
+      deliveryEta: "내일 오후 도착 예정",
+
+      // 4. 목차별 대표 구절
+      chapters: [
+        {
+          title: "제1장. 섬진강 모래톱과 순천 여고 시절",
+          content: "봄이면 섬진강 둑방길을 따라 벚꽃이 하얗게 흩날렸습니다. 열일곱 살의 나는 고무신을 벗어 쥐고 차가운 물속에 발을 담그며 끝도 없이 넓은 세상을 꿈꾸곤 했습니다. 어머니는 늘 부엌에서 보리밥을 안치며 '순옥아, 사람은 모름지기 가슴에 꽃 한 송이를 품고 살아야 한단다'라고 말씀하셨지요.\n\n그때는 그 꽃이 무엇인지 잘 알지 못했습니다. 넉넉하지 못했던 살림에 동생들 교복을 다려 입히고, 저녁이면 헌 양말을 꿰매던 그 시간들이 모두 내 가슴속에 심어지던 질긴 꽃씨였다는 것을, 칠순이 훌쩍 넘은 오늘에야 비로소 깨닫게 됩니다."
+        },
+        {
+          title: "제2장. 첫 월급으로 사드린 빨간 내복",
+          content: "스물둘, 처음으로 서울 방직공장에 취직해 한 달 내내 기계 소리를 들으며 일했습니다. 손끝이 짓무르고 눈이 뻑뻑했던 첫 월급날, 노란 봉투에 든 돈을 받아 쥐고 가장 먼저 달려간 곳은 동대문 시장의 메리야스 가게였습니다.\n\n시골에 계신 어머니 아버지께 부쳐드린 빨간 내복 한 벌. 편지에 '아버지 추위 타지 마시고 오래오래 사세요'라고 적으며 흘렸던 눈물은 고단함이 아니라 효도를 시작했다는 벅찬 안도였습니다."
+        },
+        {
+          title: "제3장. 흙 묻은 앞치마로 키워낸 삼남매",
+          content: "결혼하고 아이 셋이 줄줄이 태어났습니다. 영감의 작은 월급봉투로는 빠듯해 골목길에서 채소 장사도 하고, 남의 집 뜨개질도 마다하지 않았습니다. 앞치마에선 늘 흙냄새와 물비린내가 났지만, 학교에서 돌아온 아이들이 '엄마!' 하고 부르면 세상 부러울 것이 없었습니다.\n\n밤마다 잠든 아이들의 발가락을 만지작거리며 기도했습니다. '하느님, 이 아이들이 세상에서 상처받지 않고 곧은 나무처럼 자라게 해 주십시오.' 그 기도가 오늘의 기적을 만들었습니다."
+        },
+        {
+          title: "제4장. 이제야 비로소 맞이한 황금빛 여백",
+          content: "자식들을 다 출가시키고 영감마저 먼저 떠나보낸 뒤, 텅 빈 거실에서 한동안 시계 초침 소리만 듣고 살았습니다. 하지만 리셋 아카이브를 만나 내 지나온 삶을 한 줄 한 줄 적어 내려가면서 비로소 깨달았습니다.\n\n내 삶은 비워진 것이 아니라, 가장 맑고 눈부신 여백으로 채워지고 있다는 것을 말입니다. 이제 나는 가벼운 발걸음으로 내일의 태양을 맞이합니다."
+        }
+      ],
+
+      // 5. 전담 코치 프로필 및 케어 리포트
+      coachProfile: {
+        name: "박지은 수석코치",
+        badge: "시니어 뷰티 & 공간 리셋 1급 공인코치",
+        quote: "어르신의 거울 앞 미소와 방 안의 맑은 공기를 함께 가꾸어 드립니다."
+      },
+      careReports: [
+        {
+          id: "cr_3",
+          round: "방문 3회차",
+          date: "2026. 09. 22",
+          title: "자서전 최종 교정본 낭독 및 표지 감수",
+          memo: "순옥 어르신께서 제1장 '섬진강 모래톱' 구절을 직접 읽으실 때 눈시울이 붉어지셨습니다. 그 고운 목소리를 오디오로 온전히 담아내어 서재에 탑재해 드렸습니다. 표지도 어르신이 가장 좋아하시는 깊은 쑥색 패브릭으로 제본 발주를 완료했습니다."
+        },
+        {
+          id: "cr_2",
+          round: "방문 2회차",
+          date: "2026. 09. 15",
+          title: "침실 옷장 비움 & 안전 동선 확보",
+          memo: "발에 걸리던 바닥의 묵은 상자들을 정리하고, 자주 입으시는 편안한 옷 위주로 손닿기 쉬운 높이에 재배치했습니다. 어르신께서 '아침에 일어날 때 방이 훤해서 기분이 상쾌하다'고 활짝 웃으셔서 참 뿌듯했습니다."
+        },
+        {
+          id: "cr_1",
+          round: "방문 1회차",
+          date: "2026. 09. 08",
+          title: "첫 만남 상담 & 퍼스널 컬러 생기 뷰티 코칭",
+          memo: "순옥 어르신은 따뜻한 웜톤의 피부 결을 지니고 계십니다. 칙칙한 검정 옷보다는 은은한 베이지와 화사한 스카프를 매치해 드렸더니 10년은 더 젊어 보이셨어요. 앞으로의 서재 구축 계획을 차근차근 나누었습니다."
+        }
+      ]
+    };
+
+    // 저장된 코치 데이터 가져오기
+    function getCoachData() {
+      try {
+        const stored = localStorage.getItem(COACH_STORAGE_KEY);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          return { ...defaultCoachData, ...parsed };
+        }
+      } catch(e) {
+        console.error('코치 데이터 파싱 실패:', e);
+      }
+      return JSON.parse(JSON.stringify(defaultCoachData));
+    }
+
+    // 목차 챕터 본문 로드
+    let currentChapterNum = 1;
     function loadChapter(num, btn) {
+      currentChapterNum = num;
       document.querySelectorAll('.chapter-tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+      if (btn) btn.classList.add('active');
       const box = document.getElementById('chapterReader');
-      const data = chapterData[num];
-      if (data) {
-        box.innerHTML = `<p>${data.p1}</p><p>${data.p2}</p>`;
+      const data = getCoachData();
+      if (data && data.chapters && data.chapters[num - 1]) {
+        const ch = data.chapters[num - 1];
+        const paragraphs = (ch.content || '').split('\n\n').filter(p => p.trim());
+        box.innerHTML = paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join('');
       }
     }
 
-    // 1분 오디오 시뮬레이션
-    let isPlaying = false;
-    let audioInterval = null;
-    let currentSec = 24;
-    const totalSec = 75;
+    // ================= 📥 완성본 e-Book PDF 다운로드 =================
+    function downloadMemoirPdf() {
+      const data = getCoachData();
+      const fileName = data.pdfFileName || '김순옥_어르신_인생평전_디지털_양장본.pdf';
 
-    function toggleAudioDemo() {
+      if (data.pdfDataUrl && data.pdfDataUrl.startsWith('data:application/pdf')) {
+        // 실제 업로드된 PDF 파일 다운로드
+        const a = document.createElement('a');
+        a.href = data.pdfDataUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } else {
+        // 등록된 실제 PDF가 없을 경우: 정갈한 전자책 텍스트 소장본 Blob 파일 즉시 생성 다운로드
+        const textContent = `[여백과 결 · 리셋 아카이브]\n\n` +
+          `제목: 지리산 자락에서 피워낸 꽃 한 송이\n` +
+          `저자: 김순옥 어르신 구술 평전\n` +
+          `전담 코치 감수: ${data.coachProfile ? data.coachProfile.name : '박지은 수석코치'} (${data.coachProfile ? data.coachProfile.badge : ''})\n` +
+          `총 분량: ${data.pdfPages || 184} 페이지\n\n` +
+          `============================================================\n\n` +
+          data.chapters.map((ch, idx) => `[${ch.title}]\n\n${ch.content}\n\n`).join('------------------------------------------------------------\n\n') +
+          `\n============================================================\n` +
+          `[김순옥 어르신의 1분 육성 회고록 육성 메시지]\n` +
+          `"${data.audioSubtitle}"\n\n` +
+          `발행일: 2026년 9월 한정판\n` +
+          `발행처: 메타큐 라이프 (여백과 결 아카이브)\n` +
+          `실물 양장본 배송 송장: ${data.deliveryCourier} ${data.deliveryTrackingNo}\n` +
+          `============================================================\n`;
+
+        const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const downName = fileName.replace(/\.pdf$/i, '') + '_전자책_소장본.txt';
+        a.download = downName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        alert(`📥 [${downName}] 자서전 디지털 소장본이 다운로드되었습니다!\n(※ 코치 관리홈에서 인쇄용 .pdf 파일을 업로드하시면 실제 PDF 파일로 즉시 다운로드됩니다.)`);
+      }
+    }
+
+    // ================= 🎙️ 1분 육성 오디오 회고록 플레이어 =================
+    let isAudioPlaying = false;
+    let audioTimerInterval = null;
+    let audioElapsedSec = 0;
+
+    function toggleAudioPlayer() {
+      const data = getCoachData();
+      const realAudio = document.getElementById('realAudioElement');
       const btn = document.getElementById('btnAudioToggle');
-      if (!isPlaying) {
-        isPlaying = true;
-        btn.textContent = '❚❚';
-        audioInterval = setInterval(() => {
-          if (currentSec < totalSec) {
-            currentSec++;
-            updateAudioUI();
+
+      if (data.audioDataUrl && realAudio) {
+        if (realAudio.src !== data.audioDataUrl) {
+          realAudio.src = data.audioDataUrl;
+        }
+        if (realAudio.paused) {
+          realAudio.play().then(() => {
+            isAudioPlaying = true;
+            if (btn) btn.textContent = '❚❚';
+          }).catch(err => {
+            console.warn('오디오 실제 재생 실패, 시뮬레이션으로 대체:', err);
+            runSimulatedAudio();
+          });
+        } else {
+          realAudio.pause();
+          isAudioPlaying = false;
+          if (btn) btn.textContent = '▶';
+        }
+      } else {
+        runSimulatedAudio();
+      }
+    }
+
+    function runSimulatedAudio() {
+      const btn = document.getElementById('btnAudioToggle');
+      const data = getCoachData();
+      const durationStr = data.audioDuration || '01:15';
+      const parts = durationStr.split(':');
+      const totalSec = (parseInt(parts[0], 10) || 1) * 60 + (parseInt(parts[1], 10) || 15);
+
+      if (!isAudioPlaying) {
+        isAudioPlaying = true;
+        if (btn) btn.textContent = '❚❚';
+        audioTimerInterval = setInterval(() => {
+          if (audioElapsedSec < totalSec) {
+            audioElapsedSec++;
+            updateAudioProgressUI(audioElapsedSec, totalSec);
           } else {
-            currentSec = 0;
-            toggleAudioDemo();
+            audioElapsedSec = 0;
+            toggleAudioPlayer();
           }
         }, 1000);
       } else {
-        isPlaying = false;
-        btn.textContent = '▶';
-        clearInterval(audioInterval);
+        isAudioPlaying = false;
+        if (btn) btn.textContent = '▶';
+        clearInterval(audioTimerInterval);
       }
     }
 
-    function updateAudioUI() {
+    function updateAudioProgressUI(curr, total) {
       const progress = document.getElementById('audioProgress');
       const timer = document.getElementById('audioTimer');
-      const percent = (currentSec / totalSec) * 100;
-      progress.style.width = percent + '%';
-      
-      const curM = String(Math.floor(currentSec / 60)).padStart(2, '0');
-      const curS = String(currentSec % 60).padStart(2, '0');
-      const totM = String(Math.floor(totalSec / 60)).padStart(2, '0');
-      const totS = String(totalSec % 60).padStart(2, '0');
-      timer.textContent = `${curM}:${curS} / ${totM}:${totS}`;
+      if (progress && total > 0) {
+        progress.style.width = ((curr / total) * 100) + '%';
+      }
+      if (timer) {
+        const curM = String(Math.floor(curr / 60)).padStart(2, '0');
+        const curS = String(curr % 60).padStart(2, '0');
+        const totM = String(Math.floor(total / 60)).padStart(2, '0');
+        const totS = String(total % 60).padStart(2, '0');
+        timer.textContent = `${curM}:${curS} / ${totM}:${totS}`;
+      }
+    }
+
+    function onAudioTimeUpdate() {
+      const realAudio = document.getElementById('realAudioElement');
+      if (realAudio && realAudio.duration) {
+        updateAudioProgressUI(Math.floor(realAudio.currentTime), Math.floor(realAudio.duration));
+      }
+    }
+
+    function onAudioEnded() {
+      const btn = document.getElementById('btnAudioToggle');
+      if (btn) btn.textContent = '▶';
+      isAudioPlaying = false;
+      audioElapsedSec = 0;
+      updateAudioProgressUI(0, 75);
     }
 
     function seekAudio(e) {
       const rect = e.currentTarget.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
       const width = rect.width;
-      currentSec = Math.floor((clickX / width) * totalSec);
-      updateAudioUI();
+      const data = getCoachData();
+      const durationStr = data.audioDuration || '01:15';
+      const parts = durationStr.split(':');
+      const totalSec = (parseInt(parts[0], 10) || 1) * 60 + (parseInt(parts[1], 10) || 15);
+      
+      const realAudio = document.getElementById('realAudioElement');
+      if (realAudio && realAudio.duration) {
+        realAudio.currentTime = (clickX / width) * realAudio.duration;
+      } else {
+        audioElapsedSec = Math.floor((clickX / width) * totalSec);
+        updateAudioProgressUI(audioElapsedSec, totalSec);
+      }
+    }
+
+    // ================= 🌿 전담 코칭 관리틀 모달 조작 & 데이터 동기화 =================
+    let currentEditingCoachData = null;
+
+    // 코치 관리 모달 열기
+    function openCoachAdminModal(initialTab) {
+      currentEditingCoachData = getCoachData();
+      populateCoachModalForm(currentEditingCoachData);
+      if (initialTab) {
+        switchCoachTab(initialTab);
+      } else {
+        switchCoachTab('pdf');
+      }
+      const modal = document.getElementById('coachAdminModal');
+      if (modal) modal.classList.add('open');
+    }
+
+    // 코치 관리 모달 닫기
+    function closeCoachAdminModal() {
+      const modal = document.getElementById('coachAdminModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function closeCoachAdminModalOnOverlay(e) {
+      if (e.target.id === 'coachAdminModal') {
+        closeCoachAdminModal();
+      }
+    }
+
+    // 관리틀 탭 전환
+    function switchCoachTab(tabKey) {
+      document.querySelectorAll('.coach-tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.coach-panel').forEach(p => p.classList.remove('active'));
+
+      const tabBtnMap = {
+        'pdf': 'btnCoachTabPdf',
+        'audio': 'btnCoachTabAudio',
+        'delivery': 'btnCoachTabDelivery',
+        'chapters': 'btnCoachTabChapters',
+        'report': 'btnCoachTabReport'
+      };
+      const panelMap = {
+        'pdf': 'coachPanelPdf',
+        'audio': 'coachPanelAudio',
+        'delivery': 'coachPanelDelivery',
+        'chapters': 'coachPanelChapters',
+        'report': 'coachPanelReport'
+      };
+
+      const btn = document.getElementById(tabBtnMap[tabKey]);
+      const panel = document.getElementById(panelMap[tabKey]);
+      if (btn) btn.classList.add('active');
+      if (panel) panel.classList.add('active');
+    }
+
+    // 폼에 데이터 채우기
+    function populateCoachModalForm(data) {
+      // 1. PDF
+      document.getElementById('coachPdfFileNameDisplay').textContent = data.pdfFileName || '미등록 (파일 선택 필요)';
+      document.getElementById('coachPdfFileSizeDisplay').textContent = data.pdfFileSize || '미등록';
+      document.getElementById('inputCoachPdfTitle').value = data.pdfFileName || '';
+      document.getElementById('inputCoachPdfPages').value = data.pdfPages || '184';
+
+      // 2. Audio
+      document.getElementById('coachAudioFileNameDisplay').textContent = data.audioFileName || '미등록 (파일 선택 필요)';
+      document.getElementById('coachAudioDurationDisplay').textContent = `재생시간: ${data.audioDuration || '01:15'}`;
+      document.getElementById('inputCoachAudioTitle').value = data.audioTitle || '';
+      document.getElementById('inputCoachAudioDuration').value = data.audioDuration || '01:15';
+      document.getElementById('inputCoachAudioSubtitle').value = data.audioSubtitle || '';
+
+      // 3. Delivery
+      selectCoachStage(data.deliveryStage || 4);
+      document.getElementById('inputCoachDeliveryStatus').value = data.deliveryStatus || '';
+      document.getElementById('inputCoachDeliveryCourier').value = data.deliveryCourier || '우체국 등기택배';
+      document.getElementById('inputCoachDeliveryTracking').value = data.deliveryTrackingNo || '';
+      document.getElementById('inputCoachDeliveryEta').value = data.deliveryEta || '';
+
+      // 4. Chapters
+      const chs = data.chapters || [];
+      if (chs[0]) {
+        document.getElementById('inputCoachCh1Title').value = chs[0].title || '';
+        document.getElementById('inputCoachCh1Content').value = chs[0].content || '';
+      }
+      if (chs[1]) {
+        document.getElementById('inputCoachCh2Title').value = chs[1].title || '';
+        document.getElementById('inputCoachCh2Content').value = chs[1].content || '';
+      }
+      if (chs[2]) {
+        document.getElementById('inputCoachCh3Title').value = chs[2].title || '';
+        document.getElementById('inputCoachCh3Content').value = chs[2].content || '';
+      }
+      if (chs[3]) {
+        document.getElementById('inputCoachCh4Title').value = chs[3].title || '';
+        document.getElementById('inputCoachCh4Content').value = chs[3].content || '';
+      }
+
+      // 5. Coach Profile & Reports
+      const prof = data.coachProfile || {};
+      document.getElementById('inputCoachName').value = prof.name || '';
+      document.getElementById('inputCoachBadge').value = prof.badge || '';
+      document.getElementById('inputCoachQuote').value = prof.quote || '';
+      renderCoachReportsEditList();
+    }
+
+    // PDF 파일 선택 핸들러
+    function handleCoachPdfSelected(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+      currentEditingCoachData.pdfFileName = file.name;
+      currentEditingCoachData.pdfFileSize = `${sizeMb} MB (업로드 완료)`;
+      document.getElementById('coachPdfFileNameDisplay').textContent = file.name;
+      document.getElementById('coachPdfFileSizeDisplay').textContent = `${sizeMb} MB (업로드 완료)`;
+      document.getElementById('inputCoachPdfTitle').value = file.name;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        currentEditingCoachData.pdfDataUrl = event.target.result;
+        alert(`✅ [${file.name}] PDF 파일이 정상적으로 등록되었습니다!\n하단의 [서재에 실시간 반영하기]를 누르면 즉시 적용됩니다.`);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // 육성 오디오 파일 선택 핸들러
+    function handleCoachAudioSelected(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      currentEditingCoachData.audioFileName = file.name;
+      document.getElementById('coachAudioFileNameDisplay').textContent = file.name;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        currentEditingCoachData.audioDataUrl = event.target.result;
+        // 오디오 객체에 임시 로드하여 재생시간 계산
+        const tempAudio = new Audio(event.target.result);
+        tempAudio.onloadedmetadata = function() {
+          const m = String(Math.floor(tempAudio.duration / 60)).padStart(2, '0');
+          const s = String(Math.floor(tempAudio.duration % 60)).padStart(2, '0');
+          currentEditingCoachData.audioDuration = `${m}:${s}`;
+          document.getElementById('coachAudioDurationDisplay').textContent = `재생시간: ${m}:${s}`;
+          document.getElementById('inputCoachAudioDuration').value = `${m}:${s}`;
+        };
+        alert(`🎙️ [${file.name}] 어르신 육성 음성 파일이 등록되었습니다!`);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // 배송 단계 선택
+    let selectedCoachDeliveryStage = 4;
+    function selectCoachStage(stageNum) {
+      selectedCoachDeliveryStage = stageNum;
+      for (let i = 1; i <= 4; i++) {
+        const item = document.getElementById(`stageOption${i}`);
+        if (item) {
+          if (i === stageNum) item.classList.add('selected');
+          else item.classList.remove('selected');
+        }
+      }
+    }
+
+    // 케어 리포트 일지 편집 리스트 렌더링
+    function renderCoachReportsEditList() {
+      const container = document.getElementById('coachReportsEditList');
+      if (!container || !currentEditingCoachData) return;
+
+      const reports = currentEditingCoachData.careReports || [];
+      if (reports.length === 0) {
+        container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 20px;">등록된 방문 케어 일지가 없습니다.</div>';
+        return;
+      }
+
+      container.innerHTML = reports.map((r, idx) => `
+        <div class="coach-report-item-box" style="margin-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div style="font-weight: 800; color: var(--accent-green); font-size: 0.92rem;">
+              방문 일지 #${reports.length - idx}
+            </div>
+            <button type="button" onclick="deleteCoachReportItem(${idx})" style="background: none; border: 1px solid #e11d48; color: #e11d48; padding: 3px 8px; border-radius: 4px; font-size: 0.78rem; cursor: pointer;">
+              삭제
+            </button>
+          </div>
+          <div class="coach-form-grid" style="margin-bottom: 10px;">
+            <div>
+              <label class="coach-form-label">방문 회차</label>
+              <input type="text" class="coach-form-input" value="${escapeHtml(r.round || '')}" onchange="updateCoachReportField(${idx}, 'round', this.value)" placeholder="예: 방문 3회차">
+            </div>
+            <div>
+              <label class="coach-form-label">방문 일자</label>
+              <input type="text" class="coach-form-input" value="${escapeHtml(r.date || '')}" onchange="updateCoachReportField(${idx}, 'date', this.value)" placeholder="예: 2026. 09. 22">
+            </div>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <label class="coach-form-label">방문 코칭 제목</label>
+            <input type="text" class="coach-form-input" value="${escapeHtml(r.title || '')}" onchange="updateCoachReportField(${idx}, 'title', this.value)" placeholder="예: 자서전 최종 교정본 낭독 및 표지 감수">
+          </div>
+          <div>
+            <label class="coach-form-label">상세 케어 소견 및 어르신 변화 일지</label>
+            <textarea class="coach-form-textarea" style="min-height: 70px;" onchange="updateCoachReportField(${idx}, 'memo', this.value)">${escapeHtml(r.memo || '')}</textarea>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateCoachReportField(idx, field, val) {
+      if (currentEditingCoachData && currentEditingCoachData.careReports[idx]) {
+        currentEditingCoachData.careReports[idx][field] = val;
+      }
+    }
+
+    function addCoachReportItem() {
+      if (!currentEditingCoachData) return;
+      const today = new Date();
+      const dateStr = `${today.getFullYear()}. ${String(today.getMonth() + 1).padStart(2, '0')}. ${String(today.getDate()).padStart(2, '0')}`;
+      const nextRound = `방문 ${(currentEditingCoachData.careReports.length + 1)}회차`;
+      
+      currentEditingCoachData.careReports.unshift({
+        id: 'cr_' + Date.now(),
+        round: nextRound,
+        date: dateStr,
+        title: "새 방문 맞춤 케어 코칭",
+        memo: "어르신과 함께 나눈 따뜻한 대화와 라이프 리셋 활동 소견을 기록합니다."
+      });
+      renderCoachReportsEditList();
+    }
+
+    function deleteCoachReportItem(idx) {
+      if (!confirm('이 방문 일지를 삭제하시겠습니까?')) return;
+      if (currentEditingCoachData && currentEditingCoachData.careReports) {
+        currentEditingCoachData.careReports.splice(idx, 1);
+        renderCoachReportsEditList();
+      }
+    }
+
+    // 코치 관리 데이터 최종 저장 실행
+    function saveCoachAdminData() {
+      if (!currentEditingCoachData) currentEditingCoachData = getCoachData();
+
+      // 1. PDF 데이터 반영
+      currentEditingCoachData.pdfFileName = document.getElementById('inputCoachPdfTitle').value.trim() || currentEditingCoachData.pdfFileName;
+      currentEditingCoachData.pdfPages = document.getElementById('inputCoachPdfPages').value.trim() || "184";
+
+      // 2. Audio 데이터 반영
+      currentEditingCoachData.audioTitle = document.getElementById('inputCoachAudioTitle').value.trim() || currentEditingCoachData.audioTitle;
+      currentEditingCoachData.audioDuration = document.getElementById('inputCoachAudioDuration').value.trim() || "01:15";
+      currentEditingCoachData.audioSubtitle = document.getElementById('inputCoachAudioSubtitle').value.trim() || currentEditingCoachData.audioSubtitle;
+
+      // 3. Delivery 데이터 반영
+      currentEditingCoachData.deliveryStage = selectedCoachDeliveryStage;
+      currentEditingCoachData.deliveryStatus = document.getElementById('inputCoachDeliveryStatus').value.trim() || "발송 완료 (배송중)";
+      currentEditingCoachData.deliveryCourier = document.getElementById('inputCoachDeliveryCourier').value;
+      currentEditingCoachData.deliveryTrackingNo = document.getElementById('inputCoachDeliveryTracking').value.trim() || "6892-4112-9011";
+      currentEditingCoachData.deliveryEta = document.getElementById('inputCoachDeliveryEta').value.trim() || "내일 오후 도착 예정";
+
+      // 4. Chapters 반영
+      currentEditingCoachData.chapters[0].title = document.getElementById('inputCoachCh1Title').value.trim();
+      currentEditingCoachData.chapters[0].content = document.getElementById('inputCoachCh1Content').value.trim();
+      currentEditingCoachData.chapters[1].title = document.getElementById('inputCoachCh2Title').value.trim();
+      currentEditingCoachData.chapters[1].content = document.getElementById('inputCoachCh2Content').value.trim();
+      currentEditingCoachData.chapters[2].title = document.getElementById('inputCoachCh3Title').value.trim();
+      currentEditingCoachData.chapters[2].content = document.getElementById('inputCoachCh3Content').value.trim();
+      currentEditingCoachData.chapters[3].title = document.getElementById('inputCoachCh4Title').value.trim();
+      currentEditingCoachData.chapters[3].content = document.getElementById('inputCoachCh4Content').value.trim();
+
+      // 5. Coach Profile 반영
+      currentEditingCoachData.coachProfile = {
+        name: document.getElementById('inputCoachName').value.trim() || "박지은 수석코치",
+        badge: document.getElementById('inputCoachBadge').value.trim() || "시니어 뷰티 & 공간 리셋 1급 공인코치",
+        quote: document.getElementById('inputCoachQuote').value.trim() || "어르신의 거울 앞 미소와 방 안의 맑은 공기를 함께 가꾸어 드립니다."
+      };
+
+      try {
+        localStorage.setItem(COACH_STORAGE_KEY, JSON.stringify(currentEditingCoachData));
+      } catch(err) {
+        console.warn('LocalStorage 저장 한도 초과 위험:', err);
+      }
+
+      // 서재 화면 즉시 갱신
+      applyCoachDataToRoom();
+      closeCoachAdminModal();
+      alert('🌿 전담 코치 관리 데이터가 서재에 성공적으로 실시간 반영되었습니다!');
+    }
+
+    // 기본 초기 예시로 되돌리기
+    function resetCoachDataToDefault() {
+      if (!confirm('초기 표준 예시 데이터(김순옥 어르신 자서전 및 기본 케어 리포트)로 되돌리시겠습니까?')) return;
+      localStorage.removeItem(COACH_STORAGE_KEY);
+      currentEditingCoachData = JSON.parse(JSON.stringify(defaultCoachData));
+      populateCoachModalForm(currentEditingCoachData);
+      applyCoachDataToRoom();
+      alert('↺ 초기 표준 데이터로 복원되었습니다.');
+    }
+
+    // ================= 🏛️ 서재 화면에 코치 데이터 실시간 적용 =================
+    function applyCoachDataToRoom() {
+      const data = getCoachData();
+
+      // 1. 배송 상태 & 송장 정보 갱신
+      const statusTagEl = document.getElementById('viewDeliveryStatusTag');
+      if (statusTagEl) statusTagEl.textContent = data.deliveryStatus || '발송 완료 (배송중)';
+
+      const courierEl = document.getElementById('viewDeliveryCourier');
+      if (courierEl) courierEl.textContent = data.deliveryCourier || '우체국 등기택배';
+
+      const trackingEl = document.getElementById('viewDeliveryTrackingNo');
+      if (trackingEl) trackingEl.textContent = data.deliveryTrackingNo || '6892-4112-9011';
+
+      const etaEl = document.getElementById('viewDeliveryEta');
+      if (etaEl) etaEl.textContent = data.deliveryEta || '내일 오후 도착 예정';
+
+      // 4단계 트래커 스텝 아이콘 갱신
+      const stepsContainer = document.getElementById('viewDeliverySteps');
+      if (stepsContainer) {
+        const stageNum = data.deliveryStage || 4;
+        const labels = ['구술 인터뷰', '교정 & 감수', '양장 제본 인쇄', '안심 패키징 발송'];
+        stepsContainer.innerHTML = labels.map((lbl, idx) => {
+          const stepIdx = idx + 1;
+          let stepClass = '';
+          let icon = stepIdx;
+          if (stepIdx < stageNum) {
+            stepClass = 'completed';
+            icon = '✓';
+          } else if (stepIdx === stageNum) {
+            stepClass = 'current';
+            icon = stepIdx;
+          }
+          return `
+            <div class="tracker-step ${stepClass}">
+              <div class="step-circle">${icon}</div>
+              <div class="step-label">${lbl}</div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // 2. 육성 회고록 플레이어 갱신
+      const audioTitleEl = document.getElementById('viewAudioTitle');
+      if (audioTitleEl) audioTitleEl.textContent = data.audioTitle || '🎙️ 김순옥 어르신의 1분 육성 회고록';
+
+      const audioSubTagEl = document.getElementById('viewAudioSubTag');
+      if (audioSubTagEl) audioSubTagEl.textContent = data.audioSubTag || '자녀에게 들려주는 목소리';
+
+      const audioTimerEl = document.getElementById('audioTimer');
+      if (audioTimerEl) audioTimerEl.textContent = `00:00 / ${data.audioDuration || '01:15'}`;
+
+      const audioSubtitleEl = document.getElementById('audioSubtitle');
+      if (audioSubtitleEl) audioSubtitleEl.textContent = `"${data.audioSubtitle || ''}"`;
+
+      // 3. 목차 탭 제목 갱신
+      if (data.chapters) {
+        for (let i = 1; i <= 4; i++) {
+          const tabBtn = document.getElementById(`viewChapterTab${i}`);
+          if (tabBtn && data.chapters[i - 1]) {
+            tabBtn.textContent = data.chapters[i - 1].title;
+          }
+        }
+        loadChapter(currentChapterNum || 1);
+      }
+
+      // 4. 코치 프로필 갱신
+      const prof = data.coachProfile || {};
+      const coachNameEl = document.getElementById('viewCoachName');
+      if (coachNameEl) coachNameEl.textContent = prof.name || '박지은 수석코치';
+
+      const coachBadgeEl = document.getElementById('viewCoachBadge');
+      if (coachBadgeEl) coachBadgeEl.textContent = prof.badge || '시니어 뷰티 & 공간 리셋 1급 공인코치';
+
+      const coachQuoteEl = document.getElementById('viewCoachQuote');
+      if (coachQuoteEl) coachQuoteEl.textContent = `"${prof.quote || ''}"`;
+
+      // 5. 케어 리포트 타임라인 갱신
+      const timelineContainer = document.getElementById('viewReportTimeline');
+      if (timelineContainer && data.careReports) {
+        timelineContainer.innerHTML = data.careReports.map(r => `
+          <div class="report-item">
+            <div class="report-dot"></div>
+            <div class="report-date">${escapeHtml(r.date || '')} (${escapeHtml(r.round || '')})</div>
+            <h4 class="report-heading">${escapeHtml(r.title || '')}</h4>
+            <div class="report-memo">
+              "${escapeHtml(r.memo || '')}"
+            </div>
+          </div>
+        `).join('');
+      }
     }
 
     // 비움 일기 쓰기 & 로컬스토리지 저장
@@ -3090,13 +4210,15 @@
       }
     }
 
-    // 초기 테마 및 사용자 메모리/금고 로드
+    // 초기 테마 및 사용자 메모리/금고/코치 데이터 로드
     window.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         document.getElementById('themeToggleBtn').textContent = '☀️';
       }
+      // 🌿 전담 코칭스태프 데이터(PDF, 오디오, 배송트래커, 목차, 케어리포트) 서재 실시간 적용
+      applyCoachDataToRoom();
       // 저장된 사용자 추억 렌더링
       renderCustomMemories();
       // 저장된 사용자 엔딩 금고 렌더링
