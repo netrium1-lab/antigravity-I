@@ -2628,10 +2628,8 @@
             <label for="editorCategory" style="font-weight: 700; font-size: 0.9rem; color: var(--text-secondary);">카테고리:</label>
             <select id="editorCategory" class="editor-category-select">
               <option value="비움과 갈무리">비움과 갈무리</option>
-              <option value="로망과 축제">로망과 축제</option>
-              <option value="몸과 웰니스">몸과 웰니스</option>
-              <option value="인생 서사">인생 서사</option>
-              <option value="마음과 영성">마음과 영성</option>
+              <option value="웰라이프">웰라이프</option>
+              <option value="웰다잉">웰다잉</option>
             </select>
           </div>
           <div id="editorMainThumbIndicator" style="font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
@@ -2852,14 +2850,12 @@
         원하는 글을 클릭하면 상세 전문을 읽을 수 있으며, 우측의 ⭐ <strong>[메인 전면 노출]</strong> 버튼을 눌러 메인 대문에 띄울 글을 직접 선택/해제할 수 있습니다.
       </p>
 
-      <!-- 카테고리 필터 탭 -->
+      <!-- 카테고리 필터 탭 (3개 카테고리) -->
       <div class="board-filter-tabs" id="boardCategoryTabs">
         <button class="filter-tab-btn active" onclick="filterBoardCategory('all', this)">전체보기</button>
         <button class="filter-tab-btn" onclick="filterBoardCategory('비움과 갈무리', this)">비움과 갈무리</button>
-        <button class="filter-tab-btn" onclick="filterBoardCategory('로망과 축제', this)">로망과 축제</button>
-        <button class="filter-tab-btn" onclick="filterBoardCategory('몸과 웰니스', this)">몸과 웰니스</button>
-        <button class="filter-tab-btn" onclick="filterBoardCategory('인생 서사', this)">인생 서사</button>
-        <button class="filter-tab-btn" onclick="filterBoardCategory('마음과 영성', this)">마음과 영성</button>
+        <button class="filter-tab-btn" onclick="filterBoardCategory('웰라이프', this)">웰라이프</button>
+        <button class="filter-tab-btn" onclick="filterBoardCategory('웰다잉', this)">웰다잉</button>
       </div>
 
       <!-- 게시글 리스트 컨테이너 -->
@@ -2955,10 +2951,8 @@
           <select id="adminFilterCategory" class="editor-category-select" onchange="renderAdminTable()" style="padding: 6px 12px; font-size: 0.85rem;">
             <option value="all">전체보기</option>
             <option value="비움과 갈무리">비움과 갈무리</option>
-            <option value="로망과 축제">로망과 축제</option>
-            <option value="몸과 웰니스">몸과 웰니스</option>
-            <option value="인생 서사">인생 서사</option>
-            <option value="마음과 영성">마음과 영성</option>
+            <option value="웰라이프">웰라이프</option>
+            <option value="웰다잉">웰다잉</option>
           </select>
         </div>
       </div>
@@ -3159,7 +3153,7 @@
       {
         id: 'mag_2',
         title: "눈물 대신 웃음으로 건네는 인사, 일본의 '생전 장례식'",
-        category: '로망과 축제',
+        category: '웰다잉',
         image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=75',
         excerpt: "내가 살아있을 때 소중한 사람들을 초대해 맛있는 음식을 대접하고 고마움을 전하는 인생 감사 파티의 품격 있는 미학.",
         content: `
@@ -3181,7 +3175,7 @@
       {
         id: 'mag_3',
         title: "미래의 병원비를 줄이는 세포 건강과 '소버 큐리어스'",
-        category: '몸과 웰니스',
+        category: '웰라이프',
         image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75',
         excerpt: "무리한 통제가 아닌 미네랄 밸런스와 일상 대사 루틴을 통해 남은 인생을 활기차게 걸어갈 수 있는 체력을 만듭니다.",
         content: `
@@ -3204,7 +3198,7 @@
       {
         id: 'mag_4',
         title: '부모와 자식이 함께 쓰는 30일 인생 서사 워크북',
-        category: '인생 서사',
+        category: '비움과 갈무리',
         image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=75',
         excerpt: '말로는 쑥스러워 전하지 못했던 지난날의 후회와 사랑을 글과 사진으로 엮어 남기는 특별한 유산 기록법.',
         content: `
@@ -3222,12 +3216,32 @@
       }
     ];
 
-    // 기사 데이터 로드 및 저장
+    // 공인 3대 카테고리 정의 및 기존 데이터 정규화 헬퍼
+    const VALID_MAGAZINE_CATEGORIES = ['비움과 갈무리', '웰라이프', '웰다잉'];
+    function normalizeMagazineCategory(cat) {
+      if (cat === '웰라이프' || cat === '몸과 웰니스') return '웰라이프';
+      if (cat === '웰다잉' || cat === '로망과 축제' || cat === '마음과 영성') return '웰다잉';
+      if (cat === '비움과 갈무리' || cat === '인생 서사') return '비움과 갈무리';
+      return '비움과 갈무리';
+    }
+
+    // 기사 데이터 로드 및 저장 (3대 카테고리로 자동 마이그레이션)
     function getStoredArticles() {
       const stored = localStorage.getItem('yebaek_magazine_articles');
       if (stored) {
         try {
-          return JSON.parse(stored);
+          const list = JSON.parse(stored);
+          let migrated = false;
+          list.forEach(item => {
+            if (!VALID_MAGAZINE_CATEGORIES.includes(item.category)) {
+              item.category = normalizeMagazineCategory(item.category);
+              migrated = true;
+            }
+          });
+          if (migrated) {
+            localStorage.setItem('yebaek_magazine_articles', JSON.stringify(list));
+          }
+          return list;
         } catch (e) {
           console.error('기사 데이터 파싱 오류:', e);
         }
