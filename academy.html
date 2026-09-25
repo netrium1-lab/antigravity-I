@@ -843,6 +843,191 @@
       margin-bottom: 18px;
     }
 
+    /* -------------------- 6대 독점 특전 & 1기 모집 요강 스타일 -------------------- */
+    .benefits-section {
+      background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-bottom: 44px;
+    }
+    .benefit-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 28px 24px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .benefit-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+    .benefit-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .benefit-icon-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+    }
+    .benefit-num {
+      font-size: 0.80rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      letter-spacing: 0.8px;
+    }
+    .benefit-title {
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .benefit-highlight {
+      display: inline-block;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      align-self: flex-start;
+    }
+    .benefit-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      flex-grow: 1;
+    }
+    .benefit-desc strong {
+      color: var(--text-primary);
+    }
+
+    /* 1기 모집 요강 & 수강료 안내 박스 */
+    .pricing-summary-card {
+      background: var(--bg-card);
+      border: 2px solid var(--accent);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      box-shadow: var(--shadow-md);
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 32px;
+      align-items: center;
+    }
+    .pricing-info-left h3 {
+      font-size: 1.42rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+    .pricing-info-left p {
+      font-size: 0.93rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .pricing-features-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 18px;
+      padding: 0;
+    }
+    .pricing-features-list li {
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pricing-features-list li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 0.95rem;
+    }
+    .pricing-box-right {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      padding: 28px 24px;
+      text-align: center;
+      border: 1px solid var(--border-color);
+    }
+    .price-badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 800;
+      background: #e11d48;
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+      letter-spacing: -0.2px;
+    }
+    .original-price {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      text-decoration: line-through;
+      margin-bottom: 4px;
+    }
+    .current-price {
+      font-size: 2.25rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .current-price small {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-left: 2px;
+    }
+    .price-notice {
+      font-size: 0.80rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .btn-apply-cta {
+      display: block;
+      width: 100%;
+      background: var(--accent);
+      color: #ffffff;
+      text-align: center;
+      padding: 14px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 1.02rem;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(43, 106, 56, 0.35);
+      transition: var(--transition);
+    }
+    .btn-apply-cta:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(43, 106, 56, 0.45);
+    }
+
     /* 반응형 레이아웃 */
     @media (max-width: 992px) {
       .hero-main-title { font-size: 2.15rem; }
@@ -851,6 +1036,9 @@
       .benchmark-grid { grid-template-columns: repeat(2, 1fr); }
       .tracks-grid { grid-template-columns: 1fr; }
       .roadmap-grid { grid-template-columns: repeat(2, 1fr); }
+      .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-summary-card { grid-template-columns: 1fr; gap: 24px; padding: 28px 22px; }
+      .pricing-features-list { grid-template-columns: 1fr; }
       .form-grid { grid-template-columns: 1fr; }
       .form-field.full { grid-column: span 1; }
       .nav-menu { display: none; }
@@ -863,6 +1051,8 @@
       .stat-item:last-child { border-bottom: none; }
       .benchmark-grid { grid-template-columns: 1fr; }
       .roadmap-grid { grid-template-columns: 1fr; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .current-price { font-size: 1.85rem; }
       .apply-card { padding: 26px 18px; }
       .track-header, .track-body { padding: 18px; }
       .nav-home-link { font-size: 0.82rem; }
@@ -925,6 +1115,7 @@
         <a href="#benchmark" class="nav-link">일본 선진 모델</a>
         <a href="#tracks" class="nav-link">4대 교육과정</a>
         <a href="#roadmap" class="nav-link">현장 파트너십</a>
+        <a href="#benefits" class="nav-link">수료 특전</a>
         <a href="#faq" class="nav-link">자주 묻는 질문</a>
       </nav>
 
@@ -1331,7 +1522,129 @@
     </div>
   </section>
 
-  <!-- ================= 4. 1기 입학 신청 폼 (깔끔하게 정돈) ================= -->
+  <!-- ================= 4. 수료생 6대 독점 특전 & 1기 모집 요강 ================= -->
+  <section id="benefits" class="section-wrap benefits-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-tag">Graduation Benefits & Admission</p>
+        <h2 class="section-title">수료생만을 위한 <strong>6대 독점 특전 & 1기 특별 요강</strong></h2>
+        <p class="section-desc">
+          단순 수료증에 그치지 않고, <strong>활동 첫 달부터 실질적인 코칭 수익과 평생의 전문 커리어</strong>를 보장합니다.
+        </p>
+      </div>
+
+      <!-- 6대 독점 특전 그리드 -->
+      <div class="benefits-grid">
+        <!-- 혜택 1: 현장 방문 코칭비 -->
+        <div class="benefit-card">
+          <div class="benefit-top">
+            <div class="benefit-icon-badge">💰</div>
+            <span class="benefit-num">BENEFIT 01</span>
+          </div>
+          <h3 class="benefit-title">현장 방문 코칭비 정산</h3>
+          <span class="benefit-highlight">회당 8만 ~ 12만 원 우선 배정</span>
+          <p class="benefit-desc">
+            [여백과 결] 플랫폼에 접수된 시니어 1:1 방문 맞춤 케어 고객을 최우선 배정합니다. <strong>3~4회 출장 시 수강료가 즉각 회수</strong>되는 안정적 수익 모델을 제공합니다.
+          </p>
+        </div>
+
+        <!-- 혜택 2: 공인 코치 라이선스 -->
+        <div class="benefit-card">
+          <div class="benefit-top">
+            <div class="benefit-icon-badge">📜</div>
+            <span class="benefit-num">BENEFIT 02</span>
+          </div>
+          <h3 class="benefit-title">공인 코치 공식 라이선스</h3>
+          <span class="benefit-highlight">인증 수료증 & 전문 프로필 키트</span>
+          <p class="benefit-desc">
+            『여백과 결 라이프 리셋 전문 코치』 공인 수료증 발급 및 전용 명함 키트, 공식 웹사이트 코치 프로필 등재를 통해 신뢰받는 전문가 브랜딩을 지원합니다.
+          </p>
+        </div>
+
+        <!-- 혜택 3: 플랫폼 독점 관리 권한 -->
+        <div class="benefit-card">
+          <div class="benefit-top">
+            <div class="benefit-icon-badge">💻</div>
+            <span class="benefit-num">BENEFIT 03</span>
+          </div>
+          <h3 class="benefit-title">‘나만의 서재’ 매니저 권한</h3>
+          <span class="benefit-highlight">전용 웹 코치 관리자 계정 부여</span>
+          <p class="benefit-desc">
+            담당 어르신의 생애 인터뷰, 케어 리포트, 소장품 사진을 손쉽게 업로드하고 관리할 수 있는 [여백과 결] 플랫폼 전용 코치 관리자 모드를 무상 제공합니다.
+          </p>
+        </div>
+
+        <!-- 혜택 4: 2인 1조 안심 동행제 -->
+        <div class="benefit-card">
+          <div class="benefit-top">
+            <div class="benefit-icon-badge">🤝</div>
+            <span class="benefit-num">BENEFIT 04</span>
+          </div>
+          <h3 class="benefit-title">2인 1조 안심 동행제</h3>
+          <span class="benefit-highlight">선임 마스터 코치 현장 동행</span>
+          <p class="benefit-desc">
+            첫 현장 방문 시의 부담과 긴장을 덜어드리기 위해, 숙련된 선임 마스터 코치가 함께 출장하여 현장 실습 및 고객 커뮤니케이션을 1:1로 지도합니다.
+          </p>
+        </div>
+
+        <!-- 혜택 5: 지역 지부장 & 차기 강사 승급 -->
+        <div class="benefit-card">
+          <div class="benefit-top">
+            <div class="benefit-icon-badge">🏛️</div>
+            <span class="benefit-num">BENEFIT 05</span>
+          </div>
+          <h3 class="benefit-title">지역 지부장 & 강사 승급</h3>
+          <span class="benefit-highlight">거점 센터장 위촉 및 차기 출강</span>
+          <p class="benefit-desc">
+            우수 활동 코치에게는 서울·경기 및 주요 광역시 거점 센터장 위촉 자격을 드리며, 본 아카데미 후속 기수의 실습 전담 외래 강사로 활동할 수 있습니다.
+          </p>
+        </div>
+
+        <!-- 혜택 6: 직계가족 평생 우대 할인 -->
+        <div class="benefit-card">
+          <div class="benefit-top">
+            <div class="benefit-icon-badge">💖</div>
+            <span class="benefit-num">BENEFIT 06</span>
+          </div>
+          <h3 class="benefit-title">직계가족 평생 우대 혜택</h3>
+          <span class="benefit-highlight">자서전·케어 30% VIP 할인 & 보수교육</span>
+          <p class="benefit-desc">
+            코치 본인 및 부모님의 자서전 제작, 리셋 케어 의뢰 시 평생 30% VIP 할인을 적용하며, 매년 정기 업데이트되는 최신 시니어 케어 보수교육을 전액 무료 제공합니다.
+          </p>
+        </div>
+      </div>
+
+      <!-- 1기 파운더스 특별 모집 요강 카드 -->
+      <div class="pricing-summary-card">
+        <div class="pricing-info-left">
+          <span class="hero-pill-badge" style="margin-bottom: 12px; display: inline-flex;">🌸 1기 창립 멤버(Founders) 특별 모집</span>
+          <h3>[여백과 결] 코칭스태프 1기 정규 과정</h3>
+          <p>
+            일본의 선진 4대 시니어 자격 체계와 한국형 감성 케어 솔루션을 융합한 4주 마스터 코스.<br>
+            소수 정예 20명 한정, 1기 수료생에게는 <strong>최우선 고객 매칭권</strong>이 주어집니다.
+          </p>
+          <ul class="pricing-features-list">
+            <li>4주 집중 커리큘럼 (주 1회 4시간)</li>
+            <li>온·오프라인 하이브리드 실습 워크숍</li>
+            <li>실습 교재 및 워크북 키트 일체 제공</li>
+            <li>공인 코치 라이선스 발급비 전액 포함</li>
+            <li>수료 즉시 현장 방문 케어 고객 1:1 매칭</li>
+            <li>선임 코치와의 첫 방문 2인 1조 안심 동행</li>
+          </ul>
+        </div>
+
+        <div class="pricing-box-right">
+          <span class="price-badge">1기 창립 장학 30% 특별 혜택</span>
+          <div class="original-price">정상가 500,000원</div>
+          <div class="current-price">350,000<small>원</small></div>
+          <p class="price-notice">※ 1기 선착순 20명 한정 마감 (교재·자격증 발급비 포함)</p>
+          <a href="#apply" class="btn-apply-cta">1기 파운더스 장학생 지원하기 ↓</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 5. 1기 입학 신청 폼 (깔끔하게 정돈) ================= -->
   <section id="apply" class="section-wrap">
     <div class="container">
       <div class="apply-card">
@@ -1446,6 +1759,16 @@
           </div>
           <div class="faq-a">
             네, 가능합니다. 특히 '뷰티 + 옷장정리' 혹은 '생전정리 + 디지털 자서전' 조합은 실제 현장 고객들이 가장 많이 함께 요청하는 연계 서비스이므로, 복수 트랙 수강 시 수강료 할인 및 '마스터 라이프 코치' 특별 자격이 부여됩니다.
+          </div>
+        </div>
+
+        <div class="faq-row">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>Q. 1기 특별 수강료(35만 원)에는 어떤 혜택이 포함되어 있나요?</span>
+            <span class="faq-caret">▼</span>
+          </div>
+          <div class="faq-a">
+            1기 창립 멤버(파운더스) 특별 수강료(350,000원)에는 4주간의 온·오프라인 집중 교육과 워크북 교재 일체, 모의 실습 키트, [여백과 결 공인 코치 라이선스] 발급비, 첫 현장 파견 시 2인 1조 안심 동행 지도비가 모두 포함되어 있어 추가 비용이 전혀 없습니다. 수료 후 3~4회의 1:1 방문 코칭 활동(회당 8~12만 원)만으로 수강료 전액 회수가 가능합니다.
           </div>
         </div>
       </div>
