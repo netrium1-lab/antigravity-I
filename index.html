@@ -3505,30 +3505,16 @@
             <button class="btn btn-primary" onclick="addUnburden()">가볍게 비워내기</button>
           </div>
 
-          <!-- 피드 목록 -->
+          <!-- 피드 목록 (JS에서 동적 렌더링: 대표 추천글 우선 + 최대 4개 노출) -->
           <div class="unburden-feed" id="unburdenFeed">
-            <!-- 기본 샘플 피드 카드들 -->
-            <div class="feed-card">
-              <p class="feed-text">"오랫동안 서랍 구석에 넣어두었던 옛 명함들과 서류들을 정리했습니다. 홀가분한 여백이 생겼네요."</p>
-              <div class="feed-meta">
-                <span>익명의 여행자 · 방금 전</span>
-                <button class="cheer-btn" onclick="cheerUp(this)">🌿 응원해요 <span>12</span></button>
-              </div>
-            </div>
-            <div class="feed-card">
-              <p class="feed-text">"스마트폰에서 쓰지 않는 앱 20개와 중복 사진 500장을 지웠습니다. 손가락 하나로 가벼워진 기분입니다."</p>
-              <div class="feed-meta">
-                <span>자유로운 결 · 1시간 전</span>
-                <button class="cheer-btn" onclick="cheerUp(this)">🌿 응원해요 <span>28</span></button>
-              </div>
-            </div>
-            <div class="feed-card">
-              <p class="feed-text">"완벽해야 한다는 강박을 내려놓았습니다. 남은 후반전은 온전히 나의 속도대로 살아가기로 했습니다."</p>
-              <div class="feed-meta">
-                <span>세컨드윈드 · 3시간 전</span>
-                <button class="cheer-btn" onclick="cheerUp(this)">🌿 응원해요 <span>34</span></button>
-              </div>
-            </div>
+            <!-- JS 동적 렌더링 -->
+          </div>
+
+          <!-- 더보기 버튼 (4개 초과 시 노출) -->
+          <div style="text-align: center; margin-top: 24px;" id="unburdenMoreWrap">
+            <button class="btn btn-secondary" id="btnToggleUnburdenMore" onclick="toggleUnburdenMore()" style="padding: 10px 24px; font-size: 0.94rem; font-weight: 700; border-radius: 999px;">
+              🌿 더 많은 비움 이야기 보기
+            </button>
           </div>
         </div>
       </div>
@@ -4313,6 +4299,10 @@
           <span>📋</span> 1:1 상담 신청 접수 관리
           <span class="admin-tab-badge" id="adminConsultBadge">0</span>
         </button>
+        <button type="button" class="admin-nav-tab-btn" id="tabBtnUnburden" onclick="switchAdminTab('unburden')">
+          <span>💬</span> 오늘의 비움 한 줄 관리
+          <span class="admin-tab-badge" id="adminUnburdenBadge" style="background: var(--accent);">0</span>
+        </button>
       </div>
 
       <!-- ================= 탭 1: 칼럼 & 서재 관리 영역 ================= -->
@@ -4482,6 +4472,83 @@
         <div style="margin-top: 18px; font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
           <span>💡</span>
           <span>전화번호를 클릭하면 스마트폰에서 바로 고객에게 통화가 연결됩니다. 진행 상태를 [상담 진행 중] 또는 [상담 완료]로 실시간 변경할 수 있습니다.</span>
+        </div>
+      </div>
+
+      <!-- ================= 탭 3: 오늘의 비움 한 줄 관리 영역 (NEW) ================= -->
+      <div id="adminUnburdenTabContent" style="display: none;">
+        <!-- 비움 통계 요약 카드 -->
+        <div class="consult-stat-grid">
+          <div class="consult-stat-card active" id="statUnburdenCardAll" onclick="filterUnburdenList('all')">
+            <div>
+              <div style="font-size: 0.80rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 2px;">전체 비움글</div>
+              <div class="admin-stat-val" id="statUnburdenTotal" style="font-size: 1.4rem;">0편</div>
+            </div>
+            <div style="font-size: 1.6rem;">💬</div>
+          </div>
+          <div class="consult-stat-card" id="statUnburdenCardFeatured" onclick="filterUnburdenList('featured')">
+            <div>
+              <div style="font-size: 0.80rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 2px;">⭐ 메인 대표글 (핀 고정)</div>
+              <div class="admin-stat-val" id="statUnburdenFeatured" style="font-size: 1.4rem; color: var(--accent-gold);">0편</div>
+            </div>
+            <div style="font-size: 1.6rem;">⭐</div>
+          </div>
+          <div class="consult-stat-card" id="statUnburdenCardHidden" onclick="filterUnburdenList('hidden')">
+            <div>
+              <div style="font-size: 0.80rem; font-weight: 700; color: var(--text-muted); margin-bottom: 2px;">🚫 메인 숨김글</div>
+              <div class="admin-stat-val" id="statUnburdenHidden" style="font-size: 1.4rem; color: var(--text-muted);">0편</div>
+            </div>
+            <div style="font-size: 1.6rem;">🔒</div>
+          </div>
+          <div class="consult-stat-card">
+            <div>
+              <div style="font-size: 0.80rem; font-weight: 700; color: #2b6a38; margin-bottom: 2px;">🌿 누적 응원(공감)</div>
+              <div class="admin-stat-val" id="statUnburdenCheers" style="font-size: 1.4rem; color: #2b6a38;">0회</div>
+            </div>
+            <div style="font-size: 1.6rem;">❤️</div>
+          </div>
+        </div>
+
+        <!-- 비움글 툴바 -->
+        <div class="admin-action-toolbar">
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <label for="adminUnburdenFilterSelect" style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);">노출 필터:</label>
+            <select id="adminUnburdenFilterSelect" class="editor-category-select" onchange="filterUnburdenFromSelect()" style="padding: 6px 10px; font-size: 0.85rem;">
+              <option value="all">전체보기</option>
+              <option value="featured">⭐ 메인 대표글만</option>
+              <option value="visible">👁️ 일반 노출글만</option>
+              <option value="hidden">🚫 숨김글만</option>
+            </select>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="openAddUnburdenModal()" style="padding: 7px 14px; font-size: 0.86rem; display: inline-flex; align-items: center; gap: 5px;">
+              <span>➕</span> 추천 비움글 직접 등록
+            </button>
+          </div>
+        </div>
+
+        <!-- 비움글 관리 테이블 -->
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width: 140px; text-align: center;">메인 대표글 지정</th>
+                <th>비움 한 줄 내용</th>
+                <th style="width: 130px;">작성자 / 일시</th>
+                <th style="width: 90px; text-align: center;">응원수</th>
+                <th style="width: 110px; text-align: center;">메인 노출 상태</th>
+                <th style="width: 70px; text-align: center;">삭제</th>
+              </tr>
+            </thead>
+            <tbody id="adminUnburdenTableBody">
+              <!-- JS 동적 렌더링 -->
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top: 18px; font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
+          <span>💡</span>
+          <span>[⭐ 대표글 지정] 버튼을 누르면 해당 글이 메인 페이지 최상단에 추천글로 우선 노출됩니다. [메인 노출 상태]를 클릭하여 부적절한 글을 숨기거나 [🗑️] 버튼으로 영구 삭제할 수 있습니다.</span>
         </div>
       </div>
     </div>
@@ -4772,37 +4839,191 @@
       }
     }
 
-    // 3. 참여 라운지: 오늘의 비움 한 줄 추가 기능
+    // ================= 3. 참여 라운지: 오늘의 비움 한 줄 영구 관리 및 렌더링 =================
+    const UNBURDEN_STORAGE_KEY = 'reset_unburden_list';
+    let isUnburdenExpanded = false; // 기본: 상위 4개 노출, 클릭 시 전체 노출
+
+    // 비움 목록 로드 (초기 데이터 없으면 감동 샘플 5편 자동 주입)
+    function getUnburdenList() {
+      const stored = localStorage.getItem(UNBURDEN_STORAGE_KEY);
+      if (stored) {
+        try {
+          return JSON.parse(stored);
+        } catch (e) {
+          console.error('비움 목록 파싱 실패:', e);
+        }
+      }
+      const initialSamples = [
+        {
+          id: 'unb_1',
+          text: '오랫동안 서랍 구석에 넣어두었던 옛 명함들과 서류들을 정리했습니다. 홀가분한 여백이 생겼네요.',
+          author: '익명의 여행자',
+          time: '방금 전',
+          cheers: 14,
+          isFeatured: true,
+          isVisible: true
+        },
+        {
+          id: 'unb_2',
+          text: '스마트폰에서 쓰지 않는 앱 20개와 중복 사진 500장을 지웠습니다. 손가락 하나로 가벼워진 기분입니다.',
+          author: '자유로운 결',
+          time: '1시간 전',
+          cheers: 28,
+          isFeatured: true,
+          isVisible: true
+        },
+        {
+          id: 'unb_3',
+          text: '완벽해야 한다는 강박을 내려놓았습니다. 남은 후반전은 온전히 나의 속도대로 살아가기로 했습니다.',
+          author: '세컨드윈드',
+          time: '3시간 전',
+          cheers: 35,
+          isFeatured: false,
+          isVisible: true
+        },
+        {
+          id: 'unb_4',
+          text: '10년 동안 옷장에 걸려만 있던 고급 정장을 필요한 이웃에게 기부했습니다. 마음의 무게도 덜어졌습니다.',
+          author: '비움의 기쁨',
+          time: '어제',
+          cheers: 19,
+          isFeatured: false,
+          isVisible: true
+        },
+        {
+          id: 'unb_5',
+          text: '자식들에게 섭섭했던 서운함을 오늘 아침 산책하며 숲속 바람에 모두 날려보냈습니다.',
+          author: '청명한 아침',
+          time: '2일 전',
+          cheers: 42,
+          isFeatured: false,
+          isVisible: true
+        }
+      ];
+      localStorage.setItem(UNBURDEN_STORAGE_KEY, JSON.stringify(initialSamples));
+      return initialSamples;
+    }
+
+    function saveUnburdenList(list) {
+      localStorage.setItem(UNBURDEN_STORAGE_KEY, JSON.stringify(list));
+      updateUnburdenAdminBadge();
+    }
+
+    // 메인 화면 비움 피드 동적 렌더링
+    function renderUnburdenFeed() {
+      const feed = document.getElementById('unburdenFeed');
+      if (!feed) return;
+
+      const list = getUnburdenList();
+      // 메인 노출 가능한 글 (isVisible === true)
+      const visibleList = list.filter(item => item.isVisible !== false);
+
+      // 정렬: 메인 대표글(isFeatured === true) 최우선, 그 다음 최신순
+      visibleList.sort((a, b) => {
+        if (a.isFeatured && !b.isFeatured) return -1;
+        if (!a.isFeatured && b.isFeatured) return 1;
+        return 0;
+      });
+
+      const displayList = isUnburdenExpanded ? visibleList : visibleList.slice(0, 4);
+
+      if (displayList.length === 0) {
+        feed.innerHTML = `
+          <div style="text-align: center; padding: 40px 16px; color: var(--text-muted); background: var(--bg-card); border-radius: 16px; border: 1px dashed var(--border-color);">
+            아직 등록된 비움 한 줄이 없습니다. 첫 번째로 마음을 가볍게 비워보세요!
+          </div>
+        `;
+      } else {
+        feed.innerHTML = displayList.map(item => `
+          <div class="feed-card" style="${item.isFeatured ? 'border: 1.8px solid var(--accent); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(94, 107, 82, 0.06) 100%); position: relative;' : ''}">
+            ${item.isFeatured ? `
+              <div style="display: inline-flex; align-items: center; gap: 4px; font-size: 0.76rem; font-weight: 850; color: var(--accent); background: var(--accent-light); padding: 3px 9px; border-radius: 999px; margin-bottom: 10px; border: 1px solid rgba(94, 107, 82, 0.3);">
+                ⭐ 공감 추천 비움
+              </div>
+            ` : ''}
+            <p class="feed-text">"${escapeHtml(item.text)}"</p>
+            <div class="feed-meta">
+              <span>${escapeHtml(item.author || '익명의 여행자')} · ${escapeHtml(item.time || '방금 전')}</span>
+              <button class="cheer-btn" onclick="cheerUpUnburden('${item.id}', this)" title="따뜻하게 응원합니다">
+                🌿 응원해요 <span>${item.cheers || 0}</span>
+              </button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 더보기 버튼 제어 (4개 초과 시 노출)
+      const moreWrap = document.getElementById('unburdenMoreWrap');
+      const moreBtn = document.getElementById('btnToggleUnburdenMore');
+      if (moreWrap && moreBtn) {
+        if (visibleList.length <= 4) {
+          moreWrap.style.display = 'none';
+        } else {
+          moreWrap.style.display = 'block';
+          if (isUnburdenExpanded) {
+            moreBtn.innerHTML = '▲ 비움 이야기 접기';
+          } else {
+            moreBtn.innerHTML = `🌿 더 많은 비움 이야기 보기 (+${visibleList.length - 4}개)`;
+          }
+        }
+      }
+    }
+
+    // 더보기 펼치기 / 접기 토글
+    function toggleUnburdenMore() {
+      isUnburdenExpanded = !isUnburdenExpanded;
+      renderUnburdenFeed();
+    }
+
+    // 메인에서 비움 한 줄 추가
     function addUnburden() {
       const input = document.getElementById('unburdenInput');
-      const text = input.value.trim();
+      const text = input ? input.value.trim() : '';
       if (!text) {
         alert('내려놓고 싶은 마음이나 비운 일상을 한 줄 적어주세요.');
+        if (input) input.focus();
         return;
       }
 
-      const feed = document.getElementById('unburdenFeed');
-      const newCard = document.createElement('div');
-      newCard.className = 'feed-card';
-      newCard.innerHTML = `
-        <p class="feed-text">"${escapeHtml(text)}"</p>
-        <div class="feed-meta">
-          <span>새로운 여백 · 방금 전</span>
-          <button class="cheer-btn" onclick="cheerUp(this)">🌿 응원해요 <span>1</span></button>
-        </div>
-      `;
+      const list = getUnburdenList();
+      const newCard = {
+        id: 'unb_' + Date.now(),
+        text: text,
+        author: '새로운 여백',
+        time: '방금 전',
+        cheers: 1,
+        isFeatured: false,
+        isVisible: true
+      };
 
-      feed.insertBefore(newCard, feed.firstChild);
-      input.value = '';
+      list.unshift(newCard); // 최신글 맨 위로
+      saveUnburdenList(list);
+
+      if (input) input.value = '';
+      renderUnburdenFeed();
+
+      // 관리자 화면이 열려있다면 함께 갱신
+      renderAdminUnburdenTable();
+
+      alert('🌿 마음의 짐이 가볍게 비워졌습니다!\n따뜻한 여백이 당신의 삶을 더욱 평온하게 채워줄 것입니다.');
     }
 
-    // 응원 버튼 카운트 증가
-    function cheerUp(btn) {
-      const span = btn.querySelector('span');
-      let count = parseInt(span.textContent, 10);
-      span.textContent = count + 1;
-      btn.style.transform = 'scale(1.1)';
-      setTimeout(() => btn.style.transform = 'scale(1)', 200);
+    // 응원해요 버튼 클릭
+    function cheerUpUnburden(id, btn) {
+      const list = getUnburdenList();
+      const target = list.find(item => item.id === id);
+      if (target) {
+        target.cheers = (target.cheers || 0) + 1;
+        saveUnburdenList(list);
+
+        const span = btn.querySelector('span');
+        if (span) span.textContent = target.cheers;
+        btn.style.transform = 'scale(1.15)';
+        setTimeout(() => btn.style.transform = 'scale(1)', 200);
+
+        // 관리자 테이블 통계도 갱신
+        renderAdminUnburdenTable();
+      }
     }
 
     function escapeHtml(string) {
@@ -5324,6 +5545,7 @@
     function openAdminDashboardModal() {
       renderAdminDashboard();
       renderConsultAdminTable();
+      renderAdminUnburdenTable();
       const modal = document.getElementById('adminDashboardModal');
       if (modal) {
         modal.classList.add('open');
@@ -6003,25 +6225,34 @@
     // ================= 관리자 콘솔: 1:1 상담 신청 접수 관리 시스템 =================
     const CONSULT_STORAGE_KEY = 'reset_consult_list';
 
-    // 관리자 탭 전환 (칼럼 관리 vs 상담 접수 관리)
+    // 관리자 탭 전환 (칼럼 관리 vs 상담 접수 관리 vs 비움 한 줄 관리)
     function switchAdminTab(tabName) {
       const tabArticles = document.getElementById('tabBtnArticles');
       const tabConsults = document.getElementById('tabBtnConsults');
+      const tabUnburden = document.getElementById('tabBtnUnburden');
       const contentArticles = document.getElementById('adminArticlesTabContent');
       const contentConsults = document.getElementById('adminConsultsTabContent');
+      const contentUnburden = document.getElementById('adminUnburdenTabContent');
+
+      // 탭 버튼 비활성화
+      [tabArticles, tabConsults, tabUnburden].forEach(btn => btn && btn.classList.remove('active'));
+      // 컨텐츠 숨김
+      if (contentArticles) contentArticles.style.display = 'none';
+      if (contentConsults) contentConsults.style.display = 'none';
+      if (contentUnburden) contentUnburden.style.display = 'none';
 
       if (tabName === 'articles') {
         if (tabArticles) tabArticles.classList.add('active');
-        if (tabConsults) tabConsults.classList.remove('active');
         if (contentArticles) contentArticles.style.display = 'block';
-        if (contentConsults) contentConsults.style.display = 'none';
         renderAdminDashboard();
-      } else {
-        if (tabArticles) tabArticles.classList.remove('active');
+      } else if (tabName === 'consults') {
         if (tabConsults) tabConsults.classList.add('active');
-        if (contentArticles) contentArticles.style.display = 'none';
         if (contentConsults) contentConsults.style.display = 'block';
         renderConsultAdminTable();
+      } else if (tabName === 'unburden') {
+        if (tabUnburden) tabUnburden.classList.add('active');
+        if (contentUnburden) contentUnburden.style.display = 'block';
+        renderAdminUnburdenTable();
       }
     }
 
@@ -6314,6 +6545,177 @@
       if (badge) badge.textContent = waiting;
     }
 
+    // ================= 관리자 콘솔: 오늘의 비움 한 줄 관리 시스템 =================
+    // 비움 관리 테이블 렌더링 및 통계 집계
+    function renderAdminUnburdenTable() {
+      const tbody = document.getElementById('adminUnburdenTableBody');
+      const list = getUnburdenList();
+
+      // 1. 통계 집계
+      const totalCount = list.length;
+      const featuredCount = list.filter(item => item.isFeatured).length;
+      const hiddenCount = list.filter(item => item.isVisible === false).length;
+      const totalCheers = list.reduce((acc, cur) => acc + (cur.cheers || 0), 0);
+
+      const statTotal = document.getElementById('statUnburdenTotal');
+      const statFeatured = document.getElementById('statUnburdenFeatured');
+      const statHidden = document.getElementById('statUnburdenHidden');
+      const statCheers = document.getElementById('statUnburdenCheers');
+      const badge = document.getElementById('adminUnburdenBadge');
+
+      if (statTotal) statTotal.textContent = `${totalCount}편`;
+      if (statFeatured) statFeatured.textContent = `${featuredCount}편`;
+      if (statHidden) statHidden.textContent = `${hiddenCount}편`;
+      if (statCheers) statCheers.textContent = `${totalCheers}회`;
+      if (badge) badge.textContent = totalCount;
+
+      // 2. 필터링
+      const filterSelect = document.getElementById('adminUnburdenFilterSelect');
+      const filterVal = filterSelect ? filterSelect.value : 'all';
+
+      // 상단 카드 active 클래스 토글
+      document.querySelectorAll('#adminUnburdenTabContent .consult-stat-card').forEach(c => c.classList.remove('active'));
+      if (filterVal === 'all') {
+        const c = document.getElementById('statUnburdenCardAll');
+        if (c) c.classList.add('active');
+      } else if (filterVal === 'featured') {
+        const c = document.getElementById('statUnburdenCardFeatured');
+        if (c) c.classList.add('active');
+      } else if (filterVal === 'hidden') {
+        const c = document.getElementById('statUnburdenCardHidden');
+        if (c) c.classList.add('active');
+      }
+
+      const filtered = list.filter(item => {
+        if (filterVal === 'featured') return item.isFeatured === true;
+        if (filterVal === 'visible') return item.isVisible !== false;
+        if (filterVal === 'hidden') return item.isVisible === false;
+        return true;
+      });
+
+      if (!tbody) return;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align: center; padding: 36px 16px; color: var(--text-muted);">
+              해당 조건의 비움 한 줄이 없습니다.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(item => `
+        <tr>
+          <td style="text-align: center; white-space: nowrap;">
+            <button class="btn-pin-toggle ${item.isFeatured ? 'pinned' : ''}" onclick="toggleUnburdenFeature('${item.id}')" title="${item.isFeatured ? '클릭 시 메인 대표글 지정이 해제됩니다' : '클릭 시 메인 최상단에 추천글로 우선 노출됩니다'}">
+              ${item.isFeatured ? '⭐ 대표글 지정됨' : '☆ 일반 지정'}
+            </button>
+          </td>
+          <td style="font-size: 0.94rem; line-height: 1.5; color: var(--text-primary); word-break: keep-all;">
+            "${escapeHtml(item.text)}"
+          </td>
+          <td style="font-size: 0.84rem; color: var(--text-muted); white-space: nowrap;">
+            ${escapeHtml(item.author || '익명의 여행자')}<br>
+            <span style="font-size: 0.78rem;">(${escapeHtml(item.time || '')})</span>
+          </td>
+          <td style="text-align: center; font-weight: 800; color: #2b6a38; font-size: 0.95rem; white-space: nowrap;">
+            ❤️ ${item.cheers || 0}
+          </td>
+          <td style="text-align: center; white-space: nowrap;">
+            <button onclick="toggleUnburdenVisibility('${item.id}')" class="btn-mag-action" style="font-size: 0.82rem; padding: 4px 10px; ${item.isVisible === false ? 'color: var(--text-muted); background: var(--bg-secondary);' : 'color: #166534; background: #dcfce7; border-color: #86efac;'}">
+              ${item.isVisible === false ? '🚫 숨김 중' : '👁️ 메인 노출'}
+            </button>
+          </td>
+          <td style="text-align: center; white-space: nowrap;">
+            <button onclick="deleteUnburden('${item.id}')" title="삭제" style="background: none; border: none; font-size: 1.1rem; cursor: pointer; opacity: 0.6; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+              🗑️
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // 메인 대표글 지정 토글
+    function toggleUnburdenFeature(id) {
+      const list = getUnburdenList();
+      const target = list.find(item => item.id === id);
+      if (target) {
+        target.isFeatured = !target.isFeatured;
+        saveUnburdenList(list);
+        renderAdminUnburdenTable();
+        renderUnburdenFeed();
+      }
+    }
+
+    // 메인 노출 / 숨김 토글
+    function toggleUnburdenVisibility(id) {
+      const list = getUnburdenList();
+      const target = list.find(item => item.id === id);
+      if (target) {
+        target.isVisible = target.isVisible === false ? true : false;
+        saveUnburdenList(list);
+        renderAdminUnburdenTable();
+        renderUnburdenFeed();
+      }
+    }
+
+    // 비움글 삭제
+    function deleteUnburden(id) {
+      if (!confirm('정말 이 비움 한 줄을 삭제하시겠습니까?')) return;
+      let list = getUnburdenList();
+      list = list.filter(item => item.id !== id);
+      saveUnburdenList(list);
+      renderAdminUnburdenTable();
+      renderUnburdenFeed();
+    }
+
+    // 관리자 추천 비움글 직접 등록
+    function openAddUnburdenModal() {
+      const text = prompt('추천 비움 한 줄 내용을 입력하세요:\n(예: 마음속 오랜 응어리를 비우고 평온을 찾았습니다.)');
+      if (!text || !text.trim()) return;
+
+      const author = prompt('작성자 닉네임을 입력하세요 (미입력 시 "여백지기"):', '여백지기') || '여백지기';
+      const isFeatured = confirm('이 글을 메인 대표글(⭐ 공감 추천 비움)로 최상단에 띄우시겠습니까?');
+
+      const list = getUnburdenList();
+      const newCard = {
+        id: 'unb_' + Date.now(),
+        text: text.trim(),
+        author: author.trim(),
+        time: '오늘',
+        cheers: 5,
+        isFeatured: isFeatured,
+        isVisible: true
+      };
+
+      list.unshift(newCard);
+      saveUnburdenList(list);
+      renderAdminUnburdenTable();
+      renderUnburdenFeed();
+      alert('추천 비움글이 등록되었습니다!');
+    }
+
+    // 필터링
+    function filterUnburdenList(type) {
+      const select = document.getElementById('adminUnburdenFilterSelect');
+      if (select) {
+        select.value = type;
+        renderAdminUnburdenTable();
+      }
+    }
+
+    function filterUnburdenFromSelect() {
+      renderAdminUnburdenTable();
+    }
+
+    function updateUnburdenAdminBadge() {
+      const list = getUnburdenList();
+      const badge = document.getElementById('adminUnburdenBadge');
+      if (badge) badge.textContent = list.length;
+    }
+
     // 에디터 본문 커서 위치 리스너 등록
     document.addEventListener('DOMContentLoaded', () => {
       const editorArea = document.getElementById('editorContent');
@@ -6324,6 +6726,8 @@
       renderFeaturedMagazine();
       updateAdminUI();
       updateConsultBadges();
+      renderUnburdenFeed();
+      updateUnburdenAdminBadge();
     });
 
     // 외부 클릭 시 서식 팝업 닫기
@@ -6342,6 +6746,8 @@
     renderFeaturedMagazine();
     updateAdminUI();
     updateConsultBadges();
+    renderUnburdenFeed();
+    updateUnburdenAdminBadge();
   </script>
 </body>
 </html>
