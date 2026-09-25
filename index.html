@@ -2929,9 +2929,397 @@
       transition: var(--transition);
     }
 
-    .admin-pwd-input:focus {
+    /* ================= 시니어 맞춤형 원터치 안심 상담 모달 스타일 ================= */
+    .senior-modal-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: 24px;
+      max-width: 520px;
+      width: 92%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+      padding: 32px 26px;
+      text-align: center;
+      position: relative;
+      animation: modalSlideUp 0.3s ease;
+    }
+
+    .senior-badge-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      border: 1px solid rgba(94, 107, 82, 0.3);
+    }
+
+    .senior-headline {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.48rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      line-height: 1.35;
+      word-break: keep-all;
+    }
+
+    .senior-subcopy {
+      font-size: 0.98rem;
+      color: var(--text-secondary);
+      margin-bottom: 22px;
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+
+    /* 시니어 원터치 퀵 액션 카드 (전화 / 카카오) */
+    .senior-quick-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 480px) {
+      .senior-quick-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .senior-call-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 16px 12px;
+      background: linear-gradient(135deg, #2b6a38 0%, #1e4f29 100%);
+      color: #ffffff !important;
+      border-radius: 16px;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(43, 106, 56, 0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .senior-call-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(43, 106, 56, 0.4);
+    }
+
+    .senior-call-main {
+      font-size: 1.12rem;
+      font-weight: 850;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .senior-call-sub {
+      font-size: 0.80rem;
+      opacity: 0.92;
+    }
+
+    .senior-kakao-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 16px 12px;
+      background: #fee500;
+      color: #191600 !important;
+      border-radius: 16px;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(254, 229, 0, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .senior-kakao-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(254, 229, 0, 0.5);
+    }
+
+    /* 또는 구분선 */
+    .senior-divider-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 18px 0;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .senior-divider-row::before, .senior-divider-row::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border-color);
+    }
+
+    /* 시니어 간편 번호 남기기 박스 */
+    .senior-input-box {
+      background: var(--bg-secondary);
+      border: 1.5px solid var(--border-color);
+      border-radius: 18px;
+      padding: 18px 16px;
+      text-align: left;
+    }
+
+    .senior-box-title {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .senior-role-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .senior-role-btn {
+      flex: 1;
+      padding: 8px 12px;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      cursor: pointer;
+      text-align: center;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    .senior-role-btn.active {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(94, 107, 82, 0.2);
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 850;
+    }
+
+    .senior-phone-input {
+      width: 100%;
+      padding: 13px 16px;
+      font-size: 1.25rem;
+      font-weight: 800;
+      text-align: center;
+      letter-spacing: 2px;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      outline: none;
+      transition: var(--transition);
+      margin-bottom: 10px;
+      font-family: inherit;
+    }
+
+    .senior-phone-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(94, 107, 82, 0.25);
+    }
+
+    .senior-note-input {
+      width: 100%;
+      padding: 10px 14px;
+      font-size: 0.92rem;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      outline: none;
+      margin-bottom: 14px;
+      font-family: inherit;
+    }
+
+    .senior-submit-btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 1.12rem;
+      font-weight: 850;
+      border-radius: 14px;
+      border: none;
+      background: var(--accent);
+      color: #ffffff;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(94, 107, 82, 0.3);
+      transition: var(--transition);
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .senior-submit-btn:hover {
+      background: #4d5743;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(94, 107, 82, 0.4);
+    }
+
+    /* ================= 관리자 콘솔 탭 네비게이션 & 상담 접수 관리 스타일 ================= */
+    .admin-nav-tabs {
+      display: flex;
+      gap: 10px;
+      border-bottom: 2px solid var(--border-color);
+      margin-bottom: 22px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .admin-nav-tab-btn {
+      padding: 11px 20px;
+      border: none;
+      background: none;
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+      font-family: inherit;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .admin-nav-tab-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .admin-nav-tab-btn.active {
+      color: var(--accent);
+      font-weight: 850;
+    }
+
+    .admin-nav-tab-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 3px 3px 0 0;
+    }
+
+    .admin-tab-badge {
+      background: #e02424;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 999px;
+      line-height: 1.2;
+    }
+
+    /* 상담 통계 카드 그리드 */
+    .consult-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .consult-stat-card {
+      background: var(--bg-secondary);
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .consult-stat-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .consult-stat-card.active {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .consult-cat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .cat-beauty { background: #fce7f3; color: #9d174d; border: 1px solid #fbcfe8; }
+    .cat-wardrobe { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+    .cat-belongings { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .cat-memoir { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+    .cat-general { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+
+    [data-theme="dark"] .cat-beauty { background: #500724; color: #fbcfe8; border-color: #831843; }
+    [data-theme="dark"] .cat-wardrobe { background: #1e1b4b; color: #c7d2fe; border-color: #312e81; }
+    [data-theme="dark"] .cat-belongings { background: #451a03; color: #fde68a; border-color: #78350f; }
+    [data-theme="dark"] .cat-memoir { background: #172554; color: #bfdbfe; border-color: #1e3a8a; }
+    [data-theme="dark"] .cat-general { background: #052e16; color: #bbf7d0; border-color: #14532d; }
+
+    /* 상담 처리 상태 셀렉트 */
+    .consult-status-select {
+      padding: 5px 8px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .consult-status-select.status-waiting {
+      background: #fef3c7;
+      color: #92400e;
+      border-color: #f59e0b;
+    }
+    .consult-status-select.status-processing {
+      background: #dbeafe;
+      color: #1e40af;
+      border-color: #3b82f6;
+    }
+    .consult-status-select.status-done {
+      background: #dcfce7;
+      color: #166534;
+      border-color: #22c55e;
+    }
+
+    [data-theme="dark"] .consult-status-select.status-waiting {
+      background: #451a03; color: #fde68a; border-color: #b45309;
+    }
+    [data-theme="dark"] .consult-status-select.status-processing {
+      background: #172554; color: #bfdbfe; border-color: #2563eb;
+    }
+    [data-theme="dark"] .consult-status-select.status-done {
+      background: #052e16; color: #bbf7d0; border-color: #16a34a;
     }
   </style>
 </head>
@@ -3440,7 +3828,7 @@
                 <div class="curriculum-item"><strong>사전 절차</strong> 1:1 심층 상담 ➔ 일정 조율 ➔ 코치 2인 방문</div>
               </div>
               <div class="program-price">맞춤형 견적 안내 <span>(사전 무료 상담)</span></div>
-              <button onclick="alert('방문 컨시어지 1:1 무료 상담 신청이 접수되었습니다! 담당 코치가 곧 연락드립니다.')" class="btn btn-gold" style="justify-content: center;">무료 방문 상담 예약하기</button>
+              <button onclick="openSeniorConsultModal('🌿 오프라인 방문 컨시어지', '공간 및 디지털 유산 맞춤형 방문 정리 상담 희망')" class="btn btn-gold" style="justify-content: center;">무료 방문 상담 예약하기</button>
             </div>
           </div>
 
@@ -3812,6 +4200,90 @@
     </div>
   </div>
 
+  <!-- ================= 모달 6) 시니어 맞춤형 원터치 안심 상담 모달 ================= -->
+  <div class="cms-modal-overlay" id="seniorConsultModal" onclick="closeSeniorConsultOnOverlay(event)">
+    <div class="senior-modal-card">
+      <button class="drawer-close" onclick="closeSeniorConsultModal()" aria-label="닫기" style="position: absolute; top: 18px; right: 18px; border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">✕</button>
+      
+      <!-- 선택된 진단 주제 배지 -->
+      <div class="senior-badge-wrap">
+        <span id="seniorModalCategoryBadge">🌿 1:1 방문 맞춤 케어</span>
+      </div>
+
+      <h3 class="senior-headline" id="seniorModalHeadline">
+        1:1 방문 맞춤 상담 신청
+      </h3>
+      <p class="senior-subcopy">
+        어르신, 복잡한 회원가입이나 글자 입력 없이<br>
+        <strong>가장 편안하신 방법</strong>으로 문의해 주세요.
+      </p>
+
+      <!-- 원터치 퀵 액션: 전화 & 카카오톡 -->
+      <div class="senior-quick-grid">
+        <a href="tel:010-8765-4321" class="senior-call-btn" id="seniorCallLink" title="터치하시면 친절한 전담 코치와 바로 통화 연결됩니다">
+          <span class="senior-call-main">📞 전화로 바로 묻기</span>
+          <span class="senior-call-sub">터치 시 즉시 전화 연결 (무료)</span>
+        </a>
+        <button type="button" class="senior-kakao-btn" onclick="openKakaoConsult()" title="카카오톡으로 편안하게 상담원과 대화합니다">
+          <span class="senior-call-main" style="color: #191600;">💬 카카오톡 문의</span>
+          <span class="senior-call-sub" style="color: #555;">1초 만에 채팅 상담</span>
+        </button>
+      </div>
+
+      <div class="senior-divider-row">
+        <span>또는 전화번호만 남기시면 저희가 전화드립니다</span>
+      </div>
+
+      <!-- 시니어 간편 번호 남기기 박스 -->
+      <form class="senior-input-box" onsubmit="handleSeniorConsultSubmit(event)">
+        <div class="senior-box-title">
+          <span>📱</span> 누가 신청하시나요?
+        </div>
+        <div class="senior-role-tabs">
+          <button type="button" class="senior-role-btn active" id="roleBtnSelf" onclick="selectConsultRole('본인 어르신')">
+            👴 본인 (어르신)
+          </button>
+          <button type="button" class="senior-role-btn" id="roleBtnFamily" onclick="selectConsultRole('자녀/가족 대리')">
+            👨‍👩‍👧 자녀 / 가족 대리
+          </button>
+        </div>
+
+        <label for="seniorPhoneInput" style="display: block; font-size: 0.92rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 6px;">
+          전화번호 (숫자만 누르시면 됩니다):
+        </label>
+        <input 
+          type="tel" 
+          id="seniorPhoneInput" 
+          class="senior-phone-input" 
+          placeholder="010 - 0000 - 0000" 
+          maxlength="13" 
+          required 
+          autocomplete="tel"
+          oninput="formatPhoneNumber(this)"
+        />
+
+        <label for="seniorNoteInput" style="display: block; font-size: 0.88rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 6px;">
+          궁금한 점이나 편한 시간 (선택):
+        </label>
+        <input 
+          type="text" 
+          id="seniorNoteInput" 
+          class="senior-note-input" 
+          placeholder="예: 오후 2시 이후 전화 희망 / 옷장 정리 비용 문의" 
+        />
+
+        <button type="submit" class="senior-submit-btn">
+          <span>✨</span>
+          <span>1:1 무료 상담 신청하기</span>
+        </button>
+
+        <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 10px; margin-bottom: 0;">
+          🔒 회원가입 없이 전화번호로만 안전하게 상담 연락을 드립니다.
+        </p>
+      </form>
+    </div>
+  </div>
+
   <!-- ================= 모달 5) 여백의 서재 종합 관리자 홈 (Admin Console) ================= -->
   <div class="cms-modal-overlay" id="adminDashboardModal" onclick="closeAdminDashboardOnOverlay(event)">
     <div class="admin-modal-card">
@@ -3832,73 +4304,185 @@
         </div>
       </div>
 
-      <!-- 관리자 통계 요약 카드 -->
-      <div class="admin-stat-grid">
-        <div class="admin-stat-card">
-          <div>
-            <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;">전체 등록 칼럼</div>
-            <div class="admin-stat-val" id="statTotalArticles">0</div>
+      <!-- 관리자 탭 전환 네비게이션 바 -->
+      <div class="admin-nav-tabs">
+        <button type="button" class="admin-nav-tab-btn active" id="tabBtnArticles" onclick="switchAdminTab('articles')">
+          <span>✍️</span> 칼럼 & 서재 관리
+        </button>
+        <button type="button" class="admin-nav-tab-btn" id="tabBtnConsults" onclick="switchAdminTab('consults')">
+          <span>📋</span> 1:1 상담 신청 접수 관리
+          <span class="admin-tab-badge" id="adminConsultBadge">0</span>
+        </button>
+      </div>
+
+      <!-- ================= 탭 1: 칼럼 & 서재 관리 영역 ================= -->
+      <div id="adminArticlesTabContent">
+        <!-- 관리자 통계 요약 카드 -->
+        <div class="admin-stat-grid">
+          <div class="admin-stat-card">
+            <div>
+              <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;">전체 등록 칼럼</div>
+              <div class="admin-stat-val" id="statTotalArticles">0</div>
+            </div>
+            <div style="font-size: 1.8rem;">📚</div>
           </div>
-          <div style="font-size: 1.8rem;">📚</div>
+          <div class="admin-stat-card">
+            <div>
+              <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;">메인 전면 노출 중</div>
+              <div class="admin-stat-val" id="statFeaturedArticles" style="color: var(--accent-gold);">0</div>
+            </div>
+            <div style="font-size: 1.8rem;">⭐</div>
+          </div>
+          <div class="admin-stat-card">
+            <div>
+              <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;">서재 보관 목록</div>
+              <div class="admin-stat-val" id="statArchivedArticles" style="color: var(--text-muted);">0</div>
+            </div>
+            <div style="font-size: 1.8rem;">📁</div>
+          </div>
         </div>
-        <div class="admin-stat-card">
-          <div>
-            <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;">메인 전면 노출 중</div>
-            <div class="admin-stat-val" id="statFeaturedArticles" style="color: var(--accent-gold);">0</div>
+
+        <!-- 관리 액션 툴바 (새 글 쓰기, 전체 게시판 열기, 카테고리 필터) -->
+        <div class="admin-action-toolbar">
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="openTistoryEditor()" style="display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; font-size: 0.92rem;">
+              <span>✍️</span> 새 칼럼 작성하기
+            </button>
+            <button class="btn btn-secondary" onclick="openBoardModal()" style="display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; font-size: 0.92rem;" title="전체 게시판 목록으로 이동">
+              <span>📖</span> 전체 서재 게시판 보기
+            </button>
+            <span style="font-size: 0.84rem; color: var(--text-muted);">게시글 클릭 시 본문 및 수정·삭제 메뉴로 바로 연결됩니다</span>
           </div>
-          <div style="font-size: 1.8rem;">⭐</div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <label for="adminFilterCategory" style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);">카테고리:</label>
+            <select id="adminFilterCategory" class="editor-category-select" onchange="renderAdminTable()" style="padding: 6px 12px; font-size: 0.85rem;">
+              <option value="all">전체보기</option>
+              <option value="비움과 갈무리">비움과 갈무리</option>
+              <option value="웰라이프">웰라이프</option>
+              <option value="웰다잉">웰다잉</option>
+            </select>
+          </div>
         </div>
-        <div class="admin-stat-card">
-          <div>
-            <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;">서재 보관 목록</div>
-            <div class="admin-stat-val" id="statArchivedArticles" style="color: var(--text-muted);">0</div>
-          </div>
-          <div style="font-size: 1.8rem;">📁</div>
+
+        <!-- 칼럼 관리 목록 테이블 -->
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width: 135px; text-align: center;">메인 전면 노출</th>
+                <th style="width: 115px;">카테고리</th>
+                <th>칼럼 제목 및 요약</th>
+                <th style="width: 95px;">작성일</th>
+                <th style="width: 215px; text-align: center;">수정 / 보기 / 삭제</th>
+              </tr>
+            </thead>
+            <tbody id="adminArticleTableBody">
+              <!-- JS 동적 렌더링 -->
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top: 18px; font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
+          <span>💡</span>
+          <span>[메인 전면 노출] 버튼을 클릭하면 메인 화면 상단 대문에 띄울 대표 칼럼을 실시간으로 켜고 끌 수 있습니다. (3~4개 권장)</span>
         </div>
       </div>
 
-      <!-- 관리 액션 툴바 (새 글 쓰기, 전체 게시판 열기, 카테고리 필터) -->
-      <div class="admin-action-toolbar">
-        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-          <button class="btn btn-primary" onclick="openTistoryEditor()" style="display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; font-size: 0.92rem;">
-            <span>✍️</span> 새 칼럼 작성하기
-          </button>
-          <button class="btn btn-secondary" onclick="openBoardModal()" style="display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; font-size: 0.92rem;" title="전체 게시판 목록으로 이동">
-            <span>📖</span> 전체 서재 게시판 보기
-          </button>
-          <span style="font-size: 0.84rem; color: var(--text-muted);">게시글 클릭 시 본문 및 수정·삭제 메뉴로 바로 연결됩니다</span>
+      <!-- ================= 탭 2: 1:1 상담 신청 접수 관리 영역 (NEW) ================= -->
+      <div id="adminConsultsTabContent" style="display: none;">
+        <!-- 카테고리별 실시간 신청 통계 카드 (클릭 시 해당 카테고리 즉시 필터) -->
+        <div class="consult-stat-grid">
+          <div class="consult-stat-card active" id="statCardAll" onclick="filterConsultByCategory('all')">
+            <div>
+              <div style="font-size: 0.80rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 2px;">전체 신청</div>
+              <div class="admin-stat-val" id="statConsultTotal" style="font-size: 1.4rem;">0</div>
+            </div>
+            <div style="font-size: 1.6rem;">📋</div>
+          </div>
+          <div class="consult-stat-card" id="statCardBeauty" onclick="filterConsultByCategory('웰니스 & 뷰티')">
+            <div>
+              <div style="font-size: 0.80rem; font-weight: 700; color: #9d174d; margin-bottom: 2px;">💄 뷰티 케어</div>
+              <div class="admin-stat-val" id="statConsultBeauty" style="font-size: 1.4rem; color: #db2777;">0</div>
+            </div>
+            <div style="font-size: 1.6rem;">💄</div>
+          </div>
+          <div class="consult-stat-card" id="statCardWardrobe" onclick="filterConsultByCategory('옷장 정리')">
+            <div>
+              <div style="font-size: 0.80rem; font-weight: 700; color: #3730a3; margin-bottom: 2px;">👗 옷장 & 비움</div>
+              <div class="admin-stat-val" id="statConsultWardrobe" style="font-size: 1.4rem; color: #4f46e5;">0</div>
+            </div>
+            <div style="font-size: 1.6rem;">👗</div>
+          </div>
+          <div class="consult-stat-card" id="statCardBelongings" onclick="filterConsultByCategory('유품 정리')">
+            <div>
+              <div style="font-size: 0.80rem; font-weight: 700; color: #92400e; margin-bottom: 2px;">📦 유품 & 짐정리</div>
+              <div class="admin-stat-val" id="statConsultBelongings" style="font-size: 1.4rem; color: #d97706;">0</div>
+            </div>
+            <div style="font-size: 1.6rem;">📦</div>
+          </div>
+          <div class="consult-stat-card" id="statCardMemoir" onclick="filterConsultByCategory('디지털 자서전')">
+            <div>
+              <div style="font-size: 0.80rem; font-weight: 700; color: #1e40af; margin-bottom: 2px;">✍️ 디지털 자서전</div>
+              <div class="admin-stat-val" id="statConsultMemoir" style="font-size: 1.4rem; color: #2563eb;">0</div>
+            </div>
+            <div style="font-size: 1.6rem;">✍️</div>
+          </div>
         </div>
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <label for="adminFilterCategory" style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);">카테고리:</label>
-          <select id="adminFilterCategory" class="editor-category-select" onchange="renderAdminTable()" style="padding: 6px 12px; font-size: 0.85rem;">
-            <option value="all">전체보기</option>
-            <option value="비움과 갈무리">비움과 갈무리</option>
-            <option value="웰라이프">웰라이프</option>
-            <option value="웰다잉">웰다잉</option>
-          </select>
-        </div>
-      </div>
 
-      <!-- 칼럼 관리 목록 테이블 -->
-      <div class="admin-table-wrap">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th style="width: 135px; text-align: center;">메인 전면 노출</th>
-              <th style="width: 115px;">카테고리</th>
-              <th>칼럼 제목 및 요약</th>
-              <th style="width: 95px;">작성일</th>
-              <th style="width: 215px; text-align: center;">수정 / 보기 / 삭제</th>
-            </tr>
-          </thead>
-          <tbody id="adminArticleTableBody">
-            <!-- JS 동적 렌더링 -->
-          </tbody>
-        </table>
-      </div>
-      <div style="margin-top: 18px; font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
-        <span>💡</span>
-        <span>[메인 전면 노출] 버튼을 클릭하면 메인 화면 상단 대문에 띄울 대표 칼럼을 실시간으로 켜고 끌 수 있습니다. (3~4개 권장)</span>
+        <!-- 상담 관리 툴바 -->
+        <div class="admin-action-toolbar">
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <label for="adminConsultFilterCat" style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);">카테고리:</label>
+            <select id="adminConsultFilterCat" class="editor-category-select" onchange="renderConsultAdminTable()" style="padding: 6px 10px; font-size: 0.85rem;">
+              <option value="all">전체 카테고리</option>
+              <option value="웰니스 & 뷰티">💄 웰니스 & 뷰티 케어</option>
+              <option value="옷장 정리">👗 일상과 비움의 미학</option>
+              <option value="유품 정리">📦 오래된 짐 및 유품 정리</option>
+              <option value="디지털 자서전">✍️ 내 인생의 디지털 자서전</option>
+              <option value="기타">🌿 기타 / 라이프 컨시어지</option>
+            </select>
+
+            <label for="adminConsultFilterStatus" style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); margin-left: 6px;">진행상태:</label>
+            <select id="adminConsultFilterStatus" class="editor-category-select" onchange="renderConsultAdminTable()" style="padding: 6px 10px; font-size: 0.85rem;">
+              <option value="all">전체 상태</option>
+              <option value="대기">🟡 접수 대기</option>
+              <option value="진행">🔵 상담 진행 중</option>
+              <option value="완료">🟢 상담 완료</option>
+            </select>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="exportConsultToCSV()" style="padding: 7px 14px; font-size: 0.86rem; display: inline-flex; align-items: center; gap: 5px;">
+              <span>📥</span> 엑셀(CSV) 저장
+            </button>
+            <button class="btn btn-primary" onclick="openManualConsultModal()" style="padding: 7px 14px; font-size: 0.86rem; display: inline-flex; align-items: center; gap: 5px;">
+              <span>➕</span> 상담 직접 등록
+            </button>
+          </div>
+        </div>
+
+        <!-- 상담 신청 접수 테이블 -->
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width: 100px;">접수일시</th>
+                <th style="width: 140px;">상담 카테고리</th>
+                <th style="width: 100px; text-align: center;">신청 구분</th>
+                <th style="width: 160px;">연락처 (전화걸기)</th>
+                <th>상담 메모 / 궁금한 점</th>
+                <th style="width: 130px; text-align: center;">진행 상태</th>
+                <th style="width: 70px; text-align: center;">삭제</th>
+              </tr>
+            </thead>
+            <tbody id="adminConsultTableBody">
+              <!-- JS 동적 렌더링 -->
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top: 18px; font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
+          <span>💡</span>
+          <span>전화번호를 클릭하면 스마트폰에서 바로 고객에게 통화가 연결됩니다. 진행 상태를 [상담 진행 중] 또는 [상담 완료]로 실시간 변경할 수 있습니다.</span>
+        </div>
       </div>
     </div>
   </div>
@@ -4038,16 +4622,140 @@
       }
     }
 
-    // 진단 결과에서 상담 신청 시 테마명과 함께 안내
+    // ================= 시니어 맞춤형 원터치 안심 상담 모달 제어 =================
+    let selectedConsultCategory = '🌿 1:1 방문 맞춤 케어';
+    let selectedConsultRole = '본인 어르신';
+
+    // 진단 결과에서 상담 신청 시 호출
     function requestConsultationFromDiag() {
       const topicName = selectedDiagType && DIAGNOSIS_SOLUTIONS[selectedDiagType]
         ? `${DIAGNOSIS_SOLUTIONS[selectedDiagType].badge}`
-        : '맞춤형 라이프 리셋';
+        : '🌿 1:1 방문 맞춤 케어';
       
-      const phoneOrEmail = prompt(`🌿 ${topicName} 1:1 방문 맞춤 상담 신청\n\n상담 받으실 연락처(휴대전화 번호)를 입력해 주시면, 전담 전문 코칭스태프가 24시간 이내에 따뜻하게 안내 연락드립니다:`);
-      if (phoneOrEmail && phoneOrEmail.trim()) {
-        alert(`감사합니다! ${topicName} 무료 맞춤 상담 신청이 정상 접수되었습니다.\n(연락처: ${phoneOrEmail.trim()})\n\n담당 코칭스태프가 곧 정성껏 안내해 드리겠습니다.`);
+      openSeniorConsultModal(topicName, `${topicName} 맞춤형 방문 솔루션 상담 희망`);
+    }
+
+    // 디지털 자서전 1:1 맞춤 상담 신청 인터랙션
+    function openMemoirConsultModal() {
+      openSeniorConsultModal('✍️ 내 인생의 디지털 자서전', '자서전 30일 워크북 및 제작 상담 희망');
+    }
+
+    // 시니어 모달 열기
+    function openSeniorConsultModal(category, defaultNote) {
+      selectedConsultCategory = category || '🌿 1:1 방문 맞춤 케어';
+      selectedConsultRole = '본인 어르신';
+
+      const badge = document.getElementById('seniorModalCategoryBadge');
+      if (badge) badge.textContent = selectedConsultCategory;
+
+      const headline = document.getElementById('seniorModalHeadline');
+      if (headline) {
+        const cleanTitle = selectedConsultCategory.replace(/^[^\w가-힣\s]+/, '').trim();
+        headline.textContent = cleanTitle + ' 1:1 방문 맞춤 상담';
       }
+
+      const phoneInput = document.getElementById('seniorPhoneInput');
+      if (phoneInput) phoneInput.value = '';
+
+      const noteInput = document.getElementById('seniorNoteInput');
+      if (noteInput) noteInput.value = defaultNote || '';
+
+      selectConsultRole('본인 어르신');
+
+      const modal = document.getElementById('seniorConsultModal');
+      if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeSeniorConsultModal() {
+      const modal = document.getElementById('seniorConsultModal');
+      if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function closeSeniorConsultOnOverlay(e) {
+      if (e.target.id === 'seniorConsultModal') {
+        closeSeniorConsultModal();
+      }
+    }
+
+    // 신청자 역할 선택 (어르신 본인 / 자녀 대리)
+    function selectConsultRole(role) {
+      selectedConsultRole = role;
+      const btnSelf = document.getElementById('roleBtnSelf');
+      const btnFamily = document.getElementById('roleBtnFamily');
+      if (btnSelf && btnFamily) {
+        if (role === '본인 어르신') {
+          btnSelf.classList.add('active');
+          btnFamily.classList.remove('active');
+        } else {
+          btnFamily.classList.add('active');
+          btnSelf.classList.remove('active');
+        }
+      }
+    }
+
+    // 전화번호 자동 하이픈 포맷팅
+    function formatPhoneNumber(input) {
+      let val = input.value.replace(/[^0-9]/g, '');
+      if (val.length < 4) {
+        input.value = val;
+      } else if (val.length < 7) {
+        input.value = val.substr(0, 3) + ' - ' + val.substr(3);
+      } else if (val.length < 11) {
+        input.value = val.substr(0, 3) + ' - ' + val.substr(3, 3) + ' - ' + val.substr(6);
+      } else {
+        input.value = val.substr(0, 3) + ' - ' + val.substr(3, 4) + ' - ' + val.substr(7, 4);
+      }
+    }
+
+    // 카카오톡 문의 알림
+    function openKakaoConsult() {
+      alert('💬 [여백과 결] 카카오톡 1:1 상담 채널\n\n카카오톡 채널 연동 준비 중입니다.\n지금은 [📞 전화로 바로 묻기] 버튼을 누르시거나 아래 [전화번호]를 남겨주시면 가장 빠르게 정성껏 연락드립니다!');
+    }
+
+    // 시니어 안심 상담 제출 처리
+    function handleSeniorConsultSubmit(e) {
+      e.preventDefault();
+      const phoneInput = document.getElementById('seniorPhoneInput');
+      const noteInput = document.getElementById('seniorNoteInput');
+      const phoneVal = phoneInput ? phoneInput.value.trim() : '';
+      const noteVal = noteInput ? noteInput.value.trim() : '';
+
+      const cleanNumbers = phoneVal.replace(/[^0-9]/g, '');
+      if (cleanNumbers.length < 9) {
+        alert('전화번호를 다시 한번 확인해 주세요.\n(예: 010-1234-5678)');
+        if (phoneInput) phoneInput.focus();
+        return;
+      }
+
+      const now = new Date();
+      const dateStr = `${now.getMonth() + 1}/${now.getDate()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+      const newRecord = {
+        id: 'cs_' + Date.now(),
+        category: selectedConsultCategory,
+        role: selectedConsultRole,
+        phone: phoneVal,
+        note: noteVal || '상담 요청',
+        status: '대기',
+        createdAt: dateStr
+      };
+
+      const list = getConsultList();
+      list.unshift(newRecord);
+      saveConsultList(list);
+
+      // 알림 및 모달 닫기
+      alert(`🌸 상담 신청이 정상 접수되었습니다!\n\n[상담 주제: ${selectedConsultCategory}]\n[신청 구분: ${selectedConsultRole}]\n[연락처: ${phoneVal}]\n\n회원가입 없이도 안심하세요!\n전담 코칭팀이 24시간 이내에 따뜻한 목소리로 편안하게 연락드리겠습니다.`);
+      closeSeniorConsultModal();
+
+      // 관리자 화면이 열려있다면 갱신
+      renderConsultAdminTable();
     }
 
     // 다른 주제 다시 선택하기
@@ -4061,14 +4769,6 @@
       const grid = document.getElementById('diagCardsGrid');
       if (grid) {
         grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
-
-    // 디지털 자서전 1:1 맞춤 상담 신청 인터랙션
-    function openMemoirConsultModal() {
-      const phoneOrEmail = prompt(`✍️ 세상에 단 하나뿐인 [내 인생의 디지털 자서전] 제작 상담 신청\n\n상담 받으실 연락처(휴대전화 번호)를 입력해 주시면, 자서전 전담 전문 에디터가 24시간 이내에 '30일 서사 워크북 안내'와 함께 따뜻하게 안내 연락드립니다:`);
-      if (phoneOrEmail && phoneOrEmail.trim()) {
-        alert(`감사합니다! [내 인생의 디지털 자서전] 1:1 방문 맞춤 제작 상담 신청이 정상 접수되었습니다.\n(연락처: ${phoneOrEmail.trim()})\n\n전문 작가와 전담 에디터가 곧 정성껏 안내해 드리겠습니다.`);
       }
     }
 
@@ -4623,6 +5323,7 @@
     // ================= 관리자 홈 대시보드 모달 제어 =================
     function openAdminDashboardModal() {
       renderAdminDashboard();
+      renderConsultAdminTable();
       const modal = document.getElementById('adminDashboardModal');
       if (modal) {
         modal.classList.add('open');
@@ -5295,7 +5996,322 @@
       }
       if (isAdminLoggedIn()) {
         renderAdminDashboard();
+        renderConsultAdminTable();
       }
+    }
+
+    // ================= 관리자 콘솔: 1:1 상담 신청 접수 관리 시스템 =================
+    const CONSULT_STORAGE_KEY = 'reset_consult_list';
+
+    // 관리자 탭 전환 (칼럼 관리 vs 상담 접수 관리)
+    function switchAdminTab(tabName) {
+      const tabArticles = document.getElementById('tabBtnArticles');
+      const tabConsults = document.getElementById('tabBtnConsults');
+      const contentArticles = document.getElementById('adminArticlesTabContent');
+      const contentConsults = document.getElementById('adminConsultsTabContent');
+
+      if (tabName === 'articles') {
+        if (tabArticles) tabArticles.classList.add('active');
+        if (tabConsults) tabConsults.classList.remove('active');
+        if (contentArticles) contentArticles.style.display = 'block';
+        if (contentConsults) contentConsults.style.display = 'none';
+        renderAdminDashboard();
+      } else {
+        if (tabArticles) tabArticles.classList.remove('active');
+        if (tabConsults) tabConsults.classList.add('active');
+        if (contentArticles) contentArticles.style.display = 'none';
+        if (contentConsults) contentConsults.style.display = 'block';
+        renderConsultAdminTable();
+      }
+    }
+
+    // 상담 목록 로컬스토리지 로드 (초기 데이터 없으면 기본 4건 샘플 주입)
+    function getConsultList() {
+      const stored = localStorage.getItem(CONSULT_STORAGE_KEY);
+      if (stored) {
+        try {
+          return JSON.parse(stored);
+        } catch (e) {
+          console.error('상담 목록 파싱 실패:', e);
+        }
+      }
+      // 초기 기본 샘플 데이터 (카테고리별 현황 확인용)
+      const defaultSamples = [
+        {
+          id: 'cs_sample_1',
+          category: '💄 웰니스 & 뷰티 케어',
+          role: '본인 어르신',
+          phone: '010 - 3841 - 9210',
+          note: '거동이 다소 불편하여 집으로 찾아오는 메이크업 코디 상담 희망',
+          status: '대기',
+          createdAt: '09/25 14:20'
+        },
+        {
+          id: 'cs_sample_2',
+          category: '👗 일상과 비움의 미학',
+          role: '자녀 / 가족 대리',
+          phone: '010 - 8271 - 6453',
+          note: '어머니 댁 옷장 정리 및 수납 코칭 문의 (따님이 대신 신청)',
+          status: '진행',
+          createdAt: '09/25 11:05'
+        },
+        {
+          id: 'cs_sample_3',
+          category: '📦 오래된 짐 및 유품 정리',
+          role: '본인 어르신',
+          phone: '010 - 5192 - 3301',
+          note: '서재 오래된 책과 서류들 비우기 방문 견적 요청',
+          status: '대기',
+          createdAt: '09/24 16:40'
+        },
+        {
+          id: 'cs_sample_4',
+          category: '✍️ 내 인생의 디지털 자서전',
+          role: '본인 어르신',
+          phone: '010 - 9944 - 1234',
+          note: '30일 서사 워크북 및 가족 기념 자서전 출판 상담 희망',
+          status: '완료',
+          createdAt: '09/24 10:15'
+        }
+      ];
+      localStorage.setItem(CONSULT_STORAGE_KEY, JSON.stringify(defaultSamples));
+      return defaultSamples;
+    }
+
+    function saveConsultList(list) {
+      localStorage.setItem(CONSULT_STORAGE_KEY, JSON.stringify(list));
+      updateConsultBadges();
+    }
+
+    // 카테고리 카드 클릭 시 빠른 필터링
+    function filterConsultByCategory(catName) {
+      const select = document.getElementById('adminConsultFilterCat');
+      if (select) {
+        select.value = catName;
+        renderConsultAdminTable();
+      }
+    }
+
+    // 카테고리별 CSS 배지 클래스 반환
+    function getConsultCategoryClass(cat) {
+      if (!cat) return 'cat-general';
+      if (cat.includes('뷰티') || cat.includes('외출')) return 'cat-beauty';
+      if (cat.includes('옷장') || cat.includes('미학')) return 'cat-wardrobe';
+      if (cat.includes('유품') || cat.includes('짐')) return 'cat-belongings';
+      if (cat.includes('자서전')) return 'cat-memoir';
+      return 'cat-general';
+    }
+
+    // 상담 관리 테이블 렌더링 및 카테고리별 통계 집계
+    function renderConsultAdminTable() {
+      const tbody = document.getElementById('adminConsultTableBody');
+      const list = getConsultList();
+
+      // 1. 카테고리별 실시간 통계 카운트
+      let totalCount = list.length;
+      let beautyCount = 0;
+      let wardrobeCount = 0;
+      let belongingsCount = 0;
+      let memoirCount = 0;
+      let waitingCount = 0;
+
+      list.forEach(c => {
+        const cat = c.category || '';
+        if (cat.includes('뷰티') || cat.includes('외출')) beautyCount++;
+        else if (cat.includes('옷장') || cat.includes('미학')) wardrobeCount++;
+        else if (cat.includes('유품') || cat.includes('짐')) belongingsCount++;
+        else if (cat.includes('자서전')) memoirCount++;
+
+        if (c.status === '대기') waitingCount++;
+      });
+
+      // 통계 카드 숫자 갱신
+      const statTotal = document.getElementById('statConsultTotal');
+      const statBeauty = document.getElementById('statConsultBeauty');
+      const statWardrobe = document.getElementById('statConsultWardrobe');
+      const statBelongings = document.getElementById('statConsultBelongings');
+      const statMemoir = document.getElementById('statConsultMemoir');
+      const badge = document.getElementById('adminConsultBadge');
+
+      if (statTotal) statTotal.textContent = `${totalCount}건`;
+      if (statBeauty) statBeauty.textContent = `${beautyCount}건`;
+      if (statWardrobe) statWardrobe.textContent = `${wardrobeCount}건`;
+      if (statBelongings) statBelongings.textContent = `${belongingsCount}건`;
+      if (statMemoir) statMemoir.textContent = `${memoirCount}건`;
+      if (badge) badge.textContent = waitingCount;
+
+      // 2. 필터링 (카테고리 & 진행상태)
+      const catFilterEl = document.getElementById('adminConsultFilterCat');
+      const statusFilterEl = document.getElementById('adminConsultFilterStatus');
+      const selectedCat = catFilterEl ? catFilterEl.value : 'all';
+      const selectedStatus = statusFilterEl ? statusFilterEl.value : 'all';
+
+      // 상단 카테고리 카드 active 상태 반영
+      document.querySelectorAll('.consult-stat-card').forEach(card => card.classList.remove('active'));
+      if (selectedCat === 'all') {
+        const c = document.getElementById('statCardAll');
+        if (c) c.classList.add('active');
+      } else if (selectedCat.includes('뷰티')) {
+        const c = document.getElementById('statCardBeauty');
+        if (c) c.classList.add('active');
+      } else if (selectedCat.includes('옷장')) {
+        const c = document.getElementById('statCardWardrobe');
+        if (c) c.classList.add('active');
+      } else if (selectedCat.includes('유품')) {
+        const c = document.getElementById('statCardBelongings');
+        if (c) c.classList.add('active');
+      } else if (selectedCat.includes('자서전')) {
+        const c = document.getElementById('statCardMemoir');
+        if (c) c.classList.add('active');
+      }
+
+      const filtered = list.filter(item => {
+        let matchCat = true;
+        if (selectedCat !== 'all') {
+          matchCat = (item.category || '').includes(selectedCat);
+        }
+        let matchStatus = true;
+        if (selectedStatus !== 'all') {
+          matchStatus = item.status === selectedStatus;
+        }
+        return matchCat && matchStatus;
+      });
+
+      if (!tbody) return;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align: center; padding: 40px 16px; color: var(--text-muted);">
+              해당 조건의 상담 신청 내역이 없습니다.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(item => {
+        const catClass = getConsultCategoryClass(item.category);
+        const statusClass = item.status === '대기' ? 'status-waiting' : (item.status === '진행' ? 'status-processing' : 'status-done');
+        const cleanPhone = (item.phone || '').replace(/[^0-9]/g, '');
+
+        return `
+          <tr>
+            <td style="font-size: 0.85rem; color: var(--text-muted); white-space: nowrap;">
+              ${escapeHtml(item.createdAt || '')}
+            </td>
+            <td>
+              <span class="consult-cat-badge ${catClass}">
+                ${escapeHtml(item.category)}
+              </span>
+            </td>
+            <td style="text-align: center; font-size: 0.88rem; font-weight: 700; color: var(--text-secondary); white-space: nowrap;">
+              ${item.role === '본인 어르신' ? '👴 본인' : '👨‍👩‍👧 가족대리'}
+            </td>
+            <td style="white-space: nowrap;">
+              <a href="tel:${cleanPhone}" title="클릭 시 전화 연결" style="color: var(--accent); font-weight: 850; font-size: 0.95rem; text-decoration: underline; display: inline-flex; align-items: center; gap: 4px;">
+                <span>📞</span> ${escapeHtml(item.phone)}
+              </a>
+            </td>
+            <td style="font-size: 0.90rem; color: var(--text-primary); line-height: 1.45; word-break: keep-all;">
+              ${escapeHtml(item.note || '상담 신청')}
+            </td>
+            <td style="text-align: center; white-space: nowrap;">
+              <select class="consult-status-select ${statusClass}" onchange="updateConsultStatus('${item.id}', this.value)">
+                <option value="대기" ${item.status === '대기' ? 'selected' : ''}>🟡 접수대기</option>
+                <option value="진행" ${item.status === '진행' ? 'selected' : ''}>🔵 상담중</option>
+                <option value="완료" ${item.status === '완료' ? 'selected' : ''}>🟢 완료</option>
+              </select>
+            </td>
+            <td style="text-align: center; white-space: nowrap;">
+              <button onclick="deleteConsult('${item.id}')" title="삭제" style="background: none; border: none; font-size: 1.1rem; cursor: pointer; opacity: 0.6; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+                🗑️
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // 상담 진행 상태 실시간 변경
+    function updateConsultStatus(id, newStatus) {
+      const list = getConsultList();
+      const target = list.find(item => item.id === id);
+      if (target) {
+        target.status = newStatus;
+        saveConsultList(list);
+        renderConsultAdminTable();
+      }
+    }
+
+    // 상담 내역 삭제
+    function deleteConsult(id) {
+      if (!confirm('정말 이 상담 신청 내역을 삭제하시겠습니까?')) return;
+      let list = getConsultList();
+      list = list.filter(item => item.id !== id);
+      saveConsultList(list);
+      renderConsultAdminTable();
+    }
+
+    // 관리자 직접 상담 등록
+    function openManualConsultModal() {
+      const cat = prompt('상담 카테고리를 선택하거나 입력하세요:\n(예: 웰니스 & 뷰티 / 옷장 정리 / 유품 정리 / 디지털 자서전)', '💄 웰니스 & 뷰티 케어');
+      if (!cat) return;
+      const phone = prompt('고객 전화번호를 입력하세요:', '010-');
+      if (!phone) return;
+      const note = prompt('상담 내용 및 메모를 입력하세요:', '유선 인바운드 전화 상담 접수');
+
+      const now = new Date();
+      const dateStr = `${now.getMonth() + 1}/${now.getDate()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+      const newRecord = {
+        id: 'cs_' + Date.now(),
+        category: cat.trim(),
+        role: '본인 어르신',
+        phone: phone.trim(),
+        note: note ? note.trim() : '관리자 수기 등록',
+        status: '진행',
+        createdAt: dateStr
+      };
+
+      const list = getConsultList();
+      list.unshift(newRecord);
+      saveConsultList(list);
+      renderConsultAdminTable();
+      alert('상담 내역이 등록되었습니다.');
+    }
+
+    // 상담 목록 엑셀(CSV) 다운로드
+    function exportConsultToCSV() {
+      const list = getConsultList();
+      if (!list.length) {
+        alert('내보낼 상담 신청 데이터가 없습니다.');
+        return;
+      }
+
+      let csvContent = '\uFEFF접수일시,카테고리,신청구분,연락처,진행상태,메모\n';
+      list.forEach(item => {
+        const cleanNote = (item.note || '').replace(/"/g, '""');
+        csvContent += `"${item.createdAt}","${item.category}","${item.role}","${item.phone}","${item.status}","${cleanNote}"\n`;
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      const now = new Date();
+      const filename = `여백과결_상담신청현황_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}.csv`;
+      link.setAttribute('href', url);
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function updateConsultBadges() {
+      const list = getConsultList();
+      const waiting = list.filter(item => item.status === '대기').length;
+      const badge = document.getElementById('adminConsultBadge');
+      if (badge) badge.textContent = waiting;
     }
 
     // 에디터 본문 커서 위치 리스너 등록
@@ -5307,6 +6323,7 @@
       }
       renderFeaturedMagazine();
       updateAdminUI();
+      updateConsultBadges();
     });
 
     // 외부 클릭 시 서식 팝업 닫기
@@ -5324,6 +6341,7 @@
     // 즉시 실행
     renderFeaturedMagazine();
     updateAdminUI();
+    updateConsultBadges();
   </script>
 </body>
 </html>
