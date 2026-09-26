@@ -474,9 +474,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(4px);
-      z-index: 199;
+      z-index: 1200;
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -490,31 +490,49 @@
     .mobile-drawer {
       position: fixed;
       top: 0;
-      right: -300px;
-      width: 280px;
+      right: -340px;
+      width: min(320px, 84vw);
       height: 100vh;
       background: var(--bg-card);
       border-left: 1px solid var(--border-color);
-      box-shadow: var(--shadow-lg);
-      z-index: 200;
-      padding: 30px 24px;
+      box-shadow: -6px 0 28px rgba(0, 0, 0, 0.22);
+      z-index: 1210;
+      padding: 24px 18px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: right 0.3s ease;
+      transition: right 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .mobile-drawer.open {
       right: 0;
     }
 
+    /* 드로어 오픈 시 바디 스크롤 방지 및 카톡 플로팅 버튼 숨김 */
+    body.drawer-open {
+      overflow: hidden;
+    }
+    body.drawer-open .kakao-float-btn {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
     .drawer-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-bottom: 20px;
+      padding-bottom: 16px;
       border-bottom: 1px solid var(--border-color);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
+    }
+
+    .drawer-title-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .drawer-title {
@@ -525,46 +543,158 @@
     }
 
     .drawer-close {
-      background: none;
-      border: none;
-      font-size: 1.4rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
       cursor: pointer;
       color: var(--text-muted);
-      padding: 4px;
+      transition: var(--transition);
+    }
+    .drawer-close:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-color: var(--accent);
     }
 
     .drawer-nav-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
     }
 
     .drawer-nav-item {
-      font-size: 1.02rem;
+      font-size: 0.98rem;
       font-weight: 600;
       color: var(--text-primary);
-      padding: 10px 14px;
+      padding: 11px 14px;
       border-radius: 10px;
       transition: var(--transition);
       display: flex;
       align-items: center;
       justify-content: space-between;
+      text-decoration: none;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
     }
 
-    .drawer-nav-item:hover {
+    .drawer-nav-item:hover,
+    .drawer-nav-item:active {
       background: var(--accent-light);
       color: var(--accent);
+      border-color: var(--accent);
+      transform: translateX(-2px);
+    }
+
+    .drawer-item-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.96rem;
+    }
+
+    .drawer-icon {
+      font-size: 1.18rem;
+      line-height: 1;
+      width: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .drawer-arrow {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    .drawer-badge {
+      font-size: 0.72rem;
+      font-weight: 750;
+      padding: 3px 8px;
+      border-radius: 999px;
+      line-height: 1.2;
+      flex-shrink: 0;
+      margin-left: 6px;
+    }
+
+    .badge-accent {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .badge-memoir {
+      background: #c25946;
+      color: #fff;
+    }
+
+    .badge-academy {
+      background: #296299;
+      color: #fff;
+    }
+
+    .badge-room {
+      background: var(--accent-gold);
+      color: #fff;
+    }
+
+    .drawer-item-highlight {
+      background: var(--accent-light) !important;
+      color: var(--accent) !important;
+      border-color: var(--accent) !important;
+      font-weight: 800;
+    }
+
+    .drawer-item-memoir {
+      background: rgba(184, 80, 66, 0.08) !important;
+      color: #9c3b28 !important;
+      border-color: #c25946 !important;
+      font-weight: 800;
+    }
+
+    .drawer-item-academy {
+      background: rgba(41, 98, 153, 0.08) !important;
+      color: #1e5a8f !important;
+      border-color: #296299 !important;
+      font-weight: 800;
+    }
+
+    .drawer-item-room {
+      background: rgba(194, 155, 56, 0.1) !important;
+      color: #8c6610 !important;
+      border-color: var(--accent-gold) !important;
+      font-weight: 800;
     }
 
     .drawer-login-btn {
-      margin-top: 8px;
-      background: var(--accent);
+      margin-top: 10px;
+      background: var(--accent) !important;
       color: #fff !important;
+      border-color: var(--accent) !important;
       text-align: center;
       justify-content: center;
       padding: 12px;
       border-radius: 12px;
-      font-weight: 700;
+      font-weight: 750;
+      box-shadow: 0 4px 14px rgba(43, 90, 66, 0.28);
+    }
+    .drawer-login-btn:hover {
+      background: var(--accent-hover) !important;
+      color: #fff !important;
+    }
+
+    .drawer-footer-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      padding-top: 14px;
+      line-height: 1.5;
     }
 
     /* -------------------- 로그인 모달 팝업 -------------------- */
@@ -3882,12 +4012,100 @@
       height: 20px;
       flex-shrink: 0;
     }
+    /* -------------------- 메인페이지 모바일 전용 하단 고정 퀵 내비게이션 바 -------------------- */
+    .main-mobile-bottom-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 58px;
+      background: var(--bg-card);
+      border-top: 1.5px solid var(--border-color);
+      z-index: 998;
+      box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.08);
+      align-items: center;
+      justify-content: space-around;
+      padding: 4px 6px;
+      padding-bottom: max(4px, env(safe-area-inset-bottom));
+      box-sizing: border-box;
+    }
+
+    .bottom-nav-item {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      height: 100%;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.68rem;
+      font-weight: 650;
+      gap: 3px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      padding: 2px 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .bottom-nav-item:active,
+    .bottom-nav-item.active {
+      color: var(--accent);
+    }
+
+    .bottom-nav-icon {
+      font-size: 1.22rem;
+      line-height: 1;
+      display: block;
+      transition: transform 0.18s ease;
+    }
+
+    .bottom-nav-item:active .bottom-nav-icon {
+      transform: scale(1.15);
+    }
+
+    .bottom-nav-back {
+      color: var(--text-primary);
+      font-weight: 750;
+    }
+    .bottom-nav-back .bottom-nav-icon {
+      font-weight: 900;
+      color: var(--accent);
+    }
+
+    .bottom-nav-highlight {
+      color: var(--accent);
+      font-weight: 750;
+    }
+    .bottom-nav-highlight .bottom-nav-icon {
+      filter: drop-shadow(0 2px 4px rgba(43, 90, 66, 0.35));
+    }
+
+    .bottom-nav-academy {
+      color: #1e5a8f;
+      font-weight: 750;
+    }
+    .bottom-nav-academy .bottom-nav-icon {
+      filter: drop-shadow(0 2px 4px rgba(30, 90, 143, 0.35));
+    }
+
     @media (max-width: 768px) {
+      .main-mobile-bottom-bar {
+        display: flex;
+      }
+      body {
+        padding-bottom: 64px; /* 모바일 하단 내비게이션 바 가림 방지 */
+      }
       .kakao-float-btn {
-        bottom: 20px;
-        right: 20px;
-        padding: 10px 16px;
-        font-size: 0.88rem;
+        bottom: 74px !important;
+        right: 14px !important;
+        padding: 9px 14px !important;
+        font-size: 0.82rem !important;
       }
     }
   </style>
@@ -3983,37 +4201,76 @@
 
   <!-- 모바일 슬라이드 드로어 메뉴 -->
   <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="closeMobileDrawer()"></div>
-  <aside class="mobile-drawer" id="mobileDrawer">
+  <aside class="mobile-drawer" id="mobileDrawer" aria-label="모바일 전체 메뉴">
     <div>
       <div class="drawer-header">
-        <span class="drawer-title">여백과 결</span>
+        <div class="drawer-title-group">
+          <span style="font-size: 1.25rem; line-height: 1;">🌿</span>
+          <span class="drawer-title">여백과 결</span>
+        </div>
         <button class="drawer-close" onclick="closeMobileDrawer()" aria-label="메뉴 닫기">✕</button>
       </div>
       <nav class="drawer-nav-list">
-        <a href="#home" class="drawer-nav-item" onclick="closeMobileDrawer()">🏠 <strong>홈</strong></a>
-        <a href="#magazine" class="drawer-nav-item" onclick="closeMobileDrawer()">📖 <strong>여백의 서재</strong></a>
-        <a href="#lounge" class="drawer-nav-item" onclick="closeMobileDrawer()">💬 <strong>오늘의 비움 한 줄</strong></a>
-        <a href="#test" class="drawer-nav-item" onclick="closeMobileDrawer()" style="background: var(--accent-light); color: var(--accent); border: 1.5px solid var(--accent); font-weight: 850;">
-          <span>🎯 <strong>1분 자가진단</strong></span>
-          <span style="font-size: 0.72rem; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 999px;">무료진단</span>
+        <a href="#home" class="drawer-nav-item" onclick="closeMobileDrawer()">
+          <div class="drawer-item-left">
+            <span class="drawer-icon">🏠</span>
+            <span>홈 (처음으로)</span>
+          </div>
+          <span class="drawer-arrow">›</span>
         </a>
-        <a href="#memoir" class="drawer-nav-item" onclick="closeMobileDrawer()" style="background: rgba(184, 80, 66, 0.12); color: #9c3b28; border: 1.5px solid #c25946; font-weight: 850;">
-          <span>✍️ <strong>디지털 자서전</strong></span>
-          <span style="font-size: 0.72rem; background: #c25946; color: #fff; padding: 2px 8px; border-radius: 999px;">자서전</span>
+        <a href="#magazine" class="drawer-nav-item" onclick="closeMobileDrawer()">
+          <div class="drawer-item-left">
+            <span class="drawer-icon">📖</span>
+            <span>여백의 서재</span>
+          </div>
+          <span class="drawer-arrow">›</span>
         </a>
-        <a href="academy.html" class="drawer-nav-item" style="background: rgba(41, 98, 153, 0.12); color: #1e5a8f; border: 1.5px solid #296299; font-weight: 850;">
-          <span>🎓 <strong>코치 아카데미</strong></span>
-          <span style="font-size: 0.72rem; background: #296299; color: #fff; padding: 2px 8px; border-radius: 999px;">자격과정</span>
+        <a href="#lounge" class="drawer-nav-item" onclick="closeMobileDrawer()">
+          <div class="drawer-item-left">
+            <span class="drawer-icon">💬</span>
+            <span>오늘의 비움 한 줄</span>
+          </div>
+          <span class="drawer-arrow">›</span>
         </a>
-        <a href="javascript:void(0)" class="drawer-nav-item" style="background: rgba(194, 155, 56, 0.14); color: #8c6610; border: 1.5px solid var(--accent-gold); font-weight: 850;" onclick="closeMobileDrawer(); openLoginModal(event); return false;">
-          <span>🏛️ <strong>나의 고유한 서재</strong></span>
-          <span style="font-size: 0.72rem; background: var(--accent-gold); color: #fff; padding: 2px 8px; border-radius: 999px;">온라인룸</span>
+        <a href="#test" class="drawer-nav-item drawer-item-highlight" onclick="closeMobileDrawer()">
+          <div class="drawer-item-left">
+            <span class="drawer-icon">🎯</span>
+            <span>1분 자가진단</span>
+          </div>
+          <span class="drawer-badge badge-accent">무료진단</span>
         </a>
-        <a href="#login" class="drawer-nav-item drawer-login-btn" onclick="closeMobileDrawer(); openLoginModal(event)">👤 <strong>로그인</strong></a>
+        <a href="#memoir" class="drawer-nav-item drawer-item-memoir" onclick="closeMobileDrawer()">
+          <div class="drawer-item-left">
+            <span class="drawer-icon">✍️</span>
+            <span>디지털 자서전</span>
+          </div>
+          <span class="drawer-badge badge-memoir">자서전</span>
+        </a>
+        <a href="academy.html" class="drawer-nav-item drawer-item-academy">
+          <div class="drawer-item-left">
+            <span class="drawer-icon">🎓</span>
+            <span>코치 아카데미</span>
+          </div>
+          <span class="drawer-badge badge-academy">자격과정</span>
+        </a>
+        <a href="javascript:void(0)" class="drawer-nav-item drawer-item-room" onclick="closeMobileDrawer(); openLoginModal(event); return false;">
+          <div class="drawer-item-left">
+            <span class="drawer-icon">🏛️</span>
+            <span>나의 고유한 서재</span>
+          </div>
+          <span class="drawer-badge badge-room">온라인룸</span>
+        </a>
+        <a href="#login" class="drawer-nav-item drawer-login-btn" onclick="closeMobileDrawer(); openLoginModal(event)">
+          <div class="drawer-item-left" style="justify-content: center; width: 100%;">
+            <span class="drawer-icon">👤</span>
+            <span>로그인 / 회원서재</span>
+          </div>
+        </a>
       </nav>
     </div>
-    <div style="font-size: 0.82rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 16px;">
-      삶의 결을 다듬는 따뜻한 리셋 아카이브
+    <div class="drawer-footer-note">
+      <div style="font-weight: 750; color: var(--text-primary); margin-bottom: 3px;">여백과 결 · 리셋 아카이브</div>
+      삶의 결을 다듬는 따뜻한 마음 쉼터
     </div>
   </aside>
 
@@ -4667,6 +4924,30 @@
       </div>
     </div>
   </footer>
+
+  <!-- ================= 메인페이지 모바일 전용 하단 고정 퀵 내비게이션 바 ================= -->
+  <nav class="main-mobile-bottom-bar" id="mainMobileBottomBar" aria-label="모바일 하단 내비게이션 바">
+    <button type="button" class="bottom-nav-item bottom-nav-back" onclick="handleSmartGoBack()" aria-label="이전 화면 또는 위로 가기" title="이전으로 돌아가기">
+      <span class="bottom-nav-icon">←</span>
+      <span class="bottom-nav-label">이전</span>
+    </button>
+    <a href="#home" class="bottom-nav-item" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" aria-label="메인 홈 최상단으로 이동">
+      <span class="bottom-nav-icon">🏠</span>
+      <span class="bottom-nav-label">홈</span>
+    </a>
+    <a href="#test" class="bottom-nav-item bottom-nav-highlight" onclick="document.getElementById('test')?.scrollIntoView({behavior: 'smooth'});" aria-label="1분 자가진단 바로가기">
+      <span class="bottom-nav-icon">🎯</span>
+      <span class="bottom-nav-label">자가진단</span>
+    </a>
+    <a href="academy.html" class="bottom-nav-item bottom-nav-academy" aria-label="코치 아카데미 자격과정으로 이동" title="코치 아카데미 바로가기">
+      <span class="bottom-nav-icon">🎓</span>
+      <span class="bottom-nav-label">코치자격</span>
+    </a>
+    <button type="button" class="bottom-nav-item" onclick="toggleMobileDrawer()" aria-label="전체 카테고리 메뉴 열기" title="전체 메뉴 열기">
+      <span class="bottom-nav-icon">☰</span>
+      <span class="bottom-nav-label">전체메뉴</span>
+    </button>
+  </nav>
 
   <!-- 💬 카카오톡 오픈채팅 실시간 1:1 상담 플로팅 버튼 -->
   <a href="https://open.kakao.com/o/p79YYjPi" target="_blank" rel="noopener noreferrer" onclick="trackGoogleAdsConversion('kakaotalk_floating_click')" class="kakao-float-btn" title="카카오톡 오픈채팅 실시간 1:1 상담 열기">
@@ -6206,19 +6487,80 @@
       });
     }
 
+    // 브라우저 뒤로가기(popstate) 연동을 위한 모달 히스토리 관리
+    function pushModalHistory(modalName) {
+      try {
+        history.pushState({ modalOpen: modalName }, '', window.location.href);
+      } catch (err) {
+        console.warn('[History] pushState warning:', err);
+      }
+    }
+
+    // 모바일 뒤로가기(안드로이드 제스처 / 브라우저 뒤로가기) 감지 시 열려 있는 모달/드로어 닫기
+    window.addEventListener('popstate', function(e) {
+      const drawer = document.getElementById('mobileDrawer');
+      const loginModal = document.getElementById('loginModal');
+      const adminModal = document.getElementById('adminAuthModal');
+      const tistoryModal = document.getElementById('tistoryEditorModal');
+      
+      if (drawer && drawer.classList.contains('open')) {
+        closeMobileDrawer(true);
+      } else if (loginModal && loginModal.classList.contains('open')) {
+        closeLoginModal(true);
+      } else if (adminModal && adminModal.classList.contains('open')) {
+        if (typeof closeAdminAuthModal === 'function') closeAdminAuthModal(true);
+      } else if (tistoryModal && tistoryModal.classList.contains('open')) {
+        if (typeof closeEditor === 'function') closeEditor(true);
+      }
+    });
+
     // 4. 모바일 메뉴 드로어 제어
     function toggleMobileDrawer() {
       const drawer = document.getElementById('mobileDrawer');
-      const overlay = document.getElementById('mobileDrawerOverlay');
-      if (drawer) drawer.classList.toggle('open');
-      if (overlay) overlay.classList.toggle('open');
+      if (drawer && drawer.classList.contains('open')) {
+        closeMobileDrawer();
+      } else {
+        openMobileDrawer();
+      }
     }
 
-    function closeMobileDrawer() {
+    function openMobileDrawer() {
+      const drawer = document.getElementById('mobileDrawer');
+      const overlay = document.getElementById('mobileDrawerOverlay');
+      if (drawer) drawer.classList.add('open');
+      if (overlay) overlay.classList.add('open');
+      document.body.classList.add('drawer-open');
+      pushModalHistory('mobileDrawer');
+    }
+
+    function closeMobileDrawer(isPopState = false) {
       const drawer = document.getElementById('mobileDrawer');
       const overlay = document.getElementById('mobileDrawerOverlay');
       if (drawer) drawer.classList.remove('open');
       if (overlay) overlay.classList.remove('open');
+      document.body.classList.remove('drawer-open');
+      if (!isPopState && history.state && history.state.modalOpen === 'mobileDrawer') {
+        history.back();
+      }
+    }
+
+    // 모바일 하단 바 '이전' 버튼 스마트 뒤로가기 동작
+    function handleSmartGoBack() {
+      // 1) 만약 드로어가 열려있으면 드로어 닫기
+      const drawer = document.getElementById('mobileDrawer');
+      if (drawer && drawer.classList.contains('open')) {
+        closeMobileDrawer();
+        return;
+      }
+      // 2) 이전 히스토리가 있는 경우 뒤로가기
+      if (window.history.length > 1 && document.referrer && document.referrer.indexOf(window.location.host) !== -1) {
+        window.history.back();
+      } else if (window.history.length > 1 && window.history.state) {
+        window.history.back();
+      } else {
+        // 최상단으로 부드럽게 이동
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
 
     // 5. 로그인 모달 제어
@@ -6231,6 +6573,7 @@
       if (modal) {
         modal.classList.add('open');
         updateLoginModalUserInfo();
+        pushModalHistory('loginModal');
       }
       return false;
     }
@@ -6260,9 +6603,14 @@
       }
     }
 
-    function closeLoginModal() {
+    function closeLoginModal(isPopState = false) {
       const modal = document.getElementById('loginModal');
-      if (modal) modal.classList.remove('open');
+      if (modal) {
+        modal.classList.remove('open');
+        if (!isPopState && history.state && history.state.modalOpen === 'loginModal') {
+          history.back();
+        }
+      }
     }
 
     function closeLoginModalOnOverlay(e) {
