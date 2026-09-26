@@ -4238,6 +4238,16 @@
       filter: drop-shadow(0 2px 4px rgba(30, 90, 143, 0.35));
     }
 
+    /* -------------------- 모바일 전용 상단 스티키 카테고리 탭바 -------------------- */
+    .mobile-category-bar {
+      display: none;
+    }
+
+    /* -------------------- 모바일 전용 카테고리 랜드마크 배너 -------------------- */
+    .mobile-section-badge {
+      display: none;
+    }
+
     @media (max-width: 768px) {
       .main-mobile-bottom-bar {
         display: flex;
@@ -4250,6 +4260,89 @@
         right: 14px !important;
         padding: 9px 14px !important;
         font-size: 0.82rem !important;
+      }
+
+      /* 상단 스티키 가로 스크롤 탭바 */
+      .mobile-category-bar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 12px 10px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        background: var(--bg-card);
+        border-top: 1px solid var(--border-color);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        scrollbar-width: none;
+      }
+      .mobile-category-bar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .mobile-cat-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 6px 13px;
+        font-size: 0.85rem;
+        font-weight: 750;
+        color: var(--text-secondary);
+        background: var(--bg-primary);
+        border: 1.2px solid var(--border-color);
+        border-radius: 999px;
+        text-decoration: none;
+        flex-shrink: 0;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .mobile-cat-item:active {
+        transform: scale(0.96);
+      }
+
+      .mobile-cat-item.active {
+        background: var(--accent) !important;
+        color: #ffffff !important;
+        border-color: var(--accent) !important;
+        box-shadow: 0 2px 8px rgba(43, 90, 66, 0.3);
+      }
+
+      /* 모바일 전용 섹션 상단 랜드마크 뱃지 */
+      .mobile-section-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, var(--bg-card) 0%, rgba(43, 90, 66, 0.08) 100%);
+        border: 1.5px solid var(--accent);
+        border-radius: 999px;
+        padding: 5px 14px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 8px rgba(43, 90, 66, 0.1);
+      }
+      .msb-num {
+        font-size: 0.72rem;
+        font-weight: 850;
+        background: var(--accent);
+        color: #ffffff;
+        padding: 2px 7px;
+        border-radius: 999px;
+        letter-spacing: 0.5px;
+      }
+      .msb-title {
+        font-size: 0.88rem;
+        font-weight: 800;
+        color: var(--text-primary);
+      }
+
+      /* 모바일에서 섹션 간 확실한 두터운 분리선 부여 */
+      section {
+        border-bottom: 10px solid rgba(43, 90, 66, 0.06) !important;
+        padding-top: 38px !important;
+        padding-bottom: 42px !important;
+      }
+      [data-theme="dark"] section {
+        border-bottom-color: rgba(255, 255, 255, 0.06) !important;
       }
     }
   </style>
@@ -4339,8 +4432,18 @@
           <!-- 모바일 햄버거 메뉴 버튼 -->
           <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="메뉴 열기" onclick="toggleMobileDrawer()">☰</button>
         </div>
-      </div>
     </div>
+
+    <!-- 모바일 전용 가로 스크롤 스티키 카테고리 탭바 -->
+    <nav class="mobile-category-bar" id="mobileCategoryBar" aria-label="모바일 카테고리 탭">
+      <a href="#home" class="mobile-cat-item active" data-target="home" onclick="handleMobileTabClick('home', event)"><span>🏠</span> <span>홈</span></a>
+      <a href="#magazine" class="mobile-cat-item" data-target="magazine" onclick="handleMobileTabClick('magazine', event)"><span>📖</span> <span>여백서재</span></a>
+      <a href="#lounge" class="mobile-cat-item" data-target="lounge" onclick="handleMobileTabClick('lounge', event)"><span>💬</span> <span>비움한줄</span></a>
+      <a href="#test" class="mobile-cat-item" data-target="test" onclick="handleMobileTabClick('test', event)"><span>🎯</span> <span>자가진단</span></a>
+      <a href="#memoir" class="mobile-cat-item" data-target="memoir" onclick="handleMobileTabClick('memoir', event)"><span>✍️</span> <span>자서전</span></a>
+      <a href="academy.html" class="mobile-cat-item" data-target="programs" title="코치 아카데미"><span>🎓</span> <span>아카데미</span></a>
+      <a href="javascript:void(0)" onclick="openLoginModal(event)" class="mobile-cat-item" data-target="archive"><span>🏛️</span> <span>나의서재</span></a>
+    </nav>
   </header>
 
   <!-- 모바일 슬라이드 드로어 메뉴 -->
@@ -4566,6 +4669,11 @@
     <!-- 2. [1단계] 인사이트 매거진: 여백의 서재 (칼럼 & 게시판) -->
     <section id="magazine" style="background-color: var(--bg-secondary);">
       <div class="container">
+        <!-- 모바일 전용 카테고리 랜드마크 배너 -->
+        <div class="mobile-section-badge">
+          <span class="msb-num">CATEGORY 01</span>
+          <span class="msb-title">📖 여백의 서재</span>
+        </div>
         <div class="mag-header-row">
           <div class="section-header" style="margin-bottom: 0; text-align: left;">
             <p class="section-tag">Insights Magazine & Board</p>
@@ -4596,6 +4704,11 @@
     <!-- 3. [2단계] 참여 라운지 (오늘의 비움 한 줄 - 따뜻한 커뮤니티 형성) -->
     <section id="lounge">
       <div class="container">
+        <!-- 모바일 전용 카테고리 랜드마크 배너 -->
+        <div class="mobile-section-badge">
+          <span class="msb-num">CATEGORY 02</span>
+          <span class="msb-title">💬 오늘의 비움 한 줄</span>
+        </div>
         <div class="section-header">
           <p class="section-tag">Community Lounge</p>
           <h2 class="section-title">오늘의 비움 한 줄</h2>
@@ -4629,6 +4742,11 @@
     <!-- 4. [3단계] 1분 여백 자가진단 (참여 유도 위젯) -->
     <section id="test" style="background-color: var(--bg-secondary);">
       <div class="container">
+        <!-- 모바일 전용 카테고리 랜드마크 배너 -->
+        <div class="mobile-section-badge">
+          <span class="msb-num">CATEGORY 03</span>
+          <span class="msb-title">🎯 1분 여백 자가진단</span>
+        </div>
         <div class="section-header">
           <p class="section-tag">Self Diagnosis</p>
           <h2 class="section-title">1분 여백 자가진단</h2>
@@ -4792,6 +4910,11 @@
     <!-- 4. [신설 독립 카테고리] 내 인생의 서사 기록, 디지털 자서전 -->
     <section id="memoir" class="memoir-section">
       <div class="container">
+        <!-- 모바일 전용 카테고리 랜드마크 배너 -->
+        <div class="mobile-section-badge">
+          <span class="msb-num">CATEGORY 04</span>
+          <span class="msb-title">✍️ 내 인생의 서사, 디지털 자서전</span>
+        </div>
         <div class="section-header">
           <p class="section-tag">Digital Memoir & Life Archive</p>
           <h2 class="section-title">내 인생의 서사 기록, 디지털 자서전</h2>
@@ -4911,6 +5034,11 @@
     <!-- 6. [코칭스태프 양성 아카데미] 클릭 시 아카데미로 이동하는 프리미엄 홍보카드 이미지 -->
     <section id="programs" style="background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 80px 0;">
       <div class="container">
+        <!-- 모바일 전용 카테고리 랜드마크 배너 -->
+        <div class="mobile-section-badge">
+          <span class="msb-num">CATEGORY 05</span>
+          <span class="msb-title">🎓 라이프 리셋 코치 아카데미</span>
+        </div>
         <div class="section-header" style="margin-bottom: 36px;">
           <p class="section-tag" style="color: var(--accent-gold); letter-spacing: 2px;">Coach Academy & Partnership</p>
           <h2 class="section-title">우아한 라이프 리셋 코칭 아카데미</h2>
@@ -4966,6 +5094,11 @@
     <!-- 7. [6단계] 나의 아카이브 안내 (개인 고유한 서재 온라인룸) -->
     <section id="archive" style="background-color: var(--bg-secondary); padding: 80px 0;">
       <div class="container">
+        <!-- 모바일 전용 카테고리 랜드마크 배너 -->
+        <div class="mobile-section-badge">
+          <span class="msb-num">CATEGORY 06</span>
+          <span class="msb-title">🏛️ 나의 고유한 서재 (온라인룸)</span>
+        </div>
         <div class="section-header">
           <p class="section-tag">Private Online Room & Sacred Shelf</p>
           <h2 class="section-title">나의 고유한 서재 <span style="font-size: 1.3rem; font-weight: 600; color: var(--accent-gold);">(온라인룸)</span></h2>
@@ -6760,6 +6893,89 @@
         // 최상단으로 부드럽게 이동
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
+    }
+
+    // 모바일 상단 스티키 카테고리 탭 클릭 시 부드러운 스크롤 이동
+    function handleMobileTabClick(targetId, e) {
+      if (e) e.preventDefault();
+      const targetEl = targetId === 'home' 
+        ? document.querySelector('.hero') || document.body 
+        : document.getElementById(targetId);
+      
+      if (targetEl) {
+        const headerOffset = 115;
+        const elementPosition = targetEl.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: targetId === 'home' ? 0 : offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+
+      // 클릭한 탭 즉시 활성화 및 가로 스크롤 중앙 정렬
+      const tabs = document.querySelectorAll('.mobile-cat-item');
+      tabs.forEach(tab => {
+        if (tab.getAttribute('data-target') === targetId) {
+          tab.classList.add('active');
+          tab.scrollIntoView({ inline: 'center', behavior: 'smooth', block: 'nearest' });
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+    }
+
+    // 모바일 스크롤에 따른 상단 카테고리 탭 자동 하이라이트 (ScrollSpy)
+    function initMobileScrollSpy() {
+      const sectionTargets = [
+        { id: 'home', el: document.querySelector('.hero') },
+        { id: 'magazine', el: document.getElementById('magazine') },
+        { id: 'lounge', el: document.getElementById('lounge') },
+        { id: 'test', el: document.getElementById('test') },
+        { id: 'memoir', el: document.getElementById('memoir') },
+        { id: 'programs', el: document.getElementById('programs') },
+        { id: 'archive', el: document.getElementById('archive') }
+      ];
+
+      let isThrottled = false;
+      window.addEventListener('scroll', function() {
+        if (window.innerWidth > 768) return;
+        if (isThrottled) return;
+        isThrottled = true;
+        setTimeout(() => { isThrottled = false; }, 80);
+
+        const scrollPos = window.scrollY + 130;
+        let activeId = 'home';
+
+        for (let i = 0; i < sectionTargets.length; i++) {
+          const item = sectionTargets[i];
+          if (item.el) {
+            const top = item.el.offsetTop;
+            if (scrollPos >= top) {
+              activeId = item.id;
+            }
+          }
+        }
+
+        const tabs = document.querySelectorAll('.mobile-cat-item');
+        tabs.forEach(tab => {
+          if (tab.getAttribute('data-target') === activeId) {
+            if (!tab.classList.contains('active')) {
+              tab.classList.add('active');
+              tab.scrollIntoView({ inline: 'center', behavior: 'smooth', block: 'nearest' });
+            }
+          } else {
+            tab.classList.remove('active');
+          }
+        });
+      }, { passive: true });
+    }
+
+    // DOM 로드 완료 시 스크롤스파이 초기화
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMobileScrollSpy);
+    } else {
+      initMobileScrollSpy();
     }
 
     // 5. 로그인 모달 제어
