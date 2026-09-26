@@ -5072,6 +5072,44 @@
         </div>
       </div>
 
+      <!-- 📞 직통 상담 전화번호 실시간 설정 바 (관리자홈 상단 고정) -->
+      <div style="background: var(--bg-card); border: 2px solid var(--accent); border-radius: 14px; padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.06); position: relative; z-index: 20;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="font-size: 1.6rem; background: rgba(43, 90, 66, 0.12); width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">📞</div>
+          <div>
+            <div style="font-size: 0.96rem; font-weight: 850; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+              <span>고객 맞춤 상담 직통 전화번호 설정</span>
+              <span style="font-size: 0.72rem; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 999px; font-weight: 700;">실시간 연동</span>
+            </div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">
+              고객 모달의 <strong>[📞 전화로 바로 묻기]</strong> 및 하단 푸터에 연결되는 대표 직통 번호입니다.
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <input 
+            type="tel" 
+            id="adminConsultPhoneInput" 
+            placeholder="010-9613-5913" 
+            value="010-9613-5913" 
+            style="width: 175px; padding: 10px 14px; border: 2px solid var(--accent); border-radius: 10px; font-size: 1.05rem; font-weight: 800; text-align: center; color: #111827 !important; background: #ffffff !important; cursor: text !important; -webkit-user-select: text !important; user-select: text !important; outline: none; box-shadow: 0 2px 6px rgba(0,0,0,0.06); font-family: inherit;"
+            onclick="this.select()"
+            onfocus="this.select()"
+            oninput="formatAdminPhone(this)"
+          >
+          <button type="button" onclick="saveAdminConsultPhone()" class="btn btn-primary" style="padding: 10px 18px; font-size: 0.92rem; font-weight: 800; white-space: nowrap; cursor: pointer; border-radius: 10px;">
+            💾 변경 저장
+          </button>
+          <button type="button" onclick="promptChangeAdminPhone()" class="btn btn-secondary" style="padding: 10px 14px; font-size: 0.86rem; font-weight: 750; white-space: nowrap; cursor: pointer; border-radius: 10px;" title="간편 팝업으로 번호 수정">
+            ✏️ 번호 수정
+          </button>
+          <button type="button" onclick="testCallAdminConsultPhone()" class="btn" style="background: var(--bg-secondary); border: 1.5px solid var(--border-color); color: var(--text-primary); padding: 10px 14px; font-size: 0.86rem; font-weight: 750; white-space: nowrap; cursor: pointer; border-radius: 10px;" title="설정된 번호로 테스트 통화">
+            📞 테스트
+          </button>
+        </div>
+      </div>
+
       <!-- 관리자 탭 전환 네비게이션 바 -->
       <div class="admin-nav-tabs">
         <button type="button" class="admin-nav-tab-btn active" id="tabBtnArticles" onclick="switchAdminTab('articles')">
@@ -5165,31 +5203,6 @@
 
       <!-- ================= 탭 2: 1:1 상담 신청 접수 관리 영역 (NEW) ================= -->
       <div id="adminConsultsTabContent" style="display: none;">
-        <!-- 📞 직통 상담 전화번호 실시간 설정 바 -->
-        <div style="background: var(--bg-card, #fff); border: 1.5px solid var(--accent, #2b5a42); border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <div style="font-size: 1.7rem; background: rgba(43, 90, 66, 0.1); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">📞</div>
-            <div>
-              <div style="font-size: 0.96rem; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
-                <span>고객 맞춤 상담 직통 전화번호 설정</span>
-                <span style="font-size: 0.74rem; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 999px; font-weight: 700;">터치 즉시 통화 연결</span>
-              </div>
-              <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 3px;">
-                고객이 모달에서 <strong>[📞 전화로 바로 묻기]</strong>를 눌렀을 때 연결될 대표 직통 번호입니다.
-              </div>
-            </div>
-          </div>
-          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-            <input type="tel" id="adminConsultPhoneInput" placeholder="010-9613-5913" style="width: 170px; padding: 9px 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 1rem; font-weight: 800; text-align: center; color: var(--text-primary); font-family: inherit;" oninput="formatPhoneNumber(this)">
-            <button type="button" onclick="saveAdminConsultPhone()" class="btn btn-primary" style="padding: 9px 18px; font-size: 0.90rem; font-weight: 800; white-space: nowrap; cursor: pointer;">
-              💾 전화번호 변경 저장
-            </button>
-            <button type="button" onclick="testCallAdminConsultPhone()" class="btn btn-secondary" style="padding: 9px 14px; font-size: 0.86rem; font-weight: 700; white-space: nowrap; cursor: pointer;" title="설정된 번호로 테스트 통화 걸기">
-              📞 테스트
-            </button>
-          </div>
-        </div>
-
         <!-- 카테고리별 실시간 신청 통계 카드 (클릭 시 해당 카테고리 즉시 필터) -->
         <div class="consult-stat-grid">
           <div class="consult-stat-card active" id="statCardAll" onclick="filterConsultByCategory('all')">
@@ -5658,6 +5671,44 @@
       if (adminInput && document.activeElement !== adminInput) {
         adminInput.value = phone;
       }
+    }
+
+    // 관리자 전화번호 입력 자동 서식 (010-XXXX-XXXX)
+    function formatAdminPhone(input) {
+      if (!input) return;
+      let raw = input.value.replace(/[^0-9]/g, '');
+      if (raw.length > 11) raw = raw.substr(0, 11);
+
+      if (raw.length <= 3) {
+        input.value = raw;
+      } else if (raw.length <= 7) {
+        input.value = raw.substr(0, 3) + '-' + raw.substr(3);
+      } else {
+        input.value = raw.substr(0, 3) + '-' + raw.substr(3, 4) + '-' + raw.substr(7);
+      }
+    }
+
+    // 간편 팝업으로 전화번호 수정
+    function promptChangeAdminPhone() {
+      const current = getConsultPhone();
+      const next = prompt('고객 맞춤 상담 직통 전화번호를 입력해 주세요.\n(예: 010-9613-5913 또는 숫자만 입력)', current);
+      if (next === null) return;
+      let clean = next.replace(/[^0-9]/g, '');
+      if (!clean) {
+        alert('전화번호 숫자를 정확히 입력해 주세요.');
+        return;
+      }
+      let formatted = clean;
+      if (clean.length === 11) {
+        formatted = clean.substr(0, 3) + '-' + clean.substr(3, 4) + '-' + clean.substr(7);
+      } else if (clean.length === 10) {
+        formatted = clean.substr(0, 3) + '-' + clean.substr(3, 3) + '-' + clean.substr(6);
+      }
+      localStorage.setItem('reset_consult_phone', formatted);
+      updateConsultPhoneUI();
+      const input = document.getElementById('adminConsultPhoneInput');
+      if (input) input.value = formatted;
+      alert(`✅ 상담 직통 전화번호가 [${formatted}] (으)로 안전하게 저장되었습니다.\n\n이제 고객이 '전화로 바로 묻기'를 터치하면 이 번호로 즉시 통화 연결됩니다.`);
     }
 
     // 관리자홈에서 상담 직통 전화번호 변경 및 저장
