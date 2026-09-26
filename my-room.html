@@ -33,6 +33,9 @@
     }
   </script>
 
+  <!-- Kakao JavaScript SDK v2 -->
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
+
   <!-- 웹폰트: 기본 Pretendard(고딕) + 감성 포인트 Noto Serif KR(명조) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2415,7 +2418,21 @@
     <div class="login-modal-card">
       <div style="font-size: 3rem; margin-bottom: 12px;">🗝️</div>
       <h2>내 서재 열기</h2>
-      <p>복잡한 아이디와 비밀번호 대신, <strong>성함</strong>과 <strong>전화번호 뒤 4자리</strong>로 간편하게 들어오세요.</p>
+      <p>카카오톡으로 3초 만에 시작하시거나, <strong>성함</strong>과 <strong>전화번호</strong>로 간편하게 입장하세요.</p>
+
+      <!-- 💬 카카오 3초 간편 로그인 -->
+      <button type="button" onclick="loginWithKakao()" style="width: 100%; padding: 13px; background: #FEE500; color: #191600; border: none; border-radius: 12px; font-weight: 800; font-size: 0.96rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 16px; box-shadow: 0 3px 10px rgba(254, 229, 0, 0.35);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#3C1E1E">
+          <path d="M12 3C6.48 3 2 6.58 2 11c0 2.84 1.87 5.33 4.71 6.73-.21.78-.77 2.83-.88 3.26-.14.54.2.53.42.39.29-.19 3.42-2.34 3.99-2.73.57.08 1.16.12 1.76.12 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/>
+        </svg>
+        <span>카카오로 3초 만에 내 서재 열기</span>
+      </button>
+
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px; color: var(--text-muted); font-size: 0.82rem;">
+        <span style="flex: 1; height: 1px; background: var(--border-color);"></span>
+        <span>또는 성함으로 직접 입장</span>
+        <span style="flex: 1; height: 1px; background: var(--border-color);"></span>
+      </div>
 
       <form onsubmit="handleSeniorLogin(event)">
         <div class="login-input-group">
@@ -3686,6 +3703,79 @@
       document.getElementById('loginModal').classList.remove('open');
     }
 
+    const KAKAO_JAVASCRIPT_KEY = '34a3a5001a59423bdbba8969871f0054';
+
+    function initKakaoSDK() {
+      try {
+        if (window.Kakao && !window.Kakao.isInitialized()) {
+          window.Kakao.init(KAKAO_JAVASCRIPT_KEY);
+        }
+      } catch(err) {
+        console.error(err);
+      }
+    }
+
+    function loginWithKakao() {
+      if (!window.Kakao) {
+        alert('카카오 SDK 로드에 실패했습니다. 페이지를 새로고침 해주세요.');
+        return;
+      }
+      if (!Kakao.isInitialized()) {
+        initKakaoSDK();
+      }
+
+      window.Kakao.Auth.login({
+        scope: 'profile_nickname,profile_image',
+        success: function(authObj) {
+          window.Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(res) {
+              const kakaoAccount = res.kakao_account || {};
+              const profile = kakaoAccount.profile || {};
+              const nickname = profile.nickname || '어르신';
+              const profileImg = profile.profile_image_url || profile.thumbnail_image_url || '';
+              const email = kakaoAccount.email || '';
+
+              const userData = {
+                id: res.id,
+                name: nickname,
+                nickname: nickname,
+                email: email,
+                profileImage: profileImg,
+                loginType: 'kakao',
+                loginAt: new Date().toISOString()
+              };
+
+              localStorage.setItem('reset_logged_in_user', JSON.stringify(userData));
+              localStorage.setItem('reset_user_name', nickname);
+
+              const titleEl = document.getElementById('ownerTitle');
+              if (titleEl) titleEl.innerHTML = `<strong class="point-bold">${escapeHtml(nickname)}</strong> 어르신의 고유한 서재`;
+              const avatarEl = document.getElementById('ownerAvatar');
+              if (avatarEl) avatarEl.textContent = '🌿';
+              const descEl = document.getElementById('ownerDesc');
+              if (descEl) descEl.textContent = '카카오 간편 가입으로 안전하게 열린 나만의 프라이빗 라이프 아카이브';
+
+              closeLoginModal();
+              alert(`🎉 환영합니다, ${nickname}님!\n카카오 로그인으로 나만의 전용 서재가 활성화되었습니다.`);
+            },
+            fail: function(error) {
+              console.error(error);
+              alert('카카오 사용자 정보를 가져오지 못했습니다.');
+            }
+          });
+        },
+        fail: function(err) {
+          console.error(err);
+          if (err && err.error === 'access_denied') {
+            alert('카카오 로그인이 취소되었습니다.');
+          } else {
+            alert('카카오 로그인 창이 닫혔거나 취소되었습니다.');
+          }
+        }
+      });
+    }
+
     // 시니어 간편 로그인 처리
     function handleSeniorLogin(e) {
       e.preventDefault();
@@ -4332,6 +4422,30 @@
       renderCustomMemories();
       // 저장된 사용자 엔딩 금고 렌더링
       renderCustomVaultItems();
+
+      // 카카오 SDK 초기화 및 로그인 사용자 서재 자동 활성화
+      initKakaoSDK();
+      const savedUserStr = localStorage.getItem('reset_logged_in_user');
+      const savedName = localStorage.getItem('reset_user_name');
+      if (savedName || savedUserStr) {
+        let name = savedName;
+        let avatar = '🌿';
+        try {
+          if (savedUserStr) {
+            const u = JSON.parse(savedUserStr);
+            if (u.name || u.nickname) name = u.name || u.nickname;
+            if (u.loginType === 'kakao') avatar = '🌿';
+          }
+        } catch(e) {}
+        if (name && name !== '김순옥') {
+          const titleEl = document.getElementById('ownerTitle');
+          const avatarEl = document.getElementById('ownerAvatar');
+          const descEl = document.getElementById('ownerDesc');
+          if (titleEl) titleEl.innerHTML = `<strong class="point-bold">${escapeHtml(name)}</strong> 어르신의 고유한 서재`;
+          if (avatarEl) avatarEl.textContent = avatar;
+          if (descEl) descEl.textContent = '일생의 소중한 서사와 결이 단정히 보관된 나만의 독립 서재';
+        }
+      }
     });
   </script>
 </body>
