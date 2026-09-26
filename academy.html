@@ -1228,39 +1228,64 @@
     }
 
     .academy-admin-tabs {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
       gap: 8px;
+      margin-bottom: 22px;
+      padding-bottom: 8px;
       border-bottom: 2px solid var(--border-color);
-      margin-bottom: 20px;
-      overflow-x: auto;
-      padding-bottom: 2px;
+    }
+
+    @media (max-width: 1100px) {
+      .academy-admin-tabs {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 650px) {
+      .academy-admin-tabs {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     .academy-admin-tab-btn {
-      padding: 11px 18px;
-      font-size: 0.92rem;
-      font-weight: 750;
+      padding: 10px 6px;
+      font-size: 0.85rem;
+      font-weight: 800;
       color: var(--text-secondary);
-      background: transparent;
-      border: none;
-      border-bottom: 3px solid transparent;
+      background: var(--bg-primary);
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
       cursor: pointer;
-      display: inline-flex;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 7px;
-      white-space: nowrap;
-      transition: var(--transition);
+      justify-content: center;
+      text-align: center;
+      gap: 5px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .academy-admin-tab-btn:hover {
+      border-color: var(--accent);
       color: var(--accent);
-      background: var(--accent-light);
-      border-radius: 8px 8px 0 0;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(43, 90, 66, 0.1);
     }
     .academy-admin-tab-btn.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-      background: var(--accent-light);
-      border-radius: 8px 8px 0 0;
+      color: #ffffff !important;
+      background: var(--accent) !important;
+      border-color: var(--accent) !important;
+      box-shadow: 0 4px 14px rgba(43, 90, 66, 0.28);
+      transform: translateY(-2px);
+    }
+    .academy-admin-tab-btn.active strong,
+    .academy-admin-tab-btn.active span {
+      color: #ffffff !important;
+    }
+    .academy-admin-tab-btn.active .academy-tab-badge {
+      background: rgba(255, 255, 255, 0.25) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.4);
     }
 
     .academy-tab-badge {
@@ -2292,10 +2317,10 @@
           </div>
           <div style="font-size: 1.6rem;">🎓</div>
         </div>
-        <div class="academy-stat-card" onclick="switchAcademyAdminTab('schedules')" style="border: 1.5px solid var(--accent); background: rgba(43, 90, 66, 0.05); cursor: pointer;" title="클릭 시 개설 교육일정 및 배너 관리 탭으로 이동">
+        <div class="academy-stat-card" onclick="switchAcademyAdminTab('schedules')">
           <div>
-            <div style="font-size: 0.78rem; font-weight: 800; color: var(--accent); margin-bottom: 3px;">📅 개설 강의 일정</div>
-            <div class="academy-stat-val" id="acadStatScheduleCount" style="color: var(--accent);">2개 반</div>
+            <div style="font-size: 0.78rem; font-weight: 800; color: #059669; margin-bottom: 3px;">📅 개설 강의 일정</div>
+            <div class="academy-stat-val" id="acadStatScheduleCount" style="color: #059669;">2개 반</div>
           </div>
           <div style="font-size: 1.6rem;">🗓️</div>
         </div>
@@ -2315,30 +2340,43 @@
         </div>
       </div>
 
-      <!-- 6대 탭 전환 바 -->
-      <div class="academy-admin-tabs">
-        <button type="button" class="academy-admin-tab-btn active" id="tabBtnAcadApplicants" onclick="switchAcademyAdminTab('applicants')">
-          <span>📋</span> 1. 수강 신청자 접수 관리
+      <!-- 6대 관리 탭 전환 바 (1번~6번 전체 한눈에 균등 표시) -->
+      <div class="academy-admin-tabs" id="academyAdminTabsBar">
+        <button type="button" class="academy-admin-tab-btn active" id="tabBtnAcadApplicants" onclick="switchAcademyAdminTab('applicants')" title="1. 수강 신청자 접수 관리">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <span>📋</span> <strong>1. 신청자 접수</strong>
+          </div>
           <span class="academy-tab-badge" id="acadBadgeWaiting">0</span>
         </button>
-        <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadStudents" onclick="switchAcademyAdminTab('students')">
-          <span>🎓</span> 2. 교육생 출석 & 수료 관리
+        <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadStudents" onclick="switchAcademyAdminTab('students')" title="2. 교육생 출석 & 수료 관리">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <span>🎓</span> <strong>2. 교육생 출석·수료</strong>
+          </div>
           <span class="academy-tab-badge" id="acadBadgeStudents" style="background: #16a34a;">0</span>
         </button>
-        <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadSchedules" onclick="switchAcademyAdminTab('schedules')">
-          <span>📅</span> 3. 개설 교육일정 & 신청 배너 관리
+        <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadSchedules" onclick="switchAcademyAdminTab('schedules')" title="3. 개설 교육일정 & 신청 배너 관리">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <span>📅</span> <strong>3. 교육일정·배너</strong>
+          </div>
           <span class="academy-tab-badge" id="acadBadgeSchedules" style="background: #059669;">2개</span>
         </button>
-        <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadCurriculum" onclick="switchAcademyAdminTab('curriculum')">
-          <span>📖</span> 4. 4대 전문 트랙 & 주차별 커리큘럼 관리
+        <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadCurriculum" onclick="switchAcademyAdminTab('curriculum')" title="4. 4대 전문 트랙 & 주차별 커리큘럼 관리">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <span>📖</span> <strong>4. 트랙·커리큘럼</strong>
+          </div>
           <span class="academy-tab-badge" style="background: #2563eb;">화면 연동</span>
         </button>
-        <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadBranches" onclick="switchAcademyAdminTab('branches')">
-          <span>🏛️</span> 5. 전국 지부 생성 & 지부장 관리
+        <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadBranches" onclick="switchAcademyAdminTab('branches')" title="5. 전국 지부 생성 & 지부장 관리">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <span>🏛️</span> <strong>5. 전국 거점 지부</strong>
+          </div>
           <span class="academy-tab-badge" id="acadBadgeBranches" style="background: var(--accent-gold);">0</span>
         </button>
-        <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadSettings" onclick="switchAcademyAdminTab('settings')">
-          <span>⚙️</span> 6. 아카데미 운영 설정 & 계좌
+        <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadSettings" onclick="switchAcademyAdminTab('settings')" title="6. 아카데미 운영 설정 & 계좌">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <span>⚙️</span> <strong>6. 운영 설정·계좌</strong>
+          </div>
+          <span class="academy-tab-badge" style="background: #64748b;">시스템</span>
         </button>
       </div>
 
@@ -3835,7 +3873,7 @@
       }
     }
 
-    function openAcademyAdminDashboard() {
+    function openAcademyAdminDashboard(initialTab = 'applicants') {
       updateAcademyTopStats();
       renderAcademyApplicantTable();
       renderAcademyStudentsTable();
@@ -3844,11 +3882,22 @@
       renderAcademyBranchesTable();
       loadAcademyAccountSettings();
 
+      // 관리홈 열릴 때 항상 1번(수강 신청자 접수 관리) 탭 또는 지정된 탭으로 활성화
+      switchAcademyAdminTab(initialTab);
+
       const modal = document.getElementById('academyAdminModal');
       if (modal) {
         modal.classList.add('open');
         document.body.style.overflow = 'hidden';
       }
+
+      // 모달 본문 및 탭 바 스크롤 초기화 (1번부터 6번까지 한눈에 보이도록 보장)
+      setTimeout(() => {
+        const modalContent = document.querySelector('.academy-admin-modal-card');
+        if (modalContent) modalContent.scrollTop = 0;
+        const tabsBar = document.getElementById('academyAdminTabsBar');
+        if (tabsBar) tabsBar.scrollLeft = 0;
+      }, 30);
     }
 
     function closeAcademyAdminModal() {
@@ -3863,7 +3912,7 @@
       if (e.target.id === 'academyAdminModal') closeAcademyAdminModal();
     }
 
-    // 탭 전환
+    // 탭 전환 (1번~6번)
     function switchAcademyAdminTab(tabName) {
       const tabs = ['applicants', 'students', 'schedules', 'curriculum', 'branches', 'settings'];
       tabs.forEach(t => {
