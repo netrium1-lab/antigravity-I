@@ -1906,18 +1906,6 @@
     </div>
   </header>
 
-  <!-- 🌿 서재 모드 안내 & 둘러보기 토글 배너 -->
-  <div id="roomModeBanner" class="room-mode-banner user-mode" style="display: none;">
-    <div id="bannerText" style="display: flex; align-items: center; gap: 8px;">
-      🌿 <strong id="bannerOwnerName" style="color: var(--accent-green); font-size: 1rem;">어르신</strong>의 독립된 개인 서재입니다. 나만의 사진과 소중한 글을 직접 꽂아보세요.
-    </div>
-    <div style="display: flex; gap: 8px; align-items: center;">
-      <button type="button" id="btnToggleSampleRoom" class="btn-mode-switch to-sample" onclick="toggleRoomMode()">
-        👵 김순옥 어르신 완성 예시 둘러보기
-      </button>
-    </div>
-  </div>
-
   <!-- 서재 인트로 히어로 -->
   <section class="room-hero">
     <div class="room-hero-inner">
@@ -2498,11 +2486,6 @@
 
   </main>
 
-  <!-- ✍️+📸 화면 우하단 고정 플로팅 올리기 버튼 (어르신 전용 큰 버튼) -->
-  <button class="fab-upload-btn" onclick="openUploadModal()" title="새 사진이나 글 올리기">
-    <span style="font-size: 1.3rem;">✍️</span>
-    <span>사진·글 올리기</span>
-  </button>
 
   <!-- 📸+✍️ 시니어 맞춤형 원스톱 사진 & 글 올리기 모달 -->
   <div class="modal-overlay" id="uploadMemoryModal" onclick="closeUploadModalOnOverlay(event)">
@@ -4076,10 +4059,6 @@
       const user = getLoggedInUser();
       const hasUser = !!(user.name && user.name !== '김순옥');
 
-      const banner = document.getElementById('roomModeBanner');
-      const bannerText = document.getElementById('bannerText');
-      const btnToggle = document.getElementById('btnToggleSampleRoom');
-
       const ownerTitle = document.getElementById('ownerTitle');
       const ownerAvatar = document.getElementById('ownerAvatar');
       const ownerDesc = document.getElementById('ownerDesc');
@@ -4116,19 +4095,6 @@
 
       if (!hasUser || isSampleModeActive) {
         // [1] 김순옥 어르신 완성 샘플 둘러보기 모드
-        if (hasUser) {
-          if (banner) {
-            banner.style.display = 'flex';
-            banner.className = 'room-mode-banner sample-mode';
-            if (bannerText) bannerText.innerHTML = `💡 <strong>[둘러보기 모드]</strong> 김순옥 어르신의 완성된 라이프 아카이브 예시를 둘러보고 계십니다.`;
-            if (btnToggle) {
-              btnToggle.className = 'btn-mode-switch to-user';
-              btnToggle.innerHTML = `🏠 내 서재로 돌아가기`;
-            }
-          }
-        } else {
-          if (banner) banner.style.display = 'none';
-        }
 
         if (ownerTitle) ownerTitle.innerHTML = `<strong class="point-bold">김순옥</strong> 어르신의 고유한 서재`;
         if (ownerAvatar) ownerAvatar.textContent = '👵';
@@ -4177,15 +4143,6 @@
       } else {
         // [2] 로그인 회원 본인의 깨끗한 독립 서재 모드 (Empty State)
         const name = user.name;
-        if (banner) {
-          banner.style.display = 'flex';
-          banner.className = 'room-mode-banner user-mode';
-          if (bannerText) bannerText.innerHTML = `🌿 <strong style="color: var(--accent-green); font-size: 1rem;">${escapeHtml(name)}</strong> 어르신의 고유한 독립 서재입니다. 나만의 사진과 소중한 글을 직접 채워보세요.`;
-          if (btnToggle) {
-            btnToggle.className = 'btn-mode-switch to-sample';
-            btnToggle.innerHTML = `👵 김순옥 어르신 완성 예시 둘러보기`;
-          }
-        }
 
         if (ownerTitle) ownerTitle.innerHTML = `<strong class="point-bold">${escapeHtml(name)}</strong> 어르신의 고유한 서재`;
         if (ownerAvatar) ownerAvatar.textContent = user.avatar || '🌿';
