@@ -1898,11 +1898,6 @@
           💌 가족 공유
         </button>
 
-        <!-- 🌿 전담 코칭스태프 서재 관리홈 버튼 -->
-        <button class="btn-coach-admin" onclick="openCoachAdminModal()" title="전담 코칭스태프 서재 관리틀 열기">
-          🌿 코치 관리홈
-        </button>
-
         <!-- 서재 변경 / 로그인 -->
         <button class="btn-back-home" onclick="openLoginModal()" style="font-weight: 700;">
           👤 다른 서재
@@ -1958,19 +1953,19 @@
   <nav class="room-tabs-bar">
     <div class="room-tabs-container">
       <button class="room-tab-btn active" onclick="switchTab('tab-memoir')">
-        📖 디지털 자서전 e-Book <span class="tab-counter" id="tabCounterMemoir">1권</span>
+        📖 디지털 자서전 <span class="tab-counter" id="tabCounterMemoir">1권</span>
       </button>
       <button class="room-tab-btn" onclick="switchTab('tab-gallery')">
-        🎞️ 빛바랜 추억 복원관 <span class="tab-counter" id="tabCounterGallery">12장</span>
+        🎞️ 추억 복원관 <span class="tab-counter" id="tabCounterGallery">12장</span>
       </button>
       <button class="room-tab-btn" onclick="switchTab('tab-diary')">
-        💬 마음의 비움 일기장 <span class="tab-counter" id="tabCounterDiary">28편</span>
+        💬 비움 일기장 <span class="tab-counter" id="tabCounterDiary">28편</span>
       </button>
       <button class="room-tab-btn" onclick="switchTab('tab-vault')">
-        💌 가족을 위한 엔딩 금고 <span class="tab-counter" id="tabCounterVault">안심보관</span>
+        💌 엔딩 금고 <span class="tab-counter" id="tabCounterVault">안심보관</span>
       </button>
-      <button class="room-tab-btn" onclick="switchTab('tab-coach')">
-        🌿 전담 코칭 케어 리포트 <span class="tab-counter" id="tabCounterCoach">최신</span>
+      <button class="room-tab-btn" onclick="handleCoachTabClick()" id="tabBtnCoach" title="클릭 시 전담 코치 관리자 센터가 열립니다" style="color: var(--accent-green);">
+        🌿 전담 코치 케어 <span class="tab-counter" id="tabCounterCoach" style="background: rgba(43, 106, 56, 0.12); color: var(--accent-green); font-weight: 800;">관리자</span>
       </button>
     </div>
   </nav>
@@ -1981,19 +1976,19 @@
     <!-- [서가 1] 디지털 자서전 e-Book 뷰어 -->
     <div id="tab-memoir" class="tab-pane active">
       <div class="shelf-header">
-        <div>
-          <h2 class="shelf-title">📖 내 인생의 디지털 자서전</h2>
-          <p class="shelf-desc" id="memoirShelfDesc">전문 구술 인터뷰와 교정을 거쳐 완성된 어르신의 인생 평전입니다.</p>
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <h2 class="shelf-title" style="margin-bottom: 0;">📖 내 인생의 디지털 자서전</h2>
+          <button type="button" id="btnShelfMemoirToggle" class="btn-mode-switch to-sample" onclick="toggleRoomMode()" style="padding: 6px 14px; font-size: 0.86rem; box-shadow: 0 2px 6px rgba(0,0,0,0.06); font-family: inherit;">
+            👵 김순옥 어르신 완성 예시
+          </button>
         </div>
         <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
           <button class="btn-share" id="btnMemoirPdfDownload" onclick="downloadMemoirPdf()" title="완성된 자서전 e-Book 전체 PDF 파일 다운로드">
             📥 자서전 전체 PDF 받기
           </button>
-          <button class="btn-coach-admin" onclick="openCoachAdminModal('pdf')" title="코치 전용: PDF 및 자서전 데이터 관리" style="font-size: 0.80rem; padding: 6px 12px;">
-            ⚙️ 관리
-          </button>
         </div>
       </div>
+      <p class="shelf-desc" id="memoirShelfDesc" style="margin-top: 6px; margin-bottom: 18px;">전문 구술 인터뷰와 교정을 거쳐 완성된 어르신의 인생 평전입니다.</p>
 
       <!-- 🌿 신규 회원용 자서전 집필 준비 빈 서가 -->
       <div id="userMemoirArea" class="empty-shelf-card" style="display: none;">
@@ -2089,13 +2084,10 @@
 
       <!-- 목차별 본문 미리보기 리더기 -->
       <div class="memoir-chapters">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div style="margin-bottom: 16px;">
           <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.25rem; font-weight: 800; margin: 0;">
             📚 목차별 대표 구절 읽기
           </h3>
-          <button class="btn-coach-admin" onclick="openCoachAdminModal('chapters')" style="font-size: 0.78rem; padding: 4px 10px;">
-            ✏️ 목차·구절 편집
-          </button>
         </div>
         <div class="chapter-nav">
           <button class="chapter-tab active" id="viewChapterTab1" onclick="loadChapter(1, this)">제1장. 섬진강 모래톱과 순천 여고 시절</button>
@@ -2441,16 +2433,16 @@
       </div>
     </div>
 
-    <!-- [서가 5] 전담 코칭 케어 리포트 -->
+    <!-- [서가 5] 전담 코치 케어 리포트 -->
     <div id="tab-coach" class="tab-pane">
       <div class="shelf-header">
         <div>
-          <h2 class="shelf-title">🌿 전담 코칭스태프 케어 리포트</h2>
+          <h2 class="shelf-title">🌿 전담 코치 케어 리포트</h2>
           <p class="shelf-desc">어르신의 라이프 리셋을 돕는 전문 코칭스태프의 정기 방문 관리 일지와 응원 메시지입니다.</p>
         </div>
         <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-          <button class="btn-coach-admin" onclick="openCoachAdminModal('report')" title="전담 코치: 방문 케어 리포트 작성 및 수정">
-            ✍️ 방문 리포트 작성/관리
+          <button class="btn-coach-admin" onclick="openCoachAdminModal()" title="전담 코치: 자서전, 오디오, 배송, 리포트 통합 관리">
+            ⚙️ 전담 코치 관리자 센터 열기
           </button>
           <a href="academy.html" class="btn-back-home" style="border-color: var(--accent-green); color: var(--accent-green);">
             🎓 코치 양성과정 ➔
@@ -4170,6 +4162,18 @@
         if (tcD) tcD.textContent = (28 + userNotesCount) + '편';
         if (tcV) tcV.textContent = '안심보관';
 
+        // 📖 자서전 헤더 옆 예시 토글 버튼 상태 동기화
+        const btnShelfToggle = document.getElementById('btnShelfMemoirToggle');
+        if (btnShelfToggle) {
+          if (hasUser) {
+            btnShelfToggle.innerHTML = '🏠 내 서재로 돌아가기';
+            btnShelfToggle.className = 'btn-mode-switch to-user';
+          } else {
+            btnShelfToggle.innerHTML = '👵 김순옥 어르신 완성 예시';
+            btnShelfToggle.className = 'btn-mode-switch to-sample';
+          }
+        }
+
       } else {
         // [2] 로그인 회원 본인의 깨끗한 독립 서재 모드 (Empty State)
         const name = user.name;
@@ -4225,7 +4229,20 @@
         if (tcG) tcG.textContent = userPhotosCount + '장';
         if (tcD) tcD.textContent = userNotesCount + '편';
         if (tcV) tcV.textContent = userVaultCount > 0 ? (userVaultCount + '건') : '안심보관';
+
+        // 📖 자서전 헤더 옆 예시 토글 버튼 상태 동기화
+        const btnShelfToggle = document.getElementById('btnShelfMemoirToggle');
+        if (btnShelfToggle) {
+          btnShelfToggle.innerHTML = '👵 김순옥 어르신 완성 예시';
+          btnShelfToggle.className = 'btn-mode-switch to-sample';
+        }
       }
+    }
+
+    // 🌿 전담 코치 케어 탭 클릭 시 관리자 센터 직결 실행
+    function handleCoachTabClick() {
+      switchTab('tab-coach');
+      openCoachAdminModal();
     }
 
     // 가족 공유 링크 복사
