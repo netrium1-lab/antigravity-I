@@ -604,8 +604,10 @@
     .week-detail span {
       font-size: 0.82rem;
       color: var(--text-muted);
-      line-height: 1.45;
+      line-height: 1.5;
       display: block;
+      white-space: pre-line;
+      word-break: keep-all;
     }
 
     .track-footer {
@@ -1343,12 +1345,54 @@
       background: var(--bg-card);
       border: 1.5px solid var(--border-color);
       border-radius: 14px;
-      padding: 18px 20px;
-      margin-bottom: 14px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
       transition: var(--transition);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
     }
     .curriculum-editor-card:hover {
       border-color: var(--accent);
+    }
+    .curriculum-track-tabs-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .acad-track-filter-btn {
+      padding: 8px 16px;
+      font-size: 0.86rem;
+      font-weight: 750;
+      border-radius: 9px;
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .acad-track-filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--text-primary);
+    }
+    .acad-track-filter-btn.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(43, 90, 66, 0.25);
+    }
+    .week-edit-item-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      padding: 14px 16px;
+      transition: var(--transition);
+    }
+    .week-edit-item-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
     }
 
     /* 🖱️ 강의 일정 카드 클릭 & 선택 활성화 인터랙션 스타일 */
@@ -2286,7 +2330,7 @@
           <span class="academy-tab-badge" id="acadBadgeSchedules" style="background: #059669;">2개</span>
         </button>
         <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadCurriculum" onclick="switchAcademyAdminTab('curriculum')">
-          <span>📚</span> 4. 4대 전문 트랙 & 수강료 관리
+          <span>📖</span> 4. 4대 전문 트랙 & 주차별 커리큘럼 관리
           <span class="academy-tab-badge" style="background: #2563eb;">화면 연동</span>
         </button>
         <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadBranches" onclick="switchAcademyAdminTab('branches')">
@@ -2534,27 +2578,61 @@
         </div>
       </div>
 
-      <!-- ================= 탭 4: 📚 4대 전문 트랙 & 수강료 관리 ================= -->
+      <!-- ================= 탭 4: 📖 4대 전문 트랙 & 주차별 커리큘럼 관리 ================= -->
       <div id="acadTabContentCurriculum" style="display: none;">
-        <div style="background: rgba(43, 90, 66, 0.08); border: 1.5px solid var(--accent); border-radius: 14px; padding: 16px 20px; margin-bottom: 22px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 1.8rem;">📚</span>
+        <!-- 상단 가이드 & 액션 바 -->
+        <div style="background: rgba(43, 90, 66, 0.08); border: 1.5px solid var(--accent); border-radius: 14px; padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 2rem;">📖</span>
             <div>
-              <div style="font-size: 0.98rem; font-weight: 850; color: var(--text-primary);">
-                4대 전문 트랙 & 1기 수강료 설정
+              <div style="font-size: 1.05rem; font-weight: 850; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                4대 전문 코칭 트랙 & 주차별 커리큘럼 관리
+                <span class="academy-tab-badge" style="background: var(--accent); color: #fff;">실시간 화면 반영</span>
               </div>
-              <div style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 2px;">
-                아래 폼에서 트랙 커리큘럼이나 수강료를 수정한 후 [저장]을 누르면, <strong>메인 페이지에 즉시 실시간으로 반영</strong>됩니다.
+              <div style="font-size: 0.83rem; color: var(--text-secondary); margin-top: 3px;">
+                4대 전문 트랙(뷰티 웰니스, 공간&비움, 엔딩 라이프, 생애사 에디팅)의 <strong>주차별 교육내용(1~4주차 등), 강의 소주제, 실습 상세 내용</strong>을 직접 수정하고 주차를 추가/삭제할 수 있습니다.
               </div>
             </div>
           </div>
-          <button type="button" onclick="saveAcademyCurriculumSettings()" class="btn-submit-apply" style="padding: 10px 22px; font-size: 0.92rem; font-weight: 800; border-radius: 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
-            <span>💾</span> 교육과정 & 수강료 저장
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <button type="button" onclick="resetAcademyCurriculumToDefault()" title="공식 기본 커리큘럼 내용으로 되돌립니다." style="padding: 9px 15px; font-size: 0.86rem; font-weight: 750; border-radius: 8px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-secondary); cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
+              <span>🔄</span> 기본값 복원
+            </button>
+            <button type="button" onclick="saveAcademyCurriculumSettings()" class="btn-submit-apply" style="padding: 10px 22px; font-size: 0.92rem; font-weight: 800; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+              <span>💾</span> 전체 커리큘럼 저장
+            </button>
+          </div>
+        </div>
+
+        <!-- 트랙 선택 탭 바 (전체보기 / 트랙별 탭 / 1기 수강료 요강) -->
+        <div class="curriculum-track-tabs-bar">
+          <button type="button" class="acad-track-filter-btn active" id="trackFilterBtn_all" onclick="setCurriculumTrackFilter('all')">
+            📑 전체 트랙 (4개 과정)
+          </button>
+          <button type="button" class="acad-track-filter-btn" id="trackFilterBtn_0" onclick="setCurriculumTrackFilter(0)">
+            💄 1. 뷰티 웰니스
+          </button>
+          <button type="button" class="acad-track-filter-btn" id="trackFilterBtn_1" onclick="setCurriculumTrackFilter(1)">
+            👗 2. 공간 & 비움
+          </button>
+          <button type="button" class="acad-track-filter-btn" id="trackFilterBtn_2" onclick="setCurriculumTrackFilter(2)">
+            📦 3. 엔딩 라이프
+          </button>
+          <button type="button" class="acad-track-filter-btn" id="trackFilterBtn_3" onclick="setCurriculumTrackFilter(3)">
+            ✍️ 4. 생애사 에디팅
+          </button>
+          <button type="button" class="acad-track-filter-btn" id="trackFilterBtn_pricing" onclick="setCurriculumTrackFilter('pricing')">
+            💰 1기 수강료 & 모집 요강
           </button>
         </div>
 
+        <!-- 4대 전문 트랙 상세 커리큘럼 편집 영역 (JS 동적 렌더링) -->
+        <div id="curriculumEditorContainer">
+          <!-- JS 동적 렌더링: 4개 트랙 편집 카드 & 주차별 상세 편집 카드 -->
+        </div>
+
         <!-- 1기 수강료 및 모집 요강 설정 박스 -->
-        <div class="academy-sub-card">
+        <div id="curriculumPricingBox" class="academy-sub-card" style="margin-top: 20px;">
           <h3 style="font-size: 1.12rem; font-weight: 850; color: var(--text-primary); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
             <span>💰</span> 1기 수강료 및 모집 요강 설정
           </h3>
@@ -2586,20 +2664,19 @@
           </div>
         </div>
 
-        <!-- 4대 전문 트랙 상세 커리큘럼 편집 영역 -->
-        <div style="margin-top: 24px;">
-          <h3 style="font-size: 1.12rem; font-weight: 850; color: var(--text-primary); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
-            <span>📖</span> 4대 전문 코칭 트랙 커리큘럼 편집
-          </h3>
-          <div id="curriculumEditorContainer">
-            <!-- JS 동적 렌더링: 4개 트랙 편집 카드 -->
+        <!-- 하단 저장 바 -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color); flex-wrap: wrap; gap: 12px;">
+          <div style="font-size: 0.84rem; color: var(--text-muted);">
+            💡 <strong>실시간 반영 안내</strong>: 커리큘럼이나 수강료를 저장하면, 웹페이지 새로고침 없이 메인 화면에 즉시 적용됩니다.
           </div>
-        </div>
-
-        <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-          <button type="button" onclick="saveAcademyCurriculumSettings()" class="btn-submit-apply" style="padding: 12px 28px; font-size: 0.96rem; font-weight: 800; border-radius: 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
-            <span>💾</span> 교육과정 & 수강료 변경사항 저장
-          </button>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <button type="button" onclick="resetAcademyCurriculumToDefault()" style="padding: 11px 18px; font-size: 0.88rem; font-weight: 750; border-radius: 8px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-secondary); cursor: pointer;">
+              🔄 기본값 복원
+            </button>
+            <button type="button" onclick="saveAcademyCurriculumSettings()" class="btn-submit-apply" style="padding: 12px 28px; font-size: 0.96rem; font-weight: 800; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+              <span>💾</span> 교육과정 & 수강료 변경사항 저장
+            </button>
+          </div>
         </div>
       </div>
 
@@ -4211,13 +4288,45 @@
     }
 
     // -------------------------------------------------------------------------
-    // 7-1. 탭 4: 4대 트랙 교육과정 & 수강료 관리 엔진 (화면 즉시 반영)
+    // 7-1. 탭 4: 4대 트랙 주차별 커리큘럼 & 수강료 관리 엔진 (화면 즉시 반영)
     // -------------------------------------------------------------------------
-    function loadAcademyCurriculumForm() {
-      const pricing = getAcademyPricing();
-      const tracks = getAcademyTracks();
+    let currentCurriculumFilter = 'all';
 
-      // 수강료 요강 폼 채우기
+    function setCurriculumTrackFilter(filterKey) {
+      currentCurriculumFilter = filterKey;
+
+      // 1. 탭 버튼 UI 활성화 상태 전환
+      const buttons = document.querySelectorAll('.acad-track-filter-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      const targetBtn = document.getElementById('trackFilterBtn_' + filterKey);
+      if (targetBtn) targetBtn.classList.add('active');
+
+      // 2. 트랙 카드 및 수강료 박스 표시/숨김 제어
+      const tracks = getAcademyTracks();
+      tracks.forEach((_, idx) => {
+        const card = document.getElementById(`trackCardEditor_${idx}`);
+        if (!card) return;
+        if (filterKey === 'all' || filterKey === idx || filterKey === String(idx)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      const pricingBox = document.getElementById('curriculumPricingBox');
+      if (pricingBox) {
+        if (filterKey === 'all' || filterKey === 'pricing') {
+          pricingBox.style.display = 'block';
+        } else {
+          pricingBox.style.display = 'none';
+        }
+      }
+    }
+
+    function loadAcademyCurriculumForm() {
+      // 1. 수강료 요강 폼 데이터 채우기
+      const pricing = getAcademyPricing();
       const fTitle = document.getElementById('cfgPricingCourseTitle');
       const fOrig = document.getElementById('cfgPricingOriginal');
       const fCurr = document.getElementById('cfgPricingCurrent');
@@ -4232,67 +4341,128 @@
       if (fNotice) fNotice.value = pricing.priceNotice || '';
       if (fPay) fPay.value = pricing.coachingPay || '회당 8만 ~ 12만 원 우선 배정';
 
-      // 4개 트랙 커리큘럼 폼 채우기
+      // 2. 4개 트랙 및 주차별 커리큘럼 폼 렌더링
+      renderCurriculumEditorTrackCards();
+    }
+
+    // 4개 트랙 및 각 트랙의 주차별 커리큘럼 편집 카드 렌더링
+    function renderCurriculumEditorTrackCards() {
       const container = document.getElementById('curriculumEditorContainer');
       if (!container) return;
 
-      container.innerHTML = tracks.map((t, idx) => `
-        <div class="curriculum-editor-card">
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
-            <div style="font-weight:850; font-size:1rem; color:var(--accent);">
-              ${escapeHtml(t.trackNo)} 편집
-            </div>
-            <span style="font-size:0.80rem; color:var(--text-muted);">${escapeHtml(t.duration)}</span>
-          </div>
+      const tracks = getAcademyTracks();
 
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:12px;">
-            <div>
-              <label style="display:block; font-size:0.82rem; font-weight:750; color:var(--text-secondary); margin-bottom:4px;">트랙 타이틀:</label>
-              <input type="text" id="trackName_${idx}" value="${escapeHtml(t.name)}" style="width:100%; padding:8px 10px; border:1px solid var(--border-color); border-radius:6px; font-size:0.88rem; font-weight:750; background:var(--bg-primary); color:var(--text-primary);" />
-            </div>
-            <div>
-              <label style="display:block; font-size:0.82rem; font-weight:750; color:var(--text-secondary); margin-bottom:4px;">교육 기간 문구:</label>
-              <input type="text" id="trackDuration_${idx}" value="${escapeHtml(t.duration)}" style="width:100%; padding:8px 10px; border:1px solid var(--border-color); border-radius:6px; font-size:0.88rem; background:var(--bg-primary); color:var(--text-primary);" />
-            </div>
-          </div>
+      container.innerHTML = tracks.map((t, idx) => {
+        const isVisible = (currentCurriculumFilter === 'all' || currentCurriculumFilter === idx || currentCurriculumFilter === String(idx));
+        const displayStyle = isVisible ? 'block' : 'none';
+        const weeksCount = (t.weeks && t.weeks.length) || 0;
 
-          <div style="margin-bottom:12px;">
-            <label style="display:block; font-size:0.82rem; font-weight:750; color:var(--text-secondary); margin-bottom:4px;">한 줄 요약 소개:</label>
-            <input type="text" id="trackSummary_${idx}" value="${escapeHtml(t.summary)}" style="width:100%; padding:8px 10px; border:1px solid var(--border-color); border-radius:6px; font-size:0.88rem; background:var(--bg-primary); color:var(--text-primary);" />
-          </div>
-
-          <!-- 4주차 커리큘럼 편집 -->
-          <div style="background:var(--bg-primary); padding:10px 12px; border-radius:8px; margin-bottom:12px;">
-            <div style="font-size:0.82rem; font-weight:800; color:var(--text-secondary); margin-bottom:8px;">주차별 상세 교육 내용 (1~4주차)</div>
-            ${(t.weeks || []).map((w, wIdx) => `
-              <div style="display:grid; grid-template-columns: 80px 1fr 2fr; gap:8px; margin-bottom:6px; align-items:center;">
-                <span style="font-size:0.80rem; font-weight:800; color:var(--text-muted);">${w.week}</span>
-                <input type="text" id="weekTitle_${idx}_${wIdx}" value="${escapeHtml(w.title)}" placeholder="주차 소제목" style="padding:6px 8px; border:1px solid var(--border-color); border-radius:5px; font-size:0.82rem; background:var(--bg-card); color:var(--text-primary);" />
-                <input type="text" id="weekDesc_${idx}_${wIdx}" value="${escapeHtml(w.desc)}" placeholder="세부 커리큘럼" style="padding:6px 8px; border:1px solid var(--border-color); border-radius:5px; font-size:0.82rem; background:var(--bg-card); color:var(--text-primary);" />
+        return `
+          <div class="curriculum-editor-card" id="trackCardEditor_${idx}" style="display: ${displayStyle};">
+            <!-- 트랙 헤더 바 -->
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1.5px solid var(--border-color); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <span class="track-pill" style="background: ${t.pillBg || '#eaf4ed'}; color: ${t.pillColor || '#2b6a38'}; font-weight: 850; padding: 5px 12px; border-radius: 20px; font-size: 0.82rem;">
+                  ${escapeHtml(t.trackNo)}
+                </span>
+                <span style="font-weight: 850; font-size: 1.05rem; color: var(--text-primary);">${escapeHtml(t.name)}</span>
               </div>
-            `).join('')}
-          </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <button type="button" onclick="addTrackWeek(${idx})" style="padding: 6px 12px; font-size: 0.82rem; font-weight: 800; border-radius: 6px; border: 1.5px solid var(--accent); background: var(--bg-card); color: var(--accent); cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+                  <span>➕</span> 주차 추가
+                </button>
+                <button type="button" onclick="saveAcademyCurriculumSettings()" style="padding: 6px 14px; font-size: 0.82rem; font-weight: 800; border-radius: 6px; border: none; background: var(--accent); color: #fff; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+                  <span>💾</span> 저장
+                </button>
+              </div>
+            </div>
 
-          <div>
-            <label style="display:block; font-size:0.82rem; font-weight:750; color:var(--text-secondary); margin-bottom:4px;">수료 특전 문구:</label>
-            <input type="text" id="trackBenefit_${idx}" value="${escapeHtml(t.benefit)}" style="width:100%; padding:8px 10px; border:1px solid var(--border-color); border-radius:6px; font-size:0.88rem; background:var(--bg-primary); color:var(--text-primary);" />
+            <!-- 트랙 기본 정보 설정 폼 -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-bottom: 14px;">
+              <div>
+                <label for="trackName_${idx}" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">트랙 공식 명칭:</label>
+                <input type="text" id="trackName_${idx}" value="${escapeHtml(t.name)}" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 7px; font-size: 0.90rem; font-weight: 750; background: var(--bg-primary); color: var(--text-primary);" />
+              </div>
+              <div>
+                <label for="trackDuration_${idx}" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">교육 기간 문구:</label>
+                <input type="text" id="trackDuration_${idx}" value="${escapeHtml(t.duration)}" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 7px; font-size: 0.90rem; background: var(--bg-primary); color: var(--text-primary);" />
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-bottom: 18px;">
+              <div>
+                <label for="trackSummary_${idx}" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">한 줄 요약 소개:</label>
+                <input type="text" id="trackSummary_${idx}" value="${escapeHtml(t.summary)}" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 7px; font-size: 0.88rem; background: var(--bg-primary); color: var(--text-primary);" />
+              </div>
+              <div>
+                <label for="trackBenefit_${idx}" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">수료 특전 문구:</label>
+                <input type="text" id="trackBenefit_${idx}" value="${escapeHtml(t.benefit)}" style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 7px; font-size: 0.88rem; background: var(--bg-primary); color: var(--text-primary);" />
+              </div>
+            </div>
+
+            <!-- 주차별 상세 교육 내용 (개선된 카드 리스트) -->
+            <div style="background: var(--bg-primary); padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border-color);">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                <div style="font-size: 0.92rem; font-weight: 850; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                  <span>📅</span> 주차별 상세 커리큘럼 & 실습 내용
+                  <span style="font-size: 0.78rem; font-weight: 800; color: var(--accent); background: rgba(43,90,66,0.1); padding: 3px 9px; border-radius: 12px;">
+                    현재 총 ${weeksCount}주차 편성
+                  </span>
+                </div>
+                <span style="font-size: 0.78rem; color: var(--text-muted);">
+                  * 세부 교육 및 실습 내용은 여러 줄로 자세히 입력할 수 있습니다.
+                </span>
+              </div>
+
+              <!-- 주차 리스트 카드들 -->
+              <div id="trackWeeksContainer_${idx}" style="display: flex; flex-direction: column; gap: 12px;">
+                ${weeksCount === 0 ? `
+                  <div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 0.84rem; background: var(--bg-card); border-radius: 8px; border: 1px dashed var(--border-color);">
+                    등록된 주차별 커리큘럼이 없습니다. 아래 [+ 주차 추가] 버튼을 눌러 교육 일정을 등록하세요.
+                  </div>
+                ` : ''}
+
+                ${(t.weeks || []).map((w, wIdx) => `
+                  <div class="week-edit-item-card" id="weekCard_${idx}_${wIdx}">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
+                      <div style="display: flex; align-items: center; gap: 8px; flex: 1; min-width: 280px;">
+                        <div style="display: flex; align-items: center; gap: 5px;">
+                          <span style="font-size: 0.80rem; font-weight: 800; color: var(--text-secondary); white-space: nowrap;">주차:</span>
+                          <input type="text" id="weekName_${idx}_${wIdx}" value="${escapeHtml(w.week)}" placeholder="1주차" style="width: 84px; padding: 6px 8px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.86rem; font-weight: 850; text-align: center; background: var(--bg-primary); color: var(--accent);" />
+                        </div>
+                        <div style="flex: 1; display: flex; align-items: center; gap: 5px;">
+                          <span style="font-size: 0.80rem; font-weight: 800; color: var(--text-secondary); white-space: nowrap;">강의 소주제:</span>
+                          <input type="text" id="weekTitle_${idx}_${wIdx}" value="${escapeHtml(w.title)}" placeholder="주차 핵심 주제 / 강의명 (예: 노년기 피부학 & 릴랙싱 터치 테라피)" style="width: 100%; padding: 6px 12px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; font-weight: 750; background: var(--bg-primary); color: var(--text-primary);" />
+                        </div>
+                      </div>
+                      <button type="button" onclick="deleteTrackWeek(${idx}, ${wIdx})" title="${w.week || '이 주차'} 삭제" style="padding: 6px 12px; font-size: 0.80rem; font-weight: 750; border-radius: 6px; border: 1px solid #fee2e2; background: #fff5f5; color: #dc2626; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px;">
+                        <span>🗑️</span> 주차 삭제
+                      </button>
+                    </div>
+                    <div>
+                      <label for="weekDesc_${idx}_${wIdx}" style="display: block; font-size: 0.80rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">
+                        📝 상세 교육 및 실습 내용 (줄바꿈 가능):
+                      </label>
+                      <textarea id="weekDesc_${idx}_${wIdx}" rows="3" placeholder="어르신 방문 실습 및 구체적인 교육 내용을 줄바꿈하여 편안하게 입력하세요." style="width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 7px; font-size: 0.86rem; line-height: 1.55; background: var(--bg-primary); color: var(--text-primary); resize: vertical;">${escapeHtml(w.desc || '')}</textarea>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+
+              <!-- 주차 추가 버튼 -->
+              <div style="margin-top: 14px; text-align: center;">
+                <button type="button" onclick="addTrackWeek(${idx})" style="width: 100%; padding: 10px; border: 1.5px dashed var(--accent); border-radius: 8px; background: rgba(43,90,66,0.04); color: var(--accent); font-size: 0.88rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: var(--transition);">
+                  <span>➕</span> 이 트랙에 새 주차( ${(weeksCount + 1)}주차 ) 추가하기
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
-    function saveAcademyCurriculumSettings() {
-      // 1. 수강료 & 요강 저장
-      const pricing = getAcademyPricing();
-      pricing.courseTitle = document.getElementById('cfgPricingCourseTitle')?.value.trim() || pricing.courseTitle;
-      pricing.originalPrice = document.getElementById('cfgPricingOriginal')?.value.trim() || pricing.originalPrice;
-      pricing.currentPrice = document.getElementById('cfgPricingCurrent')?.value.trim() || pricing.currentPrice;
-      pricing.discountBadge = document.getElementById('cfgPricingBadge')?.value.trim() || pricing.discountBadge;
-      pricing.priceNotice = document.getElementById('cfgPricingNotice')?.value.trim() || pricing.priceNotice;
-      pricing.coachingPay = document.getElementById('cfgPricingCoachingPay')?.value.trim() || pricing.coachingPay;
-      saveAcademyPricing(pricing);
-
-      // 2. 4대 트랙 커리큘럼 저장
+    // 현재 폼 화면에 입력된 트랙 및 주차별 내용 동기화 수집
+    function collectCurrentCurriculumInputs() {
       const tracks = getAcademyTracks();
       tracks.forEach((t, idx) => {
         const nameEl = document.getElementById(`trackName_${idx}`);
@@ -4305,20 +4475,112 @@
         if (sumEl) t.summary = sumEl.value.trim();
         if (benEl) t.benefit = benEl.value.trim();
 
-        (t.weeks || []).forEach((w, wIdx) => {
-          const wTitleEl = document.getElementById(`weekTitle_${idx}_${wIdx}`);
-          const wDescEl = document.getElementById(`weekDesc_${idx}_${wIdx}`);
-          if (wTitleEl) w.title = wTitleEl.value.trim();
-          if (wDescEl) w.desc = wDescEl.value.trim();
-        });
+        if (Array.isArray(t.weeks)) {
+          t.weeks.forEach((w, wIdx) => {
+            const wNameEl = document.getElementById(`weekName_${idx}_${wIdx}`);
+            const wTitleEl = document.getElementById(`weekTitle_${idx}_${wIdx}`);
+            const wDescEl = document.getElementById(`weekDesc_${idx}_${wIdx}`);
+            if (wNameEl) w.week = wNameEl.value.trim();
+            if (wTitleEl) w.title = wTitleEl.value.trim();
+            if (wDescEl) w.desc = wDescEl.value.trim();
+          });
+        }
       });
-      saveAcademyTracks(tracks);
+      return tracks;
+    }
 
-      // 3. 메인 화면 동적 갱신
+    // 주차 추가 기능
+    function addTrackWeek(trackIdx) {
+      const tracks = collectCurrentCurriculumInputs();
+      if (!tracks[trackIdx]) return;
+      if (!Array.isArray(tracks[trackIdx].weeks)) {
+        tracks[trackIdx].weeks = [];
+      }
+
+      const nextWeekNum = tracks[trackIdx].weeks.length + 1;
+      tracks[trackIdx].weeks.push({
+        week: `${nextWeekNum}주차`,
+        title: "",
+        desc: ""
+      });
+
+      saveAcademyTracks(tracks);
+      renderCurriculumEditorTrackCards();
+      renderAcademyDynamicTracks();
+
+      // 새로 추가된 주차 카드로 스크롤 및 강의 소주제 input에 자동 포커스
+      setTimeout(() => {
+        const newTitleInput = document.getElementById(`weekTitle_${trackIdx}_${nextWeekNum - 1}`);
+        if (newTitleInput) {
+          newTitleInput.focus();
+          newTitleInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 50);
+    }
+
+    // 주차 삭제 기능
+    function deleteTrackWeek(trackIdx, weekIdx) {
+      const tracks = collectCurrentCurriculumInputs();
+      if (!tracks[trackIdx] || !tracks[trackIdx].weeks || !tracks[trackIdx].weeks[weekIdx]) return;
+
+      const targetWeek = tracks[trackIdx].weeks[weekIdx];
+      const weekLabel = targetWeek.week || `${weekIdx + 1}주차`;
+      const titleLabel = targetWeek.title ? `("${targetWeek.title}")` : '';
+
+      if (!confirm(`[${tracks[trackIdx].name}]\n${weekLabel} ${titleLabel} 교육내용을 정말 삭제하시겠습니까?`)) {
+        return;
+      }
+
+      tracks[trackIdx].weeks.splice(weekIdx, 1);
+      saveAcademyTracks(tracks);
+      renderCurriculumEditorTrackCards();
+      renderAcademyDynamicTracks();
+    }
+
+    // 교육과정 및 수강료 전체 저장
+    function saveAcademyCurriculumSettings() {
+      // 1. 수강료 & 요강 저장
+      const pricing = getAcademyPricing();
+      const fTitle = document.getElementById('cfgPricingCourseTitle');
+      const fOrig = document.getElementById('cfgPricingOriginal');
+      const fCurr = document.getElementById('cfgPricingCurrent');
+      const fBadge = document.getElementById('cfgPricingBadge');
+      const fNotice = document.getElementById('cfgPricingNotice');
+      const fPay = document.getElementById('cfgPricingCoachingPay');
+
+      if (fTitle) pricing.courseTitle = fTitle.value.trim() || pricing.courseTitle;
+      if (fOrig) pricing.originalPrice = fOrig.value.trim() || pricing.originalPrice;
+      if (fCurr) pricing.currentPrice = fCurr.value.trim() || pricing.currentPrice;
+      if (fBadge) pricing.discountBadge = fBadge.value.trim() || pricing.discountBadge;
+      if (fNotice) pricing.priceNotice = fNotice.value.trim() || pricing.priceNotice;
+      if (fPay) pricing.coachingPay = fPay.value.trim() || pricing.coachingPay;
+      saveAcademyPricing(pricing);
+
+      // 2. 4대 전문 트랙 & 주차별 커리큘럼 데이터 수집 및 저장
+      const updatedTracks = collectCurrentCurriculumInputs();
+      saveAcademyTracks(updatedTracks);
+
+      // 3. 메인 페이지 화면 즉시 동적 반영
       renderAcademyDynamicTracks();
       renderAcademyDynamicPricing();
 
-      alert('✅ 4대 트랙 교육과정 및 수강료 설정이 저장되었습니다!\n아카데미 메인 페이지에 실시간으로 즉시 반영되었습니다.');
+      alert('✅ 4대 전문 트랙 및 주차별 교육내용(커리큘럼)이 저장되었습니다!\n아카데미 메인 페이지에 실시간으로 즉시 반영되었습니다.');
+    }
+
+    // 기본 커리큘럼으로 초기화
+    function resetAcademyCurriculumToDefault() {
+      if (!confirm('정말 4대 전문 트랙 커리큘럼을 [여백과 결] 공식 기본값으로 초기화하시겠습니까?\n기존에 직접 작성하거나 수정한 내용은 기본값으로 대체됩니다.')) {
+        return;
+      }
+
+      // 딥 카피로 기본값 복원
+      const defaultClone = JSON.parse(JSON.stringify(DEFAULT_ACAD_TRACKS));
+      saveAcademyTracks(defaultClone);
+
+      loadAcademyCurriculumForm();
+      renderAcademyDynamicTracks();
+
+      alert('✅ 4대 전문 트랙 커리큘럼이 기본 설정값으로 복원되었습니다!\n메인 페이지에도 즉시 적용되었습니다.');
     }
 
     // -------------------------------------------------------------------------
