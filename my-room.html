@@ -1730,6 +1730,142 @@
       .coach-form-group.full { grid-column: span 1; }
       .coach-stage-selector { grid-template-columns: repeat(2, 1fr); }
     }
+
+    /* -------------------- 🌿 신규 회원 독립 서재 vs 김순옥 예시 둘러보기 모드 -------------------- */
+    .room-mode-banner {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 0.92rem;
+      border-bottom: 1.5px solid var(--paper-border);
+      position: sticky;
+      top: 65px;
+      z-index: 90;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
+    .room-mode-banner.user-mode {
+      background: rgba(239, 243, 235, 0.96);
+      border-color: #cbd8c3;
+      color: #2b4528;
+    }
+    .room-mode-banner.sample-mode {
+      background: rgba(254, 247, 230, 0.96);
+      border-color: #f1ddb0;
+      color: #7a5214;
+    }
+    .btn-mode-switch {
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-weight: 750;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    .btn-mode-switch.to-sample {
+      background: #ffffff;
+      border: 1.5px solid var(--accent-green);
+      color: var(--accent-green);
+    }
+    .btn-mode-switch.to-sample:hover {
+      background: var(--accent-green);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .btn-mode-switch.to-user {
+      background: var(--accent-green);
+      border: 1.5px solid var(--accent-green);
+      color: #ffffff;
+    }
+    .btn-mode-switch.to-user:hover {
+      background: #1f4e29;
+      transform: translateY(-1px);
+    }
+
+    /* 텅 빈 서가(Empty State) 감성 카드 */
+    .empty-shelf-card {
+      background: var(--paper-card);
+      border: 1.5px dashed var(--paper-border);
+      border-radius: 20px;
+      padding: 48px 24px;
+      text-align: center;
+      margin: 16px 0 28px 0;
+      box-shadow: var(--shadow-sm);
+    }
+    .empty-shelf-icon {
+      font-size: 3.2rem;
+      margin-bottom: 14px;
+      animation: floatSubtle 3s ease-in-out infinite;
+    }
+    @keyframes floatSubtle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .empty-shelf-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+    .empty-shelf-desc {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      line-height: 1.6;
+      max-width: 540px;
+      margin: 0 auto 22px auto;
+    }
+    .empty-shelf-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-empty-action-primary {
+      padding: 10px 20px;
+      background: var(--accent-green);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 750;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-empty-action-primary:hover {
+      background: #1f4e29;
+      transform: translateY(-2px);
+    }
+    .btn-empty-action-secondary {
+      padding: 10px 18px;
+      background: var(--paper-bg);
+      color: var(--text-main);
+      border: 1px solid var(--paper-border);
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.90rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-empty-action-secondary:hover {
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+    }
   </style>
 </head>
 <body>
@@ -1775,6 +1911,18 @@
     </div>
   </header>
 
+  <!-- 🌿 서재 모드 안내 & 둘러보기 토글 배너 -->
+  <div id="roomModeBanner" class="room-mode-banner user-mode" style="display: none;">
+    <div id="bannerText" style="display: flex; align-items: center; gap: 8px;">
+      🌿 <strong id="bannerOwnerName" style="color: var(--accent-green); font-size: 1rem;">어르신</strong>의 독립된 개인 서재입니다. 나만의 사진과 소중한 글을 직접 꽂아보세요.
+    </div>
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <button type="button" id="btnToggleSampleRoom" class="btn-mode-switch to-sample" onclick="toggleRoomMode()">
+        👵 김순옥 어르신 완성 예시 둘러보기
+      </button>
+    </div>
+  </div>
+
   <!-- 서재 인트로 히어로 -->
   <section class="room-hero">
     <div class="room-hero-inner">
@@ -1810,19 +1958,19 @@
   <nav class="room-tabs-bar">
     <div class="room-tabs-container">
       <button class="room-tab-btn active" onclick="switchTab('tab-memoir')">
-        📖 디지털 자서전 e-Book <span class="tab-counter">1권</span>
+        📖 디지털 자서전 e-Book <span class="tab-counter" id="tabCounterMemoir">1권</span>
       </button>
       <button class="room-tab-btn" onclick="switchTab('tab-gallery')">
-        🎞️ 빛바랜 추억 복원관 <span class="tab-counter">12장</span>
+        🎞️ 빛바랜 추억 복원관 <span class="tab-counter" id="tabCounterGallery">12장</span>
       </button>
       <button class="room-tab-btn" onclick="switchTab('tab-diary')">
-        💬 마음의 비움 일기장 <span class="tab-counter">28편</span>
+        💬 마음의 비움 일기장 <span class="tab-counter" id="tabCounterDiary">28편</span>
       </button>
       <button class="room-tab-btn" onclick="switchTab('tab-vault')">
-        💌 가족을 위한 엔딩 금고 <span class="tab-counter">안심보관</span>
+        💌 가족을 위한 엔딩 금고 <span class="tab-counter" id="tabCounterVault">안심보관</span>
       </button>
       <button class="room-tab-btn" onclick="switchTab('tab-coach')">
-        🌿 전담 코칭 케어 리포트 <span class="tab-counter">최신</span>
+        🌿 전담 코칭 케어 리포트 <span class="tab-counter" id="tabCounterCoach">최신</span>
       </button>
     </div>
   </nav>
@@ -1835,7 +1983,7 @@
       <div class="shelf-header">
         <div>
           <h2 class="shelf-title">📖 내 인생의 디지털 자서전</h2>
-          <p class="shelf-desc">전문 구술 인터뷰와 교정을 거쳐 완성된 김순옥 어르신의 인생 평전입니다.</p>
+          <p class="shelf-desc" id="memoirShelfDesc">전문 구술 인터뷰와 교정을 거쳐 완성된 어르신의 인생 평전입니다.</p>
         </div>
         <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
           <button class="btn-share" id="btnMemoirPdfDownload" onclick="downloadMemoirPdf()" title="완성된 자서전 e-Book 전체 PDF 파일 다운로드">
@@ -1847,8 +1995,28 @@
         </div>
       </div>
 
-      <!-- 책 쇼케이스 & 제작/배송 현황 -->
-      <div class="memoir-showcase">
+      <!-- 🌿 신규 회원용 자서전 집필 준비 빈 서가 -->
+      <div id="userMemoirArea" class="empty-shelf-card" style="display: none;">
+        <div class="empty-shelf-icon">📖</div>
+        <h3 class="empty-shelf-title">어르신의 귀한 삶을 첫 자서전으로 엮어보세요</h3>
+        <p class="empty-shelf-desc">
+          아직 발간된 자서전이 없습니다.<br>
+          지나온 세월의 수많은 이야기와 감동을 전문 구술 코치와 함께 품격 있는 양장본 평전과 디지털 e-Book으로 기록해 드립니다.
+        </p>
+        <div class="empty-shelf-actions">
+          <button type="button" class="btn-empty-action-primary" onclick="openUploadModal('diary')">
+            ✍️ 내 삶의 첫 이야기 적어보기
+          </button>
+          <button type="button" class="btn-empty-action-secondary" onclick="switchToSampleRoom()">
+            👁️ 김순옥 어르신 완성 자서전 예시 둘러보기
+          </button>
+        </div>
+      </div>
+
+      <!-- 👵 김순옥 어르신 완성 샘플 영역 -->
+      <div id="sampleMemoirArea">
+        <!-- 책 쇼케이스 & 제작/배송 현황 -->
+        <div class="memoir-showcase">
         <!-- 3D 입체 북커버 -->
         <div class="memoir-book-mockup">
           <div class="book-spine-line"></div>
@@ -1945,6 +2113,7 @@
           </p>
         </div>
       </div>
+      <!-- /sampleMemoirArea -->
     </div>
 
     <!-- [서가 2] 빛바랜 기억 복원 갤러리 -->
@@ -1952,16 +2121,34 @@
       <div class="shelf-header">
         <div>
           <h2 class="shelf-title">🎞️ 빛바랜 추억 복원관</h2>
-          <p class="shelf-desc">헤지고 긁힌 흑백 사진을 최첨단 화질 개선 기법으로 선명하게 복원하고, 그날의 사연을 기록했습니다.</p>
+          <p class="shelf-desc" id="galleryShelfDesc">헤지고 긁힌 흑백 사진을 최첨단 화질 개선 기법으로 선명하게 복원하고, 그날의 사연을 기록했습니다.</p>
         </div>
         <button class="btn-share" onclick="openUploadModal('gallery')" style="background: var(--accent-green);">
           📷+✍️ 새 추억 사진 올리기
         </button>
       </div>
 
+      <!-- 🌿 신규 회원용 사진 빈 서가 안내 카드 -->
+      <div id="userGalleryEmptyArea" class="empty-shelf-card" style="display: none;">
+        <div class="empty-shelf-icon">🎞️</div>
+        <h3 class="empty-shelf-title">서재에 첫 번째 추억 사진을 꽂아보세요</h3>
+        <p class="empty-shelf-desc">
+          아직 등록된 사진이 없습니다.<br>
+          옛 흑백 사진, 젊은 날의 청춘, 가족들과의 정겨운 순간을 서재에 올려주시면 고화질로 복원하여 평생 소장해 드립니다.
+        </p>
+        <div class="empty-shelf-actions">
+          <button type="button" class="btn-empty-action-primary" onclick="openUploadModal('gallery')">
+            📸+✍️ 첫 사진과 사연 꽂기
+          </button>
+          <button type="button" class="btn-empty-action-secondary" onclick="switchToSampleRoom()">
+            👁️ 김순옥 어르신 복원 사진 예시 보기
+          </button>
+        </div>
+      </div>
+
       <div class="memory-gallery-grid" id="memoryGalleryGrid">
         <!-- 사진 카드 1 -->
-        <div class="memory-card">
+        <div class="memory-card sample-memory-item">
           <div class="photo-compare-container">
             <img src="images/hero-bg.jpg" alt="1968년 섬진강 둑방길" class="photo-compare-img">
             <span class="restore-badge">✨ AI 컬러·해상도 복원</span>
@@ -1981,7 +2168,7 @@
         </div>
 
         <!-- 사진 카드 2 -->
-        <div class="memory-card">
+        <div class="memory-card sample-memory-item">
           <div class="photo-compare-container">
             <img src="images/coach-academy-banner.jpg" alt="1974년 종로 예식장 결혼식" class="photo-compare-img">
             <span class="restore-badge">✨ AI 컬러·해상도 복원</span>
@@ -2001,7 +2188,7 @@
         </div>
 
         <!-- 사진 카드 3 -->
-        <div class="memory-card">
+        <div class="memory-card sample-memory-item">
           <div class="photo-compare-container">
             <img src="images/hero-bg.jpg" alt="1982년 큰아이 초등학교 입학식" class="photo-compare-img">
             <span class="restore-badge">✨ 스크래치 복원</span>
@@ -2027,7 +2214,7 @@
       <div class="shelf-header">
         <div>
           <h2 class="shelf-title">💬 마음의 비움 일기장</h2>
-          <p class="shelf-desc">메인 광장의 '오늘의 비움 한 줄'에 띄웠던 글과 나만의 비밀 비움 노트를 모아두었습니다.</p>
+          <p class="shelf-desc" id="diaryShelfDesc">메인 광장의 '오늘의 비움 한 줄'에 띄웠던 글과 나만의 비밀 비움 노트를 모아두었습니다.</p>
         </div>
         <button class="btn-share" onclick="openUploadModal('diary')" style="background: var(--accent-gold);">
           ✍️ 새 비움 일기 쓰기
@@ -2037,8 +2224,18 @@
       <div class="empty-notes-layout">
         <!-- 저장된 비움 일기 목록 -->
         <div id="notesListContainer">
+          <!-- 🌿 신규 회원용 일기 빈 서가 안내 카드 -->
+          <div id="userDiaryEmptyArea" class="empty-shelf-card" style="display: none; padding: 32px 20px;">
+            <div class="empty-shelf-icon" style="font-size: 2.6rem;">💬</div>
+            <h3 class="empty-shelf-title" style="font-size: 1.15rem;">오늘 마음의 여백을 한 줄 적어보세요</h3>
+            <p class="empty-shelf-desc" style="font-size: 0.88rem; margin-bottom: 0;">
+              아직 작성된 비움 일기가 없습니다.<br>
+              오늘 내려놓고 싶은 물건이나 마음의 단상을 오른쪽 상자에서 편안하게 기록해 보세요.
+            </p>
+          </div>
+
           <!-- 노트 1 (공개 글) -->
-          <div class="note-card">
+          <div class="note-card sample-note-item">
             <span class="note-tag public">🌐 메인 광장 공개 글</span>
             <p class="note-text">
               "30년 동안 장롱 깊숙이 걸려있던 옛 정장 세 벌을 이웃 나눔함에 넣고 왔습니다. 옷걸이 세 개가 텅 비었을 뿐인데, 내 마음의 어깨가 이토록 가벼워질 줄 몰랐습니다."
@@ -2050,7 +2247,7 @@
           </div>
 
           <!-- 노트 2 (비밀 글) -->
-          <div class="note-card">
+          <div class="note-card sample-note-item">
             <span class="note-tag private">🔒 나만의 비밀 일기</span>
             <p class="note-text">
               "자식들이 바쁘다고 주말에 못 온다는 전화를 받고 잠시 서운함이 차올랐다. 하지만 저녁 산책길에 바람을 맞으며 생각해보니, 아이들이 제 몫의 삶을 치열하게 살아내고 있다는 것이 감사한 일이다. 서운함을 바람에 날려 보냈다."
@@ -2062,7 +2259,7 @@
           </div>
 
           <!-- 노트 3 -->
-          <div class="note-card">
+          <div class="note-card sample-note-item">
             <span class="note-tag public">🌐 메인 광장 공개 글</span>
             <p class="note-text">
               "화장대 서랍을 정리하며 유통기한 지난 옛 화장품들을 비워냈습니다. 박지은 코치님이 알려주신 수분 크림 하나만 단정하게 남기니 아침 거울 보는 시간이 한결 즐겁습니다."
@@ -2116,8 +2313,26 @@
       </div>
 
       <div class="ending-vault-grid" id="endingVaultGrid">
+        <!-- 🌿 신규 회원용 엔딩 금고 빈 서가 안내 카드 -->
+        <div id="userVaultEmptyArea" class="empty-shelf-card" style="display: none; grid-column: 1 / -1;">
+          <div class="empty-shelf-icon">💌</div>
+          <h3 class="empty-shelf-title">가족들에게 남길 첫 사랑의 편지를 봉인해 보세요</h3>
+          <p class="empty-shelf-desc">
+            아직 금고에 보관된 유언이나 편지가 없습니다.<br>
+            자녀와 후손들에게 꼭 전하고 싶은 따뜻한 당부와 지혜, 소중한 유품 메모를 안전하게 남겨두세요.
+          </p>
+          <div class="empty-shelf-actions">
+            <button type="button" class="btn-empty-action-primary" onclick="openVaultWriteModal('letter')">
+              ✍️+💌 가족 사랑의 첫 편지 쓰기
+            </button>
+            <button type="button" class="btn-empty-action-secondary" onclick="switchToSampleRoom()">
+              👁️ 김순옥 어르신 엔딩 금고 예시 보기
+            </button>
+          </div>
+        </div>
+
         <!-- 금고 항목 1: 사랑의 편지 -->
-        <div class="vault-card">
+        <div class="vault-card sample-vault-item">
           <div>
             <div class="vault-icon">📜</div>
             <h3 class="vault-title">자녀들에게 남기는 사랑의 편지</h3>
@@ -2144,7 +2359,7 @@
         </div>
 
         <!-- 금고 항목 2: 사전연명의료의향서 & 장례 희망서 -->
-        <div class="vault-card">
+        <div class="vault-card sample-vault-item">
           <div>
             <div class="vault-icon">🕊️</div>
             <h3 class="vault-title">사전의료 & 장례 희망서 (웰다잉)</h3>
@@ -2171,7 +2386,7 @@
         </div>
 
         <!-- 금고 항목 3: 애착 유품 정리 목록 -->
-        <div class="vault-card">
+        <div class="vault-card sample-vault-item">
           <div>
             <div class="vault-icon">🎁</div>
             <h3 class="vault-title">애착 유품 분배 & 상속 메모</h3>
@@ -2198,7 +2413,7 @@
         </div>
 
         <!-- 금고 항목 4: 디지털 계정 & 비상 금고 노트 -->
-        <div class="vault-card">
+        <div class="vault-card sample-vault-item">
           <div>
             <div class="vault-icon">🔑</div>
             <h3 class="vault-title">디지털 계정 & 비상 인계 노트</h3>
@@ -3765,7 +3980,8 @@
                 if (descEl) descEl.textContent = '카카오 간편 가입으로 안전하게 열린 나만의 프라이빗 라이프 아카이브';
 
                 closeLoginModal();
-                alert(`🎉 환영합니다, ${nickname}님!\n카카오 로그인으로 나만의 전용 서재가 활성화되었습니다.`);
+                updateRoomDisplayMode();
+                alert(`🎉 환영합니다, ${nickname}님!\n어르신만의 깨끗하고 고유한 독립 서재가 열렸습니다.\n소중한 사진과 글을 직접 꽂아보세요!`);
               },
               fail: function(error) {
                 console.error(error);
@@ -3801,21 +4017,215 @@
         return;
       }
 
-      document.getElementById('ownerTitle').innerHTML = `<strong class="point-bold">${name}</strong> 어르신의 고유한 서재`;
-      document.getElementById('ownerAvatar').textContent = '👤';
-      document.getElementById('ownerDesc').textContent = `등록번호 [****-${phone}] 님의 프라이빗 라이프 아카이브`;
+      const userData = {
+        id: 'senior_' + Date.now(),
+        name: name,
+        nickname: name,
+        phone: phone,
+        loginType: 'direct',
+        loginAt: new Date().toISOString()
+      };
+      localStorage.setItem('reset_logged_in_user', JSON.stringify(userData));
+      localStorage.setItem('reset_user_name', name);
 
       closeLoginModal();
+      updateRoomDisplayMode();
       alert(`환영합니다! ${name} 어르신의 전용 서재가 열렸습니다.`);
     }
 
-    // 김순옥 어르신 샘플 서재 로드
+    // ==========================================
+    // 🏛️ 서재 모드 관리 시스템 (내 서재 vs 김순옥 샘플 둘러보기)
+    // ==========================================
+    let isSampleModeActive = false; // 기본은 로그인 회원 본인 서재
+
+    function getLoggedInUser() {
+      const savedUserStr = localStorage.getItem('reset_logged_in_user');
+      const savedName = localStorage.getItem('reset_user_name');
+      let name = savedName || '';
+      let avatar = '🌿';
+      let loginType = '';
+      if (savedUserStr) {
+        try {
+          const u = JSON.parse(savedUserStr);
+          if (u.name || u.nickname) name = u.name || u.nickname;
+          if (u.loginType) loginType = u.loginType;
+        } catch(e) {}
+      }
+      return { name, avatar, loginType };
+    }
+
+    function toggleRoomMode() {
+      isSampleModeActive = !isSampleModeActive;
+      updateRoomDisplayMode();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function switchToSampleRoom() {
+      isSampleModeActive = true;
+      updateRoomDisplayMode();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      alert('💡 김순옥 어르신의 완성된 서재 [둘러보기 모드]로 전환되었습니다.\n상단의 [내 서재로 돌아가기] 버튼을 누르면 언제든 내 서재로 복귀합니다.');
+    }
+
+    function switchToUserRoom() {
+      isSampleModeActive = false;
+      updateRoomDisplayMode();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 김순옥 어르신 샘플 서재 로드 (모달창 등에서 호출 시)
     function loadSampleRoom() {
-      document.getElementById('ownerTitle').innerHTML = `<strong class="point-bold">김순옥</strong> 어르신의 고유한 서재`;
-      document.getElementById('ownerAvatar').textContent = '👵';
-      document.getElementById('ownerDesc').textContent = '일생의 궤적이 단정히 꽂혀있는 온전한 나만의 기록 보관소';
       closeLoginModal();
-      alert('김순옥 어르신의 보물 서재 둘러보기 모드로 전환되었습니다.');
+      switchToSampleRoom();
+    }
+
+    // 화면 디스플레이 갱신 (내 서재 vs 둘러보기 분기 핵심 함수)
+    function updateRoomDisplayMode() {
+      const user = getLoggedInUser();
+      const hasUser = !!(user.name && user.name !== '김순옥');
+
+      const banner = document.getElementById('roomModeBanner');
+      const bannerText = document.getElementById('bannerText');
+      const btnToggle = document.getElementById('btnToggleSampleRoom');
+
+      const ownerTitle = document.getElementById('ownerTitle');
+      const ownerAvatar = document.getElementById('ownerAvatar');
+      const ownerDesc = document.getElementById('ownerDesc');
+      const ownerQuote = document.querySelector('.owner-quote');
+
+      const userMemoirArea = document.getElementById('userMemoirArea');
+      const sampleMemoirArea = document.getElementById('sampleMemoirArea');
+      const memoirShelfDesc = document.getElementById('memoirShelfDesc');
+      const userGalleryEmptyArea = document.getElementById('userGalleryEmptyArea');
+      const userDiaryEmptyArea = document.getElementById('userDiaryEmptyArea');
+      const userVaultEmptyArea = document.getElementById('userVaultEmptyArea');
+
+      const sampleMemories = document.querySelectorAll('.sample-memory-item');
+      const sampleNotes = document.querySelectorAll('.sample-note-item');
+      const sampleVaults = document.querySelectorAll('.sample-vault-item');
+
+      // 등록된 사용자 메모리 개수 확인
+      let customList = [];
+      try {
+        customList = JSON.parse(localStorage.getItem('reset_custom_memories') || '[]');
+      } catch(e) {}
+      const userPhotosCount = customList.filter(item => item.category === 'gallery').length;
+      const userNotesCount = customList.filter(item => item.category === 'diary').length;
+
+      let customVaultList = [];
+      try {
+        customVaultList = JSON.parse(localStorage.getItem('reset_custom_vault_items') || '[]');
+      } catch(e) {}
+      const userVaultCount = customVaultList.length;
+
+      const statPagesEl = document.getElementById('statBookPages');
+      const statPhotosEl = document.getElementById('statPhotos');
+      const statNotesEl = document.getElementById('statNotes');
+
+      if (!hasUser || isSampleModeActive) {
+        // [1] 김순옥 어르신 완성 샘플 둘러보기 모드
+        if (hasUser) {
+          if (banner) {
+            banner.style.display = 'flex';
+            banner.className = 'room-mode-banner sample-mode';
+            if (bannerText) bannerText.innerHTML = `💡 <strong>[둘러보기 모드]</strong> 김순옥 어르신의 완성된 라이프 아카이브 예시를 둘러보고 계십니다.`;
+            if (btnToggle) {
+              btnToggle.className = 'btn-mode-switch to-user';
+              btnToggle.innerHTML = `🏠 내 서재로 돌아가기`;
+            }
+          }
+        } else {
+          if (banner) banner.style.display = 'none';
+        }
+
+        if (ownerTitle) ownerTitle.innerHTML = `<strong class="point-bold">김순옥</strong> 어르신의 고유한 서재`;
+        if (ownerAvatar) ownerAvatar.textContent = '👵';
+        if (ownerDesc) ownerDesc.textContent = '일생의 궤적이 단정히 꽂혀있는 온전한 나만의 기록 보관소';
+        if (ownerQuote) ownerQuote.textContent = '"인생의 황혼은 저무는 시간이 아니라, 가장 아름다운 결을 모으는 축제의 시간입니다."';
+
+        if (userMemoirArea) userMemoirArea.style.display = 'none';
+        if (sampleMemoirArea) sampleMemoirArea.style.display = 'block';
+        if (memoirShelfDesc) memoirShelfDesc.textContent = '전문 구술 인터뷰와 교정을 거쳐 완성된 김순옥 어르신의 인생 평전입니다.';
+
+        sampleMemories.forEach(el => el.style.display = 'block');
+        if (userGalleryEmptyArea) userGalleryEmptyArea.style.display = 'none';
+
+        sampleNotes.forEach(el => el.style.display = 'block');
+        if (userDiaryEmptyArea) userDiaryEmptyArea.style.display = 'none';
+
+        sampleVaults.forEach(el => el.style.display = 'block');
+        if (userVaultEmptyArea) userVaultEmptyArea.style.display = 'none';
+
+        if (statPagesEl) statPagesEl.textContent = '184';
+        if (statPhotosEl) statPhotosEl.textContent = 12 + userPhotosCount;
+        if (statNotesEl) statNotesEl.textContent = 28 + userNotesCount;
+
+        // 탭 카운터
+        const tcM = document.getElementById('tabCounterMemoir');
+        const tcG = document.getElementById('tabCounterGallery');
+        const tcD = document.getElementById('tabCounterDiary');
+        const tcV = document.getElementById('tabCounterVault');
+        if (tcM) tcM.textContent = '1권';
+        if (tcG) tcG.textContent = (12 + userPhotosCount) + '장';
+        if (tcD) tcD.textContent = (28 + userNotesCount) + '편';
+        if (tcV) tcV.textContent = '안심보관';
+
+      } else {
+        // [2] 로그인 회원 본인의 깨끗한 독립 서재 모드 (Empty State)
+        const name = user.name;
+        if (banner) {
+          banner.style.display = 'flex';
+          banner.className = 'room-mode-banner user-mode';
+          if (bannerText) bannerText.innerHTML = `🌿 <strong style="color: var(--accent-green); font-size: 1rem;">${escapeHtml(name)}</strong> 어르신의 고유한 독립 서재입니다. 나만의 사진과 소중한 글을 직접 채워보세요.`;
+          if (btnToggle) {
+            btnToggle.className = 'btn-mode-switch to-sample';
+            btnToggle.innerHTML = `👵 김순옥 어르신 완성 예시 둘러보기`;
+          }
+        }
+
+        if (ownerTitle) ownerTitle.innerHTML = `<strong class="point-bold">${escapeHtml(name)}</strong> 어르신의 고유한 서재`;
+        if (ownerAvatar) ownerAvatar.textContent = user.avatar || '🌿';
+        if (ownerDesc) ownerDesc.textContent = '일생의 소중한 서사와 결이 단정히 보관된 나만의 독립 서재';
+        if (ownerQuote) ownerQuote.textContent = '"지나온 삶의 귀한 발자취를 내 손으로 정갈하게 가꾸어 나갑니다."';
+
+        // 자서전 서가: 신규 회원은 준비 카드 노출, 김순옥 완성본 숨김
+        if (userMemoirArea) userMemoirArea.style.display = 'block';
+        if (sampleMemoirArea) sampleMemoirArea.style.display = 'none';
+        if (memoirShelfDesc) memoirShelfDesc.textContent = '어르신의 백년 생애사를 기록하기 위한 독립 서가입니다.';
+
+        // 사진 서가: 김순옥 사진 숨기고, 올린 사진 없으면 빈 서가 카드
+        sampleMemories.forEach(el => el.style.display = 'none');
+        if (userGalleryEmptyArea) {
+          userGalleryEmptyArea.style.display = (userPhotosCount === 0) ? 'block' : 'none';
+        }
+
+        // 일기 서가: 김순옥 일기 숨기고, 올린 일기 없으면 빈 서가 카드
+        sampleNotes.forEach(el => el.style.display = 'none');
+        if (userDiaryEmptyArea) {
+          userDiaryEmptyArea.style.display = (userNotesCount === 0) ? 'block' : 'none';
+        }
+
+        // 금고 서가: 김순옥 금고 숨기고, 올린 금고 없으면 빈 서가 카드
+        sampleVaults.forEach(el => el.style.display = 'none');
+        if (userVaultEmptyArea) {
+          userVaultEmptyArea.style.display = (userVaultCount === 0) ? 'block' : 'none';
+        }
+
+        // 통계 수치 (사용자가 올린 수량 기준, 초기 0)
+        if (statPagesEl) statPagesEl.textContent = '0';
+        if (statPhotosEl) statPhotosEl.textContent = userPhotosCount;
+        if (statNotesEl) statNotesEl.textContent = userNotesCount;
+
+        // 탭 카운터
+        const tcM = document.getElementById('tabCounterMemoir');
+        const tcG = document.getElementById('tabCounterGallery');
+        const tcD = document.getElementById('tabCounterDiary');
+        const tcV = document.getElementById('tabCounterVault');
+        if (tcM) tcM.textContent = '준비중';
+        if (tcG) tcG.textContent = userPhotosCount + '장';
+        if (tcD) tcD.textContent = userNotesCount + '편';
+        if (tcV) tcV.textContent = userVaultCount > 0 ? (userVaultCount + '건') : '안심보관';
+      }
     }
 
     // 가족 공유 링크 복사
@@ -4065,11 +4475,8 @@
         }
       });
 
-      // 통계 수치 실시간 업데이트
-      const statPhotosEl = document.getElementById('statPhotos');
-      const statNotesEl = document.getElementById('statNotes');
-      if (statPhotosEl) statPhotosEl.textContent = 12 + addedPhotos;
-      if (statNotesEl) statNotesEl.textContent = 28 + addedNotes;
+      // 서재 모드 상태 및 빈 서가/통계 수치 실시간 갱신
+      updateRoomDisplayMode();
     }
 
     // 메모리 삭제
@@ -4386,6 +4793,7 @@
         `;
         grid.prepend(card);
       });
+      updateRoomDisplayMode();
     }
 
     // 동적 금고 아이템 열람
@@ -4417,6 +4825,7 @@
         list = list.filter(it => it.id !== id);
         localStorage.setItem('reset_custom_vault_items', JSON.stringify(list));
         renderCustomVaultItems();
+        updateRoomDisplayMode();
         alert('금고에서 안전하게 삭제되었습니다.');
       } catch(err) {
         console.error(err);
@@ -4437,29 +4846,11 @@
       // 저장된 사용자 엔딩 금고 렌더링
       renderCustomVaultItems();
 
-      // 카카오 SDK 초기화 및 로그인 사용자 서재 자동 활성화
+      // 카카오 SDK 초기화
       initKakaoSDK();
-      const savedUserStr = localStorage.getItem('reset_logged_in_user');
-      const savedName = localStorage.getItem('reset_user_name');
-      if (savedName || savedUserStr) {
-        let name = savedName;
-        let avatar = '🌿';
-        try {
-          if (savedUserStr) {
-            const u = JSON.parse(savedUserStr);
-            if (u.name || u.nickname) name = u.name || u.nickname;
-            if (u.loginType === 'kakao') avatar = '🌿';
-          }
-        } catch(e) {}
-        if (name && name !== '김순옥') {
-          const titleEl = document.getElementById('ownerTitle');
-          const avatarEl = document.getElementById('ownerAvatar');
-          const descEl = document.getElementById('ownerDesc');
-          if (titleEl) titleEl.innerHTML = `<strong class="point-bold">${escapeHtml(name)}</strong> 어르신의 고유한 서재`;
-          if (avatarEl) avatarEl.textContent = avatar;
-          if (descEl) descEl.textContent = '일생의 소중한 서사와 결이 단정히 보관된 나만의 독립 서재';
-        }
-      }
+
+      // 🌿 로그인 상태에 맞춰 내 서재(깨끗한 독립 서재) 또는 둘러보기 모드 자동 적용
+      updateRoomDisplayMode();
     });
   </script>
 </body>
