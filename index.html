@@ -4627,7 +4627,7 @@
           <p>지나온 세월의 결을 다듬고, 남은 인생의 여백을 내 손으로 그리는 프리미엄 웰라이프 & 라이프 아카이브 플랫폼입니다.</p>
           <div style="margin-top: 12px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
             <strong>회사명: 메타큐 라이프</strong> | 사업자등록번호: <strong>432-08-03705</strong><br>
-            고객지원: <a href="mailto:cjh6630@naver.com" style="color: inherit; text-decoration: underline;">cjh6630@naver.com</a> | 운영시간: 평일 10:00 ~ 18:00<br>
+            고객지원: <a href="mailto:cjh6630@naver.com" style="color: inherit; text-decoration: underline;">cjh6630@naver.com</a> | 직통전화: <a href="tel:01096135913" id="footerPhoneLink" style="color: var(--accent); font-weight: 700; text-decoration: underline;">010-9613-5913</a> | 운영시간: 평일 10:00 ~ 18:00<br>
             카카오톡 상담: <a href="https://open.kakao.com/o/p79YYjPi" target="_blank" rel="noopener noreferrer" style="color: var(--accent-gold); font-weight: 700; text-decoration: underline;">💬 오픈채팅 실시간 1:1 대화방</a> | <a href="privacy.html" target="_blank" style="color: var(--text-muted); text-decoration: underline;">📜 개인정보처리방침</a>
           </div>
         </div>
@@ -4988,7 +4988,7 @@
 
       <!-- 원터치 퀵 액션: 전화 & 카카오톡 -->
       <div class="senior-quick-grid">
-        <a href="tel:010-8765-4321" class="senior-call-btn" id="seniorCallLink" title="터치하시면 친절한 전담 코치와 바로 통화 연결됩니다">
+        <a href="tel:01096135913" class="senior-call-btn" id="seniorCallLink" title="터치하시면 친절한 전담 코치(010-9613-5913)와 바로 통화 연결됩니다">
           <span class="senior-call-main">📞 전화로 바로 묻기</span>
           <span class="senior-call-sub">터치 시 즉시 전화 연결 (무료)</span>
         </a>
@@ -5165,6 +5165,31 @@
 
       <!-- ================= 탭 2: 1:1 상담 신청 접수 관리 영역 (NEW) ================= -->
       <div id="adminConsultsTabContent" style="display: none;">
+        <!-- 📞 직통 상담 전화번호 실시간 설정 바 -->
+        <div style="background: var(--bg-card, #fff); border: 1.5px solid var(--accent, #2b5a42); border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="font-size: 1.7rem; background: rgba(43, 90, 66, 0.1); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">📞</div>
+            <div>
+              <div style="font-size: 0.96rem; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                <span>고객 맞춤 상담 직통 전화번호 설정</span>
+                <span style="font-size: 0.74rem; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 999px; font-weight: 700;">터치 즉시 통화 연결</span>
+              </div>
+              <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 3px;">
+                고객이 모달에서 <strong>[📞 전화로 바로 묻기]</strong>를 눌렀을 때 연결될 대표 직통 번호입니다.
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <input type="tel" id="adminConsultPhoneInput" placeholder="010-9613-5913" style="width: 170px; padding: 9px 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 1rem; font-weight: 800; text-align: center; color: var(--text-primary); font-family: inherit;" oninput="formatPhoneNumber(this)">
+            <button type="button" onclick="saveAdminConsultPhone()" class="btn btn-primary" style="padding: 9px 18px; font-size: 0.90rem; font-weight: 800; white-space: nowrap; cursor: pointer;">
+              💾 전화번호 변경 저장
+            </button>
+            <button type="button" onclick="testCallAdminConsultPhone()" class="btn btn-secondary" style="padding: 9px 14px; font-size: 0.86rem; font-weight: 700; white-space: nowrap; cursor: pointer;" title="설정된 번호로 테스트 통화 걸기">
+              📞 테스트
+            </button>
+          </div>
+        </div>
+
         <!-- 카테고리별 실시간 신청 통계 카드 (클릭 시 해당 카테고리 즉시 필터) -->
         <div class="consult-stat-grid">
           <div class="consult-stat-card active" id="statCardAll" onclick="filterConsultByCategory('all')">
@@ -5599,8 +5624,68 @@
       openSeniorConsultModal('✍️ 내 인생의 디지털 자서전', '자서전 30일 워크북 및 제작 상담 희망');
     }
 
+    // =========================================================================
+    // 📞 고객 맞춤 상담 직통 전화번호 관리 (기본값: 010-9613-5913, 관리자홈에서 변경 가능)
+    // =========================================================================
+    const DEFAULT_CONSULT_PHONE = '010-9613-5913';
+
+    // 현재 설정된 직통 전화번호 조회
+    function getConsultPhone() {
+      return localStorage.getItem('reset_consult_phone') || DEFAULT_CONSULT_PHONE;
+    }
+
+    // 화면 내 모든 직통 전화 링크(상담 모달, 푸터, 관리자창) 실시간 동기화
+    function updateConsultPhoneUI() {
+      const phone = getConsultPhone();
+      const cleanDigits = phone.replace(/[^0-9]/g, '');
+
+      // 1) 시니어 맞춤 상담 모달의 '전화로 바로 묻기' 링크
+      const callLink = document.getElementById('seniorCallLink');
+      if (callLink) {
+        callLink.href = 'tel:' + cleanDigits;
+        callLink.title = `터치하시면 친절한 전담 코치(${phone})와 바로 통화 연결됩니다`;
+      }
+
+      // 2) 메인 푸터의 직통전화 링크
+      const footerLink = document.getElementById('footerPhoneLink');
+      if (footerLink) {
+        footerLink.href = 'tel:' + cleanDigits;
+        footerLink.textContent = phone;
+      }
+
+      // 3) 관리자 입력 필드가 존재할 때 동기화
+      const adminInput = document.getElementById('adminConsultPhoneInput');
+      if (adminInput && document.activeElement !== adminInput) {
+        adminInput.value = phone;
+      }
+    }
+
+    // 관리자홈에서 상담 직통 전화번호 변경 및 저장
+    function saveAdminConsultPhone() {
+      const input = document.getElementById('adminConsultPhoneInput');
+      if (!input) return;
+      let val = input.value.trim();
+      if (!val) {
+        val = DEFAULT_CONSULT_PHONE;
+        input.value = val;
+      }
+      localStorage.setItem('reset_consult_phone', val);
+      updateConsultPhoneUI();
+      alert(`✅ 고객 맞춤 상담 직통 전화번호가 [${val}] (으)로 안전하게 저장되었습니다.\n\n이제 고객이 '전화로 바로 묻기'를 터치하면 이 번호로 즉시 통화 연결됩니다.`);
+    }
+
+    // 관리자홈에서 번호 테스트 연결
+    function testCallAdminConsultPhone() {
+      const phone = getConsultPhone();
+      const cleanDigits = phone.replace(/[^0-9]/g, '');
+      if (confirm(`📞 설정된 상담 번호 [${phone}] 로 테스트 통화를 연결하시겠습니까?`)) {
+        window.location.href = 'tel:' + cleanDigits;
+      }
+    }
+
     // 시니어 모달 열기
     function openSeniorConsultModal(category, defaultNote) {
+      updateConsultPhoneUI();
       selectedConsultCategory = category || '🌿 1:1 방문 맞춤 케어';
       selectedConsultRole = '본인 어르신';
 
@@ -6713,6 +6798,7 @@
 
     // ================= 관리자 홈 대시보드 모달 제어 =================
     function openAdminDashboardModal() {
+      updateConsultPhoneUI();
       renderAdminDashboard();
       renderConsultAdminTable();
       renderAdminMemoirTable();
@@ -8270,6 +8356,7 @@
       updateMemoirBadges();
       renderUnburdenFeed();
       updateUnburdenAdminBadge();
+      updateConsultPhoneUI();
     });
 
     // 외부 클릭 시 서식 팝업 닫기
@@ -8293,6 +8380,7 @@
     updateMemoirBadges();
     renderUnburdenFeed();
     updateUnburdenAdminBadge();
+    updateConsultPhoneUI();
   </script>
 </body>
 </html>
