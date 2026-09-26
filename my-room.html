@@ -33,8 +33,8 @@
     }
   </script>
 
-  <!-- Kakao JavaScript SDK v2 -->
-  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
+  <!-- Kakao JavaScript SDK (클라이언트 팝업 로그인 정식 지원) -->
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
   <!-- 웹폰트: 기본 Pretendard(고딕) + 감성 포인트 Noto Serif KR(명조) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -3716,65 +3716,78 @@
     }
 
     function loginWithKakao() {
-      if (!window.Kakao) {
-        alert('카카오 SDK 로드에 실패했습니다. 페이지를 새로고침 해주세요.');
-        return;
-      }
-      if (!Kakao.isInitialized()) {
-        initKakaoSDK();
-      }
-
-      window.Kakao.Auth.login({
-        success: function(authObj) {
-          window.Kakao.API.request({
-            url: '/v2/user/me',
-            success: function(res) {
-              const kakaoAccount = res.kakao_account || {};
-              const profile = kakaoAccount.profile || {};
-              const nickname = profile.nickname || '어르신';
-              const profileImg = profile.profile_image_url || profile.thumbnail_image_url || '';
-              const email = kakaoAccount.email || '';
-
-              const userData = {
-                id: res.id,
-                name: nickname,
-                nickname: nickname,
-                email: email,
-                profileImage: profileImg,
-                loginType: 'kakao',
-                loginAt: new Date().toISOString()
-              };
-
-              localStorage.setItem('reset_logged_in_user', JSON.stringify(userData));
-              localStorage.setItem('reset_user_name', nickname);
-
-              const titleEl = document.getElementById('ownerTitle');
-              if (titleEl) titleEl.innerHTML = `<strong class="point-bold">${escapeHtml(nickname)}</strong> 어르신의 고유한 서재`;
-              const avatarEl = document.getElementById('ownerAvatar');
-              if (avatarEl) avatarEl.textContent = '🌿';
-              const descEl = document.getElementById('ownerDesc');
-              if (descEl) descEl.textContent = '카카오 간편 가입으로 안전하게 열린 나만의 프라이빗 라이프 아카이브';
-
-              closeLoginModal();
-              alert(`🎉 환영합니다, ${nickname}님!\n카카오 로그인으로 나만의 전용 서재가 활성화되었습니다.`);
-            },
-            fail: function(error) {
-              console.error(error);
-              const msg = error.msg || error.error_description || JSON.stringify(error);
-              alert('카카오 사용자 정보 요청 안내: ' + msg);
-            }
-          });
-        },
-        fail: function(err) {
-          console.error(err);
-          if (err && err.error === 'access_denied') {
-            alert('카카오 로그인이 취소되었습니다.');
-          } else {
-            const desc = err.error_description || err.error || JSON.stringify(err);
-            alert('카카오 로그인 안내:\n' + desc + '\n\n카카오 디벨로퍼스에서 [카카오 로그인] 활성화(ON) 및 Redirect URI 설정을 확인해 주세요.');
-          }
+      try {
+        if (!window.Kakao) {
+          alert('카카오 로그인 서비스를 불러오는 중입니다. 잠시 후 다시 시도해 주세요.');
+          return;
         }
-      });
+        if (!window.Kakao.isInitialized()) {
+          initKakaoSDK();
+        }
+
+        if (!window.Kakao.Auth || typeof window.Kakao.Auth.login !== 'function') {
+          console.error('[Kakao] Kakao.Auth.login 함수가 준비되지 않았습니다.');
+          alert('카카오 로그인 모듈을 준비하는 중입니다. 1~2초 후 다시 눌러주세요.');
+          return;
+        }
+
+        window.Kakao.Auth.login({
+          throughTalk: true,
+          persistAccessToken: true,
+          success: function(authObj) {
+            window.Kakao.API.request({
+              url: '/v2/user/me',
+              success: function(res) {
+                const kakaoAccount = res.kakao_account || {};
+                const profile = kakaoAccount.profile || {};
+                const nickname = profile.nickname || '어르신';
+                const profileImg = profile.profile_image_url || profile.thumbnail_image_url || '';
+                const email = kakaoAccount.email || '';
+
+                const userData = {
+                  id: res.id,
+                  name: nickname,
+                  nickname: nickname,
+                  email: email,
+                  profileImage: profileImg,
+                  loginType: 'kakao',
+                  loginAt: new Date().toISOString()
+                };
+
+                localStorage.setItem('reset_logged_in_user', JSON.stringify(userData));
+                localStorage.setItem('reset_user_name', nickname);
+
+                const titleEl = document.getElementById('ownerTitle');
+                if (titleEl) titleEl.innerHTML = `<strong class="point-bold">${escapeHtml(nickname)}</strong> 어르신의 고유한 서재`;
+                const avatarEl = document.getElementById('ownerAvatar');
+                if (avatarEl) avatarEl.textContent = '🌿';
+                const descEl = document.getElementById('ownerDesc');
+                if (descEl) descEl.textContent = '카카오 간편 가입으로 안전하게 열린 나만의 프라이빗 라이프 아카이브';
+
+                closeLoginModal();
+                alert(`🎉 환영합니다, ${nickname}님!\n카카오 로그인으로 나만의 전용 서재가 활성화되었습니다.`);
+              },
+              fail: function(error) {
+                console.error(error);
+                const msg = error.msg || error.error_description || JSON.stringify(error);
+                alert('카카오 사용자 정보 요청 안내: ' + msg);
+              }
+            });
+          },
+          fail: function(err) {
+            console.error(err);
+            if (err && err.error === 'access_denied') {
+              alert('카카오 로그인이 취소되었습니다.');
+            } else {
+              const desc = err.error_description || err.error || JSON.stringify(err);
+              alert('카카오 로그인 안내:\n' + desc + '\n\n카카오 디벨로퍼스에서 [카카오 로그인] 활성화(ON) 및 Redirect URI 설정을 확인해 주세요.');
+            }
+          }
+        });
+      } catch (err) {
+        console.error('[Kakao] loginWithKakao 실행 중 오류:', err);
+        alert('카카오 로그인 실행 중 오류가 발생했습니다: ' + (err.message || err));
+      }
     }
 
     // 시니어 간편 로그인 처리

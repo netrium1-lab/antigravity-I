@@ -33,8 +33,8 @@
     }
   </script>
   
-  <!-- Kakao JavaScript SDK v2 -->
-  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
+  <!-- Kakao JavaScript SDK (클라이언트 팝업 로그인 정식 지원) -->
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
   
   <!-- 웹 폰트 (Pretendard & Noto Serif KR) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -5992,87 +5992,100 @@
 
     // 카카오 3초 간편 로그인/회원가입 실행
     function loginWithKakao() {
-      if (!window.Kakao) {
-        alert('카카오 로그인 서비스를 불러오는 중입니다. 잠시 후 다시 시도해 주세요.');
-        return;
-      }
-      if (!window.Kakao.isInitialized()) {
-        initKakaoSDK();
-      }
-
-      window.Kakao.Auth.login({
-        success: function(authObj) {
-          console.log('[Kakao] 로그인 인증 성공:', authObj);
-          window.Kakao.API.request({
-            url: '/v2/user/me',
-            success: function(res) {
-              console.log('[Kakao] 사용자 정보 수신:', res);
-              const kakaoAccount = res.kakao_account || {};
-              const profile = kakaoAccount.profile || {};
-              const nickname = profile.nickname || '어르신';
-              const profileImg = profile.profile_image_url || profile.thumbnail_image_url || '';
-              const email = kakaoAccount.email || '';
-
-              const userData = {
-                id: res.id,
-                name: nickname,
-                nickname: nickname,
-                email: email,
-                profileImage: profileImg,
-                loginType: 'kakao',
-                loginAt: new Date().toISOString()
-              };
-
-              // 로컬스토리지에 저장 (서재와 즉시 연동)
-              localStorage.setItem('reset_logged_in_user', JSON.stringify(userData));
-              localStorage.setItem('reset_user_name', nickname);
-
-              // 관리자 CRM에 신규 회원 자동 적재
-              try {
-                let adminList = [];
-                const saved = localStorage.getItem('reset_senior_consult_list');
-                if (saved) adminList = JSON.parse(saved);
-                const now = new Date();
-                const dateStr = `${now.getMonth() + 1}/${now.getDate()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-                adminList.unshift({
-                  id: 'kakao_' + res.id,
-                  category: '카카오 간편가입',
-                  role: '서재 회원',
-                  phone: email || '카카오 계정',
-                  note: `[카카오 1초 가입] ${nickname} 님 나만의 서재 자동 개설`,
-                  status: '대기',
-                  createdAt: dateStr
-                });
-                localStorage.setItem('reset_senior_consult_list', JSON.stringify(adminList));
-              } catch (crmErr) {
-                console.error('[CRM] 자동 등록 오류:', crmErr);
-              }
-
-              closeLoginModal();
-              renderHeaderLoginState();
-
-              // 환영 팝업 및 서재 이동 확인
-              if (confirm(`🎉 환영합니다, ${nickname}님!\n카카오톡으로 회원가입 및 로그인이 안전하게 완료되었습니다.\n\n지금 바로 [나의 고유한 서재]로 입장하시겠습니까?`)) {
-                window.location.href = 'my-room.html';
-              }
-            },
-            fail: function(error) {
-              console.error('[Kakao] 사용자 정보 요청 실패:', error);
-              const msg = error.msg || error.error_description || JSON.stringify(error);
-              alert('카카오 사용자 정보 요청 안내: ' + msg);
-            }
-          });
-        },
-        fail: function(err) {
-          console.error('[Kakao] 로그인 창 에러:', err);
-          if (err && err.error === 'access_denied') {
-            alert('카카오 로그인이 취소되었습니다.');
-          } else {
-            const desc = err.error_description || err.error || JSON.stringify(err);
-            alert('카카오 로그인 안내:\n' + desc + '\n\n카카오 디벨로퍼스에서 [카카오 로그인] 활성화(ON) 및 Redirect URI 설정을 확인해 주세요.');
-          }
+      try {
+        if (!window.Kakao) {
+          alert('카카오 로그인 서비스를 불러오는 중입니다. 잠시 후 다시 시도해 주세요.');
+          return;
         }
-      });
+        if (!window.Kakao.isInitialized()) {
+          initKakaoSDK();
+        }
+
+        if (!window.Kakao.Auth || typeof window.Kakao.Auth.login !== 'function') {
+          console.error('[Kakao] Kakao.Auth.login 함수가 준비되지 않았습니다.');
+          alert('카카오 로그인 모듈을 준비하는 중입니다. 1~2초 후 다시 눌러주세요.');
+          return;
+        }
+
+        window.Kakao.Auth.login({
+          throughTalk: true,
+          persistAccessToken: true,
+          success: function(authObj) {
+            console.log('[Kakao] 로그인 인증 성공:', authObj);
+            window.Kakao.API.request({
+              url: '/v2/user/me',
+              success: function(res) {
+                console.log('[Kakao] 사용자 정보 수신:', res);
+                const kakaoAccount = res.kakao_account || {};
+                const profile = kakaoAccount.profile || {};
+                const nickname = profile.nickname || '어르신';
+                const profileImg = profile.profile_image_url || profile.thumbnail_image_url || '';
+                const email = kakaoAccount.email || '';
+
+                const userData = {
+                  id: res.id,
+                  name: nickname,
+                  nickname: nickname,
+                  email: email,
+                  profileImage: profileImg,
+                  loginType: 'kakao',
+                  loginAt: new Date().toISOString()
+                };
+
+                // 로컬스토리지에 저장 (서재와 즉시 연동)
+                localStorage.setItem('reset_logged_in_user', JSON.stringify(userData));
+                localStorage.setItem('reset_user_name', nickname);
+
+                // 관리자 CRM에 신규 회원 자동 적재
+                try {
+                  let adminList = [];
+                  const saved = localStorage.getItem('reset_senior_consult_list');
+                  if (saved) adminList = JSON.parse(saved);
+                  const now = new Date();
+                  const dateStr = `${now.getMonth() + 1}/${now.getDate()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+                  adminList.unshift({
+                    id: 'kakao_' + res.id,
+                    category: '카카오 간편가입',
+                    role: '서재 회원',
+                    phone: email || '카카오 계정',
+                    note: `[카카오 1초 가입] ${nickname} 님 나만의 서재 자동 개설`,
+                    status: '대기',
+                    createdAt: dateStr
+                  });
+                  localStorage.setItem('reset_senior_consult_list', JSON.stringify(adminList));
+                } catch (crmErr) {
+                  console.error('[CRM] 자동 등록 오류:', crmErr);
+                }
+
+                closeLoginModal();
+                renderHeaderLoginState();
+
+                // 환영 팝업 및 서재 이동 확인
+                if (confirm(`🎉 환영합니다, ${nickname}님!\n카카오톡으로 회원가입 및 로그인이 안전하게 완료되었습니다.\n\n지금 바로 [나의 고유한 서재]로 입장하시겠습니까?`)) {
+                  window.location.href = 'my-room.html';
+                }
+              },
+              fail: function(error) {
+                console.error('[Kakao] 사용자 정보 요청 실패:', error);
+                const msg = error.msg || error.error_description || JSON.stringify(error);
+                alert('카카오 사용자 정보 요청 안내: ' + msg);
+              }
+            });
+          },
+          fail: function(err) {
+            console.error('[Kakao] 로그인 창 에러:', err);
+            if (err && err.error === 'access_denied') {
+              alert('카카오 로그인이 취소되었습니다.');
+            } else {
+              const desc = err.error_description || err.error || JSON.stringify(err);
+              alert('카카오 로그인 안내:\n' + desc + '\n\n카카오 디벨로퍼스 설정 또는 브라우저 팝업 차단 여부를 확인해 주세요.');
+            }
+          }
+        });
+      } catch (err) {
+        console.error('[Kakao] loginWithKakao 실행 중 오류:', err);
+        alert('카카오 로그인 실행 중 오류가 발생했습니다: ' + (err.message || err));
+      }
     }
 
     // 직접 성함 입력 폼 토글
