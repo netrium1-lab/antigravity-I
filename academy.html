@@ -687,39 +687,39 @@
       background: var(--bg-card);
       border: 1.5px solid var(--border-color);
       border-radius: var(--radius-lg);
-      padding: 44px 36px;
-      max-width: 780px;
+      padding: 32px 30px;
+      max-width: 860px;
       margin: 0 auto;
       box-shadow: var(--shadow-md);
     }
 
     .apply-intro {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 22px;
     }
     .apply-title {
-      font-size: 1.75rem;
+      font-size: 1.65rem;
       font-weight: 850;
       letter-spacing: -0.6px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .apply-sub {
-      font-size: 0.92rem;
+      font-size: 0.90rem;
       color: var(--text-secondary);
-      line-height: 1.6;
+      line-height: 1.55;
     }
 
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-      margin-bottom: 22px;
+      gap: 14px;
+      margin-bottom: 20px;
     }
 
     .form-field {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
     }
     .form-field.full {
       grid-column: span 2;
@@ -1987,8 +1987,8 @@
             <span><strong>원하시는 강의 박스를 클릭</strong>하시면 아래 지원서의 <strong>희망 수강 일정이 자동으로 즉시 선택</strong>됩니다.</span>
           </div>
 
-          <!-- 일정 및 장소 동적 그리드 (클릭하여 지원서 자동 선택) -->
-          <div id="academyScheduleGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px;">
+          <!-- 일정 및 장소 동적 그리드 (클릭하여 지원서 자동 선택 - 3열 균형 배치) -->
+          <div id="academyScheduleGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px;">
             <!-- JS 동적 렌더링 -->
           </div>
         </div>
@@ -3586,23 +3586,26 @@
               <div class="schedule-click-card ${isSelected ? 'active-sched-card' : ''}" 
                    id="schedCard_${s.id}" 
                    onclick="selectScheduleCard('${s.id}', '${escapeHtml(optVal)}')" 
-                   title="👆 클릭 시 아래 지원서에 이 일정이 자동 선택됩니다.">
-                <span class="sched-selected-tag">✓ 선택됨</span>
-                <div style="font-size: 0.78rem; font-weight: 800; color: ${tagColor}; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between;">
-                  <span>🗓️ [${escapeHtml(s.batch || '1기')}] ${escapeHtml(s.name)}</span>
+                   title="👆 클릭 시 아래 지원서에 이 일정이 자동 선택됩니다."
+                   style="padding: 12px 14px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <span class="sched-selected-tag">✓ 선택됨</span>
+                  <div style="font-size: 0.76rem; font-weight: 800; color: ${tagColor}; margin-bottom: 3px; display: flex; align-items: center; justify-content: space-between;">
+                    <span>🗓️ [${escapeHtml(s.batch || '1기')}] ${escapeHtml(s.name)}</span>
+                  </div>
+                  <div style="font-size: 0.98rem; font-weight: 850; color: var(--text-primary); margin-bottom: 3px;">
+                    ${escapeHtml(s.startDate)} 개강
+                  </div>
+                  <div style="font-size: 0.80rem; color: var(--text-secondary); margin-bottom: 3px;">
+                    ⏰ ${escapeHtml(s.timeText)}
+                  </div>
+                  <div style="font-size: 0.74rem; color: var(--text-muted); margin-bottom: 4px;">
+                    📍 ${escapeHtml(s.location || '서울 강남 교육센터 & Zoom')}
+                  </div>
                 </div>
-                <div style="font-size: 1.02rem; font-weight: 850; color: var(--text-primary); margin-bottom: 4px;">
-                  ${escapeHtml(s.startDate)} 개강
-                </div>
-                <div style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 4px;">
-                  ⏰ ${escapeHtml(s.timeText)}
-                </div>
-                <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px;">
-                  📍 ${escapeHtml(s.location || '서울 강남 교육센터 & Zoom')}
-                </div>
-                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.76rem; border-top: 1px dashed var(--border-color); padding-top: 6px; margin-top: 6px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.74rem; border-top: 1px dashed var(--border-color); padding-top: 5px; margin-top: 5px;">
                   <span style="font-weight: 850; color: #15803d;">${escapeHtml(s.status || '🟢 모집중')}</span>
-                  <span style="color: var(--text-muted); font-size: 0.74rem;">${escapeHtml(s.note || '')}</span>
+                  <span style="color: var(--text-muted); font-size: 0.70rem;">${escapeHtml(s.note || '')}</span>
                 </div>
               </div>
             `;
@@ -3610,11 +3613,15 @@
 
           // 📍 실습 장소 및 교육 방식 안내 카드 (관리자가 지정한 내용으로 동적 렌더링)
           gridHtml += `
-            <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 12px; padding: 15px 16px;">
-              <div style="font-size: 0.78rem; font-weight: 800; color: var(--accent-gold); margin-bottom: 4px;">📍 실습 장소 & 교육 방식</div>
-              <div style="font-size: 0.98rem; font-weight: 850; color: var(--text-primary); margin-bottom: 4px;">${escapeHtml(header.locationTitle || '온·오프라인 하이브리드')}</div>
-              <div style="font-size: 0.84rem; color: var(--text-secondary);">${escapeHtml(header.locationDetail || '서울 강남 거점센터 실습 + Zoom 라이브')}</div>
-              <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 6px;">${escapeHtml(header.locationSubNotice || '* 지방 수강생 실시간 라이브 & 실습 키트 택배')}</div>
+            <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="font-size: 0.76rem; font-weight: 800; color: var(--accent-gold); margin-bottom: 3px;">📍 실습 장소 & 교육 방식</div>
+                <div style="font-size: 0.94rem; font-weight: 850; color: var(--text-primary); margin-bottom: 3px;">${escapeHtml(header.locationTitle || '온·오프라인 하이브리드')}</div>
+                <div style="font-size: 0.80rem; color: var(--text-secondary);">${escapeHtml(header.locationDetail || '서울 강남 거점센터 실습 + Zoom 라이브')}</div>
+              </div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 5px; margin-top: 5px;">
+                ${escapeHtml(header.locationSubNotice || '* 지방 수강생 실시간 라이브 & 실습 키트 택배')}
+              </div>
             </div>
           `;
 
@@ -3627,10 +3634,12 @@
         let optHtml = `<option value="">희망 수강 일정을 선택해주세요 (위 박스 클릭 시 자동선택) *</option>`;
         schedules.forEach(s => {
           const optVal = `[${s.batch || '1기'}] ${s.name} (${s.startDate})`;
-          // 글자 잘림 방지용 깔끔한 표시 문구
+          // 글자 잘림 방지용 깔끔한 표시 문구 (모바일/PC 어디서든 한 줄에 쏙)
+          const batchText = (s.batch || '1기').replace(/\[|\]/g, '');
           const statusText = (s.status || '').replace(/🟢|🔴|🟡/g, '').trim();
           const cleanName = (s.name || '').replace(/\[.*?\]/g, '').trim();
-          const optDisplay = `[${s.batch || '1기'}] ${cleanName} · ${s.startDate} (${statusText || '모집중'})`;
+          const shortDate = (s.startDate || '').replace(/2026\.\s*/g, '');
+          const optDisplay = `[${batchText}] ${cleanName} (${shortDate} 개강 · ${statusText || '모집중'})`;
           optHtml += `<option value="${escapeHtml(optVal)}">${escapeHtml(optDisplay)}</option>`;
         });
         optHtml += `<option value="[일정협의] 평일/주말 전화 상담 후 결정">🤝 [일정협의] 평일/주말 전화 상담 후 결정</option>`;
