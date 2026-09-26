@@ -1350,6 +1350,53 @@
     .curriculum-editor-card:hover {
       border-color: var(--accent);
     }
+
+    /* 🖱️ 강의 일정 카드 클릭 & 선택 활성화 인터랙션 스타일 */
+    .schedule-click-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      padding: 15px 16px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+    }
+    .schedule-click-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(43, 90, 66, 0.12);
+    }
+    .schedule-click-card.active-sched-card {
+      border: 2px solid var(--accent) !important;
+      background: rgba(43, 90, 66, 0.07) !important;
+      box-shadow: 0 4px 16px rgba(43, 90, 66, 0.20) !important;
+    }
+    .schedule-click-card .sched-selected-tag {
+      display: none;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 0.72rem;
+      font-weight: 850;
+      background: var(--accent);
+      color: #ffffff;
+      padding: 2px 8px;
+      border-radius: 999px;
+      box-shadow: 0 2px 6px rgba(43, 90, 66, 0.25);
+    }
+    .schedule-click-card.active-sched-card .sched-selected-tag {
+      display: inline-block;
+    }
+    .track-card {
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .track-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
   </style>
 </head>
 <body>
@@ -1935,28 +1982,14 @@
             </div>
           </div>
 
-          <!-- 일정 및 장소 3단 그리드 -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px;">
-            <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 12px; padding: 14px 16px;">
-              <div style="font-size: 0.78rem; font-weight: 800; color: var(--accent); margin-bottom: 4px;">🗓️ 평일 주간반 (화요반)</div>
-              <div id="schedWeekdayDate" style="font-size: 0.98rem; font-weight: 850; color: var(--text-primary); margin-bottom: 4px;">2026. 10. 14 (화) 개강</div>
-              <div id="schedWeekdayTime" style="font-size: 0.84rem; color: var(--text-secondary);">매주 화요일 14:00 ~ 18:00 (4주간)</div>
-              <div id="schedWeekdayNote" style="font-size: 0.76rem; color: #16a34a; font-weight: 750; margin-top: 6px;">✓ 개설 확정 · 선착순 잔여 3석</div>
-            </div>
+          <div style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; background: var(--bg-card); padding: 8px 12px; border-radius: 8px; border: 1px dashed var(--border-color);">
+            <span>👆</span>
+            <span><strong>원하시는 강의 박스를 클릭</strong>하시면 아래 지원서의 <strong>희망 수강 일정이 자동으로 즉시 선택</strong>됩니다.</span>
+          </div>
 
-            <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 12px; padding: 14px 16px;">
-              <div style="font-size: 0.78rem; font-weight: 800; color: #5b21b6; margin-bottom: 4px;">🗓️ 주말 집중반 (토요반)</div>
-              <div id="schedWeekendDate" style="font-size: 0.98rem; font-weight: 850; color: var(--text-primary); margin-bottom: 4px;">2026. 10. 18 (토) 개강</div>
-              <div id="schedWeekendTime" style="font-size: 0.84rem; color: var(--text-secondary);">매주 토요일 10:00 ~ 14:00 (4주간)</div>
-              <div id="schedWeekendNote" style="font-size: 0.76rem; color: #16a34a; font-weight: 750; margin-top: 6px;">✓ 개설 확정 · 선착순 잔여 2석</div>
-            </div>
-
-            <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 12px; padding: 14px 16px;">
-              <div style="font-size: 0.78rem; font-weight: 800; color: var(--accent-gold); margin-bottom: 4px;">📍 실습 장소 & 교육 방식</div>
-              <div id="schedLocationTitle" style="font-size: 0.98rem; font-weight: 850; color: var(--text-primary); margin-bottom: 4px;">온·오프라인 하이브리드</div>
-              <div id="schedLocationDetail" style="font-size: 0.84rem; color: var(--text-secondary);">서울 강남 거점센터 실습 + Zoom 라이브</div>
-              <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 6px;">* 지방 수강생 실시간 라이브 & 실습 키트 택배</div>
-            </div>
+          <!-- 일정 및 장소 동적 그리드 (클릭하여 지원서 자동 선택) -->
+          <div id="academyScheduleGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px;">
+            <!-- JS 동적 렌더링 -->
           </div>
         </div>
 
@@ -2428,50 +2461,57 @@
           </div>
         </div>
 
-        <!-- 📅 강의 개설 여부 및 상세 일정 설정 박스 -->
+        <!-- 📅 강의 개설 일정 관리 테이블 (수정 / 삭제 / 신규 추가) -->
         <div class="academy-sub-card" style="border: 2px solid var(--accent); background: rgba(43, 90, 66, 0.04);">
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
-            <h3 style="font-size: 1.12rem; font-weight: 850; color: var(--text-primary); margin: 0; display: flex; align-items: center; gap: 8px;">
-              <span>📅</span> 1기 강의 개설 여부 & 개강 일정 실시간 설정
-            </h3>
-            <span style="font-size: 0.76rem; background: var(--accent); color: #fff; padding: 3px 10px; border-radius: 999px; font-weight: 750;">지원 신청란 실시간 연동</span>
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">
+            <div>
+              <h3 style="font-size: 1.12rem; font-weight: 850; color: var(--text-primary); margin: 0; display: flex; align-items: center; gap: 8px;">
+                <span>📅</span> 1기 강의 개설 일정 관리 (수정 · 삭제 · 신규 추가)
+              </h3>
+              <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 4px 0 0 0;">
+                강의 일정을 추가, 수정 또는 삭제하시면 <strong>메인의 지원 신청란 배너와 지원서 선택창에 즉시 실시간 반영</strong>됩니다.
+              </p>
+            </div>
+            <button type="button" class="btn-submit-apply" onclick="openScheduleModal()" style="padding: 7px 16px; font-size: 0.86rem; font-weight: 800; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
+              <span>➕</span> 신규 강의 일정 추가
+            </button>
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 14px;">
+          <!-- 공통 배너 문구 설정 -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;">
             <div>
-              <label for="cfgSchedStatus" style="display: block; font-size: 0.84rem; font-weight: 750; color: #15803d; margin-bottom: 5px;">강의 개설 상태 배지 문구:</label>
-              <input type="text" id="cfgSchedStatus" placeholder="🟢 1기 정규 개설 확정 (마감 임박)" style="width: 100%; padding: 8px 12px; border: 2px solid var(--accent); border-radius: 8px; font-size: 0.90rem; font-weight: 800; background: var(--bg-card); color: var(--accent);" />
+              <label for="cfgSchedStatusBadge" style="display: block; font-size: 0.80rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">배너 대표 상태 문구:</label>
+              <input type="text" id="cfgSchedStatusBadge" placeholder="🟢 1기 정규 개설 확정 (마감 임박)" style="width: 100%; padding: 6px 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.84rem; background: var(--bg-primary); color: var(--text-primary);" />
             </div>
             <div>
-              <label for="cfgSchedMode" style="display: block; font-size: 0.84rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 5px;">교육 방식 및 수업 기간:</label>
-              <input type="text" id="cfgSchedMode" placeholder="온·오프라인 하이브리드 실습 워크숍 (주 1회 4시간 · 총 4주 과정)" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 0.90rem; background: var(--bg-card); color: var(--text-primary);" />
+              <label for="cfgSchedCourseName" style="display: block; font-size: 0.80rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">배너 과정 타이틀:</label>
+              <input type="text" id="cfgSchedCourseName" placeholder="[여백과 결] 1기 코칭스태프 개강 일정 안내" style="width: 100%; padding: 6px 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.84rem; background: var(--bg-primary); color: var(--text-primary);" />
             </div>
             <div>
-              <label for="cfgSchedLocation" style="display: block; font-size: 0.84rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 5px;">실습 장소 & 방식 상세:</label>
-              <input type="text" id="cfgSchedLocation" placeholder="서울 강남 거점센터 실습 + Zoom 라이브" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 0.90rem; background: var(--bg-card); color: var(--text-primary);" />
+              <label for="cfgSchedModeInfo" style="display: block; font-size: 0.80rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">교육 방식 / 요약:</label>
+              <input type="text" id="cfgSchedModeInfo" placeholder="온·오프라인 하이브리드 실습 워크숍 (주 1회 4시간 · 총 4주 과정)" style="width: 100%; padding: 6px 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.84rem; background: var(--bg-primary); color: var(--text-primary);" />
             </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px;">
-            <!-- 평일반 설정 -->
-            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 12px 14px;">
-              <div style="font-weight: 850; font-size: 0.88rem; color: var(--accent); margin-bottom: 8px;">🗓️ 평일 주간반 (화요반) 일정</div>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
-                <input type="text" id="cfgSchedWeekdayDate" placeholder="2026. 10. 14 (화) 개강" style="padding: 7px 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.84rem; background: var(--bg-primary); color: var(--text-primary);" />
-                <input type="text" id="cfgSchedWeekdayTime" placeholder="매주 화요일 14:00 ~ 18:00 (4주간)" style="padding: 7px 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.84rem; background: var(--bg-primary); color: var(--text-primary);" />
-              </div>
-              <input type="text" id="cfgSchedWeekdayNote" placeholder="✓ 개설 확정 · 선착순 잔여 3석" style="width: 100%; padding: 7px 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.82rem; background: var(--bg-primary); color: var(--text-primary);" />
-            </div>
-
-            <!-- 주말반 설정 -->
-            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 12px 14px;">
-              <div style="font-weight: 850; font-size: 0.88rem; color: #5b21b6; margin-bottom: 8px;">🗓️ 주말 집중반 (토요반) 일정</div>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
-                <input type="text" id="cfgSchedWeekendDate" placeholder="2026. 10. 18 (토) 개강" style="padding: 7px 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.84rem; background: var(--bg-primary); color: var(--text-primary);" />
-                <input type="text" id="cfgSchedWeekendTime" placeholder="매주 토요일 10:00 ~ 14:00 (4주간)" style="padding: 7px 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.84rem; background: var(--bg-primary); color: var(--text-primary);" />
-              </div>
-              <input type="text" id="cfgSchedWeekendNote" placeholder="✓ 개설 확정 · 선착순 잔여 2석" style="width: 100%; padding: 7px 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.82rem; background: var(--bg-primary); color: var(--text-primary);" />
-            </div>
+          <!-- 일정 테이블 -->
+          <div class="academy-table-wrap">
+            <table class="academy-table">
+              <thead>
+                <tr>
+                  <th style="width: 65px; text-align: center;">기수</th>
+                  <th style="width: 170px;">개설 강의반 명칭</th>
+                  <th style="width: 130px;">개강 일자</th>
+                  <th style="width: 175px;">수업 요일 / 시간</th>
+                  <th>실습 및 교육 장소</th>
+                  <th style="width: 140px; text-align: center;">모집 상태</th>
+                  <th style="width: 140px;">잔여석 / 비고</th>
+                  <th style="width: 90px; text-align: center;">관리</th>
+                </tr>
+              </thead>
+              <tbody id="acadScheduleTableBody">
+                <!-- JS 동적 렌더링 -->
+              </tbody>
+            </table>
           </div>
         </div>
 
@@ -2750,7 +2790,85 @@
     </div>
   </div>
 
-  <script>
+  <!-- ================= 모달 5) 강의 개설 일정 신규 등록 및 수정 모달 ================= -->
+  <div class="academy-modal-overlay" id="academyScheduleEditModal" onclick="closeScheduleEditOnOverlay(event)">
+    <div class="academy-auth-modal-card" style="max-width: 520px; text-align: left; padding: 26px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+        <h3 id="scheduleModalTitle" style="font-size: 1.15rem; font-weight: 850; color: var(--text-primary); margin: 0;">
+          📅 강의 개설 일정 등록 / 수정
+        </h3>
+        <button type="button" onclick="closeScheduleModal()" aria-label="닫기" style="border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer;">✕</button>
+      </div>
+
+      <form id="scheduleEditForm" onsubmit="handleScheduleEditSubmit(event)">
+        <input type="hidden" id="editSchedId" value="">
+        <div style="display: grid; grid-template-columns: 1fr; gap: 11px;">
+          <div style="display: grid; grid-template-columns: 100px 1fr; gap: 10px;">
+            <div>
+              <label for="editSchedBatch" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">기수 *</label>
+              <input type="text" id="editSchedBatch" placeholder="1기" required style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+            </div>
+            <div>
+              <label for="editSchedName" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">강의반 명칭 *</label>
+              <input type="text" id="editSchedName" placeholder="예: 평일 주간반 (화요반)" required style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label for="editSchedStartDate" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">개강 일자 *</label>
+              <input type="text" id="editSchedStartDate" placeholder="2026. 10. 14 (화)" required style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+            </div>
+            <div>
+              <label for="editSchedTimeText" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">강의 요일 / 시간 *</label>
+              <input type="text" id="editSchedTimeText" placeholder="매주 화요일 10:00 ~ 14:00 (4주간)" required style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+            </div>
+          </div>
+
+          <div>
+            <label for="editSchedLocation" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">실습 장소 & 교육 방식</label>
+            <input type="text" id="editSchedLocation" placeholder="서울 강남 교육센터 실습 & Zoom 라이브" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label for="editSchedStatus" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">모집 / 개설 상태 *</label>
+              <select id="editSchedStatus" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+                <option value="🟢 개설확정 (마감임박)">🟢 개설확정 (마감임박)</option>
+                <option value="🟢 개설확정 (정상모집)">🟢 개설확정 (정상모집)</option>
+                <option value="🟡 접수진행중">🟡 접수진행중</option>
+                <option value="🔴 마감 (대기자접수)">🔴 마감 (대기자접수)</option>
+                <option value="⚪ 개설준비중">⚪ 개설준비중</option>
+              </select>
+            </div>
+            <div>
+              <label for="editSchedTagColor" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">카드 테마 색상</label>
+              <select id="editSchedTagColor" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+                <option value="var(--accent)">초록 (평일/기본)</option>
+                <option value="#5b21b6">보라 (주말/집중)</option>
+                <option value="#1e40af">파랑 (야간/전문)</option>
+                <option value="#92400e">골드 (창립/특별)</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="editSchedNote" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">잔여석 / 모집 요강 비고</label>
+            <input type="text" id="editSchedNote" placeholder="예: 선착순 10명 한정 · 잔여 3석" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px;">
+          <button type="button" onclick="closeScheduleModal()" class="btn" style="padding: 8px 16px; font-size: 0.86rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-secondary); cursor: pointer;">
+            취소
+          </button>
+          <button type="submit" class="btn-submit-apply" style="padding: 8px 20px; font-size: 0.88rem; border-radius: 6px; cursor: pointer;">
+            저장하기
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
     // 테마 전환
     const themeBtn = document.getElementById('themeToggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -2884,13 +3002,14 @@
     }
 
     // 로컬스토리지 키 정의
-    const STORAGE_KEY_ACAD_APPLICANTS = 'reset_academy_list';
-    const STORAGE_KEY_ACAD_STUDENTS   = 'reset_academy_students';
-    const STORAGE_KEY_ACAD_TRACKS     = 'reset_academy_tracks';
-    const STORAGE_KEY_ACAD_PRICING    = 'reset_academy_pricing';
-    const STORAGE_KEY_ACAD_SCHEDULE   = 'reset_academy_schedule';
-    const STORAGE_KEY_ACAD_BRANCHES   = 'reset_academy_branches';
-    const STORAGE_KEY_ACAD_SETTINGS   = 'reset_academy_settings';
+    const STORAGE_KEY_ACAD_APPLICANTS      = 'reset_academy_list';
+    const STORAGE_KEY_ACAD_STUDENTS        = 'reset_academy_students';
+    const STORAGE_KEY_ACAD_TRACKS          = 'reset_academy_tracks';
+    const STORAGE_KEY_ACAD_PRICING         = 'reset_academy_pricing';
+    const STORAGE_KEY_ACAD_SCHEDULES       = 'reset_academy_schedules';
+    const STORAGE_KEY_ACAD_SCHEDULE_HEADER = 'reset_academy_schedule_header';
+    const STORAGE_KEY_ACAD_BRANCHES        = 'reset_academy_branches';
+    const STORAGE_KEY_ACAD_SETTINGS        = 'reset_academy_settings';
 
     // -------------------------------------------------------------------------
     // 1. 기본 초기 데이터셋 (초기 실행 시 또는 초기화 시 사용)
@@ -2983,19 +3102,35 @@
       ]
     };
 
-    const DEFAULT_ACAD_SCHEDULE = {
-      statusBadge: "🟢 1기 정규 개설 확정 · 잔여석 마감 임박",
-      statusBadgeColor: "success",
-      courseName: "[여백과 결] 1기 코칭스태프 파운더스 양성 과정",
-      modeInfo: "소수 정예 20명 한정 · 온·오프라인 하이브리드 워크숍",
-      weekdayDate: "2026년 10월 14일(화) 오전 10:00",
-      weekdayTime: "매주 화요일 10:00 ~ 14:00 (4주간 주 1회 4시간)",
-      weekdayNote: "선착순 10명 마감 (잔여 3석)",
-      weekendDate: "2026년 10월 18일(토) 오후 13:00",
-      weekendTime: "매주 토요일 13:00 ~ 17:00 (4주간 주 1회 4시간)",
-      weekendNote: "선착순 10명 마감 (잔여 2석)",
-      locationTitle: "서울 강남 교육센터 & 실시간 Zoom",
-      locationDetail: "강남구 테헤란로 152 7층 (실습 2회 + 온라인 2회 병행)"
+    const DEFAULT_ACAD_SCHEDULES = [
+      {
+        id: "sched_1",
+        batch: "1기",
+        name: "평일 주간반 (화요반)",
+        startDate: "2026. 10. 14 (화)",
+        timeText: "매주 화요일 10:00 ~ 14:00 (4주간)",
+        location: "서울 강남 교육센터 실습 & Zoom 라이브",
+        status: "🟢 개설확정 (마감임박)",
+        tagColor: "var(--accent)",
+        note: "선착순 10명 한정 · 잔여 3석"
+      },
+      {
+        id: "sched_2",
+        batch: "1기",
+        name: "주말 집중반 (토요반)",
+        startDate: "2026. 10. 18 (토)",
+        timeText: "매주 토요일 13:00 ~ 17:00 (4주간)",
+        location: "서울 강남 교육센터 실습 & Zoom 라이브",
+        status: "🟢 개설확정 (마감임박)",
+        tagColor: "#5b21b6",
+        note: "직장인 및 원거리 추천 · 잔여 2석"
+      }
+    ];
+
+    const DEFAULT_ACAD_SCHEDULE_HEADER = {
+      courseName: "1기 정규 코칭스태프 개강 일정 안내",
+      modeInfo: "온·오프라인 하이브리드 실습 워크숍 (주 1회 4시간 · 총 4주 과정)",
+      statusBadge: "🟢 1기 정규 개설 확정 (마감 임박)"
     };
 
     const DEFAULT_ACAD_APPLICANTS = [
@@ -3192,16 +3327,31 @@
       localStorage.setItem(STORAGE_KEY_ACAD_PRICING, JSON.stringify(pricing));
     }
 
-    function getAcademySchedule() {
-      const stored = localStorage.getItem(STORAGE_KEY_ACAD_SCHEDULE);
+    function getAcademySchedules() {
+      const stored = localStorage.getItem(STORAGE_KEY_ACAD_SCHEDULES);
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        } catch(e) {}
+      }
+      localStorage.setItem(STORAGE_KEY_ACAD_SCHEDULES, JSON.stringify(DEFAULT_ACAD_SCHEDULES));
+      return DEFAULT_ACAD_SCHEDULES;
+    }
+    function saveAcademySchedules(schedules) {
+      localStorage.setItem(STORAGE_KEY_ACAD_SCHEDULES, JSON.stringify(schedules));
+    }
+
+    function getAcademyScheduleHeader() {
+      const stored = localStorage.getItem(STORAGE_KEY_ACAD_SCHEDULE_HEADER);
       if (stored) {
         try { return JSON.parse(stored); } catch(e) {}
       }
-      localStorage.setItem(STORAGE_KEY_ACAD_SCHEDULE, JSON.stringify(DEFAULT_ACAD_SCHEDULE));
-      return DEFAULT_ACAD_SCHEDULE;
+      localStorage.setItem(STORAGE_KEY_ACAD_SCHEDULE_HEADER, JSON.stringify(DEFAULT_ACAD_SCHEDULE_HEADER));
+      return DEFAULT_ACAD_SCHEDULE_HEADER;
     }
-    function saveAcademySchedule(schedule) {
-      localStorage.setItem(STORAGE_KEY_ACAD_SCHEDULE, JSON.stringify(schedule));
+    function saveAcademyScheduleHeader(header) {
+      localStorage.setItem(STORAGE_KEY_ACAD_SCHEDULE_HEADER, JSON.stringify(header));
     }
 
     function getAcademyBranches() {
@@ -3226,7 +3376,7 @@
       if (!grid || !tracks) return;
 
       grid.innerHTML = tracks.map(t => `
-        <div class="track-card">
+        <div class="track-card" onclick="selectTrackCard('${escapeHtml(t.name)}')" title="클릭 시 이 트랙으로 지원서 자동 선택">
           <div class="track-header">
             <div class="track-meta">
               <span class="track-pill" style="background: ${t.pillBg || '#eaf4ed'}; color: ${t.pillColor || '#2b6a38'};">${escapeHtml(t.trackNo)}</span>
@@ -3249,7 +3399,7 @@
             </div>
             <div class="track-footer">
               <span class="track-benefit">${escapeHtml(t.benefit)}</span>
-              <a href="#apply" class="track-apply-btn">지원 신청</a>
+              <a href="#apply" class="track-apply-btn" onclick="selectTrackCard('${escapeHtml(t.name)}'); event.stopPropagation();">지원 신청 ↓</a>
             </div>
           </div>
         </div>
@@ -3259,13 +3409,29 @@
       const applySelect = document.getElementById('applyTrack');
       if (applySelect) {
         const currentVal = applySelect.value;
-        let optHtml = `<option value="">트랙을 선택해주세요</option>`;
+        let optHtml = `<option value="">트랙을 선택해주세요 *</option>`;
         tracks.forEach(t => {
           optHtml += `<option value="${escapeHtml(t.name)}">${escapeHtml(t.name)}</option>`;
         });
         optHtml += `<option value="🌿 종합 라이프 리셋 코치 (전 과정 종합)">🌿 종합 라이프 리셋 코치 (전 과정 종합)</option>`;
         applySelect.innerHTML = optHtml;
         if (currentVal) applySelect.value = currentVal;
+      }
+    }
+
+    function selectTrackCard(trackName) {
+      const applySelect = document.getElementById('applyTrack');
+      if (applySelect) {
+        for (let i = 0; i < applySelect.options.length; i++) {
+          if (applySelect.options[i].value === trackName || applySelect.options[i].value.includes(trackName)) {
+            applySelect.selectedIndex = i;
+            break;
+          }
+        }
+      }
+      const applySec = document.getElementById('apply');
+      if (applySec) {
+        applySec.scrollIntoView({ behavior: 'smooth' });
       }
     }
 
@@ -3300,48 +3466,121 @@
       }
     }
 
+    // 🖱️ 강의 개설 일정 동적 렌더링 & 박스 클릭 인터랙션
     function renderAcademyDynamicSchedule() {
-      const sched = getAcademySchedule();
-      if (!sched) return;
+      const header = getAcademyScheduleHeader();
+      const schedules = getAcademySchedules();
 
       const elStatusText = document.getElementById('schedStatusText');
       const elCourseName = document.getElementById('schedCourseName');
       const elModeInfo = document.getElementById('schedModeInfo');
-      const elWeekdayDate = document.getElementById('schedWeekdayDate');
-      const elWeekdayTime = document.getElementById('schedWeekdayTime');
-      const elWeekdayNote = document.getElementById('schedWeekdayNote');
-      const elWeekendDate = document.getElementById('schedWeekendDate');
-      const elWeekendTime = document.getElementById('schedWeekendTime');
-      const elWeekendNote = document.getElementById('schedWeekendNote');
-      const elLocTitle = document.getElementById('schedLocationTitle');
-      const elLocDetail = document.getElementById('schedLocationDetail');
 
-      if (elStatusText) elStatusText.textContent = sched.statusBadge || '1기 정규 개설 확정 · 잔여석 마감 임박';
-      if (elCourseName) elCourseName.textContent = sched.courseName || '[여백과 결] 1기 코칭스태프 파운더스 양성 과정';
-      if (elModeInfo) elModeInfo.textContent = sched.modeInfo || '소수 정예 20명 한정 · 온·오프라인 하이브리드 워크숍';
-      
-      if (elWeekdayDate) elWeekdayDate.textContent = sched.weekdayDate || '2026년 10월 14일(화) 오전 10:00';
-      if (elWeekdayTime) elWeekdayTime.textContent = sched.weekdayTime || '매주 화요일 10:00 ~ 14:00 (4주간 주 1회 4시간)';
-      if (elWeekdayNote) elWeekdayNote.textContent = sched.weekdayNote || '선착순 10명 마감 (잔여 3석)';
+      if (elStatusText) elStatusText.textContent = header.statusBadge || '🟢 1기 정규 개설 확정 (마감 임박)';
+      if (elCourseName) elCourseName.textContent = header.courseName || '1기 정규 코칭스태프 개강 일정 안내';
+      if (elModeInfo) elModeInfo.textContent = header.modeInfo || '온·오프라인 하이브리드 실습 워크숍 (주 1회 4시간 · 총 4주 과정)';
 
-      if (elWeekendDate) elWeekendDate.textContent = sched.weekendDate || '2026년 10월 18일(토) 오후 13:00';
-      if (elWeekendTime) elWeekendTime.textContent = sched.weekendTime || '매주 토요일 13:00 ~ 17:00 (4주간 주 1회 4시간)';
-      if (elWeekendNote) elWeekendNote.textContent = sched.weekendNote || '선착순 10명 마감 (잔여 2석)';
+      const grid = document.getElementById('academyScheduleGrid');
+      const applySchedSelect = document.getElementById('applySchedule');
+      const currentSelectedVal = applySchedSelect ? applySchedSelect.value : '';
 
-      if (elLocTitle) elLocTitle.textContent = sched.locationTitle || '서울 강남 교육센터 & 실시간 Zoom';
-      if (elLocDetail) elLocDetail.textContent = sched.locationDetail || '강남구 테헤란로 152 7층 (실습 2회 + 온라인 2회 병행)';
+      if (grid) {
+        if (!schedules.length) {
+          grid.innerHTML = `
+            <div style="grid-column: 1 / -1; padding: 24px; text-align: center; color: var(--text-muted); background: var(--bg-card); border-radius: 12px; border: 1px dashed var(--border-color);">
+              현재 개설 준비 중인 강의 일정이 없습니다. 관리홈에서 강의 일정을 추가해주세요.
+            </div>
+          `;
+        } else {
+          let gridHtml = '';
+          schedules.forEach((s) => {
+            const optVal = `[${s.batch || '1기'}] ${s.name} (${s.startDate} 개강)`;
+            const isSelected = currentSelectedVal && (currentSelectedVal === optVal || currentSelectedVal.includes(s.name));
+            const tagColor = s.tagColor || 'var(--accent)';
+
+            gridHtml += `
+              <div class="schedule-click-card ${isSelected ? 'active-sched-card' : ''}" 
+                   id="schedCard_${s.id}" 
+                   onclick="selectScheduleCard('${s.id}', '${escapeHtml(optVal)}')" 
+                   title="👆 클릭 시 아래 지원서에 이 일정이 자동 선택됩니다.">
+                <span class="sched-selected-tag">✓ 선택됨</span>
+                <div style="font-size: 0.78rem; font-weight: 800; color: ${tagColor}; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between;">
+                  <span>🗓️ [${escapeHtml(s.batch || '1기')}] ${escapeHtml(s.name)}</span>
+                </div>
+                <div style="font-size: 1.02rem; font-weight: 850; color: var(--text-primary); margin-bottom: 4px;">
+                  ${escapeHtml(s.startDate)} 개강
+                </div>
+                <div style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 4px;">
+                  ⏰ ${escapeHtml(s.timeText)}
+                </div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px;">
+                  📍 ${escapeHtml(s.location || '서울 강남 교육센터 & Zoom')}
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.76rem; border-top: 1px dashed var(--border-color); padding-top: 6px; margin-top: 6px;">
+                  <span style="font-weight: 850; color: #15803d;">${escapeHtml(s.status || '🟢 모집중')}</span>
+                  <span style="color: var(--text-muted); font-size: 0.74rem;">${escapeHtml(s.note || '')}</span>
+                </div>
+              </div>
+            `;
+          });
+
+          // 📍 공통 실습 장소 안내 카드도 3단/4단으로 함께 배치
+          gridHtml += `
+            <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 12px; padding: 15px 16px;">
+              <div style="font-size: 0.78rem; font-weight: 800; color: var(--accent-gold); margin-bottom: 4px;">📍 실습 장소 & 교육 방식</div>
+              <div style="font-size: 0.98rem; font-weight: 850; color: var(--text-primary); margin-bottom: 4px;">온·오프라인 하이브리드</div>
+              <div style="font-size: 0.84rem; color: var(--text-secondary);">서울 강남 거점센터 실습 + Zoom 라이브</div>
+              <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 6px;">* 지방 수강생 실시간 라이브 & 실습 키트 택배</div>
+            </div>
+          `;
+
+          grid.innerHTML = gridHtml;
+        }
+      }
 
       // 지원 신청란 일정 선택 셀렉트 옵션 실시간 동기화
-      const applySchedSelect = document.getElementById('applySchedule');
       if (applySchedSelect) {
-        const curVal = applySchedSelect.value;
-        applySchedSelect.innerHTML = `
-          <option value="">수강 희망 일정을 선택해주세요 *</option>
-          <option value="평일 주간반 (${escapeHtml(sched.weekdayDate)})">📅 평일 주간반 [개강: ${escapeHtml(sched.weekdayDate)}]</option>
-          <option value="주말 집중반 (${escapeHtml(sched.weekendDate)})">📅 주말 집중반 [개강: ${escapeHtml(sched.weekendDate)}]</option>
-          <option value="[일정협의] 평일/주말 상담 후 결정">🤝 [일정협의] 상담 후 평일/주말 반 결정</option>
-        `;
-        if (curVal) applySchedSelect.value = curVal;
+        let optHtml = `<option value="">수강 희망 일정을 선택해주세요 (위 박스 클릭 시 자동선택) *</option>`;
+        schedules.forEach(s => {
+          const optVal = `[${s.batch || '1기'}] ${s.name} (${s.startDate} 개강)`;
+          optHtml += `<option value="${escapeHtml(optVal)}">[${escapeHtml(s.batch || '1기')}] ${escapeHtml(s.name)} [개강: ${escapeHtml(s.startDate)}] · ${escapeHtml(s.status)}</option>`;
+        });
+        optHtml += `<option value="[일정협의] 평일/주말 전화 상담 후 결정">🤝 [일정협의] 평일/주말 전화 상담 후 결정</option>`;
+        applySchedSelect.innerHTML = optHtml;
+        if (currentSelectedVal) applySchedSelect.value = currentSelectedVal;
+
+        // 드롭다운에서 선택했을 때도 카드에 하이라이트 동기화
+        applySchedSelect.onchange = function() {
+          const val = this.value;
+          document.querySelectorAll('.schedule-click-card').forEach(c => c.classList.remove('active-sched-card'));
+          schedules.forEach(s => {
+            if (val.includes(s.name)) {
+              const card = document.getElementById('schedCard_' + s.id);
+              if (card) card.classList.add('active-sched-card');
+            }
+          });
+        };
+      }
+    }
+
+    // 🖱️ 강의 박스 클릭 시 동작 (카드 활성화 + 지원서 선택 + 폼 스크롤)
+    function selectScheduleCard(schedId, scheduleVal) {
+      document.querySelectorAll('.schedule-click-card').forEach(c => c.classList.remove('active-sched-card'));
+      const targetCard = document.getElementById('schedCard_' + schedId);
+      if (targetCard) targetCard.classList.add('active-sched-card');
+
+      const applySelect = document.getElementById('applySchedule');
+      if (applySelect) {
+        for (let i = 0; i < applySelect.options.length; i++) {
+          if (applySelect.options[i].value === scheduleVal || applySelect.options[i].value.includes(scheduleVal)) {
+            applySelect.selectedIndex = i;
+            break;
+          }
+        }
+      }
+
+      const applyForm = document.getElementById('coachApplyForm');
+      if (applyForm) {
+        applyForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     }
 
@@ -3822,7 +4061,7 @@
     function loadAcademyCurriculumForm() {
       const pricing = getAcademyPricing();
       const tracks = getAcademyTracks();
-      const sched = getAcademySchedule();
+      const schedHeader = getAcademyScheduleHeader();
 
       // 수강료 요강 폼 채우기
       const fTitle = document.getElementById('cfgPricingCourseTitle');
@@ -3839,26 +4078,16 @@
       if (fNotice) fNotice.value = pricing.priceNotice || '';
       if (fPay) fPay.value = pricing.coachingPay || '회당 8만 ~ 12만 원 우선 배정';
 
-      // 1기 강의 개설 일정 폼 채우기
-      const fSchedStat = document.getElementById('cfgSchedStatus');
-      const fSchedMode = document.getElementById('cfgSchedMode');
-      const fSchedLoc = document.getElementById('cfgSchedLocation');
-      const fSchedWdDate = document.getElementById('cfgSchedWeekdayDate');
-      const fSchedWdTime = document.getElementById('cfgSchedWeekdayTime');
-      const fSchedWdNote = document.getElementById('cfgSchedWeekdayNote');
-      const fSchedWeDate = document.getElementById('cfgSchedWeekendDate');
-      const fSchedWeTime = document.getElementById('cfgSchedWeekendTime');
-      const fSchedWeNote = document.getElementById('cfgSchedWeekendNote');
+      // 1기 강의 개설 배너 헤더 폼 채우기
+      const fSchedBadge = document.getElementById('cfgSchedStatusBadge');
+      const fSchedCourse = document.getElementById('cfgSchedCourseName');
+      const fSchedMode = document.getElementById('cfgSchedModeInfo');
+      if (fSchedBadge) fSchedBadge.value = schedHeader.statusBadge || '';
+      if (fSchedCourse) fSchedCourse.value = schedHeader.courseName || '';
+      if (fSchedMode) fSchedMode.value = schedHeader.modeInfo || '';
 
-      if (fSchedStat) fSchedStat.value = sched.statusBadge || '';
-      if (fSchedMode) fSchedMode.value = sched.modeInfo || '';
-      if (fSchedLoc) fSchedLoc.value = sched.locationDetail || '';
-      if (fSchedWdDate) fSchedWdDate.value = sched.weekdayDate || '';
-      if (fSchedWdTime) fSchedWdTime.value = sched.weekdayTime || '';
-      if (fSchedWdNote) fSchedWdNote.value = sched.weekdayNote || '';
-      if (fSchedWeDate) fSchedWeDate.value = sched.weekendDate || '';
-      if (fSchedWeTime) fSchedWeTime.value = sched.weekendTime || '';
-      if (fSchedWeNote) fSchedWeNote.value = sched.weekendNote || '';
+      // 개설 강의 일정 테이블 렌더링
+      renderAcademyScheduleAdminTable();
 
       // 4개 트랙 커리큘럼 폼 채우기
       const container = document.getElementById('curriculumEditorContainer');
@@ -3920,18 +4149,12 @@
       pricing.coachingPay = document.getElementById('cfgPricingCoachingPay')?.value.trim() || pricing.coachingPay;
       saveAcademyPricing(pricing);
 
-      // 2. 1기 강의 개설 일정 저장
-      const sched = getAcademySchedule();
-      sched.statusBadge = document.getElementById('cfgSchedStatus')?.value.trim() || sched.statusBadge;
-      sched.modeInfo = document.getElementById('cfgSchedMode')?.value.trim() || sched.modeInfo;
-      sched.locationDetail = document.getElementById('cfgSchedLocation')?.value.trim() || sched.locationDetail;
-      sched.weekdayDate = document.getElementById('cfgSchedWeekdayDate')?.value.trim() || sched.weekdayDate;
-      sched.weekdayTime = document.getElementById('cfgSchedWeekdayTime')?.value.trim() || sched.weekdayTime;
-      sched.weekdayNote = document.getElementById('cfgSchedWeekdayNote')?.value.trim() || sched.weekdayNote;
-      sched.weekendDate = document.getElementById('cfgSchedWeekendDate')?.value.trim() || sched.weekendDate;
-      sched.weekendTime = document.getElementById('cfgSchedWeekendTime')?.value.trim() || sched.weekendTime;
-      sched.weekendNote = document.getElementById('cfgSchedWeekendNote')?.value.trim() || sched.weekendNote;
-      saveAcademySchedule(sched);
+      // 2. 강의 개설 배너 헤더 저장
+      const schedHeader = getAcademyScheduleHeader();
+      schedHeader.statusBadge = document.getElementById('cfgSchedStatusBadge')?.value.trim() || schedHeader.statusBadge;
+      schedHeader.courseName = document.getElementById('cfgSchedCourseName')?.value.trim() || schedHeader.courseName;
+      schedHeader.modeInfo = document.getElementById('cfgSchedModeInfo')?.value.trim() || schedHeader.modeInfo;
+      saveAcademyScheduleHeader(schedHeader);
 
       // 3. 4대 트랙 커리큘럼 저장
       const tracks = getAcademyTracks();
@@ -3960,7 +4183,140 @@
       renderAcademyDynamicPricing();
       renderAcademyDynamicSchedule();
 
-      alert('✅ 교육과정, 수강료 및 1기 개설 일정이 저장되었습니다!\n아카데미 메인 페이지에 실시간으로 즉시 반영되었습니다.');
+      alert('✅ 교육과정, 수강료 및 강의 개설 배너 설정이 저장되었습니다!\n아카데미 메인 페이지에 실시간으로 즉시 반영되었습니다.');
+    }
+
+    // -------------------------------------------------------------------------
+    // 7-1. 개설 강의 일정 테이블 렌더링 및 CRUD (추가 / 수정 / 삭제)
+    // -------------------------------------------------------------------------
+    function renderAcademyScheduleAdminTable() {
+      const tbody = document.getElementById('acadScheduleTableBody');
+      if (!tbody) return;
+
+      const list = getAcademySchedules();
+      if (!list.length) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:28px; color:var(--text-muted);">등록된 강의 일정이 없습니다. [➕ 신규 강의 일정 추가] 버튼을 눌러 새 일정을 개설하세요.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map(s => {
+        return `
+          <tr>
+            <td style="text-align:center; font-weight:800; font-size:0.86rem; color:var(--accent);">${escapeHtml(s.batch || '1기')}</td>
+            <td style="font-weight:850; font-size:0.90rem; color:var(--text-primary);">${escapeHtml(s.name)}</td>
+            <td style="font-weight:800; font-size:0.86rem; color:var(--text-primary);">${escapeHtml(s.startDate)}</td>
+            <td style="font-size:0.84rem; color:var(--text-secondary);">${escapeHtml(s.timeText)}</td>
+            <td style="font-size:0.82rem; color:var(--text-secondary);">${escapeHtml(s.location || '강남 교육센터 & Zoom')}</td>
+            <td style="text-align:center; font-size:0.82rem; font-weight:800; color:#15803d;">
+              ${escapeHtml(s.status || '🟢 모집중')}
+            </td>
+            <td style="font-size:0.80rem; color:var(--text-muted);">${escapeHtml(s.note || '')}</td>
+            <td style="text-align:center; white-space:nowrap;">
+              <button type="button" onclick="openScheduleModal('${s.id}')" title="수정" style="padding:3px 7px; font-size:0.78rem; border-radius:5px; border:1px solid var(--border-color); background:var(--bg-card); cursor:pointer;">✏️ 수정</button>
+              <button type="button" onclick="deleteAcademySchedule('${s.id}')" title="삭제" style="padding:3px 7px; font-size:0.78rem; border-radius:5px; border:1px solid rgba(220,38,38,0.3); background:rgba(220,38,38,0.06); color:#dc2626; cursor:pointer;">🗑️</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openScheduleModal(schedId = null) {
+      const modal = document.getElementById('academyScheduleEditModal');
+      const form = document.getElementById('scheduleEditForm');
+      if (!modal || !form) return;
+
+      if (schedId) {
+        const list = getAcademySchedules();
+        const sched = list.find(s => s.id === schedId);
+        if (sched) {
+          document.getElementById('scheduleModalTitle').textContent = `📅 [${sched.name}] 강의 일정 수정`;
+          document.getElementById('editSchedId').value = sched.id;
+          document.getElementById('editSchedBatch').value = sched.batch || '1기';
+          document.getElementById('editSchedName').value = sched.name;
+          document.getElementById('editSchedStartDate').value = sched.startDate;
+          document.getElementById('editSchedTimeText').value = sched.timeText;
+          document.getElementById('editSchedLocation').value = sched.location || '';
+          document.getElementById('editSchedStatus').value = sched.status || '🟢 개설확정 (마감임박)';
+          document.getElementById('editSchedTagColor').value = sched.tagColor || 'var(--accent)';
+          document.getElementById('editSchedNote').value = sched.note || '';
+        }
+      } else {
+        document.getElementById('scheduleModalTitle').textContent = '📅 신규 개설 강의 일정 추가';
+        form.reset();
+        document.getElementById('editSchedId').value = '';
+        document.getElementById('editSchedBatch').value = '1기';
+        document.getElementById('editSchedStatus').value = '🟢 개설확정 (마감임박)';
+        document.getElementById('editSchedTagColor').value = 'var(--accent)';
+      }
+      modal.classList.add('open');
+    }
+
+    function closeScheduleModal() {
+      const modal = document.getElementById('academyScheduleEditModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function closeScheduleEditOnOverlay(e) {
+      if (e.target.id === 'academyScheduleEditModal') closeScheduleModal();
+    }
+
+    function handleScheduleEditSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('editSchedId').value;
+      const batch = document.getElementById('editSchedBatch').value.trim() || '1기';
+      const name = document.getElementById('editSchedName').value.trim();
+      const startDate = document.getElementById('editSchedStartDate').value.trim();
+      const timeText = document.getElementById('editSchedTimeText').value.trim();
+      const location = document.getElementById('editSchedLocation').value.trim();
+      const status = document.getElementById('editSchedStatus').value;
+      const tagColor = document.getElementById('editSchedTagColor').value;
+      const note = document.getElementById('editSchedNote').value.trim();
+
+      const list = getAcademySchedules();
+
+      if (id) {
+        const target = list.find(s => s.id === id);
+        if (target) {
+          target.batch = batch;
+          target.name = name;
+          target.startDate = startDate;
+          target.timeText = timeText;
+          target.location = location;
+          target.status = status;
+          target.tagColor = tagColor;
+          target.note = note;
+        }
+      } else {
+        list.push({
+          id: 'sched_' + Date.now(),
+          batch,
+          name,
+          startDate,
+          timeText,
+          location,
+          status,
+          tagColor,
+          note
+        });
+      }
+
+      saveAcademySchedules(list);
+      closeScheduleModal();
+      renderAcademyScheduleAdminTable();
+      renderAcademyDynamicSchedule();
+      alert(`✅ [${name}] 강의 일정이 저장되었습니다!\n메인 화면 배너와 지원서 선택창에 즉시 반영되었습니다.`);
+    }
+
+    function deleteAcademySchedule(schedId) {
+      if (!confirm('정말 이 강의 일정을 삭제하시겠습니까?\n\n삭제 시 메인 페이지 배너 및 지원 신청서 선택 목록에서도 즉시 삭제됩니다.')) {
+        return;
+      }
+      let list = getAcademySchedules();
+      list = list.filter(s => s.id !== schedId);
+      saveAcademySchedules(list);
+      renderAcademyScheduleAdminTable();
+      renderAcademyDynamicSchedule();
+      alert('🗑️ 강의 일정이 성공적으로 삭제되었습니다.');
     }
 
     // -------------------------------------------------------------------------
@@ -4159,7 +4515,8 @@
       localStorage.setItem(STORAGE_KEY_ACAD_STUDENTS, JSON.stringify(DEFAULT_ACAD_STUDENTS));
       localStorage.setItem(STORAGE_KEY_ACAD_TRACKS, JSON.stringify(DEFAULT_ACAD_TRACKS));
       localStorage.setItem(STORAGE_KEY_ACAD_PRICING, JSON.stringify(DEFAULT_ACAD_PRICING));
-      localStorage.setItem(STORAGE_KEY_ACAD_SCHEDULE, JSON.stringify(DEFAULT_ACAD_SCHEDULE));
+      localStorage.setItem(STORAGE_KEY_ACAD_SCHEDULES, JSON.stringify(DEFAULT_ACAD_SCHEDULES));
+      localStorage.setItem(STORAGE_KEY_ACAD_SCHEDULE_HEADER, JSON.stringify(DEFAULT_ACAD_SCHEDULE_HEADER));
       localStorage.setItem(STORAGE_KEY_ACAD_BRANCHES, JSON.stringify(DEFAULT_ACAD_BRANCHES));
 
       renderAcademyDynamicTracks();
