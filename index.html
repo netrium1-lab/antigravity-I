@@ -6001,7 +6001,6 @@
       }
 
       window.Kakao.Auth.login({
-        scope: 'profile_nickname,profile_image',
         success: function(authObj) {
           console.log('[Kakao] 로그인 인증 성공:', authObj);
           window.Kakao.API.request({
@@ -6059,7 +6058,8 @@
             },
             fail: function(error) {
               console.error('[Kakao] 사용자 정보 요청 실패:', error);
-              alert('카카오 사용자 정보를 가져오지 못했습니다. 카카오 로그인 설정을 확인해 주세요.');
+              const msg = error.msg || error.error_description || JSON.stringify(error);
+              alert('카카오 사용자 정보 요청 안내: ' + msg);
             }
           });
         },
@@ -6068,7 +6068,8 @@
           if (err && err.error === 'access_denied') {
             alert('카카오 로그인이 취소되었습니다.');
           } else {
-            alert('카카오 로그인 창이 닫혔거나 취소되었습니다.\n카카오 로그인 활성화 상태를 확인해 주세요.');
+            const desc = err.error_description || err.error || JSON.stringify(err);
+            alert('카카오 로그인 안내:\n' + desc + '\n\n카카오 디벨로퍼스에서 [카카오 로그인] 활성화(ON) 및 Redirect URI 설정을 확인해 주세요.');
           }
         }
       });
