@@ -3959,7 +3959,7 @@
             </a>
           </li>
           <li>
-            <a href="my-room.html" class="nav-highlight-btn nav-room-pill" title="어르신 전용 프라이빗 온라인룸 입장" onclick="goToMyRoom(event)">
+            <a href="javascript:void(0)" class="nav-highlight-btn nav-room-pill" title="어르신 전용 프라이빗 온라인룸 입장 (로그인)" onclick="openLoginModal(event); return false;">
               <span>🏛️</span>
               <span>나의 고유한 서재</span>
             </a>
@@ -4005,7 +4005,7 @@
           <span>🎓 <strong>코치 아카데미</strong></span>
           <span style="font-size: 0.72rem; background: #296299; color: #fff; padding: 2px 8px; border-radius: 999px;">자격과정</span>
         </a>
-        <a href="my-room.html" class="drawer-nav-item" style="background: rgba(194, 155, 56, 0.14); color: #8c6610; border: 1.5px solid var(--accent-gold); font-weight: 850;" onclick="closeMobileDrawer(); goToMyRoom(event)">
+        <a href="javascript:void(0)" class="drawer-nav-item" style="background: rgba(194, 155, 56, 0.14); color: #8c6610; border: 1.5px solid var(--accent-gold); font-weight: 850;" onclick="closeMobileDrawer(); openLoginModal(event); return false;">
           <span>🏛️ <strong>나의 고유한 서재</strong></span>
           <span style="font-size: 0.72rem; background: var(--accent-gold); color: #fff; padding: 2px 8px; border-radius: 999px;">온라인룸</span>
         </a>
@@ -4025,6 +4025,21 @@
       <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.35rem; margin-bottom: 6px; color: var(--text-primary); font-weight: 700;">여백과 결 · 리셋 아카이브</h3>
       <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 22px;">나만의 고유한 서재와 따뜻한 인생 기록을 시작해보세요</p>
       
+      <!-- 현재 로그인 계정 안내 박스 (기존 로그인 이력이 있을 때 노출) -->
+      <div id="modalCurrentLoginBanner" style="display: none; background: rgba(43, 90, 66, 0.08); border: 1.5px solid var(--accent); border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; text-align: center;">
+        <div style="font-size: 0.95rem; color: var(--text-primary); margin-bottom: 8px;">
+          🌿 현재 <strong id="modalCurrentUserName" style="color: var(--accent); font-weight: 800;"></strong> 님으로 접속되어 있습니다.
+        </div>
+        <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+          <button type="button" onclick="window.location.href='my-room.html'" style="padding: 9px 18px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-weight: 800; font-size: 0.90rem; cursor: pointer;">
+            🏛️ 내 서재 바로 입장하기
+          </button>
+          <button type="button" onclick="logoutUser()" style="padding: 9px 14px; background: var(--bg-secondary); color: var(--text-muted); border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.84rem; cursor: pointer;">
+            다른 계정으로 새로 로그인
+          </button>
+        </div>
+      </div>
+
       <div style="display: flex; flex-direction: column; gap: 10px;">
         <!-- 💬 카카오 정식 간편 로그인/회원가입 버튼 -->
         <button type="button" onclick="loginWithKakao()" style="width: 100%; padding: 14px 18px; background: #FEE500; color: #191600; border: none; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 12px rgba(254, 229, 0, 0.35); transition: transform 0.2s ease;">
@@ -4132,7 +4147,7 @@
           </a>
 
           <!-- 4) 🏛️ 나의 고유한 서재 카드 -->
-          <a href="my-room.html" class="hero-action-card room-card" title="나만의 독립된 프라이빗 온라인 서재 입장" onclick="goToMyRoom(event)">
+          <a href="javascript:void(0)" class="hero-action-card room-card" title="나만의 독립된 프라이빗 온라인 서재 입장 (로그인)" onclick="openLoginModal(event); return false;">
             <div class="hero-card-icon room-bg">🏛️</div>
             <div class="hero-card-body">
               <div class="hero-card-badge-row">
@@ -4597,8 +4612,8 @@
             <a href="my-room.html" class="btn btn-primary" style="background: var(--accent-gold); border-color: var(--accent-gold); font-size: 1.05rem; padding: 14px 28px; box-shadow: 0 4px 14px rgba(197, 155, 39, 0.35);">
               ✨ 김순옥 어르신 보물 서재 둘러보기 (샘플 체험) ➔
             </a>
-            <button onclick="goToMyRoom(event)" class="btn" style="background: var(--bg-primary); border: 1.5px solid var(--border-color); color: var(--text-primary); font-size: 1.05rem; padding: 14px 24px; font-weight: 700; cursor: pointer;">
-              🗝️ 내 고유 서재 입장하기
+            <button onclick="openLoginModal(event)" class="btn" style="background: var(--bg-primary); border: 1.5px solid var(--border-color); color: var(--text-primary); font-size: 1.05rem; padding: 14px 24px; font-weight: 700; cursor: pointer;">
+              🗝️ 내 고유 서재 입장하기 (로그인)
             </button>
           </div>
         </div>
@@ -4627,7 +4642,7 @@
             <li><a href="#test">🎯 1분 자가진단</a></li>
             <li><a href="#memoir">디지털 자서전</a></li>
             <li><a href="academy.html" style="color: var(--accent-gold); font-weight: 700;">🎓 코치 양성 아카데미</a></li>
-            <li><a href="my-room.html" onclick="goToMyRoom(event)" style="color: var(--accent-gold); font-weight: 700;">🏛️ 나의 고유한 서재</a></li>
+            <li><a href="javascript:void(0)" onclick="openLoginModal(event); return false;" style="color: var(--accent-gold); font-weight: 700;">🏛️ 나의 고유한 서재</a></li>
           </ul>
         </div>
         <div class="footer-links">
@@ -5960,9 +5975,41 @@
 
     // 5. 로그인 모달 제어
     function openLoginModal(e) {
-      if (e) e.preventDefault();
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
       const modal = document.getElementById('loginModal');
-      if (modal) modal.classList.add('open');
+      if (modal) {
+        modal.classList.add('open');
+        updateLoginModalUserInfo();
+      }
+      return false;
+    }
+
+    // 로그인 모달 열릴 때 현재 로그인 상태 동적 갱신
+    function updateLoginModalUserInfo() {
+      const savedUserStr = localStorage.getItem('reset_logged_in_user');
+      const savedName = localStorage.getItem('reset_user_name');
+      const banner = document.getElementById('modalCurrentLoginBanner');
+      const nameEl = document.getElementById('modalCurrentUserName');
+
+      let displayName = savedName || '';
+      if (savedUserStr) {
+        try {
+          const u = JSON.parse(savedUserStr);
+          if (u.name || u.nickname) displayName = u.name || u.nickname;
+        } catch(e) {}
+      }
+
+      if (banner && nameEl) {
+        if (displayName) {
+          nameEl.textContent = displayName;
+          banner.style.display = 'block';
+        } else {
+          banner.style.display = 'none';
+        }
+      }
     }
 
     function closeLoginModal() {
@@ -5976,19 +6023,14 @@
       }
     }
 
-    // 나의 고유한 서재 클릭 핸들러 (로그인 여부 확인 후 분기: 미로그인 시 로그인창으로 유도)
+    // 나의 고유한 서재 클릭 핸들러 (항상 로그인 모달창으로 연결)
     function goToMyRoom(e) {
-      if (e) e.preventDefault();
-      const savedUserStr = localStorage.getItem('reset_logged_in_user');
-      const savedName = localStorage.getItem('reset_user_name');
-
-      if (savedUserStr || savedName) {
-        // 이미 로그인된 회원이면 본인의 독립 서재로 즉시 입장
-        window.location.href = 'my-room.html';
-      } else {
-        // 로그인되지 않은 방문자이면 로그인 모달창 오픈 (카카오 3초 가입/직접 성함 입력)
-        openLoginModal();
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
       }
+      openLoginModal(e);
+      return false;
     }
 
     // =========================================================================
