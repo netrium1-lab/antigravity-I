@@ -1046,18 +1046,250 @@
       .nav-menu { display: none; }
     }
 
-    @media (max-width: 640px) {
-      .hero-main-title { font-size: 1.75rem; }
-      .hero-stat-bar { grid-template-columns: 1fr; }
-      .stat-item { border-right: none; border-bottom: 1px solid var(--border-light); padding-bottom: 10px; }
-      .stat-item:last-child { border-bottom: none; }
-      .benchmark-grid { grid-template-columns: 1fr; }
-      .roadmap-grid { grid-template-columns: 1fr; }
-      .benefits-grid { grid-template-columns: 1fr; }
-      .current-price { font-size: 1.85rem; }
-      .apply-card { padding: 26px 18px; }
-      .track-header, .track-body { padding: 18px; }
-      .nav-home-link { font-size: 0.82rem; }
+    /* 모바일 가로 넘침 방지 */
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+
+    @media (max-width: 768px) {
+      .nav-container {
+        padding: 0 12px;
+        height: 58px;
+      }
+      .logo-area {
+        font-size: 1.05rem;
+        gap: 6px;
+      }
+      .logo-sub-badge {
+        font-size: 0.72rem;
+        padding: 1px 5px;
+      }
+      .nav-actions {
+        gap: 6px;
+      }
+      .nav-home-link {
+        font-size: 0.80rem;
+        font-weight: 750;
+        padding: 6px 10px;
+        background: var(--bg-secondary);
+        border: 1.2px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--accent);
+      }
+      .btn-apply-header {
+        display: none; /* 모바일 헤더 텍스트 넘침 방지 (하단 고정 바로 대체) */
+      }
+      .nav-admin-btn {
+        padding: 6px 9px;
+        font-size: 0.80rem;
+      }
+      .theme-toggle-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.88rem;
+      }
+
+      /* 모바일 본문 요소 최적화 */
+      .container {
+        padding: 0 16px !important;
+      }
+      .section-wrap {
+        padding: 48px 0 !important;
+      }
+      .section-header {
+        margin-bottom: 32px !important;
+      }
+      .section-title {
+        font-size: 1.65rem !important;
+        letter-spacing: -0.5px !important;
+      }
+      .section-desc {
+        font-size: 0.92rem !important;
+      }
+      .hero-section {
+        padding: 36px 0 32px 0;
+      }
+      .hero-main-title { 
+        font-size: 1.85rem; 
+        line-height: 1.35;
+      }
+      .hero-description {
+        font-size: 0.95rem;
+      }
+      .hero-stat-bar { 
+        grid-template-columns: 1fr; 
+      }
+      .stat-item { 
+        border-right: none; 
+        border-bottom: 1px solid var(--border-light); 
+        padding-bottom: 10px; 
+      }
+      .stat-item:last-child { 
+        border-bottom: none; 
+      }
+      .benchmark-grid { 
+        grid-template-columns: 1fr; 
+      }
+      .roadmap-grid { 
+        grid-template-columns: 1fr; 
+      }
+      .benefits-grid { 
+        grid-template-columns: 1fr; 
+      }
+      .current-price { 
+        font-size: 1.85rem; 
+      }
+      .apply-card { 
+        padding: 24px 14px; 
+      }
+      .track-header, .track-body { 
+        padding: 16px 14px; 
+      }
+      .week-row {
+        gap: 8px;
+        padding: 8px 10px;
+      }
+      .week-chip {
+        font-size: 0.70rem;
+      }
+      .track-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        text-align: center;
+      }
+      .track-apply-btn {
+        text-align: center;
+        width: 100%;
+      }
+
+      /* 모바일 폼 필드 iOS 자동 줌인 방지 */
+      input[type="text"],
+      input[type="tel"],
+      input[type="email"],
+      select,
+      textarea {
+        font-size: 16px !important;
+      }
+
+      /* 모바일 관리자 모달 최적화 */
+      .academy-admin-modal-card {
+        padding: 16px 12px !important;
+        border-radius: 18px !important;
+        width: 96vw !important;
+        max-height: 94vh !important;
+      }
+      .academy-admin-header {
+        padding-bottom: 12px !important;
+        margin-bottom: 14px !important;
+      }
+      .academy-admin-header h2 {
+        font-size: 1.02rem !important;
+      }
+      .academy-stat-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+        margin-bottom: 14px !important;
+      }
+      .academy-stat-card {
+        padding: 10px 12px !important;
+      }
+      .academy-stat-val {
+        font-size: 1.15rem !important;
+      }
+      .academy-admin-tabs {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 6px !important;
+        margin-bottom: 16px !important;
+      }
+      .academy-admin-tab-btn {
+        padding: 8px 4px !important;
+        font-size: 0.76rem !important;
+      }
+      .curriculum-editor-card {
+        padding: 14px 12px !important;
+      }
+      .week-edit-item-card {
+        padding: 12px 10px !important;
+      }
+      .academy-table th, .academy-table td {
+        padding: 9px 10px !important;
+        font-size: 0.80rem !important;
+      }
+    }
+
+    /* -------------------- 모바일 전용 하단 고정 바 (뒤로가기 & 바로신청) -------------------- */
+    .mobile-bottom-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: var(--bg-card);
+      border-top: 1.5px solid var(--border-color);
+      padding: 8px 14px;
+      z-index: 998;
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    @media (max-width: 768px) {
+      .mobile-bottom-bar {
+        display: flex;
+      }
+      body {
+        padding-bottom: 66px; /* 하단 고정 바 가림 방지 */
+      }
+      /* 카카오톡 플로팅 버튼 위치를 바 위로 안전하게 올림 */
+      .kakao-float-btn {
+        bottom: 74px !important;
+        right: 14px !important;
+        padding: 9px 14px !important;
+        font-size: 0.82rem !important;
+      }
+    }
+    .mobile-btn-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 10px 14px;
+      background: var(--bg-primary);
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.84rem;
+      font-weight: 750;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+    .mobile-btn-home:hover {
+      background: var(--border-light);
+      color: var(--accent);
+    }
+    .mobile-btn-apply {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: var(--accent);
+      color: #ffffff;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 850;
+      text-decoration: none;
+      flex-grow: 1;
+      box-shadow: 0 3px 10px rgba(43, 90, 66, 0.25);
+      transition: var(--transition);
+    }
+    .mobile-btn-apply:hover {
+      background: var(--accent-hover);
     }
 
     /* -------------------- 카카오톡 실시간 상담 플로팅 버튼 -------------------- */
@@ -2233,6 +2465,17 @@
     </div>
   </footer>
 
+  <!-- ================= 모바일 전용 하단 고정 액션 & 뒤로가기 바 ================= -->
+  <div class="mobile-bottom-bar" id="mobileBottomBar">
+    <a href="index.html" class="mobile-btn-home" title="여백과 결 메인 서비스 홈으로 뒤돌아가기">
+      <span>←</span>
+      <span>메인홈</span>
+    </a>
+    <a href="#apply" class="mobile-btn-apply" onclick="document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth' });">
+      <span>🎓 1기 장학생 지원하기 ↓</span>
+    </a>
+  </div>
+
   <!-- 💬 카카오톡 오픈채팅 실시간 1:1 상담 플로팅 버튼 -->
   <a href="https://open.kakao.com/o/p79YYjPi" target="_blank" rel="noopener noreferrer" onclick="trackGoogleAdsConversion('kakaotalk_floating_click')" class="kakao-float-btn" title="카카오톡 오픈채팅 실시간 1:1 상담 열기">
     <svg viewBox="0 0 24 24" fill="#3C1E1E">
@@ -2821,6 +3064,16 @@
             🔄 기본 샘플 데이터로 복구하기
           </button>
         </div>
+      </div>
+
+      <!-- 모달 하단 빠른 닫기(화면으로 뒤돌아가기) 액션 바 -->
+      <div style="margin-top: 24px; padding-top: 16px; border-top: 1.5px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+        <div style="font-size: 0.82rem; color: var(--text-muted);">
+          여백과 결 아카데미 본부 총괄 관리실 · 모든 변경사항은 실시간으로 저장 및 화면에 반영됩니다.
+        </div>
+        <button type="button" onclick="closeAcademyAdminModal()" style="padding: 10px 22px; font-size: 0.88rem; font-weight: 800; border-radius: 8px; border: 1.5px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: var(--transition);">
+          <span>✕</span> 관리홈 닫기 (메인 화면으로 돌아가기)
+        </button>
       </div>
     </div>
   </div>
@@ -3798,11 +4051,38 @@
     }
 
     // -------------------------------------------------------------------------
-    // 4. 관리자 인증 & 대시보드 모달 제어
+    // 4. 관리자 인증 & 대시보드 모달 제어 (모바일 뒤로가기 제스처 연동)
     // -------------------------------------------------------------------------
     function isAcademyAdminLoggedIn() {
       return sessionStorage.getItem('yebaek_academy_admin') === 'true';
     }
+
+    function pushModalHistory(modalName) {
+      try {
+        history.pushState({ modalOpen: true, modalName: modalName }, '');
+      } catch (err) {}
+    }
+
+    // 모바일 하드웨어 뒤로가기 키 및 브라우저 뒤로가기 스와이프 시 모달만 안전하게 닫기
+    window.addEventListener('popstate', function(e) {
+      const branchModal = document.getElementById('academyBranchEditModal');
+      const schedModal = document.getElementById('academyScheduleEditModal');
+      const stuModal = document.getElementById('academyStudentEditModal');
+      const adminModal = document.getElementById('academyAdminModal');
+      const authModal = document.getElementById('academyAuthModal');
+
+      if (branchModal && branchModal.classList.contains('open')) {
+        closeBranchModal(true);
+      } else if (schedModal && schedModal.classList.contains('open')) {
+        closeScheduleModal(true);
+      } else if (stuModal && stuModal.classList.contains('open')) {
+        closeStudentModal(true);
+      } else if (adminModal && adminModal.classList.contains('open')) {
+        closeAcademyAdminModal(true);
+      } else if (authModal && authModal.classList.contains('open')) {
+        closeAcademyAuthModal(true);
+      }
+    });
 
     function openAcademyAdminAuthModal() {
       if (isAcademyAdminLoggedIn()) {
@@ -3815,15 +4095,19 @@
       if (modal) {
         modal.classList.add('open');
         document.body.style.overflow = 'hidden';
+        pushModalHistory('academyAuthModal');
         setTimeout(() => { if (pwdInput) pwdInput.focus(); }, 150);
       }
     }
 
-    function closeAcademyAuthModal() {
+    function closeAcademyAuthModal(isPopState = false) {
       const modal = document.getElementById('academyAuthModal');
-      if (modal) {
+      if (modal && modal.classList.contains('open')) {
         modal.classList.remove('open');
         document.body.style.overflow = '';
+        if (!isPopState && history.state && history.state.modalOpen) {
+          history.back();
+        }
       }
     }
 
@@ -3838,7 +4122,7 @@
 
       if (pwd === '1223') {
         sessionStorage.setItem('yebaek_academy_admin', 'true');
-        closeAcademyAuthModal();
+        closeAcademyAuthModal(true);
         openAcademyAdminDashboard();
         updateAdminHeaderBtnState();
       } else {
@@ -3889,6 +4173,7 @@
       if (modal) {
         modal.classList.add('open');
         document.body.style.overflow = 'hidden';
+        pushModalHistory('academyAdminModal');
       }
 
       // 모달 본문 및 탭 바 스크롤 초기화 (1번부터 6번까지 한눈에 보이도록 보장)
@@ -3900,11 +4185,14 @@
       }, 30);
     }
 
-    function closeAcademyAdminModal() {
+    function closeAcademyAdminModal(isPopState = false) {
       const modal = document.getElementById('academyAdminModal');
-      if (modal) {
+      if (modal && modal.classList.contains('open')) {
         modal.classList.remove('open');
         document.body.style.overflow = '';
+        if (!isPopState && history.state && history.state.modalOpen) {
+          history.back();
+        }
       }
     }
 
@@ -4213,11 +4501,17 @@
         document.getElementById('editStudentCertNo').value = `YB-COACH-2026-${String(Math.floor(Math.random() * 899) + 100)}`;
       }
       modal.classList.add('open');
+      pushModalHistory('academyStudentEditModal');
     }
 
-    function closeStudentModal() {
+    function closeStudentModal(isPopState = false) {
       const modal = document.getElementById('academyStudentEditModal');
-      if (modal) modal.classList.remove('open');
+      if (modal && modal.classList.contains('open')) {
+        modal.classList.remove('open');
+        if (!isPopState && history.state && history.state.modalOpen) {
+          history.back();
+        }
+      }
     }
 
     function closeStudentEditOnOverlay(e) {
@@ -4695,11 +4989,17 @@
         document.getElementById('editSchedTagColor').value = 'var(--accent)';
       }
       modal.classList.add('open');
+      pushModalHistory('academyScheduleEditModal');
     }
 
-    function closeScheduleModal() {
+    function closeScheduleModal(isPopState = false) {
       const modal = document.getElementById('academyScheduleEditModal');
-      if (modal) modal.classList.remove('open');
+      if (modal && modal.classList.contains('open')) {
+        modal.classList.remove('open');
+        if (!isPopState && history.state && history.state.modalOpen) {
+          history.back();
+        }
+      }
     }
 
     function closeScheduleEditOnOverlay(e) {
@@ -4849,11 +5149,17 @@
         document.getElementById('editBranchStatus').value = '정상운영';
       }
       modal.classList.add('open');
+      pushModalHistory('academyBranchEditModal');
     }
 
-    function closeBranchModal() {
+    function closeBranchModal(isPopState = false) {
       const modal = document.getElementById('academyBranchEditModal');
-      if (modal) modal.classList.remove('open');
+      if (modal && modal.classList.contains('open')) {
+        modal.classList.remove('open');
+        if (!isPopState && history.state && history.state.modalOpen) {
+          history.back();
+        }
+      }
     }
 
     function closeBranchEditOnOverlay(e) {
