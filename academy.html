@@ -1097,6 +1097,254 @@
         font-size: 0.88rem;
       }
     }
+
+    /* ================= 6. 아카데미 총괄 관리실 (Admin Console) 스타일 ================= */
+    .nav-admin-btn {
+      font-size: 0.84rem;
+      font-weight: 750;
+      color: var(--accent);
+      background: var(--accent-light);
+      border: 1px solid rgba(43, 90, 66, 0.3);
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: var(--transition);
+    }
+    .nav-admin-btn:hover {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .academy-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      padding: 16px;
+      animation: modalFadeIn 0.25s ease;
+    }
+    .academy-modal-overlay.open {
+      display: flex;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes modalSlideUp {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .academy-auth-modal-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 420px;
+      padding: 32px 28px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      text-align: center;
+      position: relative;
+      animation: modalSlideUp 0.25s ease;
+    }
+
+    .academy-admin-modal-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 1240px;
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 28px 32px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+      position: relative;
+      animation: modalSlideUp 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .academy-admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding-bottom: 18px;
+      border-bottom: 1.5px solid var(--border-color);
+      margin-bottom: 20px;
+    }
+
+    .academy-admin-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .academy-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .academy-stat-card {
+      background: var(--bg-primary);
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .academy-stat-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .academy-stat-val {
+      font-size: 1.45rem;
+      font-weight: 850;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .academy-admin-tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: 2px solid var(--border-color);
+      margin-bottom: 20px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .academy-admin-tab-btn {
+      padding: 11px 18px;
+      font-size: 0.92rem;
+      font-weight: 750;
+      color: var(--text-secondary);
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+    .academy-admin-tab-btn:hover {
+      color: var(--accent);
+      background: var(--accent-light);
+      border-radius: 8px 8px 0 0;
+    }
+    .academy-admin-tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+      background: var(--accent-light);
+      border-radius: 8px 8px 0 0;
+    }
+
+    .academy-tab-badge {
+      font-size: 0.74rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-weight: 800;
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .academy-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+      background: var(--bg-primary);
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .academy-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      background: var(--bg-card);
+    }
+
+    .academy-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+    .academy-table th {
+      background: var(--bg-primary);
+      color: var(--text-secondary);
+      font-weight: 750;
+      padding: 12px 14px;
+      border-bottom: 1.5px solid var(--border-color);
+      white-space: nowrap;
+    }
+    .academy-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-primary);
+      vertical-align: middle;
+    }
+    .academy-table tr:hover {
+      background: rgba(43, 90, 66, 0.03);
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .badge-waiting { background: #fef3c7; color: #92400e; }
+    .badge-consulting { background: #dbeafe; color: #1e40af; }
+    .badge-paid { background: #dcfce7; color: #15803d; }
+    .badge-completed { background: #ede9fe; color: #5b21b6; }
+    .badge-canceled { background: #fee2e2; color: #b91c1c; }
+
+    .academy-sub-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+
+    .curriculum-editor-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      transition: var(--transition);
+    }
+    .curriculum-editor-card:hover {
+      border-color: var(--accent);
+    }
   </style>
 </head>
 <body>
@@ -1125,6 +1373,10 @@
         <a href="index.html" class="nav-home-link" title="여백과 결 서비스 메인 홈으로 이동">
           <span>← 메인홈</span>
         </a>
+        <!-- ⚙️ 아카데미 관리자 모드 진입 버튼 -->
+        <button type="button" id="academyAdminHeaderBtn" onclick="openAcademyAdminAuthModal()" class="nav-admin-btn" title="여백과 결 아카데미 총괄 관리실">
+          <span>⚙️ 관리자</span>
+        </button>
         <a href="#apply" class="btn-apply-header">
           1기 지원하기
         </a>
@@ -1271,7 +1523,7 @@
         </p>
       </div>
 
-      <div class="tracks-grid">
+      <div class="tracks-grid" id="academyTracksGrid">
         <!-- Track 1: 뷰티 -->
         <div class="track-card">
           <div class="track-header">
@@ -1615,7 +1867,7 @@
       </div>
 
       <!-- 1기 파운더스 특별 모집 요강 카드 -->
-      <div class="pricing-summary-card">
+      <div class="pricing-summary-card" id="academyPricingCard">
         <div class="pricing-info-left">
           <span class="hero-pill-badge" style="margin-bottom: 12px; display: inline-flex;">🌸 1기 창립 멤버(Founders) 특별 모집</span>
           <h3>[여백과 결] 코칭스태프 1기 정규 과정</h3>
@@ -1798,6 +2050,9 @@
         <a href="my-room.html" class="nav-home-link" style="border: 1px solid var(--border-color); padding: 7px 16px; color: var(--accent-gold);">
           <span>🏛️ 나의 고유한 서재 (체험)</span>
         </a>
+        <a href="javascript:void(0)" onclick="openAcademyAdminAuthModal()" class="nav-home-link" style="border: 1px solid var(--accent); color: var(--accent); font-weight: 750; padding: 7px 16px;">
+          <span>⚙️ 아카데미 총괄 관리실</span>
+        </a>
       </div>
       <div style="margin-top: 20px; font-size: 0.76rem; color: var(--text-muted);">
         © 2026 메타큐 라이프 · 여백과 결 (MetaQ Life) Coach Academy. All rights reserved.
@@ -1812,6 +2067,580 @@
     </svg>
     <span>실시간 카톡 상담</span>
   </a>
+
+  <!-- ================= 모달 1) 아카데미 관리자 인증 모달 ================= -->
+  <div class="academy-modal-overlay" id="academyAuthModal" onclick="closeAcademyAuthOnOverlay(event)">
+    <div class="academy-auth-modal-card">
+      <button class="theme-toggle-btn" onclick="closeAcademyAuthModal()" aria-label="닫기" style="position: absolute; top: 16px; right: 16px; border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer;">✕</button>
+      <div style="font-size: 2.2rem; margin-bottom: 8px;">🔐</div>
+      <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin-bottom: 6px;">
+        아카데미 총괄 관리실 인증
+      </h3>
+      <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 18px;">
+        교육과정 및 수강료 수정, 신청자 접수 명단, 교육 이수/수료,<br>
+        전국 지부 및 지부장을 총괄 운영하는 전용 관리홈입니다.<br>
+        관리자 비밀번호를 입력해주세요.
+      </p>
+
+      <form onsubmit="handleAcademyAdminLoginSubmit(event)">
+        <input 
+          type="password" 
+          id="academyAdminPasswordInput" 
+          placeholder="관리자 비밀번호 4자리" 
+          maxlength="8" 
+          autocomplete="current-password" 
+          required
+          style="width: 100%; padding: 12px 14px; border: 2px solid var(--accent); border-radius: 10px; font-size: 1.1rem; text-align: center; margin-bottom: 14px; background: var(--bg-card); color: var(--text-primary); outline: none;"
+        >
+        <button type="submit" class="btn-submit-apply" style="width: 100%; padding: 13px; font-size: 0.98rem; border-radius: 10px; font-weight: 800; cursor: pointer;">
+          관리자 홈 입장하기
+        </button>
+      </form>
+      <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 14px; margin-bottom: 0;">
+        (설정된 기본 관리자 비밀번호: 1223)
+      </p>
+    </div>
+  </div>
+
+  <!-- ================= 모달 2) 아카데미 총괄 관리실 (Academy Admin Console) ================= -->
+  <div class="academy-modal-overlay" id="academyAdminModal" onclick="closeAcademyAdminOnOverlay(event)">
+    <div class="academy-admin-modal-card">
+      <!-- 상단 헤더 -->
+      <div class="academy-admin-header">
+        <div class="academy-admin-title-group">
+          <span style="font-size: 1.6rem; background: rgba(43, 90, 66, 0.12); width: 44px; height: 44px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center;">⚙️</span>
+          <div>
+            <h2 style="font-size: 1.38rem; font-weight: 850; color: var(--text-primary); margin: 0; display: flex; align-items: center; gap: 8px;">
+              <span>여백과 결 아카데미 · 총괄 운영 관리실</span>
+              <span style="font-size: 0.74rem; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 999px; font-weight: 700;">본부 총괄 모드</span>
+            </h2>
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">
+              교육과정·수강료 실시간 수정, 수강 신청자 CRM, 교육 이수/수료증 발급, 전국 지부 및 지부장 원스톱 관리
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button type="button" class="btn" onclick="logoutAcademyAdmin()" style="font-size: 0.82rem; color: #dc2626; border: 1.2px solid rgba(220,38,38,0.3); background: rgba(220,38,38,0.06); padding: 7px 14px; border-radius: 8px; cursor: pointer; font-weight: 700;">
+            🚪 관리자 로그아웃
+          </button>
+          <button type="button" onclick="closeAcademyAdminModal()" aria-label="닫기" style="border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">✕</button>
+        </div>
+      </div>
+
+      <!-- 상단 4대 핵심 통계 요약 카드 -->
+      <div class="academy-stat-grid">
+        <div class="academy-stat-card" onclick="switchAcademyAdminTab('applicants')">
+          <div>
+            <div style="font-size: 0.78rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 3px;">📋 누적 수강 신청자</div>
+            <div class="academy-stat-val" id="acadStatTotalApplicants">0명</div>
+          </div>
+          <div style="font-size: 1.6rem;">📝</div>
+        </div>
+        <div class="academy-stat-card" onclick="switchAcademyAdminTab('students')">
+          <div>
+            <div style="font-size: 0.78rem; font-weight: 750; color: #15803d; margin-bottom: 3px;">💳 수강 확정·이수중</div>
+            <div class="academy-stat-val" id="acadStatPaidStudents" style="color: #16a34a;">0명</div>
+          </div>
+          <div style="font-size: 1.6rem;">🎓</div>
+        </div>
+        <div class="academy-stat-card" onclick="switchAcademyAdminTab('students')">
+          <div>
+            <div style="font-size: 0.78rem; font-weight: 750; color: #5b21b6; margin-bottom: 3px;">📜 공인 수료증 발급</div>
+            <div class="academy-stat-val" id="acadStatCertCount" style="color: #7c3aed;">0명</div>
+          </div>
+          <div style="font-size: 1.6rem;">🏅</div>
+        </div>
+        <div class="academy-stat-card" onclick="switchAcademyAdminTab('branches')">
+          <div>
+            <div style="font-size: 0.78rem; font-weight: 750; color: #c59b27; margin-bottom: 3px;">🏛️ 전국 거점 지부</div>
+            <div class="academy-stat-val" id="acadStatBranchCount" style="color: var(--accent-gold);">0개소</div>
+          </div>
+          <div style="font-size: 1.6rem;">🏢</div>
+        </div>
+      </div>
+
+      <!-- 5대 탭 전환 바 -->
+      <div class="academy-admin-tabs">
+        <button type="button" class="academy-admin-tab-btn active" id="tabBtnAcadApplicants" onclick="switchAcademyAdminTab('applicants')">
+          <span>📋</span> 1. 수강 신청자 접수 관리
+          <span class="academy-tab-badge" id="acadBadgeWaiting">0</span>
+        </button>
+        <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadStudents" onclick="switchAcademyAdminTab('students')">
+          <span>🎓</span> 2. 교육생 출석 & 수료 관리
+          <span class="academy-tab-badge" id="acadBadgeStudents" style="background: #16a34a;">0</span>
+        </button>
+        <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadCurriculum" onclick="switchAcademyAdminTab('curriculum')">
+          <span>📚</span> 3. 교육과정 & 수강료 관리
+          <span class="academy-tab-badge" style="background: #2563eb;">화면 연동</span>
+        </button>
+        <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadBranches" onclick="switchAcademyAdminTab('branches')">
+          <span>🏛️</span> 4. 전국 지부 생성 & 지부장 관리
+          <span class="academy-tab-badge" id="acadBadgeBranches" style="background: var(--accent-gold);">0</span>
+        </button>
+        <button type="button" class="academy-admin-tab-btn" id="tabBtnAcadSettings" onclick="switchAcademyAdminTab('settings')">
+          <span>⚙️</span> 5. 아카데미 운영 설정 & 계좌
+        </button>
+      </div>
+
+      <!-- ================= 탭 1: 수강 신청자 접수 관리 ================= -->
+      <div id="acadTabContentApplicants">
+        <div class="academy-toolbar">
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <label for="filterAcadTrackSelect" style="font-size: 0.84rem; font-weight: 700; color: var(--text-secondary);">트랙:</label>
+            <select id="filterAcadTrackSelect" onchange="renderAcademyApplicantTable()" style="padding: 6px 10px; font-size: 0.85rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary);">
+              <option value="all">전체 트랙</option>
+              <option value="뷰티">💄 뷰티 웰니스</option>
+              <option value="공간">👗 공간 & 비움</option>
+              <option value="생전">📦 생전정리 & 엔딩</option>
+              <option value="생애사">✍️ 디지털 생애사</option>
+              <option value="종합">🌿 종합 코치</option>
+            </select>
+
+            <label for="filterAcadStatusSelect" style="font-size: 0.84rem; font-weight: 700; color: var(--text-secondary); margin-left: 6px;">상태:</label>
+            <select id="filterAcadStatusSelect" onchange="renderAcademyApplicantTable()" style="padding: 6px 10px; font-size: 0.85rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary);">
+              <option value="all">전체 상태</option>
+              <option value="접수대기">🟡 접수대기</option>
+              <option value="상담중">🔵 상담진행중</option>
+              <option value="입금완료">💳 입금·수강확정</option>
+              <option value="취소">❌ 신청취소</option>
+            </select>
+
+            <input 
+              type="text" 
+              id="searchAcadApplicantInput" 
+              placeholder="지원자명, 연락처, 지역 검색..." 
+              oninput="renderAcademyApplicantTable()" 
+              style="padding: 6px 12px; font-size: 0.85rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-card); color: var(--text-primary); width: 190px;"
+            />
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn" onclick="exportAcademyApplicantsCSV()" style="padding: 7px 14px; font-size: 0.85rem; font-weight: 750; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
+              <span>📥</span> 엑셀(CSV) 저장
+            </button>
+            <button type="button" class="btn-submit-apply" onclick="openManualAcademyApplyModal()" style="padding: 7px 14px; font-size: 0.85rem; font-weight: 750; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
+              <span>➕</span> 신청자 직접 등록
+            </button>
+          </div>
+        </div>
+
+        <div class="academy-table-wrap">
+          <table class="academy-table">
+            <thead>
+              <tr>
+                <th style="width: 85px;">접수일시</th>
+                <th style="width: 105px;">지원자 성함</th>
+                <th style="width: 145px;">연락처 (전화걸기)</th>
+                <th style="width: 180px;">희망 코칭 트랙</th>
+                <th style="width: 110px;">활동 희망지역</th>
+                <th style="width: 130px; text-align: center;">진행 상태</th>
+                <th>상담 및 입금 메모</th>
+                <th style="width: 60px; text-align: center;">삭제</th>
+              </tr>
+            </thead>
+            <tbody id="acadApplicantTableBody">
+              <!-- JS 동적 렌더링 -->
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top: 14px; font-size: 0.80rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
+          <span>💡</span>
+          <span>진행 상태를 [💳 입금·수강확정]으로 변경하면 수강생으로 자동 연동이 가능합니다. 메모를 클릭하면 실시간 입금 일자 및 상담 노트를 입력할 수 있습니다.</span>
+        </div>
+      </div>
+
+      <!-- ================= 탭 2: 교육생 출석 & 수료 관리 ================= -->
+      <div id="acadTabContentStudents" style="display: none;">
+        <div class="academy-toolbar">
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <label for="filterStudentBatchSelect" style="font-size: 0.84rem; font-weight: 700; color: var(--text-secondary);">기수:</label>
+            <select id="filterStudentBatchSelect" onchange="renderAcademyStudentsTable()" style="padding: 6px 10px; font-size: 0.85rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary);">
+              <option value="all">전체 기수</option>
+              <option value="1기">1기 (창립 파운더스)</option>
+              <option value="2기">2기 정규</option>
+            </select>
+
+            <label for="filterStudentStatusSelect" style="font-size: 0.84rem; font-weight: 700; color: var(--text-secondary); margin-left: 6px;">이수상태:</label>
+            <select id="filterStudentStatusSelect" onchange="renderAcademyStudentsTable()" style="padding: 6px 10px; font-size: 0.85rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary);">
+              <option value="all">전체 상태</option>
+              <option value="수강중">📖 수강 진행중</option>
+              <option value="이수완료">🏅 4주 이수완료</option>
+              <option value="수료증발급">📜 수료증/자격증 발급</option>
+              <option value="보강필요">⚠️ 보강 필요</option>
+            </select>
+
+            <input 
+              type="text" 
+              id="searchStudentInput" 
+              placeholder="코치명, 자격번호, 배정지부..." 
+              oninput="renderAcademyStudentsTable()" 
+              style="padding: 6px 12px; font-size: 0.85rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-card); color: var(--text-primary); width: 190px;"
+            />
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn" onclick="exportAcademyStudentsCSV()" style="padding: 7px 14px; font-size: 0.85rem; font-weight: 750; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
+              <span>📥</span> 수료생 엑셀 저장
+            </button>
+            <button type="button" class="btn-submit-apply" onclick="openStudentModal()" style="padding: 7px 14px; font-size: 0.85rem; font-weight: 750; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
+              <span>➕</span> 교육생 신규 등록
+            </button>
+          </div>
+        </div>
+
+        <div class="academy-table-wrap">
+          <table class="academy-table">
+            <thead>
+              <tr>
+                <th style="width: 100px;">기수</th>
+                <th style="width: 110px;">코치 성함</th>
+                <th style="width: 140px;">연락처</th>
+                <th style="width: 140px;">전공 코칭 트랙</th>
+                <th style="width: 100px; text-align: center;">출석·진도율</th>
+                <th style="width: 135px; text-align: center;">이수/수료 상태</th>
+                <th style="width: 150px;">공인 수료증 번호</th>
+                <th style="width: 130px;">배정 지부/현장</th>
+                <th style="width: 70px; text-align: center;">관리</th>
+              </tr>
+            </thead>
+            <tbody id="acadStudentTableBody">
+              <!-- JS 동적 렌더링 -->
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top: 14px; font-size: 0.80rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
+          <span>💡</span>
+          <span>출석률이 80% 이상 완료되면 상태를 [📜 수료증/자격증 발급]으로 전환할 수 있습니다. 수료 번호를 누르면 공인 수료증 정보가 조회됩니다.</span>
+        </div>
+      </div>
+
+      <!-- ================= 탭 3: 교육과정 & 수강료 관리 ================= -->
+      <div id="acadTabContentCurriculum" style="display: none;">
+        <div style="background: rgba(43, 90, 66, 0.08); border: 1.5px solid var(--accent); border-radius: 14px; padding: 16px 20px; margin-bottom: 22px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.8rem;">✨</span>
+            <div>
+              <div style="font-size: 0.98rem; font-weight: 850; color: var(--text-primary);">
+                교육과정 및 수강료 실시간 화면 연동 관리
+              </div>
+              <div style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 2px;">
+                아래 폼에서 트랙 정보나 수강료를 수정한 후 [저장]을 누르면, <strong>아카데미 메인 페이지에 즉시 실시간으로 100% 반영</strong>됩니다.
+              </div>
+            </div>
+          </div>
+          <button type="button" onclick="saveAcademyCurriculumSettings()" class="btn-submit-apply" style="padding: 10px 22px; font-size: 0.92rem; font-weight: 800; border-radius: 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+            <span>💾</span> 교육과정 & 수강료 즉시 반영 저장
+          </button>
+        </div>
+
+        <!-- 1기 수강료 및 모집 요강 설정 박스 -->
+        <div class="academy-sub-card">
+          <h3 style="font-size: 1.12rem; font-weight: 850; color: var(--text-primary); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+            <span>💰</span> 1기 수강료 및 모집 요강 설정
+          </h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+            <div>
+              <label for="cfgPricingCourseTitle" style="display: block; font-size: 0.84rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 5px;">과정 공식 타이틀:</label>
+              <input type="text" id="cfgPricingCourseTitle" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 0.90rem; background: var(--bg-card); color: var(--text-primary);" />
+            </div>
+            <div>
+              <label for="cfgPricingOriginal" style="display: block; font-size: 0.84rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 5px;">정상 수강료 (표시가):</label>
+              <input type="text" id="cfgPricingOriginal" placeholder="500,000" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 0.90rem; background: var(--bg-card); color: var(--text-primary);" />
+            </div>
+            <div>
+              <label for="cfgPricingCurrent" style="display: block; font-size: 0.84rem; font-weight: 750; color: #15803d; margin-bottom: 5px;">실제 입학 수강료 (원):</label>
+              <input type="text" id="cfgPricingCurrent" placeholder="350,000" style="width: 100%; padding: 8px 12px; border: 2px solid var(--accent); border-radius: 8px; font-size: 0.98rem; font-weight: 850; background: var(--bg-card); color: var(--accent);" />
+            </div>
+            <div>
+              <label for="cfgPricingBadge" style="display: block; font-size: 0.84rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 5px;">장학 혜택 배지 문구:</label>
+              <input type="text" id="cfgPricingBadge" placeholder="1기 창립 장학 30% 특별 혜택" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 0.90rem; background: var(--bg-card); color: var(--text-primary);" />
+            </div>
+            <div>
+              <label for="cfgPricingNotice" style="display: block; font-size: 0.84rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 5px;">선착순 정원 및 포함사항 문구:</label>
+              <input type="text" id="cfgPricingNotice" placeholder="※ 1기 선착순 20명 한정 마감 (교재·자격증 발급비 포함)" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 0.90rem; background: var(--bg-card); color: var(--text-primary);" />
+            </div>
+            <div>
+              <label for="cfgPricingCoachingPay" style="display: block; font-size: 0.84rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 5px;">현장 출장 코칭비 배정 문구:</label>
+              <input type="text" id="cfgPricingCoachingPay" placeholder="회당 8만 ~ 12만 원 우선 배정" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 0.90rem; background: var(--bg-card); color: var(--text-primary);" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 4대 전문 트랙 상세 커리큘럼 편집 영역 -->
+        <div style="margin-top: 24px;">
+          <h3 style="font-size: 1.12rem; font-weight: 850; color: var(--text-primary); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+            <span>📖</span> 4대 전문 코칭 트랙 커리큘럼 편집
+          </h3>
+          <div id="curriculumEditorContainer">
+            <!-- JS 동적 렌더링: 4개 트랙 편집 카드 -->
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" onclick="saveAcademyCurriculumSettings()" class="btn-submit-apply" style="padding: 12px 28px; font-size: 0.96rem; font-weight: 800; border-radius: 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+            <span>💾</span> 교육과정 & 수강료 변경사항 저장
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= 탭 4: 전국 지부 생성 & 지부장 관리 ================= -->
+      <div id="acadTabContentBranches" style="display: none;">
+        <div class="academy-toolbar">
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <label for="filterBranchStatusSelect" style="font-size: 0.84rem; font-weight: 700; color: var(--text-secondary);">운영구분:</label>
+            <select id="filterBranchStatusSelect" onchange="renderAcademyBranchesTable()" style="padding: 6px 10px; font-size: 0.85rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary);">
+              <option value="all">전체 운영상태</option>
+              <option value="정상운영">🟢 정상운영</option>
+              <option value="개설준비중">🟡 개설준비중</option>
+              <option value="휴업">🔴 휴업/이전</option>
+            </select>
+
+            <input 
+              type="text" 
+              id="searchBranchInput" 
+              placeholder="지부명, 지역, 지부장명 검색..." 
+              oninput="renderAcademyBranchesTable()" 
+              style="padding: 6px 12px; font-size: 0.85rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-card); color: var(--text-primary); width: 200px;"
+            />
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn" onclick="exportAcademyBranchesCSV()" style="padding: 7px 14px; font-size: 0.85rem; font-weight: 750; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
+              <span>📥</span> 지부 현황 엑셀 저장
+            </button>
+            <button type="button" class="btn-submit-apply" onclick="openBranchModal()" style="padding: 7px 14px; font-size: 0.85rem; font-weight: 750; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
+              <span>🏛️</span> 새 지부 개설 & 지부장 위촉
+            </button>
+          </div>
+        </div>
+
+        <div class="academy-table-wrap">
+          <table class="academy-table">
+            <thead>
+              <tr>
+                <th style="width: 140px;">지부 명칭</th>
+                <th style="width: 160px;">관할 권역 / 지역</th>
+                <th style="width: 110px;">지부장 성함</th>
+                <th style="width: 140px;">연락처 (통화)</th>
+                <th>지부 거점 주소 / 메모</th>
+                <th style="width: 90px; text-align: center;">소속 코치</th>
+                <th style="width: 95px; text-align: center;">개설일</th>
+                <th style="width: 105px; text-align: center;">운영 상태</th>
+                <th style="width: 80px; text-align: center;">관리</th>
+              </tr>
+            </thead>
+            <tbody id="acadBranchTableBody">
+              <!-- JS 동적 렌더링 -->
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top: 14px; font-size: 0.80rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
+          <span>💡</span>
+          <span>지부를 개설하면 지역 단위의 1:1 방문 맞춤 케어와 자서전 제작 프로젝트를 해당 지부장 및 소속 코치에게 우선 배정할 수 있습니다.</span>
+        </div>
+      </div>
+
+      <!-- ================= 탭 5: 아카데미 운영 설정 & 계좌 ================= -->
+      <div id="acadTabContentSettings" style="display: none;">
+        <div class="academy-sub-card">
+          <h3 style="font-size: 1.12rem; font-weight: 850; color: var(--text-primary); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+            <span>💳</span> 아카데미 공식 수강료 입금 계좌 설정
+          </h3>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 14px;">
+            지원자가 온라인 지원서를 제출하거나 1:1 입학 상담 시 안내되는 공식 입금 계좌 정보입니다.
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
+            <div>
+              <label for="cfgBankName" style="display: block; font-size: 0.84rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 5px;">입금 은행명:</label>
+              <input type="text" id="cfgBankName" placeholder="예: 신한은행" style="width: 100%; padding: 9px 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 0.90rem; background: var(--bg-card); color: var(--text-primary);" />
+            </div>
+            <div>
+              <label for="cfgAccountNumber" style="display: block; font-size: 0.84rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 5px;">계좌번호:</label>
+              <input type="text" id="cfgAccountNumber" placeholder="예: 110-432-080370" style="width: 100%; padding: 9px 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 0.90rem; background: var(--bg-card); color: var(--text-primary);" />
+            </div>
+            <div>
+              <label for="cfgAccountHolder" style="display: block; font-size: 0.84rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 5px;">예금주명:</label>
+              <input type="text" id="cfgAccountHolder" placeholder="예: 메타큐 라이프 (여백과 결)" style="width: 100%; padding: 9px 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 0.90rem; background: var(--bg-card); color: var(--text-primary);" />
+            </div>
+            <div>
+              <label for="cfgAcademyPhone" style="display: block; font-size: 0.84rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 5px;">아카데미 대표 문의 전화:</label>
+              <input type="tel" id="cfgAcademyPhone" placeholder="010-9613-5913" style="width: 100%; padding: 9px 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 0.90rem; background: var(--bg-card); color: var(--text-primary);" />
+            </div>
+          </div>
+          <div style="display: flex; justify-content: flex-end; margin-top: 14px;">
+            <button type="button" onclick="saveAcademyAccountSettings()" class="btn-submit-apply" style="padding: 9px 20px; font-size: 0.90rem; font-weight: 800; border-radius: 8px; cursor: pointer;">
+              <span>💾</span> 입금 계좌 및 번호 저장
+            </button>
+          </div>
+        </div>
+
+        <!-- 데이터 초기화 및 안전 복구 카드 -->
+        <div class="academy-sub-card" style="border-color: rgba(220, 38, 38, 0.3); background: rgba(220, 38, 38, 0.03);">
+          <h3 style="font-size: 1.05rem; font-weight: 850; color: #b91c1c; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+            <span>⚠️</span> 아카데미 데이터 기본값 복원 (초기화)
+          </h3>
+          <p style="font-size: 0.84rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+            테스트 중 데이터가 꼬이거나 초기 기본 샘플(신청자 4명, 교육생 4명, 지부 3곳, 기본 커리큘럼)로 깨끗하게 복구하고 싶을 때 사용합니다.
+          </p>
+          <button type="button" onclick="resetAcademyAllData()" class="btn" style="background: #ffffff; border: 1.2px solid #ef4444; color: #dc2626; padding: 8px 16px; font-size: 0.84rem; font-weight: 750; border-radius: 8px; cursor: pointer;">
+            🔄 기본 샘플 데이터로 복구하기
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 모달 3) 전국 지부 개설 및 지부장 위촉 모달 ================= -->
+  <div class="academy-modal-overlay" id="academyBranchEditModal" onclick="closeBranchEditOnOverlay(event)">
+    <div class="academy-auth-modal-card" style="max-width: 500px; text-align: left; padding: 26px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+        <h3 id="branchModalTitle" style="font-size: 1.15rem; font-weight: 850; color: var(--text-primary); margin: 0;">
+          🏛️ 거점 지부 개설 및 지부장 등록
+        </h3>
+        <button type="button" onclick="closeBranchModal()" aria-label="닫기" style="border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer;">✕</button>
+      </div>
+
+      <form id="branchEditForm" onsubmit="handleBranchEditSubmit(event)">
+        <input type="hidden" id="editBranchId" value="">
+        <div style="display: grid; grid-template-columns: 1fr; gap: 11px;">
+          <div>
+            <label for="editBranchName" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">지부 명칭 *</label>
+            <input type="text" id="editBranchName" placeholder="예: 서울 강남·서초 지부" required style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+          </div>
+          <div>
+            <label for="editBranchRegion" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">관할 권역 / 지역 *</label>
+            <input type="text" id="editBranchRegion" placeholder="예: 서울 강남구, 서초구 일원" required style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label for="editBranchLeader" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">지부장 성함 *</label>
+              <input type="text" id="editBranchLeader" placeholder="예: 강서연 지부장" required style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+            </div>
+            <div>
+              <label for="editBranchPhone" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">지부장 연락처 *</label>
+              <input type="tel" id="editBranchPhone" placeholder="010-0000-0000" oninput="formatPhone(this)" required style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+            </div>
+          </div>
+          <div>
+            <label for="editBranchAddress" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">거점 사무실 주소</label>
+            <input type="text" id="editBranchAddress" placeholder="예: 서울시 강남구 테헤란로 152 7층" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label for="editBranchCoachCount" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">소속 코치 인원 (명)</label>
+              <input type="number" id="editBranchCoachCount" min="0" value="0" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+            </div>
+            <div>
+              <label for="editBranchStatus" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">운영 상태</label>
+              <select id="editBranchStatus" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+                <option value="정상운영">🟢 정상운영</option>
+                <option value="개설준비중">🟡 개설준비중</option>
+                <option value="휴업">🔴 휴업/이전</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label for="editBranchNote" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">운영 비고 / 특화 분야</label>
+            <input type="text" id="editBranchNote" placeholder="예: 방문 뷰어 및 옷장 정리 집중 관할" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px;">
+          <button type="button" onclick="closeBranchModal()" class="btn" style="padding: 8px 16px; font-size: 0.86rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-secondary); cursor: pointer;">
+            취소
+          </button>
+          <button type="submit" class="btn-submit-apply" style="padding: 8px 20px; font-size: 0.88rem; border-radius: 6px; cursor: pointer;">
+            저장하기
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= 모달 4) 교육생 신규 등록 및 수정 모달 ================= -->
+  <div class="academy-modal-overlay" id="academyStudentEditModal" onclick="closeStudentEditOnOverlay(event)">
+    <div class="academy-auth-modal-card" style="max-width: 480px; text-align: left; padding: 26px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+        <h3 id="studentModalTitle" style="font-size: 1.15rem; font-weight: 850; color: var(--text-primary); margin: 0;">
+          🎓 교육생 등록 및 수료 관리
+        </h3>
+        <button type="button" onclick="closeStudentModal()" aria-label="닫기" style="border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer;">✕</button>
+      </div>
+
+      <form id="studentEditForm" onsubmit="handleStudentEditSubmit(event)">
+        <input type="hidden" id="editStudentId" value="">
+        <div style="display: grid; grid-template-columns: 1fr; gap: 11px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label for="editStudentBatch" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">수강 기수 *</label>
+              <select id="editStudentBatch" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+                <option value="1기 (파운더스)">1기 (파운더스)</option>
+                <option value="2기">2기 정규</option>
+                <option value="3기">3기 정규</option>
+              </select>
+            </div>
+            <div>
+              <label for="editStudentName" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">코치 성함 *</label>
+              <input type="text" id="editStudentName" placeholder="예: 정혜선" required style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+            </div>
+          </div>
+          <div>
+            <label for="editStudentPhone" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">연락처 *</label>
+            <input type="tel" id="editStudentPhone" placeholder="010-0000-0000" oninput="formatPhone(this)" required style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+          </div>
+          <div>
+            <label for="editStudentTrack" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">전공 코칭 트랙 *</label>
+            <select id="editStudentTrack" required style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+              <option value="💄 뷰티 웰니스">💄 뷰티 웰니스</option>
+              <option value="👗 공간 & 비움">👗 공간 & 비움</option>
+              <option value="📦 엔딩 라이프">📦 엔딩 라이프</option>
+              <option value="✍️ 생애사 에디팅">✍️ 생애사 에디팅</option>
+              <option value="🌿 종합 코치">🌿 종합 코치</option>
+            </select>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label for="editStudentAttendance" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">출석·진도율 (%)</label>
+              <input type="text" id="editStudentAttendance" placeholder="100%" value="100%" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+            </div>
+            <div>
+              <label for="editStudentStatus" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">이수 상태</label>
+              <select id="editStudentStatus" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+                <option value="수강중">📖 수강 진행중</option>
+                <option value="이수완료">🏅 4주 이수완료</option>
+                <option value="수료증발급">📜 수료증/자격증 발급</option>
+                <option value="보강필요">⚠️ 보강 필요</option>
+              </select>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label for="editStudentCertNo" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">공인 수료증 번호</label>
+              <input type="text" id="editStudentCertNo" placeholder="예: YB-COACH-2026-001" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+            </div>
+            <div>
+              <label for="editStudentBranch" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">배정 거점 지부</label>
+              <input type="text" id="editStudentBranch" placeholder="예: 서울 강남지부 / 본부 직할" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+            </div>
+          </div>
+          <div>
+            <label for="editStudentNote" style="display: block; font-size: 0.82rem; font-weight: 750; color: var(--text-secondary); margin-bottom: 4px;">특기 사항 및 현장 배정 메모</label>
+            <input type="text" id="editStudentNote" placeholder="예: 우수 코치. 10월부터 자택 방문 뷰티 코치 파견 배정" style="width: 100%; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 6px; font-size: 0.88rem; background: var(--bg-card); color: var(--text-primary);">
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px;">
+          <button type="button" onclick="closeStudentModal()" class="btn" style="padding: 8px 16px; font-size: 0.86rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-secondary); cursor: pointer;">
+            취소
+          </button>
+          <button type="submit" class="btn-submit-apply" style="padding: 8px 20px; font-size: 0.88rem; border-radius: 6px; cursor: pointer;">
+            저장하기
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <script>
     // 테마 전환
@@ -1925,6 +2754,1206 @@
       alert(`🎉 [여백과 결 코칭 아카데미 1기] 지원서가 성공적으로 접수되었습니다!\n\n지원자: ${name} 님\n희망 트랙: ${track}\n연락처: ${phone}\n\n서류 검토 후 24시간 이내에 전담 매니저가 전화로 친절히 입학 일정과 커리큘럼을 안내해 드리겠습니다. 감사합니다!`);
       document.getElementById('coachApplyForm').reset();
     }
+
+    // =========================================================================
+    // 🎓 여백과 결 코칭 아카데미 총괄 운영 관리실 (Academy Admin Console Engine)
+    // =========================================================================
+
+    // 0. 유틸리티: HTML 특수문자 이스케이프
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // 로컬스토리지 키 정의
+    const STORAGE_KEY_ACAD_APPLICANTS = 'reset_academy_list';
+    const STORAGE_KEY_ACAD_STUDENTS   = 'reset_academy_students';
+    const STORAGE_KEY_ACAD_TRACKS     = 'reset_academy_tracks';
+    const STORAGE_KEY_ACAD_PRICING    = 'reset_academy_pricing';
+    const STORAGE_KEY_ACAD_BRANCHES   = 'reset_academy_branches';
+    const STORAGE_KEY_ACAD_SETTINGS   = 'reset_academy_settings';
+
+    // -------------------------------------------------------------------------
+    // 1. 기본 초기 데이터셋 (초기 실행 시 또는 초기화 시 사용)
+    // -------------------------------------------------------------------------
+    const DEFAULT_ACAD_TRACKS = [
+      {
+        id: "track_1",
+        trackNo: "Track 01 · 뷰티 웰니스",
+        pillBg: "#eaf4ed",
+        pillColor: "#2b6a38",
+        duration: "⏱️ 4주 과정 (총 16시간)",
+        name: "💄 시니어 웰니스 & 뷰티 코치",
+        summary: "어르신 댁을 방문해 따뜻한 터치 마사지와 내추럴 메이크업으로 젊은 날의 화사한 생기와 웃음을 되찾아드립니다.",
+        weeks: [
+          { week: "1주차", title: "노년기 피부학 & 릴랙싱 터치 테라피", desc: "시니어 건조·민감 피부 보습법, 혈액순환을 돕는 핸드 & 두피 림프 마사지" },
+          { week: "2주차", title: "생기 충전 내추럴 메이크업 실무", desc: "주름 부각 없는 화사한 베이스, 눈썹 복원 드로잉, 자연스러운 혈색 립 연출" },
+          { week: "3주차", title: "시니어 퍼스널 컬러 & 외출 코디", desc: "얼굴빛을 살리는 스카프 매칭, 보행이 편안하면서도 품격 있는 실버 스타일링" },
+          { week: "4주차", title: "방문 뷰티 서비스 시뮬레이션 & 소통 심리학", desc: "어르신의 자존감을 높이는 따뜻한 칭찬 대화법 및 1:1 현장 롤플레잉" }
+        ],
+        benefit: "✨ 특전: [여백과 결] 1:1 방문 뷰티 코치 파견 배정"
+      },
+      {
+        id: "track_2",
+        trackNo: "Track 02 · 공간 & 비움",
+        pillBg: "#ede9fe",
+        pillColor: "#5b21b6",
+        duration: "⏱️ 4주 과정 (총 16시간)",
+        name: "👗 라이프 공간 & 비움 코디네이터",
+        summary: "30~40년간 쌓인 가구와 옷장을 어르신의 안전과 평온한 일상을 기준으로 재배치하는 전문 공간 큐레이터.",
+        weeks: [
+          { week: "1주차", title: "비움의 심리학 & 애착 물건 선별 대화법", desc: "버리지 못하는 상실감을 존중하며 '소중히 남길 것'을 합의하는 공감 소통 기술" },
+          { week: "2주차", title: "시니어 옷장 큐레이션 & 안심 수납법", desc: "안 입는 옷 정돈, 계절별 한눈에 들어오는 투명 수납함 및 라벨링 시스템 구축" },
+          { week: "3주차", title: "낙상 예방 안전 동선 & 골든존 공간 설계", desc: "문턱 제거, 보행기 이동 경로 확보, 허리 높이(골든존) 자주 쓰는 물품 집중 배치" },
+          { week: "4주차", title: "방문 2인 1조 컨시어지 현장 실무 매뉴얼", desc: "사전 견적 산정, 4시간 코호트 작업 프로세스, 사후 유지관리 코칭 리포트 작성" }
+        ],
+        benefit: "✨ 특전: 공간 방문 정리 2인 1조 전문 코치 등록"
+      },
+      {
+        id: "track_3",
+        trackNo: "Track 03 · 엔딩 라이프",
+        pillBg: "#fef3c7",
+        pillColor: "#92400e",
+        duration: "⏱️ 4주 과정 (총 16시간)",
+        name: "📦 생전정리 & 엔딩 라이프 플래너",
+        summary: "삶의 마무리를 두려움이 아닌 품격 있는 인생의 갈무리로 준비하고 유족의 슬픔을 어루만져 주는 컨설턴트.",
+        weeks: [
+          { week: "1주차", title: "생전정리 철학과 [여백노트] 엔딩 워크북", desc: "사전의료의향, 장례 및 유언 철학, 가족에게 전할 감사 편지 코칭 지도법" },
+          { week: "2주차", title: "스마트폰 & 디지털 유산 안전 갈무리", desc: "사진 클라우드 백업 대행, 휴면 금융·SNS 계정 정리, 가족 공유 비밀번호함 구성" },
+          { week: "3주차", title: "유품 정리 실무 프로토콜과 법적 소양", desc: "귀중품 분류, 유품 공양 및 기부 연계, 폐기물 법규 및 상속 분쟁 예방 지침" },
+          { week: "4주차", title: "애도(Grief) 심리 상담 & 가족 중재 기법", desc: "사별 유족의 비탄을 위로하는 심리 케어 및 상속 물품 갈등 조율 대화법" }
+        ],
+        benefit: "✨ 특전: 생전정리 및 유품 상담 전문위원 위촉"
+      },
+      {
+        id: "track_4",
+        trackNo: "Track 04 · 생애사 에디팅",
+        pillBg: "#dbeafe",
+        pillColor: "#1e40af",
+        duration: "⏱️ 4주 과정 (총 16시간)",
+        name: "✍️ 디지털 생애사 채록 에디터",
+        summary: "어르신의 고유한 말씨와 삶의 기억을 인터뷰하여 세상에 단 하나뿐인 디지털 자서전과 책으로 엮는 작가.",
+        weeks: [
+          { week: "1주차", title: "회상요법(Reminiscence) 30대 질문 인터뷰법", desc: "기억의 문을 여는 질문지 활용법, 감정을 끌어올리는 경청 및 스마트폰 녹취 기술" },
+          { week: "2주차", title: "빛바랜 흑백 사진 복원 & 디지털 아카이빙", desc: "모바일 고화질 스캔, 연대기별 사진 캡션 스토리보드 구성 및 화보 큐레이션" },
+          { week: "3주차", title: "구술 원고 윤문 & 목차 구조화 글쓰기", desc: "투박한 구술을 품격 있는 문학적 문장으로 다듬는 챕터별 에디팅 및 교정 실무" },
+          { week: "4주차", title: "디지털 서재 등록 & 양장본 출판 감수", desc: "웹 플랫폼 서재 등록 절차, 표지 디자인 가이드, 가족 헌정 출판 기념식 기획" }
+        ],
+        benefit: "✨ 특전: 디지털 자서전 1:1 전담 작가 배정"
+      }
+    ];
+
+    const DEFAULT_ACAD_PRICING = {
+      courseTitle: "[여백과 결] 코칭스태프 1기 정규 과정",
+      courseSub: "일본의 선진 4대 시니어 자격 체계와 한국형 감성 케어 솔루션을 융합한 4주 마스터 코스.<br>소수 정예 20명 한정, 1기 수료생에게는 <strong>최우선 고객 매칭권</strong>이 주어집니다.",
+      originalPrice: "500,000",
+      currentPrice: "350,000",
+      discountBadge: "1기 창립 장학 30% 특별 혜택",
+      priceNotice: "※ 1기 선착순 20명 한정 마감 (교재·자격증 발급비 포함)",
+      coachingPay: "회당 8만 ~ 12만 원 우선 배정",
+      bankName: "신한은행",
+      accountNumber: "110-432-080370",
+      accountHolder: "메타큐 라이프(여백과 결)",
+      features: [
+        "4주 집중 커리큘럼 (주 1회 4시간)",
+        "온·오프라인 하이브리드 실습 워크숍",
+        "실습 교재 및 워크북 키트 일체 제공",
+        "공인 코치 라이선스 발급비 전액 포함",
+        "수료 즉시 현장 방문 케어 고객 1:1 매칭",
+        "선임 코치와의 첫 방문 2인 1조 안심 동행"
+      ]
+    };
+
+    const DEFAULT_ACAD_APPLICANTS = [
+      {
+        id: "acad_sample_1",
+        name: "정혜선",
+        phone: "010-8832-4412",
+        track: "💄 시니어 웰니스 & 뷰티 코치",
+        region: "서울 강남구/서초구",
+        motivation: "전직 뷰티 샵 15년 운영 경험. 시니어 어르신들의 자존감을 높여드리는 제2의 봉사형 커리어를 쌓고 싶습니다.",
+        status: "입금완료",
+        note: "1기 등록금 350,000원 입금 확인 완료. 교재 택배 발송 예정",
+        createdAt: "09/25 15:40"
+      },
+      {
+        id: "acad_sample_2",
+        name: "김동훈",
+        phone: "010-3321-9988",
+        track: "👗 라이프 공간 & 비움 코디네이터",
+        region: "경기 성남 분당",
+        motivation: "정리수납 2급 자격증 보유. 어르신들의 안전 낙상 방지와 옷장 비움 전문 코치로 활동 희망합니다.",
+        status: "상담중",
+        note: "일정 및 토요일 실습 시간 문의. 2차 전화 상담 예정",
+        createdAt: "09/25 11:20"
+      },
+      {
+        id: "acad_sample_3",
+        name: "이선화",
+        phone: "010-6712-3344",
+        track: "✍️ 디지털 생애사 채록 에디터",
+        region: "부산 해운대구",
+        motivation: "출판 편집 디자이너 출신. 부모님 자서전을 쓴 계기로 어르신 구술 인터뷰에 깊은 보람을 느꼈습니다.",
+        status: "접수대기",
+        note: "온라인 서류 접수 완료. 상담 전화 대기",
+        createdAt: "09/26 10:15"
+      },
+      {
+        id: "acad_sample_4",
+        name: "박철민",
+        phone: "010-5590-7711",
+        track: "📦 생전정리 & 엔딩 라이프 플래너",
+        region: "서울 송파구",
+        motivation: "웰다잉 지도사 과정 이수 후, 실전적인 생전정리 엔딩 플래너로서 전문성 심화 희망.",
+        status: "접수대기",
+        note: "입학 요강 및 장학 혜택 안내 문자 발송",
+        createdAt: "09/26 12:30"
+      }
+    ];
+
+    const DEFAULT_ACAD_STUDENTS = [
+      {
+        id: "stu_sample_1",
+        batch: "1기 (파운더스)",
+        name: "정혜선",
+        phone: "010-8832-4412",
+        track: "💄 뷰티 웰니스",
+        attendance: "100%",
+        status: "수료증발급",
+        certNo: "YB-COACH-2026-001",
+        assignedBranch: "서울 강남지부",
+        note: "우수 코치 위촉. 10월부터 자택 방문 뷰티 코치 파견 배정"
+      },
+      {
+        id: "stu_sample_2",
+        batch: "1기 (파운더스)",
+        name: "강진우",
+        phone: "010-4491-2288",
+        track: "👗 공간 & 비움",
+        attendance: "85%",
+        status: "수강중",
+        certNo: "발급예정",
+        assignedBranch: "경기 분당지부",
+        note: "3주차 안전 동선 실습 진행 중. 4주차 현장 시뮬레이션 예정"
+      },
+      {
+        id: "stu_sample_3",
+        batch: "1기 (파운더스)",
+        name: "한미경",
+        phone: "010-7721-6655",
+        track: "✍️ 생애사 에디팅",
+        attendance: "100%",
+        status: "이수완료",
+        certNo: "YB-COACH-2026-002",
+        assignedBranch: "본부 직할",
+        note: "김순옥 어르신 디지털 자서전 1:1 작가 실습 완료"
+      },
+      {
+        id: "stu_sample_4",
+        batch: "1기 (파운더스)",
+        name: "오세현",
+        phone: "010-9912-3300",
+        track: "📦 엔딩 라이프",
+        attendance: "75%",
+        status: "수강중",
+        certNo: "발급예정",
+        assignedBranch: "서울 강남지부",
+        note: "보강 교육 1회 조율 중"
+      }
+    ];
+
+    const DEFAULT_ACAD_BRANCHES = [
+      {
+        id: "br_sample_1",
+        name: "서울 강남·서초 지부",
+        region: "서울시 강남구, 서초구 일원",
+        leaderName: "강서연 지부장",
+        leaderPhone: "010-9613-5913",
+        address: "서울시 강남구 테헤란로 152 7층 (강남거점센터)",
+        coachCount: 6,
+        openedAt: "2026.03.01",
+        status: "정상운영",
+        note: "강남 거점 방문 뷰티 및 옷장 비움 집중 관할"
+      },
+      {
+        id: "br_sample_2",
+        name: "경기 성남·분당 지부",
+        region: "경기도 성남시 분당구, 수정구 일원",
+        leaderName: "임수혁 지부장",
+        leaderPhone: "010-4821-6677",
+        address: "경기도 성남시 분당구 정자일로 210 (분당센터)",
+        coachCount: 4,
+        openedAt: "2026.04.15",
+        status: "정상운영",
+        note: "실버타운 연계 생전정리 및 공간 큐레이션 전담"
+      },
+      {
+        id: "br_sample_3",
+        name: "부산 해운대·센텀 지부",
+        region: "부산시 해운대구, 수영구, 남구",
+        leaderName: "조민정 지부장",
+        leaderPhone: "010-5512-8899",
+        address: "부산시 해운대구 센텀중앙로 90 (센텀비즈센터)",
+        coachCount: 3,
+        openedAt: "2026.05.01",
+        status: "개설준비중",
+        note: "2기 수료생 배출 후 정식 발대식 예정"
+      }
+    ];
+
+    // -------------------------------------------------------------------------
+    // 2. 로컬스토리지 입출력 헬퍼 함수
+    // -------------------------------------------------------------------------
+    function getAcademyApplicants() {
+      const stored = localStorage.getItem(STORAGE_KEY_ACAD_APPLICANTS);
+      if (stored) {
+        try { return JSON.parse(stored); } catch(e) {}
+      }
+      localStorage.setItem(STORAGE_KEY_ACAD_APPLICANTS, JSON.stringify(DEFAULT_ACAD_APPLICANTS));
+      return DEFAULT_ACAD_APPLICANTS;
+    }
+    function saveAcademyApplicants(list) {
+      localStorage.setItem(STORAGE_KEY_ACAD_APPLICANTS, JSON.stringify(list));
+      updateAcademyTopStats();
+    }
+
+    function getAcademyStudents() {
+      const stored = localStorage.getItem(STORAGE_KEY_ACAD_STUDENTS);
+      if (stored) {
+        try { return JSON.parse(stored); } catch(e) {}
+      }
+      localStorage.setItem(STORAGE_KEY_ACAD_STUDENTS, JSON.stringify(DEFAULT_ACAD_STUDENTS));
+      return DEFAULT_ACAD_STUDENTS;
+    }
+    function saveAcademyStudents(list) {
+      localStorage.setItem(STORAGE_KEY_ACAD_STUDENTS, JSON.stringify(list));
+      updateAcademyTopStats();
+    }
+
+    function getAcademyTracks() {
+      const stored = localStorage.getItem(STORAGE_KEY_ACAD_TRACKS);
+      if (stored) {
+        try { return JSON.parse(stored); } catch(e) {}
+      }
+      localStorage.setItem(STORAGE_KEY_ACAD_TRACKS, JSON.stringify(DEFAULT_ACAD_TRACKS));
+      return DEFAULT_ACAD_TRACKS;
+    }
+    function saveAcademyTracks(tracks) {
+      localStorage.setItem(STORAGE_KEY_ACAD_TRACKS, JSON.stringify(tracks));
+    }
+
+    function getAcademyPricing() {
+      const stored = localStorage.getItem(STORAGE_KEY_ACAD_PRICING);
+      if (stored) {
+        try { return JSON.parse(stored); } catch(e) {}
+      }
+      localStorage.setItem(STORAGE_KEY_ACAD_PRICING, JSON.stringify(DEFAULT_ACAD_PRICING));
+      return DEFAULT_ACAD_PRICING;
+    }
+    function saveAcademyPricing(pricing) {
+      localStorage.setItem(STORAGE_KEY_ACAD_PRICING, JSON.stringify(pricing));
+    }
+
+    function getAcademyBranches() {
+      const stored = localStorage.getItem(STORAGE_KEY_ACAD_BRANCHES);
+      if (stored) {
+        try { return JSON.parse(stored); } catch(e) {}
+      }
+      localStorage.setItem(STORAGE_KEY_ACAD_BRANCHES, JSON.stringify(DEFAULT_ACAD_BRANCHES));
+      return DEFAULT_ACAD_BRANCHES;
+    }
+    function saveAcademyBranches(branches) {
+      localStorage.setItem(STORAGE_KEY_ACAD_BRANCHES, JSON.stringify(branches));
+      updateAcademyTopStats();
+    }
+
+    // -------------------------------------------------------------------------
+    // 3. 메인 화면 동적 렌더링 (관리자가 바꾼 교육과정 & 수강료 즉시 화면 반영)
+    // -------------------------------------------------------------------------
+    function renderAcademyDynamicTracks() {
+      const grid = document.getElementById('academyTracksGrid');
+      const tracks = getAcademyTracks();
+      if (!grid || !tracks) return;
+
+      grid.innerHTML = tracks.map(t => `
+        <div class="track-card">
+          <div class="track-header">
+            <div class="track-meta">
+              <span class="track-pill" style="background: ${t.pillBg || '#eaf4ed'}; color: ${t.pillColor || '#2b6a38'};">${escapeHtml(t.trackNo)}</span>
+              <span class="track-duration">${escapeHtml(t.duration)}</span>
+            </div>
+            <h3 class="track-name">${escapeHtml(t.name)}</h3>
+            <p class="track-summary">${escapeHtml(t.summary)}</p>
+          </div>
+          <div class="track-body">
+            <div class="week-list">
+              ${(t.weeks || []).map(w => `
+                <div class="week-row">
+                  <span class="week-chip" style="background: ${t.pillColor || '#2b6a38'};">${escapeHtml(w.week)}</span>
+                  <div class="week-detail">
+                    <strong>${escapeHtml(w.title)}</strong>
+                    <span>${escapeHtml(w.desc)}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            <div class="track-footer">
+              <span class="track-benefit">${escapeHtml(t.benefit)}</span>
+              <a href="#apply" class="track-apply-btn">지원 신청</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // 지원 신청 폼의 트랙 선택 옵션도 자동 동기화
+      const applySelect = document.getElementById('applyTrack');
+      if (applySelect) {
+        const currentVal = applySelect.value;
+        let optHtml = `<option value="">트랙을 선택해주세요</option>`;
+        tracks.forEach(t => {
+          optHtml += `<option value="${escapeHtml(t.name)}">${escapeHtml(t.name)}</option>`;
+        });
+        optHtml += `<option value="🌿 종합 라이프 리셋 코치 (전 과정 종합)">🌿 종합 라이프 리셋 코치 (전 과정 종합)</option>`;
+        applySelect.innerHTML = optHtml;
+        if (currentVal) applySelect.value = currentVal;
+      }
+    }
+
+    function renderAcademyDynamicPricing() {
+      const card = document.getElementById('academyPricingCard');
+      const pricing = getAcademyPricing();
+      if (!card || !pricing) return;
+
+      card.innerHTML = `
+        <div class="pricing-info-left">
+          <span class="hero-pill-badge" style="margin-bottom: 12px; display: inline-flex;">🌸 1기 창립 멤버(Founders) 특별 모집</span>
+          <h3>${escapeHtml(pricing.courseTitle || '[여백과 결] 코칭스태프 1기 정규 과정')}</h3>
+          <p>${pricing.courseSub || ''}</p>
+          <ul class="pricing-features-list">
+            ${(pricing.features || []).map(f => `<li>${escapeHtml(f)}</li>`).join('')}
+          </ul>
+        </div>
+
+        <div class="pricing-box-right">
+          <span class="price-badge">${escapeHtml(pricing.discountBadge || '1기 창립 장학 30% 특별 혜택')}</span>
+          <div class="original-price">정상가 ${escapeHtml(pricing.originalPrice || '500,000')}원</div>
+          <div class="current-price">${escapeHtml(pricing.currentPrice || '350,000')}<small>원</small></div>
+          <p class="price-notice">${escapeHtml(pricing.priceNotice || '※ 1기 선착순 20명 한정 마감 (교재·자격증 발급비 포함)')}</p>
+          <a href="#apply" class="btn-apply-cta">1기 파운더스 장학생 지원하기 ↓</a>
+        </div>
+      `;
+
+      // 6대 독점 특전 중 코칭비 문구도 동기화
+      const coachingPayEl = document.querySelector('.benefit-card .benefit-highlight');
+      if (coachingPayEl && pricing.coachingPay) {
+        coachingPayEl.textContent = pricing.coachingPay;
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 4. 관리자 인증 & 대시보드 모달 제어
+    // -------------------------------------------------------------------------
+    function isAcademyAdminLoggedIn() {
+      return sessionStorage.getItem('yebaek_academy_admin') === 'true';
+    }
+
+    function openAcademyAdminAuthModal() {
+      if (isAcademyAdminLoggedIn()) {
+        openAcademyAdminDashboard();
+        return;
+      }
+      const pwdInput = document.getElementById('academyAdminPasswordInput');
+      if (pwdInput) pwdInput.value = '';
+      const modal = document.getElementById('academyAuthModal');
+      if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => { if (pwdInput) pwdInput.focus(); }, 150);
+      }
+    }
+
+    function closeAcademyAuthModal() {
+      const modal = document.getElementById('academyAuthModal');
+      if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function closeAcademyAuthOnOverlay(e) {
+      if (e.target.id === 'academyAuthModal') closeAcademyAuthModal();
+    }
+
+    function handleAcademyAdminLoginSubmit(e) {
+      e.preventDefault();
+      const pwdInput = document.getElementById('academyAdminPasswordInput');
+      const pwd = pwdInput ? pwdInput.value.trim() : '';
+
+      if (pwd === '1223') {
+        sessionStorage.setItem('yebaek_academy_admin', 'true');
+        closeAcademyAuthModal();
+        openAcademyAdminDashboard();
+        updateAdminHeaderBtnState();
+      } else {
+        alert('비밀번호가 일치하지 않습니다. (기본 비밀번호: 1223)');
+        if (pwdInput) {
+          pwdInput.value = '';
+          pwdInput.focus();
+        }
+      }
+    }
+
+    function logoutAcademyAdmin() {
+      if (confirm('아카데미 관리자 모드에서 로그아웃 하시겠습니까?')) {
+        sessionStorage.removeItem('yebaek_academy_admin');
+        closeAcademyAdminModal();
+        updateAdminHeaderBtnState();
+        alert('관리자 로그아웃 되었습니다.');
+      }
+    }
+
+    function updateAdminHeaderBtnState() {
+      const btn = document.getElementById('academyAdminHeaderBtn');
+      if (!btn) return;
+      if (isAcademyAdminLoggedIn()) {
+        btn.innerHTML = `<span>👑 관리홈 열기</span>`;
+        btn.style.background = 'var(--accent)';
+        btn.style.color = '#ffffff';
+      } else {
+        btn.innerHTML = `<span>⚙️ 관리자</span>`;
+        btn.style.background = 'var(--accent-light)';
+        btn.style.color = 'var(--accent)';
+      }
+    }
+
+    function openAcademyAdminDashboard() {
+      updateAcademyTopStats();
+      renderAcademyApplicantTable();
+      renderAcademyStudentsTable();
+      loadAcademyCurriculumForm();
+      renderAcademyBranchesTable();
+      loadAcademyAccountSettings();
+
+      const modal = document.getElementById('academyAdminModal');
+      if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeAcademyAdminModal() {
+      const modal = document.getElementById('academyAdminModal');
+      if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function closeAcademyAdminOnOverlay(e) {
+      if (e.target.id === 'academyAdminModal') closeAcademyAdminModal();
+    }
+
+    // 탭 전환
+    function switchAcademyAdminTab(tabName) {
+      const tabs = ['applicants', 'students', 'curriculum', 'branches', 'settings'];
+      tabs.forEach(t => {
+        const btn = document.getElementById('tabBtnAcad' + t.charAt(0).toUpperCase() + t.slice(1));
+        const content = document.getElementById('acadTabContent' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (btn) btn.classList.remove('active');
+        if (content) content.style.display = 'none';
+      });
+
+      const activeBtn = document.getElementById('tabBtnAcad' + tabName.charAt(0).toUpperCase() + tabName.slice(1));
+      const activeContent = document.getElementById('acadTabContent' + tabName.charAt(0).toUpperCase() + tabName.slice(1));
+      if (activeBtn) activeBtn.classList.add('active');
+      if (activeContent) activeContent.style.display = 'block';
+
+      if (tabName === 'applicants') renderAcademyApplicantTable();
+      else if (tabName === 'students') renderAcademyStudentsTable();
+      else if (tabName === 'curriculum') loadAcademyCurriculumForm();
+      else if (tabName === 'branches') renderAcademyBranchesTable();
+      else if (tabName === 'settings') loadAcademyAccountSettings();
+    }
+
+    // 상단 4대 통계 카드 숫자 집계
+    function updateAcademyTopStats() {
+      const applicants = getAcademyApplicants();
+      const students = getAcademyStudents();
+      const branches = getAcademyBranches();
+
+      const totalApp = applicants.length;
+      const waitingApp = applicants.filter(a => a.status === '접수대기').length;
+      const paidStudents = students.filter(s => s.status === '수강중' || s.status === '이수완료' || s.status === '수료증발급').length;
+      const certCount = students.filter(s => s.status === '수료증발급' || s.status === '이수완료').length;
+      const branchCount = branches.filter(b => b.status === '정상운영').length;
+
+      const elTotal = document.getElementById('acadStatTotalApplicants');
+      const elPaid = document.getElementById('acadStatPaidStudents');
+      const elCert = document.getElementById('acadStatCertCount');
+      const elBranch = document.getElementById('acadStatBranchCount');
+      const badgeWait = document.getElementById('acadBadgeWaiting');
+      const badgeStu = document.getElementById('acadBadgeStudents');
+      const badgeBr = document.getElementById('acadBadgeBranches');
+
+      if (elTotal) elTotal.textContent = `${totalApp}명`;
+      if (elPaid) elPaid.textContent = `${paidStudents}명`;
+      if (elCert) elCert.textContent = `${certCount}명`;
+      if (elBranch) elBranch.textContent = `${branchCount}개소`;
+
+      if (badgeWait) badgeWait.textContent = waitingApp;
+      if (badgeStu) badgeStu.textContent = students.length;
+      if (badgeBr) badgeBr.textContent = branches.length;
+    }
+
+    // -------------------------------------------------------------------------
+    // 5. 탭 1: 수강 신청자 접수 관리 엔진
+    // -------------------------------------------------------------------------
+    function renderAcademyApplicantTable() {
+      const tbody = document.getElementById('acadApplicantTableBody');
+      if (!tbody) return;
+
+      const list = getAcademyApplicants();
+      const trackFilter = document.getElementById('filterAcadTrackSelect')?.value || 'all';
+      const statusFilter = document.getElementById('filterAcadStatusSelect')?.value || 'all';
+      const search = document.getElementById('searchAcadApplicantInput')?.value.trim().toLowerCase() || '';
+
+      const filtered = list.filter(item => {
+        let matchTrack = (trackFilter === 'all') || (item.track || '').includes(trackFilter);
+        let matchStatus = (statusFilter === 'all') || (item.status === statusFilter);
+        let matchSearch = !search || (`${item.name} ${item.phone} ${item.region} ${item.note}`.toLowerCase().includes(search));
+        return matchTrack && matchStatus && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:36px; color:var(--text-muted);">조건에 일치하는 수강 신청자가 없습니다.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(item => {
+        const cleanPhone = (item.phone || '').replace(/[^0-9]/g, '');
+        let statusBadgeClass = 'badge-waiting';
+        if (item.status === '상담중') statusBadgeClass = 'badge-consulting';
+        else if (item.status === '입금완료') statusBadgeClass = 'badge-paid';
+        else if (item.status === '취소') statusBadgeClass = 'badge-canceled';
+
+        return `
+          <tr>
+            <td style="font-size:0.82rem; color:var(--text-muted); white-space:nowrap;">${escapeHtml(item.createdAt || '')}</td>
+            <td style="font-weight:800; font-size:0.92rem; color:var(--text-primary);">${escapeHtml(item.name)}</td>
+            <td style="white-space:nowrap;">
+              <a href="tel:${cleanPhone}" title="클릭 시 즉시 통화 연결" style="color:var(--accent); font-weight:850; text-decoration:underline; display:inline-flex; align-items:center; gap:4px;">
+                <span>📞</span> ${escapeHtml(item.phone)}
+              </a>
+            </td>
+            <td style="font-size:0.86rem; font-weight:700;">${escapeHtml(item.track)}</td>
+            <td style="font-size:0.86rem; color:var(--text-secondary);">${escapeHtml(item.region || '전국')}</td>
+            <td style="text-align:center; white-space:nowrap;">
+              <select onchange="updateAcademyApplicantStatus('${item.id}', this.value)" style="padding:4px 8px; font-size:0.80rem; border-radius:6px; font-weight:800;" class="badge-status ${statusBadgeClass}">
+                <option value="접수대기" ${item.status === '접수대기' ? 'selected' : ''}>🟡 접수대기</option>
+                <option value="상담중" ${item.status === '상담중' ? 'selected' : ''}>🔵 상담진행</option>
+                <option value="입금완료" ${item.status === '입금완료' ? 'selected' : ''}>💳 입금·수강확정</option>
+                <option value="취소" ${item.status === '취소' ? 'selected' : ''}>❌ 신청취소</option>
+              </select>
+            </td>
+            <td style="font-size:0.84rem; line-height:1.45; cursor:pointer;" onclick="editAcademyApplicantNote('${item.id}')" title="클릭하여 메모 수정">
+              <span style="color:var(--text-primary);">${escapeHtml(item.note || '메모 추가...')}</span>
+              <span style="font-size:0.75rem; color:var(--text-muted); margin-left:4px;">✏️</span>
+            </td>
+            <td style="text-align:center;">
+              <button type="button" onclick="deleteAcademyApplicant('${item.id}')" title="삭제" style="background:none; border:none; font-size:1.05rem; cursor:pointer; opacity:0.6;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">🗑️</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function updateAcademyApplicantStatus(id, newStatus) {
+      const list = getAcademyApplicants();
+      const target = list.find(a => a.id === id);
+      if (target) {
+        target.status = newStatus;
+        // 만약 [입금완료]로 변경 시, 교육생 목록에 없는 사람이면 교육생 명단(탭 2)에 자동 등록 제안
+        if (newStatus === '입금완료') {
+          const students = getAcademyStudents();
+          const exists = students.find(s => s.phone === target.phone || s.name === target.name);
+          if (!exists) {
+            if (confirm(`🎉 [${target.name}] 님의 수강료 입금이 확인되었습니다!\n\n[교육생 출석·수료 관리(2번 탭)] 명단에 1기 수강생으로 자동 추가하시겠습니까?`)) {
+              students.push({
+                id: 'stu_' + Date.now(),
+                batch: '1기 (파운더스)',
+                name: target.name,
+                phone: target.phone,
+                track: target.track.replace(/^[^\w가-힣\s]+/, '').trim(),
+                attendance: '0%',
+                status: '수강중',
+                certNo: '발급예정',
+                assignedBranch: target.region || '본부 직할',
+                note: '입금 확인 완료 및 1기 수강 배정'
+              });
+              saveAcademyStudents(students);
+            }
+          }
+        }
+        saveAcademyApplicants(list);
+        renderAcademyApplicantTable();
+      }
+    }
+
+    function editAcademyApplicantNote(id) {
+      const list = getAcademyApplicants();
+      const target = list.find(a => a.id === id);
+      if (!target) return;
+      const newNote = prompt(`[${target.name}] 님의 입금 및 상담 진행 메모를 입력하세요:`, target.note || '');
+      if (newNote !== null) {
+        target.note = newNote.trim();
+        saveAcademyApplicants(list);
+        renderAcademyApplicantTable();
+      }
+    }
+
+    function deleteAcademyApplicant(id) {
+      if (!confirm('정말 이 수강 신청 내역을 삭제하시겠습니까?')) return;
+      let list = getAcademyApplicants();
+      list = list.filter(a => a.id !== id);
+      saveAcademyApplicants(list);
+      renderAcademyApplicantTable();
+    }
+
+    function openManualAcademyApplyModal() {
+      const name = prompt('지원자 성함을 입력하세요:');
+      if (!name) return;
+      const phone = prompt('지원자 연락처를 입력하세요:', '010-');
+      if (!phone) return;
+      const track = prompt('지원 트랙을 입력하세요:\n(예: 뷰티 웰니스 / 공간 비움 / 엔딩 라이프 / 디지털 생애사)', '💄 시니어 웰니스 & 뷰티 코치');
+      const region = prompt('희망 활동 지역을 입력하세요:', '서울');
+      const note = prompt('상담/입금 메모를 입력하세요:', '유선 입학 상담 접수');
+
+      const now = new Date();
+      const dateStr = `${now.getMonth() + 1}/${now.getDate()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+      const list = getAcademyApplicants();
+      list.unshift({
+        id: 'acad_' + Date.now(),
+        name: name.trim(),
+        phone: phone.trim(),
+        track: track || '종합 코칭',
+        region: region || '전국',
+        status: '상담중',
+        note: note || '관리자 수기 접수',
+        createdAt: dateStr
+      });
+      saveAcademyApplicants(list);
+      renderAcademyApplicantTable();
+      alert(`✅ [${name}] 지원자가 등록되었습니다.`);
+    }
+
+    function exportAcademyApplicantsCSV() {
+      const list = getAcademyApplicants();
+      if (!list.length) {
+        alert('내보낼 수강 신청 데이터가 없습니다.');
+        return;
+      }
+      let csv = '\uFEFF접수일시,성함,연락처,희망트랙,지역,진행상태,상담메모\n';
+      list.forEach(i => {
+        csv += `"${i.createdAt}","${i.name}","${i.phone}","${i.track}","${i.region}","${i.status}","${(i.note || '').replace(/"/g, '""')}"\n`;
+      });
+      downloadCSVFile(csv, '여백과결_아카데미_수강신청자명단');
+    }
+
+    // -------------------------------------------------------------------------
+    // 6. 탭 2: 교육생 출석·이수·수료 관리 엔진
+    // -------------------------------------------------------------------------
+    function renderAcademyStudentsTable() {
+      const tbody = document.getElementById('acadStudentTableBody');
+      if (!tbody) return;
+
+      const list = getAcademyStudents();
+      const batchFilter = document.getElementById('filterStudentBatchSelect')?.value || 'all';
+      const statusFilter = document.getElementById('filterStudentStatusSelect')?.value || 'all';
+      const search = document.getElementById('searchStudentInput')?.value.trim().toLowerCase() || '';
+
+      const filtered = list.filter(item => {
+        let matchBatch = (batchFilter === 'all') || (item.batch || '').includes(batchFilter);
+        let matchStatus = (statusFilter === 'all') || (item.status === statusFilter);
+        let matchSearch = !search || (`${item.name} ${item.phone} ${item.certNo} ${item.assignedBranch}`.toLowerCase().includes(search));
+        return matchBatch && matchStatus && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:36px; color:var(--text-muted);">조건에 맞는 교육생이 없습니다.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(item => {
+        let statusBadgeClass = 'badge-waiting';
+        if (item.status === '수료증발급') statusBadgeClass = 'badge-completed';
+        else if (item.status === '이수완료') statusBadgeClass = 'badge-paid';
+        else if (item.status === '수강중') statusBadgeClass = 'badge-consulting';
+
+        return `
+          <tr>
+            <td style="font-weight:700; font-size:0.85rem;">${escapeHtml(item.batch)}</td>
+            <td style="font-weight:850; font-size:0.94rem; color:var(--text-primary);">${escapeHtml(item.name)}</td>
+            <td style="font-size:0.86rem; color:var(--text-secondary);">${escapeHtml(item.phone)}</td>
+            <td style="font-size:0.86rem; font-weight:700;">${escapeHtml(item.track)}</td>
+            <td style="text-align:center; font-weight:800; color:var(--accent);">${escapeHtml(item.attendance || '0%')}</td>
+            <td style="text-align:center; white-space:nowrap;">
+              <span class="badge-status ${statusBadgeClass}">${escapeHtml(item.status)}</span>
+            </td>
+            <td style="font-family:monospace; font-weight:800; font-size:0.86rem; color:${item.certNo && item.certNo.includes('YB-') ? 'var(--accent-gold)' : 'var(--text-muted)'};">
+              ${escapeHtml(item.certNo || '미발급')}
+            </td>
+            <td style="font-size:0.86rem; color:var(--text-secondary);">${escapeHtml(item.assignedBranch || '본부')}</td>
+            <td style="text-align:center; white-space:nowrap;">
+              <button type="button" onclick="openStudentModal('${item.id}')" title="수정" style="padding:3px 7px; font-size:0.78rem; border-radius:5px; border:1px solid var(--border-color); background:var(--bg-card); cursor:pointer;">✏️</button>
+              <button type="button" onclick="deleteAcademyStudent('${item.id}')" title="삭제" style="padding:3px 7px; font-size:0.78rem; border-radius:5px; border:1px solid rgba(220,38,38,0.3); background:rgba(220,38,38,0.06); color:#dc2626; cursor:pointer;">🗑️</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openStudentModal(studentId = null) {
+      const modal = document.getElementById('academyStudentEditModal');
+      const form = document.getElementById('studentEditForm');
+      if (!modal || !form) return;
+
+      if (studentId) {
+        const list = getAcademyStudents();
+        const student = list.find(s => s.id === studentId);
+        if (student) {
+          document.getElementById('studentModalTitle').textContent = `🎓 [${student.name}] 교육생 정보 & 수료 관리`;
+          document.getElementById('editStudentId').value = student.id;
+          document.getElementById('editStudentBatch').value = student.batch;
+          document.getElementById('editStudentName').value = student.name;
+          document.getElementById('editStudentPhone').value = student.phone;
+          document.getElementById('editStudentTrack').value = student.track;
+          document.getElementById('editStudentAttendance').value = student.attendance || '100%';
+          document.getElementById('editStudentStatus').value = student.status;
+          document.getElementById('editStudentCertNo').value = student.certNo || '';
+          document.getElementById('editStudentBranch').value = student.assignedBranch || '';
+          document.getElementById('editStudentNote').value = student.note || '';
+        }
+      } else {
+        document.getElementById('studentModalTitle').textContent = '🎓 교육생 신규 등록';
+        form.reset();
+        document.getElementById('editStudentId').value = '';
+        document.getElementById('editStudentCertNo').value = `YB-COACH-2026-${String(Math.floor(Math.random() * 899) + 100)}`;
+      }
+      modal.classList.add('open');
+    }
+
+    function closeStudentModal() {
+      const modal = document.getElementById('academyStudentEditModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function closeStudentEditOnOverlay(e) {
+      if (e.target.id === 'academyStudentEditModal') closeStudentModal();
+    }
+
+    function handleStudentEditSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('editStudentId').value;
+      const batch = document.getElementById('editStudentBatch').value;
+      const name = document.getElementById('editStudentName').value.trim();
+      const phone = document.getElementById('editStudentPhone').value.trim();
+      const track = document.getElementById('editStudentTrack').value;
+      const attendance = document.getElementById('editStudentAttendance').value.trim();
+      const status = document.getElementById('editStudentStatus').value;
+      const certNo = document.getElementById('editStudentCertNo').value.trim();
+      const assignedBranch = document.getElementById('editStudentBranch').value.trim();
+      const note = document.getElementById('editStudentNote').value.trim();
+
+      const list = getAcademyStudents();
+
+      if (id) {
+        const target = list.find(s => s.id === id);
+        if (target) {
+          target.batch = batch;
+          target.name = name;
+          target.phone = phone;
+          target.track = track;
+          target.attendance = attendance;
+          target.status = status;
+          target.certNo = certNo;
+          target.assignedBranch = assignedBranch;
+          target.note = note;
+        }
+      } else {
+        list.unshift({
+          id: 'stu_' + Date.now(),
+          batch, name, phone, track, attendance, status, certNo, assignedBranch, note
+        });
+      }
+
+      saveAcademyStudents(list);
+      closeStudentModal();
+      renderAcademyStudentsTable();
+      alert(`✅ 교육생 [${name}] 정보가 저장되었습니다.`);
+    }
+
+    function deleteAcademyStudent(id) {
+      if (!confirm('정말 이 교육생 정보를 삭제하시겠습니까?')) return;
+      let list = getAcademyStudents();
+      list = list.filter(s => s.id !== id);
+      saveAcademyStudents(list);
+      renderAcademyStudentsTable();
+    }
+
+    function exportAcademyStudentsCSV() {
+      const list = getAcademyStudents();
+      if (!list.length) {
+        alert('내보낼 교육생 데이터가 없습니다.');
+        return;
+      }
+      let csv = '\uFEFF기수,코치성함,연락처,전공트랙,출석진도율,이수상태,수료증번호,배정지부,메모\n';
+      list.forEach(s => {
+        csv += `"${s.batch}","${s.name}","${s.phone}","${s.track}","${s.attendance}","${s.status}","${s.certNo}","${s.assignedBranch}","${(s.note || '').replace(/"/g, '""')}"\n`;
+      });
+      downloadCSVFile(csv, '여백과결_아카데미_교육생_수료자명단');
+    }
+
+    // -------------------------------------------------------------------------
+    // 7. 탭 3: 교육과정 & 수강료 관리 엔진 (화면 즉시 반영)
+    // -------------------------------------------------------------------------
+    function loadAcademyCurriculumForm() {
+      const pricing = getAcademyPricing();
+      const tracks = getAcademyTracks();
+
+      // 수강료 요강 폼 채우기
+      const fTitle = document.getElementById('cfgPricingCourseTitle');
+      const fOrig = document.getElementById('cfgPricingOriginal');
+      const fCurr = document.getElementById('cfgPricingCurrent');
+      const fBadge = document.getElementById('cfgPricingBadge');
+      const fNotice = document.getElementById('cfgPricingNotice');
+      const fPay = document.getElementById('cfgPricingCoachingPay');
+
+      if (fTitle) fTitle.value = pricing.courseTitle || '';
+      if (fOrig) fOrig.value = pricing.originalPrice || '500,000';
+      if (fCurr) fCurr.value = pricing.currentPrice || '350,000';
+      if (fBadge) fBadge.value = pricing.discountBadge || '';
+      if (fNotice) fNotice.value = pricing.priceNotice || '';
+      if (fPay) fPay.value = pricing.coachingPay || '회당 8만 ~ 12만 원 우선 배정';
+
+      // 4개 트랙 커리큘럼 폼 채우기
+      const container = document.getElementById('curriculumEditorContainer');
+      if (!container) return;
+
+      container.innerHTML = tracks.map((t, idx) => `
+        <div class="curriculum-editor-card">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+            <div style="font-weight:850; font-size:1rem; color:var(--accent);">
+              ${escapeHtml(t.trackNo)} 편집
+            </div>
+            <span style="font-size:0.80rem; color:var(--text-muted);">${escapeHtml(t.duration)}</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:12px;">
+            <div>
+              <label style="display:block; font-size:0.82rem; font-weight:750; color:var(--text-secondary); margin-bottom:4px;">트랙 타이틀:</label>
+              <input type="text" id="trackName_${idx}" value="${escapeHtml(t.name)}" style="width:100%; padding:8px 10px; border:1px solid var(--border-color); border-radius:6px; font-size:0.88rem; font-weight:750; background:var(--bg-primary); color:var(--text-primary);" />
+            </div>
+            <div>
+              <label style="display:block; font-size:0.82rem; font-weight:750; color:var(--text-secondary); margin-bottom:4px;">교육 기간 문구:</label>
+              <input type="text" id="trackDuration_${idx}" value="${escapeHtml(t.duration)}" style="width:100%; padding:8px 10px; border:1px solid var(--border-color); border-radius:6px; font-size:0.88rem; background:var(--bg-primary); color:var(--text-primary);" />
+            </div>
+          </div>
+
+          <div style="margin-bottom:12px;">
+            <label style="display:block; font-size:0.82rem; font-weight:750; color:var(--text-secondary); margin-bottom:4px;">한 줄 요약 소개:</label>
+            <input type="text" id="trackSummary_${idx}" value="${escapeHtml(t.summary)}" style="width:100%; padding:8px 10px; border:1px solid var(--border-color); border-radius:6px; font-size:0.88rem; background:var(--bg-primary); color:var(--text-primary);" />
+          </div>
+
+          <!-- 4주차 커리큘럼 편집 -->
+          <div style="background:var(--bg-primary); padding:10px 12px; border-radius:8px; margin-bottom:12px;">
+            <div style="font-size:0.82rem; font-weight:800; color:var(--text-secondary); margin-bottom:8px;">주차별 상세 교육 내용 (1~4주차)</div>
+            ${(t.weeks || []).map((w, wIdx) => `
+              <div style="display:grid; grid-template-columns: 80px 1fr 2fr; gap:8px; margin-bottom:6px; align-items:center;">
+                <span style="font-size:0.80rem; font-weight:800; color:var(--text-muted);">${w.week}</span>
+                <input type="text" id="weekTitle_${idx}_${wIdx}" value="${escapeHtml(w.title)}" placeholder="주차 소제목" style="padding:6px 8px; border:1px solid var(--border-color); border-radius:5px; font-size:0.82rem; background:var(--bg-card); color:var(--text-primary);" />
+                <input type="text" id="weekDesc_${idx}_${wIdx}" value="${escapeHtml(w.desc)}" placeholder="세부 커리큘럼" style="padding:6px 8px; border:1px solid var(--border-color); border-radius:5px; font-size:0.82rem; background:var(--bg-card); color:var(--text-primary);" />
+              </div>
+            `).join('')}
+          </div>
+
+          <div>
+            <label style="display:block; font-size:0.82rem; font-weight:750; color:var(--text-secondary); margin-bottom:4px;">수료 특전 문구:</label>
+            <input type="text" id="trackBenefit_${idx}" value="${escapeHtml(t.benefit)}" style="width:100%; padding:8px 10px; border:1px solid var(--border-color); border-radius:6px; font-size:0.88rem; background:var(--bg-primary); color:var(--text-primary);" />
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function saveAcademyCurriculumSettings() {
+      // 1. 수강료 & 요강 저장
+      const pricing = getAcademyPricing();
+      pricing.courseTitle = document.getElementById('cfgPricingCourseTitle')?.value.trim() || pricing.courseTitle;
+      pricing.originalPrice = document.getElementById('cfgPricingOriginal')?.value.trim() || pricing.originalPrice;
+      pricing.currentPrice = document.getElementById('cfgPricingCurrent')?.value.trim() || pricing.currentPrice;
+      pricing.discountBadge = document.getElementById('cfgPricingBadge')?.value.trim() || pricing.discountBadge;
+      pricing.priceNotice = document.getElementById('cfgPricingNotice')?.value.trim() || pricing.priceNotice;
+      pricing.coachingPay = document.getElementById('cfgPricingCoachingPay')?.value.trim() || pricing.coachingPay;
+      saveAcademyPricing(pricing);
+
+      // 2. 4대 트랙 커리큘럼 저장
+      const tracks = getAcademyTracks();
+      tracks.forEach((t, idx) => {
+        const nameEl = document.getElementById(`trackName_${idx}`);
+        const durEl = document.getElementById(`trackDuration_${idx}`);
+        const sumEl = document.getElementById(`trackSummary_${idx}`);
+        const benEl = document.getElementById(`trackBenefit_${idx}`);
+
+        if (nameEl) t.name = nameEl.value.trim();
+        if (durEl) t.duration = durEl.value.trim();
+        if (sumEl) t.summary = sumEl.value.trim();
+        if (benEl) t.benefit = benEl.value.trim();
+
+        (t.weeks || []).forEach((w, wIdx) => {
+          const wTitleEl = document.getElementById(`weekTitle_${idx}_${wIdx}`);
+          const wDescEl = document.getElementById(`weekDesc_${idx}_${wIdx}`);
+          if (wTitleEl) w.title = wTitleEl.value.trim();
+          if (wDescEl) w.desc = wDescEl.value.trim();
+        });
+      });
+      saveAcademyTracks(tracks);
+
+      // 3. 메인 화면 동적 갱신
+      renderAcademyDynamicTracks();
+      renderAcademyDynamicPricing();
+
+      alert('✅ 교육과정 및 수강료 변경사항이 저장되었습니다!\n아카데미 메인 페이지에 실시간으로 즉시 반영되었습니다.');
+    }
+
+    // -------------------------------------------------------------------------
+    // 8. 탭 4: 전국 지부 생성 & 지부장 관리 엔진
+    // -------------------------------------------------------------------------
+    function renderAcademyBranchesTable() {
+      const tbody = document.getElementById('acadBranchTableBody');
+      if (!tbody) return;
+
+      const list = getAcademyBranches();
+      const statusFilter = document.getElementById('filterBranchStatusSelect')?.value || 'all';
+      const search = document.getElementById('searchBranchInput')?.value.trim().toLowerCase() || '';
+
+      const filtered = list.filter(item => {
+        let matchStatus = (statusFilter === 'all') || (item.status === statusFilter);
+        let matchSearch = !search || (`${item.name} ${item.region} ${item.leaderName} ${item.leaderPhone}`.toLowerCase().includes(search));
+        return matchStatus && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:36px; color:var(--text-muted);">조건에 맞는 지부가 없습니다.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(item => {
+        const cleanPhone = (item.leaderPhone || '').replace(/[^0-9]/g, '');
+        let statusBadge = item.status === '정상운영' ? 'badge-paid' : (item.status === '개설준비중' ? 'badge-waiting' : 'badge-canceled');
+
+        return `
+          <tr>
+            <td style="font-weight:850; font-size:0.92rem; color:var(--text-primary);">${escapeHtml(item.name)}</td>
+            <td style="font-size:0.86rem; color:var(--text-secondary);">${escapeHtml(item.region)}</td>
+            <td style="font-weight:800; font-size:0.90rem;">${escapeHtml(item.leaderName)}</td>
+            <td style="white-space:nowrap;">
+              <a href="tel:${cleanPhone}" title="지부장 전화 연결" style="color:var(--accent); font-weight:850; text-decoration:underline;">
+                ${escapeHtml(item.leaderPhone)}
+              </a>
+            </td>
+            <td style="font-size:0.84rem; color:var(--text-secondary); line-height:1.4;">
+              ${escapeHtml(item.address || '')}
+              ${item.note ? `<div style="font-size:0.78rem; color:var(--text-muted);">${escapeHtml(item.note)}</div>` : ''}
+            </td>
+            <td style="text-align:center; font-weight:800; color:var(--accent);">${escapeHtml(item.coachCount || 0)}명</td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--text-muted);">${escapeHtml(item.openedAt || '')}</td>
+            <td style="text-align:center;">
+              <span class="badge-status ${statusBadge}">${escapeHtml(item.status)}</span>
+            </td>
+            <td style="text-align:center; white-space:nowrap;">
+              <button type="button" onclick="openBranchModal('${item.id}')" title="수정" style="padding:3px 7px; font-size:0.78rem; border-radius:5px; border:1px solid var(--border-color); background:var(--bg-card); cursor:pointer;">✏️</button>
+              <button type="button" onclick="deleteAcademyBranch('${item.id}')" title="삭제" style="padding:3px 7px; font-size:0.78rem; border-radius:5px; border:1px solid rgba(220,38,38,0.3); background:rgba(220,38,38,0.06); color:#dc2626; cursor:pointer;">🗑️</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openBranchModal(branchId = null) {
+      const modal = document.getElementById('academyBranchEditModal');
+      const form = document.getElementById('branchEditForm');
+      if (!modal || !form) return;
+
+      if (branchId) {
+        const list = getAcademyBranches();
+        const branch = list.find(b => b.id === branchId);
+        if (branch) {
+          document.getElementById('branchModalTitle').textContent = `🏛️ [${branch.name}] 정보 수정`;
+          document.getElementById('editBranchId').value = branch.id;
+          document.getElementById('editBranchName').value = branch.name;
+          document.getElementById('editBranchRegion').value = branch.region;
+          document.getElementById('editBranchLeader').value = branch.leaderName;
+          document.getElementById('editBranchPhone').value = branch.leaderPhone;
+          document.getElementById('editBranchAddress').value = branch.address || '';
+          document.getElementById('editBranchCoachCount').value = branch.coachCount || 0;
+          document.getElementById('editBranchStatus').value = branch.status || '정상운영';
+          document.getElementById('editBranchNote').value = branch.note || '';
+        }
+      } else {
+        document.getElementById('branchModalTitle').textContent = '🏛️ 거점 지부 신규 개설 & 지부장 위촉';
+        form.reset();
+        document.getElementById('editBranchId').value = '';
+        document.getElementById('editBranchCoachCount').value = 0;
+        document.getElementById('editBranchStatus').value = '정상운영';
+      }
+      modal.classList.add('open');
+    }
+
+    function closeBranchModal() {
+      const modal = document.getElementById('academyBranchEditModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function closeBranchEditOnOverlay(e) {
+      if (e.target.id === 'academyBranchEditModal') closeBranchModal();
+    }
+
+    function handleBranchEditSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('editBranchId').value;
+      const name = document.getElementById('editBranchName').value.trim();
+      const region = document.getElementById('editBranchRegion').value.trim();
+      const leaderName = document.getElementById('editBranchLeader').value.trim();
+      const leaderPhone = document.getElementById('editBranchPhone').value.trim();
+      const address = document.getElementById('editBranchAddress').value.trim();
+      const coachCount = parseInt(document.getElementById('editBranchCoachCount').value) || 0;
+      const status = document.getElementById('editBranchStatus').value;
+      const note = document.getElementById('editBranchNote').value.trim();
+
+      const list = getAcademyBranches();
+      const now = new Date();
+      const dateStr = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
+
+      if (id) {
+        const target = list.find(b => b.id === id);
+        if (target) {
+          target.name = name;
+          target.region = region;
+          target.leaderName = leaderName;
+          target.leaderPhone = leaderPhone;
+          target.address = address;
+          target.coachCount = coachCount;
+          target.status = status;
+          target.note = note;
+        }
+      } else {
+        list.push({
+          id: 'br_' + Date.now(),
+          name, region, leaderName, leaderPhone, address, coachCount,
+          openedAt: dateStr, status, note
+        });
+      }
+
+      saveAcademyBranches(list);
+      closeBranchModal();
+      renderAcademyBranchesTable();
+      alert(`✅ [${name}] 지부 정보가 저장되었습니다.`);
+    }
+
+    function deleteAcademyBranch(id) {
+      if (!confirm('정말 이 지부 정보를 삭제하시겠습니까?')) return;
+      let list = getAcademyBranches();
+      list = list.filter(b => b.id !== id);
+      saveAcademyBranches(list);
+      renderAcademyBranchesTable();
+    }
+
+    function exportAcademyBranchesCSV() {
+      const list = getAcademyBranches();
+      if (!list.length) {
+        alert('내보낼 지부 데이터가 없습니다.');
+        return;
+      }
+      let csv = '\uFEFF지부명,관할지역,지부장명,연락처,주소,소속코치수,개설일,운영상태,비고\n';
+      list.forEach(b => {
+        csv += `"${b.name}","${b.region}","${b.leaderName}","${b.leaderPhone}","${(b.address||'').replace(/"/g,'""')}","${b.coachCount}","${b.openedAt}","${b.status}","${(b.note||'').replace(/"/g,'""')}"\n`;
+      });
+      downloadCSVFile(csv, '여백과결_전국지부및지부장현황');
+    }
+
+    // -------------------------------------------------------------------------
+    // 9. 탭 5: 아카데미 계좌 및 운영 설정 엔진
+    // -------------------------------------------------------------------------
+    function loadAcademyAccountSettings() {
+      const pricing = getAcademyPricing();
+      const savedPhone = localStorage.getItem(STORAGE_KEY_ACAD_SETTINGS) || '010-9613-5913';
+
+      const fBank = document.getElementById('cfgBankName');
+      const fAcc = document.getElementById('cfgAccountNumber');
+      const fHolder = document.getElementById('cfgAccountHolder');
+      const fPhone = document.getElementById('cfgAcademyPhone');
+
+      if (fBank) fBank.value = pricing.bankName || '신한은행';
+      if (fAcc) fAcc.value = pricing.accountNumber || '110-432-080370';
+      if (fHolder) fHolder.value = pricing.accountHolder || '메타큐 라이프(여백과 결)';
+      if (fPhone) fPhone.value = savedPhone;
+    }
+
+    function saveAcademyAccountSettings() {
+      const pricing = getAcademyPricing();
+      pricing.bankName = document.getElementById('cfgBankName')?.value.trim() || pricing.bankName;
+      pricing.accountNumber = document.getElementById('cfgAccountNumber')?.value.trim() || pricing.accountNumber;
+      pricing.accountHolder = document.getElementById('cfgAccountHolder')?.value.trim() || pricing.accountHolder;
+      saveAcademyPricing(pricing);
+
+      const phone = document.getElementById('cfgAcademyPhone')?.value.trim() || '010-9613-5913';
+      localStorage.setItem(STORAGE_KEY_ACAD_SETTINGS, phone);
+
+      alert('✅ 공식 수강료 입금 계좌 및 아카데미 문의 번호가 저장되었습니다.');
+    }
+
+    // 기본 데이터 전체 복구
+    function resetAcademyAllData() {
+      if (!confirm('⚠️ 정말 아카데미 데이터를 초기 샘플 데이터로 복구하시겠습니까?\n\n현재 수정한 신청자, 교육생, 지부 데이터가 기본 권장 데이터로 초기화됩니다.')) {
+        return;
+      }
+      localStorage.setItem(STORAGE_KEY_ACAD_APPLICANTS, JSON.stringify(DEFAULT_ACAD_APPLICANTS));
+      localStorage.setItem(STORAGE_KEY_ACAD_STUDENTS, JSON.stringify(DEFAULT_ACAD_STUDENTS));
+      localStorage.setItem(STORAGE_KEY_ACAD_TRACKS, JSON.stringify(DEFAULT_ACAD_TRACKS));
+      localStorage.setItem(STORAGE_KEY_ACAD_PRICING, JSON.stringify(DEFAULT_ACAD_PRICING));
+      localStorage.setItem(STORAGE_KEY_ACAD_BRANCHES, JSON.stringify(DEFAULT_ACAD_BRANCHES));
+
+      renderAcademyDynamicTracks();
+      renderAcademyDynamicPricing();
+      openAcademyAdminDashboard();
+      alert('🔄 아카데미 초기 기본 샘플 데이터로 깨끗하게 복구되었습니다.');
+    }
+
+    // 공통 CSV 파일 다운로드 헬퍼
+    function downloadCSVFile(csvContent, filenamePrefix) {
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      const now = new Date();
+      const dateStr = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+      link.setAttribute('href', url);
+      link.setAttribute('download', `${filenamePrefix}_${dateStr}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // 페이지 첫 로드 시 화면 동적 초기화 및 헤더 버튼 상태 확인
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAcademyDynamicTracks();
+      renderAcademyDynamicPricing();
+      updateAdminHeaderBtnState();
+    });
   </script>
 </body>
 </html>
