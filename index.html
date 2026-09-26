@@ -3959,7 +3959,7 @@
             </a>
           </li>
           <li>
-            <a href="my-room.html" class="nav-highlight-btn nav-room-pill" title="어르신 전용 프라이빗 온라인룸 입장">
+            <a href="my-room.html" class="nav-highlight-btn nav-room-pill" title="어르신 전용 프라이빗 온라인룸 입장" onclick="goToMyRoom(event)">
               <span>🏛️</span>
               <span>나의 고유한 서재</span>
             </a>
@@ -4005,7 +4005,7 @@
           <span>🎓 <strong>코치 아카데미</strong></span>
           <span style="font-size: 0.72rem; background: #296299; color: #fff; padding: 2px 8px; border-radius: 999px;">자격과정</span>
         </a>
-        <a href="my-room.html" class="drawer-nav-item" style="background: rgba(194, 155, 56, 0.14); color: #8c6610; border: 1.5px solid var(--accent-gold); font-weight: 850;">
+        <a href="my-room.html" class="drawer-nav-item" style="background: rgba(194, 155, 56, 0.14); color: #8c6610; border: 1.5px solid var(--accent-gold); font-weight: 850;" onclick="closeMobileDrawer(); goToMyRoom(event)">
           <span>🏛️ <strong>나의 고유한 서재</strong></span>
           <span style="font-size: 0.72rem; background: var(--accent-gold); color: #fff; padding: 2px 8px; border-radius: 999px;">온라인룸</span>
         </a>
@@ -4055,8 +4055,11 @@
         처음 오셨더라도 별도 회원가입 없이<br>카카오 인증 즉시 나만의 전용 서재가 자동 개설됩니다.
       </p>
 
-      <div style="margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--border-color); text-align: center;">
-        <button onclick="closeLoginModal(); openAdminAuthModal();" style="background: none; border: none; color: var(--accent); font-size: 0.84rem; font-weight: 700; cursor: pointer; text-decoration: underline; font-family: inherit;">
+      <div style="margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--border-color); text-align: center; display: flex; flex-direction: column; gap: 8px;">
+        <a href="my-room.html" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 700; text-decoration: underline;">
+          👵 김순옥 어르신 완성 서재 예시 먼저 둘러보기 ➔
+        </a>
+        <button onclick="closeLoginModal(); openAdminAuthModal();" style="background: none; border: none; color: var(--accent); font-size: 0.82rem; font-weight: 600; cursor: pointer; text-decoration: underline; font-family: inherit;">
           ⚙️ 서재 관리자 홈으로 이동 (인증번호 1223)
         </button>
       </div>
@@ -4129,7 +4132,7 @@
           </a>
 
           <!-- 4) 🏛️ 나의 고유한 서재 카드 -->
-          <a href="my-room.html" class="hero-action-card room-card" title="나만의 독립된 프라이빗 온라인 서재 입장">
+          <a href="my-room.html" class="hero-action-card room-card" title="나만의 독립된 프라이빗 온라인 서재 입장" onclick="goToMyRoom(event)">
             <div class="hero-card-icon room-bg">🏛️</div>
             <div class="hero-card-body">
               <div class="hero-card-badge-row">
@@ -4594,7 +4597,7 @@
             <a href="my-room.html" class="btn btn-primary" style="background: var(--accent-gold); border-color: var(--accent-gold); font-size: 1.05rem; padding: 14px 28px; box-shadow: 0 4px 14px rgba(197, 155, 39, 0.35);">
               ✨ 김순옥 어르신 보물 서재 둘러보기 (샘플 체험) ➔
             </a>
-            <button onclick="window.location.href='my-room.html'" class="btn" style="background: var(--bg-primary); border: 1.5px solid var(--border-color); color: var(--text-primary); font-size: 1.05rem; padding: 14px 24px; font-weight: 700;">
+            <button onclick="goToMyRoom(event)" class="btn" style="background: var(--bg-primary); border: 1.5px solid var(--border-color); color: var(--text-primary); font-size: 1.05rem; padding: 14px 24px; font-weight: 700; cursor: pointer;">
               🗝️ 내 고유 서재 입장하기
             </button>
           </div>
@@ -4624,7 +4627,7 @@
             <li><a href="#test">🎯 1분 자가진단</a></li>
             <li><a href="#memoir">디지털 자서전</a></li>
             <li><a href="academy.html" style="color: var(--accent-gold); font-weight: 700;">🎓 코치 양성 아카데미</a></li>
-            <li><a href="my-room.html" style="color: var(--accent-gold); font-weight: 700;">🏛️ 나의 고유한 서재</a></li>
+            <li><a href="my-room.html" onclick="goToMyRoom(event)" style="color: var(--accent-gold); font-weight: 700;">🏛️ 나의 고유한 서재</a></li>
           </ul>
         </div>
         <div class="footer-links">
@@ -5970,6 +5973,21 @@
     function closeLoginModalOnOverlay(e) {
       if (e.target.id === 'loginModal') {
         closeLoginModal();
+      }
+    }
+
+    // 나의 고유한 서재 클릭 핸들러 (로그인 여부 확인 후 분기: 미로그인 시 로그인창으로 유도)
+    function goToMyRoom(e) {
+      if (e) e.preventDefault();
+      const savedUserStr = localStorage.getItem('reset_logged_in_user');
+      const savedName = localStorage.getItem('reset_user_name');
+
+      if (savedUserStr || savedName) {
+        // 이미 로그인된 회원이면 본인의 독립 서재로 즉시 입장
+        window.location.href = 'my-room.html';
+      } else {
+        // 로그인되지 않은 방문자이면 로그인 모달창 오픈 (카카오 3초 가입/직접 성함 입력)
+        openLoginModal();
       }
     }
 
