@@ -636,6 +636,640 @@
         padding: 24px 18px;
       }
     }
+
+    /* =========================================================================
+       프리미엄 서재 에디터 & 사진보관함 스타일 (티스토리 + fitflunce 시스템)
+       ========================================================================= */
+    .cms-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(8, 10, 15, 0.78);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    .cms-modal-overlay.open {
+      display: flex;
+    }
+
+    #tistoryEditorModal { z-index: 10040; }
+    #editorDraftsModal { z-index: 10050; }
+    #articleReaderModal { z-index: 10030; }
+
+    /* 프리미엄 딥 블랙 에디터 카드 */
+    .tistory-editor-card {
+      background: #0c0e12;
+      border: 1px solid #252a35;
+      border-radius: 20px;
+      max-width: 1100px;
+      width: 100%;
+      height: calc(100dvh - 32px);
+      max-height: calc(100dvh - 32px);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95);
+      overflow: hidden;
+      color: #f1f3f7;
+    }
+
+    .editor-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-bottom: 1px solid #202531;
+      background: #141720;
+      flex-shrink: 0;
+    }
+
+    .editor-top-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .editor-top-badge {
+      background: linear-gradient(135deg, #d4af37, #aa8210);
+      color: #0b0c0e;
+      font-size: 0.72rem;
+      font-weight: 850;
+      padding: 3px 9px;
+      border-radius: 999px;
+      letter-spacing: 0.05em;
+    }
+
+    .editor-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-editor-action {
+      background: #1c212b;
+      border: 1px solid #303746;
+      color: #e2e8f0;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-editor-action:hover {
+      background: #272e3c;
+      border-color: #d4af37;
+      color: #d4af37;
+    }
+
+    .btn-editor-publish {
+      background: linear-gradient(135deg, #e5c158 0%, #c29b38 100%);
+      color: #0f1012;
+      border: none;
+      padding: 8px 22px;
+      border-radius: 999px;
+      font-weight: 850;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      box-shadow: 0 4px 14px rgba(194, 155, 56, 0.45);
+    }
+    .btn-editor-publish:hover {
+      background: linear-gradient(135deg, #f0cf6f 0%, #d4af37 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(194, 155, 56, 0.6);
+    }
+
+    /* 에디터 설정 옵션바 */
+    .editor-settings-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      border-bottom: 1px solid #202531;
+      background: #10131a;
+      flex-wrap: wrap;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .editor-category-select {
+      padding: 7px 14px;
+      border: 1px solid #2e3544;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: #1a1e27;
+      color: #f1f3f7;
+      outline: none;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .editor-category-select:focus {
+      border-color: #d4af37;
+    }
+
+    .editor-featured-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #e5c158;
+      background: rgba(212, 175, 55, 0.12);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      transition: all 0.2s ease;
+    }
+    .editor-featured-toggle:hover {
+      background: rgba(212, 175, 55, 0.2);
+    }
+    .editor-featured-toggle input {
+      accent-color: #d4af37;
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* 에디터 워크스페이스 레이아웃 (좌측 사진보관함 + 우측 메인 에디터) */
+    .editor-body-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    /* 좌측 사진 보관함 (FIT-FLUENCE 핵심) */
+    .editor-photo-sidebar {
+      width: 250px;
+      background: #11141c;
+      border-right: 1px solid #202531;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .photo-sidebar-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid #202531;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .photo-sidebar-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #e5c158;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btn-photo-upload {
+      width: 100%;
+      background: #171b24;
+      color: #e5c158;
+      border: 1.5px dashed #c29b38;
+      padding: 9px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: inherit;
+    }
+    .btn-photo-upload:hover {
+      background: rgba(194, 155, 56, 0.15);
+      border-color: #e5c158;
+    }
+
+    .photo-img-grid {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .photo-item {
+      background: #171b24;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid #272d3a;
+      position: relative;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .photo-item.is-main {
+      border-color: #e5c158;
+      box-shadow: 0 0 14px rgba(229, 193, 88, 0.45);
+    }
+    .photo-item img {
+      width: 100%;
+      height: 72px;
+      object-fit: cover;
+      cursor: pointer;
+      display: block;
+    }
+
+    .photo-item-controls {
+      display: flex;
+      background: #0e1117;
+      padding: 4px;
+      gap: 3px;
+      border-top: 1px solid #202531;
+    }
+
+    .photo-btn {
+      flex: 1;
+      font-size: 0.68rem;
+      padding: 4px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 700;
+      font-family: inherit;
+      transition: all 0.15s ease;
+      text-align: center;
+    }
+    .photo-btn-ins {
+      background: #202735;
+      color: #93c5fd;
+    }
+    .photo-btn-ins:hover {
+      background: #3b82f6;
+      color: #fff;
+    }
+    .photo-btn-rep {
+      background: #1c212c;
+      color: #9ca3af;
+    }
+    .photo-btn-rep.active {
+      background: #c29b38;
+      color: #0b0c0e;
+      font-weight: 800;
+    }
+
+    .photo-del-btn {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      border: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      font-size: 10px;
+      cursor: pointer;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+    .photo-del-btn:hover {
+      background: #d9534f;
+    }
+
+    /* 우측 메인 에디터 패널 */
+    .editor-main-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: #08090c;
+    }
+
+    .editor-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 9px 20px;
+      background: #13161f;
+      border-bottom: 1px solid #202531;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .tool-btn {
+      background: #1c212b;
+      border: 1px solid #2b3240;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      height: 32px;
+    }
+    .tool-btn:hover {
+      background: #28303f;
+      border-color: #d4af37;
+      color: #d4af37;
+    }
+
+    .tool-separator {
+      width: 1px;
+      height: 20px;
+      background: #2b3240;
+      margin: 0 4px;
+    }
+
+    .editor-popup-menu {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 0;
+      background: #171b24;
+      border: 1px solid #2f3747;
+      padding: 14px;
+      border-radius: 12px;
+      z-index: 1000;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7);
+    }
+    .popup-menu-title {
+      font-size: 0.78rem;
+      color: #e5c158;
+      margin-bottom: 8px;
+      display: block;
+      font-weight: 800;
+    }
+    .editor-color-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 24px);
+      gap: 6px;
+    }
+    .color-chip {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.15s ease;
+    }
+    .color-chip:hover {
+      transform: scale(1.15);
+    }
+
+    .editor-symbol-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 28px);
+      gap: 5px;
+      width: 200px;
+    }
+    .symbol-chip {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 6px;
+      background: #1c212b;
+      border: 1px solid #2b3240;
+      color: #e2e8f0;
+      font-size: 0.88rem;
+      transition: all 0.15s ease;
+    }
+    .symbol-chip:hover {
+      background: #d4af37;
+      color: #0b0c0e;
+    }
+
+    .editor-scroll-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      background: #08090c;
+    }
+
+    .editor-title-input {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: #ffffff;
+      border: none;
+      border-bottom: 2px solid #242a36;
+      padding: 8px 0 14px;
+      outline: none;
+      width: 100%;
+      background: transparent;
+      letter-spacing: -0.5px;
+    }
+    .editor-title-input::placeholder { color: #555d6e; }
+    .editor-title-input:focus { border-bottom-color: #d4af37; }
+
+    .editor-excerpt-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #252b37;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      color: #e5e7eb;
+      background: #10131a;
+      outline: none;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 55px;
+      line-height: 1.6;
+    }
+    .editor-excerpt-input::placeholder { color: #555d6e; }
+    .editor-excerpt-input:focus { border-color: #d4af37; }
+
+    .editor-content-area {
+      min-height: 320px;
+      font-size: 1.08rem;
+      line-height: 2.0;
+      color: #f3f5f8;
+      outline: none;
+      font-family: inherit;
+      word-break: keep-all;
+      background: #08090c;
+    }
+    .editor-content-area:empty::before {
+      content: attr(data-placeholder);
+      color: #555d6e;
+    }
+    .editor-content-area blockquote {
+      border-left: 4px solid #d4af37;
+      padding: 14px 22px;
+      margin: 20px 0;
+      background: rgba(212, 175, 55, 0.08);
+      border-radius: 0 12px 12px 0;
+      font-style: italic;
+      color: #e8dfc8;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .editor-body-layout {
+        flex-direction: column;
+      }
+      .editor-photo-sidebar {
+        width: 100%;
+        max-height: 165px;
+        border-right: none;
+        border-bottom: 1px solid #202531;
+      }
+      .photo-img-grid {
+        grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+      }
+      .editor-scroll-body {
+        padding: 20px 16px;
+      }
+    }
+
+    /* ================= 글 본문 상세 뷰어 모달 ================= */
+    .reader-card {
+      background: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: 20px;
+      max-width: 780px;
+      width: 100%;
+      max-height: calc(100dvh - 32px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      box-sizing: border-box;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+      padding: 32px 28px 24px;
+      position: relative;
+    }
+    .reader-header {
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 20px;
+    }
+    .reader-meta-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .reader-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.4;
+      margin-bottom: 14px;
+      letter-spacing: -0.5px;
+    }
+    .reader-info {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .reader-cover-img {
+      width: 100%;
+      max-height: 380px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 24px;
+      display: block;
+      border: 1px solid var(--border-color);
+    }
+    .reader-body {
+      font-size: 1.08rem;
+      line-height: 2.0;
+      color: var(--text-main);
+      word-break: keep-all;
+    }
+    .reader-body blockquote {
+      border-left: 4px solid var(--accent);
+      padding: 14px 20px;
+      margin: 18px 0;
+      background: var(--accent-light);
+      border-radius: 0 12px 12px 0;
+      font-style: italic;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* 게시판 카테고리 필터 탭 & 검색바 */
+    .board-filter-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      flex-wrap: wrap;
+    }
+    .filter-tab-btn {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border-color);
+      background: #ffffff;
+      color: var(--text-sub);
+      font-size: 0.88rem;
+      font-weight: 750;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .filter-tab-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .filter-tab-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+      font-weight: 850;
+      box-shadow: 0 3px 10px rgba(44, 95, 70, 0.25);
+    }
+    .admin-search-input {
+      padding: 9px 16px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-color);
+      font-size: 0.9rem;
+      outline: none;
+      min-width: 240px;
+      transition: border-color 0.2s;
+    }
+    .admin-search-input:focus {
+      border-color: var(--accent);
+    }
   </style>
 </head>
 <body>
@@ -802,9 +1436,9 @@
         </div>
       </section>
 
-      <!-- ================= 탭 2: 📝 01. 여백서재 관리 (게시글 & 글쓰기) ================= -->
+      <!-- ================= 탭 2: 📝 01. 여백서재 관리 (프리미엄 게시판 & 에디터) ================= -->
       <section class="tab-panel" id="tabMagazine">
-        <!-- 상단 통계 -->
+        <!-- 상단 통계 및 퀵 액션 카드 -->
         <div class="stat-cards-grid">
           <div class="stat-card">
             <span class="stat-icon">📚</span>
@@ -817,103 +1451,61 @@
             <span class="stat-icon">⭐</span>
             <div>
               <div class="stat-num" id="statArticleFeatured">0편</div>
-              <div class="stat-label">메인 전면 노출 중</div>
+              <div class="stat-label">메인 전면 대표글 노출 중</div>
             </div>
           </div>
-          <div class="stat-card">
-            <span class="stat-icon">✍️</span>
+          <div class="stat-card" style="display: flex; align-items: center; justify-content: space-between;">
             <div>
-              <button class="btn-save-setting" onclick="toggleArticleForm()" style="padding: 8px 16px; font-size: 0.88rem;">
-                + 새 글 작성하기
-              </button>
+              <div style="font-size: 0.84rem; color: var(--text-muted); font-weight: 700; margin-bottom: 4px;">티스토리 + FIT-FLUENCE</div>
+              <div style="font-size: 1.05rem; font-weight: 850; color: var(--text-main);">프리미엄 글쓰기</div>
             </div>
+            <button type="button" class="btn-save-setting" onclick="openTistoryEditor()" style="padding: 10px 18px; font-size: 0.92rem; background: linear-gradient(135deg, #2c5f46 0%, #1e4532 100%); box-shadow: 0 4px 12px rgba(44, 95, 70, 0.35);">
+              <span>✍️</span> 새 칼럼 작성하기
+            </button>
           </div>
         </div>
 
-        <!-- 새 글 작성 / 수정 폼 (기본 숨김, 작성 버튼 클릭 시 노출) -->
-        <div class="panel-card" id="articleFormCard" style="display: none; border-color: var(--accent);">
-          <div class="panel-header">
-            <div class="panel-title-wrap">
-              <span class="panel-icon">✍️</span>
-              <h3 class="panel-title" id="articleFormTitle">새 칼럼 작성하기</h3>
-            </div>
-            <button type="button" onclick="cancelArticleEdit()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted);">✕</button>
-          </div>
-
-          <form onsubmit="handleSaveArticle(event)">
-            <input type="hidden" id="editArticleId">
-            
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px;">
-              <div>
-                <label style="font-weight: 800; font-size: 0.9rem; display: block; margin-bottom: 6px;">칼럼 제목 *</label>
-                <input type="text" id="articleTitleInput" class="setting-input" placeholder="칼럼 제목을 입력하세요" required>
-              </div>
-              <div>
-                <label style="font-weight: 800; font-size: 0.9rem; display: block; margin-bottom: 6px;">카테고리 *</label>
-                <select id="articleCategoryInput" class="setting-input" required>
-                  <option value="비움과 갈무리">비움과 갈무리</option>
-                  <option value="웰다잉">웰다잉</option>
-                  <option value="웰라이프">웰라이프</option>
-                  <option value="종활 문화">종활 문화</option>
-                  <option value="서사 기록">서사 기록</option>
-                </select>
-              </div>
-            </div>
-
-            <div style="margin-bottom: 16px;">
-              <label style="font-weight: 800; font-size: 0.9rem; display: block; margin-bottom: 6px;">대표 썸네일 이미지 URL (선택)</label>
-              <input type="url" id="articleImageInput" class="setting-input" placeholder="https://images.unsplash.com/... 또는 로컬 이미지 경로" oninput="previewArticleImage(this.value)">
-              <div id="articleImagePreviewBox" style="margin-top: 10px; max-height: 180px; display: none; overflow: hidden; border-radius: 12px;">
-                <img id="articleImagePreview" src="" alt="썸네일 미리보기" style="width: 100%; height: 160px; object-fit: cover;">
-              </div>
-            </div>
-
-            <div style="margin-bottom: 16px;">
-              <label style="font-weight: 800; font-size: 0.9rem; display: block; margin-bottom: 6px;">한 줄 요약 (목록에 노출)</label>
-              <input type="text" id="articleExcerptInput" class="setting-input" placeholder="독자의 시선을 사로잡는 1~2줄 요약">
-            </div>
-
-            <div style="margin-bottom: 20px;">
-              <label style="font-weight: 800; font-size: 0.9rem; display: block; margin-bottom: 6px;">본문 내용 (HTML 지원) *</label>
-              <textarea id="articleContentInput" class="setting-textarea" style="min-height: 220px;" placeholder="칼럼 본문 내용을 정성껏 작성해주세요. <p>, <h3>, <blockquote> 태그를 사용하실 수 있습니다." required></textarea>
-            </div>
-
-            <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border-color);">
-              <label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800; cursor: pointer;">
-                <input type="checkbox" id="articleFeaturedCheck" style="width: 18px; height: 18px;">
-                <span>⭐ 이 글을 메인 화면 전면에 대표글로 노출</span>
-              </label>
-
-              <div style="display: flex; gap: 10px;">
-                <button type="button" onclick="cancelArticleEdit()" style="padding: 10px 18px; border: 1.5px solid var(--border-color); border-radius: 10px; background: #fff; cursor: pointer; font-weight: 700;">취소</button>
-                <button type="submit" class="btn-save-setting">저장 완료</button>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        <!-- 칼럼 목록 테이블 -->
+        <!-- 칼럼 목록 및 게시판 관리 카드 -->
         <div class="panel-card">
-          <div class="panel-header">
+          <div class="panel-header" style="flex-wrap: wrap; gap: 14px;">
             <div class="panel-title-wrap">
-              <span class="panel-icon">📋</span>
-              <h3 class="panel-title">전체 칼럼 목록 및 노출 관리</h3>
+              <span class="panel-icon">📖</span>
+              <div>
+                <h3 class="panel-title">여백의 서재 전체 게시판 관리</h3>
+                <p style="font-size: 0.86rem; color: var(--text-muted); margin: 2px 0 0;">
+                  글을 클릭하면 본문 전문을 미리 볼 수 있으며, <strong>[⭐ 전면 노출]</strong> 버튼으로 메인 화면 전면에 띄울 대표글을 자유롭게 선택할 수 있습니다.
+                </p>
+              </div>
             </div>
-            <div style="font-size: 0.88rem; color: var(--text-muted);">
-              ⭐ 버튼을 클릭하면 메인 화면 전면 노출 여부를 즉시 켜고 끌 수 있습니다.
+            <button type="button" class="btn-save-setting" onclick="openTistoryEditor()" style="padding: 9px 18px; font-size: 0.88rem;">
+              <span>+</span> 새 글 작성
+            </button>
+          </div>
+
+          <!-- 카테고리 필터 탭 & 검색창 -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1.5px solid var(--border-color);">
+            <div class="board-filter-tabs" id="adminBoardFilterTabs">
+              <button type="button" class="filter-tab-btn active" onclick="filterAdminMagazineCategory('all', this)">전체보기</button>
+              <button type="button" class="filter-tab-btn" onclick="filterAdminMagazineCategory('비움과 갈무리', this)">비움과 갈무리</button>
+              <button type="button" class="filter-tab-btn" onclick="filterAdminMagazineCategory('웰라이프', this)">웰라이프</button>
+              <button type="button" class="filter-tab-btn" onclick="filterAdminMagazineCategory('웰다잉', this)">웰다잉</button>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <input type="text" id="adminArticleSearchInput" class="admin-search-input" placeholder="🔍 제목 또는 내용 검색..." oninput="handleAdminArticleSearch(this.value)">
             </div>
           </div>
 
+          <!-- 칼럼 데이터 테이블 -->
           <div class="admin-table-wrap">
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th style="width: 70px;">사진</th>
-                  <th>제목 & 요약</th>
-                  <th style="width: 110px;">카테고리</th>
-                  <th style="width: 95px;">작성일</th>
-                  <th style="width: 130px; text-align: center;">메인 전면 노출</th>
-                  <th style="width: 120px; text-align: center;">관리</th>
+                  <th style="width: 80px;">사진</th>
+                  <th>제목 & 요약 (클릭 시 전문 보기)</th>
+                  <th style="width: 120px;">카테고리</th>
+                  <th style="width: 100px;">작성일</th>
+                  <th style="width: 140px; text-align: center;">메인 전면 노출</th>
+                  <th style="width: 160px; text-align: center;">관리</th>
                 </tr>
               </thead>
               <tbody id="articleTableBody">
@@ -1149,6 +1741,229 @@
     </main>
   </div>
 
+  <!-- ================= 모달 1) 프리미엄 서재 에디터 (티스토리 + FIT-FLUENCE 사진보관함 & 대표사진 지정) ================= -->
+  <div class="cms-modal-overlay" id="tistoryEditorModal" onclick="closeEditorOnOverlay(event)">
+    <div class="tistory-editor-card">
+      <!-- 에디터 상단 헤더바 -->
+      <div class="editor-top-bar">
+        <div class="editor-top-title">
+          <span>✍️</span> 여백의 서재 프리미엄 에디터
+          <span class="editor-top-badge">PREMIUM BLACK</span>
+        </div>
+        <div class="editor-btn-group">
+          <button type="button" class="btn-editor-action" onclick="saveEditorDraft()" title="작성 중인 내용을 임시 저장합니다">
+            <span>💾</span> 임시저장
+          </button>
+          <button type="button" class="btn-editor-action" onclick="openEditorDraftsModal()" title="임시 저장된 글 목록을 불러옵니다">
+            <span>📂</span> 불러오기
+          </button>
+          <button type="button" class="btn-editor-action" onclick="closeTistoryEditor()">취소</button>
+          <button type="button" class="btn-editor-publish" onclick="publishArticle()">
+            <span>🚀</span> 발행하기
+          </button>
+        </div>
+      </div>
+
+      <!-- 에디터 설정 옵션바 (카테고리, 메인 전면 노출 여부, 대표사진 뱃지) -->
+      <div class="editor-settings-bar">
+        <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <label for="editorCategory" style="font-weight: 700; font-size: 0.9rem; color: #cbd5e1;">카테고리:</label>
+            <select id="editorCategory" class="editor-category-select">
+              <option value="비움과 갈무리">비움과 갈무리</option>
+              <option value="웰라이프">웰라이프</option>
+              <option value="웰다잉">웰다잉</option>
+            </select>
+          </div>
+          <div id="editorMainThumbIndicator" style="font-size: 0.84rem; color: #94a3b8; display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 1.05rem;">🖼️</span>
+            <span>대표사진: <strong id="editorMainThumbText" style="color: #e2e8f0;">미지정 (좌측 보관함에서 지정)</strong></span>
+          </div>
+        </div>
+        <label class="editor-featured-toggle" title="체크 시 메인 화면 전면 서재 카드에 우선 노출됩니다.">
+          <input type="checkbox" id="editorIsFeatured" checked>
+          <span>⭐ 메인 전면에 대표글로 노출</span>
+        </label>
+      </div>
+
+      <!-- 에디터 워크스페이스: 좌측 사진 보관함 + 우측 본문 에디터 -->
+      <div class="editor-body-layout">
+        <!-- 📸 좌측 사진 보관함 (FIT-FLUENCE 핵심 기능) -->
+        <div class="editor-photo-sidebar">
+          <div class="photo-sidebar-header">
+            <div class="photo-sidebar-title">
+              <span>📸 사진 보관함</span>
+              <span id="photoCountBadge" style="font-size: 0.72rem; color: #94a3b8;">0장</span>
+            </div>
+            <button type="button" class="btn-photo-upload" onclick="document.getElementById('editorImgInput').click()">
+              <span>+ 사진 불러오기</span>
+            </button>
+            <input type="file" id="editorImgInput" style="display:none" onchange="processUploadedImgs(this)" multiple accept="image/*">
+            <span style="font-size: 0.72rem; color: #94a3b8; line-height: 1.35;">
+              사진 업로드 후 <strong>[대표 지정]</strong>을 누르면 메인 카드 커버 사진으로 적용됩니다.
+            </span>
+          </div>
+          <!-- 업로드된 이미지 그리드 -->
+          <div id="photoImgGrid" class="photo-img-grid">
+            <!-- JS 동적 렌더링 -->
+          </div>
+        </div>
+
+        <!-- ✍️ 우측 메인 에디터 패널 -->
+        <div class="editor-main-panel">
+          <!-- 서식 툴바 (티스토리 + fitflunce 확장 도구) -->
+          <div class="editor-toolbar">
+            <div class="tool-group" style="display: flex; gap: 3px; align-items: center;">
+              <button type="button" class="tool-btn" onclick="execEditorCmd('bold')" title="굵게 (Bold)"><b>B</b></button>
+              <button type="button" class="tool-btn" onclick="execEditorCmd('italic')" title="기울임 (Italic)"><i>I</i></button>
+              <button type="button" class="tool-btn" onclick="execEditorCmd('underline')" title="밑줄 (Underline)"><u>U</u></button>
+              <button type="button" class="tool-btn" onclick="execEditorCmd('strikeThrough')" title="취소선"><s>S</s></button>
+            </div>
+
+            <div class="tool-separator"></div>
+
+            <!-- 글자색 팝업 팔레트 -->
+            <div style="position: relative; display: inline-block;">
+              <button type="button" class="tool-btn" onclick="toggleColorPopup(event)" title="글자색 변경" style="font-weight: 800; color: #e5c158;">
+                🎨 색상
+              </button>
+              <div id="editorColorMenu" class="editor-popup-menu" style="width: 160px;" onclick="event.stopPropagation()">
+                <span class="popup-menu-title">글자색 선택</span>
+                <div class="editor-color-grid">
+                  <div class="color-chip" style="background:#2c2a29;" onclick="execEditorColor('#2c2a29')" title="기본 먹색"></div>
+                  <div class="color-chip" style="background:#5e6b52;" onclick="execEditorColor('#5e6b52')" title="세이지 그린"></div>
+                  <div class="color-chip" style="background:#c29b38;" onclick="execEditorColor('#c29b38')" title="웜 골드"></div>
+                  <div class="color-chip" style="background:#d9534f;" onclick="execEditorColor('#d9534f')" title="레드"></div>
+                  <div class="color-chip" style="background:#2e7d32;" onclick="execEditorColor('#2e7d32')" title="그린"></div>
+                  <div class="color-chip" style="background:#1976d2;" onclick="execEditorColor('#1976d2')" title="블루"></div>
+                  <div class="color-chip" style="background:#7b1fa2;" onclick="execEditorColor('#7b1fa2')" title="퍼플"></div>
+                  <div class="color-chip" style="background:#8d6e63;" onclick="execEditorColor('#8d6e63')" title="브라운"></div>
+                  <div class="color-chip" style="background:#757575;" onclick="execEditorColor('#757575')" title="그레이"></div>
+                  <input type="color" style="width: 24px; height: 24px; padding: 0; border: none; background: none; cursor: pointer;" onchange="execEditorColor(this.value)" title="직접 선택">
+                </div>
+              </div>
+            </div>
+
+            <div class="tool-separator"></div>
+
+            <button type="button" class="tool-btn" onclick="insertEditorBlockquote()" title="티스토리 인용구 박스 삽입">❝ 인용구</button>
+            <button type="button" class="tool-btn" onclick="execEditorCmd('insertHorizontalRule')" title="구분선 삽입">― 구분선</button>
+
+            <!-- 특수기호 팝업 팔레트 -->
+            <div style="position: relative; display: inline-block;">
+              <button type="button" class="tool-btn" onclick="toggleSymbolPopup(event)" title="특수기호 삽입">Ω 기호</button>
+              <div id="editorSymbolMenu" class="editor-popup-menu" onclick="event.stopPropagation()">
+                <span class="popup-menu-title">특수기호 삽입</span>
+                <div class="editor-symbol-grid">
+                  <div class="symbol-chip" onclick="insertSymbolChar('★')">★</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('☆')">☆</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('○')">○</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('●')">●</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('◎')">◎</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('◆')">◆</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('→')">→</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('←')">←</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('↑')">↑</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('↓')">↓</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('↔')">↔</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('✔')">✔</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('※')">※</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('▶')">▶</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('◀')">◀</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('▼')">▼</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('▲')">▲</div>
+                  <div class="symbol-chip" onclick="insertSymbolChar('■')">■</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tool-separator"></div>
+
+            <button type="button" class="tool-btn" onclick="execEditorCmd('justifyLeft')" title="왼쪽 정렬">⫷</button>
+            <button type="button" class="tool-btn" onclick="execEditorCmd('justifyCenter')" title="가운데 정렬">≡</button>
+            <button type="button" class="tool-btn" onclick="execEditorCmd('justifyRight')" title="오른쪽 정렬">⫸</button>
+
+            <div class="tool-separator"></div>
+
+            <button type="button" class="tool-btn" onclick="insertExternalImgPrompt()" title="웹 이미지 URL 삽입">🖼️ 사진주소</button>
+            <button type="button" class="tool-btn" onclick="insertYoutubeVideoPrompt()" title="유튜브 영상 삽입">🎬 영상</button>
+            <button type="button" class="tool-btn" onclick="insertLinkPrompt()" title="하이퍼링크 삽입">🔗 링크</button>
+          </div>
+
+          <!-- 본문 작성 스크롤 영역 -->
+          <div class="editor-scroll-body">
+            <input type="text" id="editorTitle" class="editor-title-input" placeholder="제목을 입력하세요 (예: 품격 있는 생전 정리의 첫걸음)" maxlength="120">
+            <textarea id="editorExcerpt" class="editor-excerpt-input" placeholder="글 요약 한 줄을 적어주세요 (메인 카드 미리보기에 노출됩니다)" rows="2"></textarea>
+            <div id="editorContent" class="editor-content-area" contenteditable="true" data-placeholder="이곳에 따뜻하고 깊이 있는 글을 자유롭게 작성해보세요. 좌측 사진 보관함에서 사진을 본문에 삽입하거나 대표사진을 지정할 수 있습니다..."></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 모달 2) 임시저장 글 불러오기 모달 ================= -->
+  <div class="cms-modal-overlay" id="editorDraftsModal" onclick="closeDraftsOnOverlay(event)">
+    <div class="auth-card" style="max-width: 520px; text-align: left; padding: 28px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+        <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin: 0;">
+          📂 임시 저장된 글 불러오기
+        </h3>
+        <button type="button" onclick="closeEditorDraftsModal()" aria-label="닫기" style="border: 1px solid var(--border-color); background: var(--bg-body); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;">✕</button>
+      </div>
+      <div id="draftListContainer" style="max-height: 320px; overflow-y: auto; margin-bottom: 16px;">
+        <!-- JS로 동적 렌더링 -->
+      </div>
+      <button type="button" class="btn-save-setting" onclick="closeEditorDraftsModal()" style="width: 100%; justify-content: center; padding: 11px; background: #64748b;">닫기</button>
+    </div>
+  </div>
+
+  <!-- ================= 모달 3) 글 본문 상세 뷰어 모달 ================= -->
+  <div class="cms-modal-overlay" id="articleReaderModal" onclick="closeReaderOnOverlay(event)">
+    <div class="reader-card">
+      <!-- 상단 스티키 고정 닫기 바 -->
+      <div style="position: sticky; top: -32px; z-index: 60; background: #ffffff; padding: 12px 0 14px; margin: -32px -28px 16px; padding-left: 28px; padding-right: 28px; border-bottom: 1.5px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.92rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 6px;">
+          <span>📖</span> 여백의 서재 칼럼 미리보기
+        </span>
+        <button type="button" onclick="closeArticleReader()" style="padding: 6px 14px; border-radius: 999px; background: var(--accent-light); border: 1.5px solid var(--accent); color: var(--accent); font-weight: 800; font-size: 0.86rem; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" aria-label="닫기">
+          <span>✕ 닫기</span>
+        </button>
+      </div>
+
+      <div class="reader-header">
+        <div class="reader-meta-top">
+          <span style="display:inline-block; padding: 3px 8px; border-radius: 6px; background: var(--bg-body); font-size: 0.82rem; font-weight: 800;" id="readerCategory">[비움과 갈무리]</span>
+          <span id="readerFeaturedBadge" class="badge-pin pinned" style="display: none;">⭐ 메인 대표글</span>
+        </div>
+        <h1 class="reader-title" id="readerTitle">칼럼 제목</h1>
+        <div class="reader-info">
+          <span id="readerDate">2026.09.25</span>
+          <span>·</span>
+          <span id="readerReadTime">읽는 시간 3분</span>
+          <span>·</span>
+          <span>여백과 결 에디터팀</span>
+        </div>
+      </div>
+
+      <!-- 대표 커버 이미지 (지정된 경우 표시) -->
+      <img id="readerCoverImg" class="reader-cover-img" style="display: none;" alt="칼럼 대표 이미지">
+
+      <!-- 본문 영역 -->
+      <div class="reader-body" id="readerBody">
+        <!-- 동적 삽입 -->
+      </div>
+
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+        <button type="button" class="btn-action-sm edit" id="readerEditBtn" style="padding: 9px 18px; font-size: 0.9rem;">
+          ✏️ 이 글 수정하기
+        </button>
+        <button type="button" class="btn-save-setting" onclick="closeArticleReader()" style="padding: 9px 20px; background: #64748b; font-size: 0.9rem;">
+          ✕ 닫고 돌아가기
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // =========================================================================
     // 여백과 결 통합 관리자 콘솔 엔진
@@ -1260,8 +2075,11 @@
       alert('🌿 사이트 설정 변경사항이 안전하게 저장되었습니다!\n메인 화면에 즉시 적용됩니다.');
     }
 
-    // ================= 2. 여백서재 칼럼 관리 =================
-    const ARTICLES_KEY = 'yebaek_custom_articles_v2';
+    // =========================================================================
+    // 2. 여백서재 프리미엄 게시판 & 에디터 관리 시스템 (티스토리 + FIT-FLUENCE)
+    // =========================================================================
+    // 메인 사이트(index.html)와 100% 실시간 공유되는 키
+    const ARTICLES_KEY = 'yebaek_magazine_articles';
 
     // 기본 칼럼 데이터셋 (fallback)
     const defaultArticles = [
@@ -1271,7 +2089,13 @@
         category: '비움과 갈무리',
         image: 'images/showcase-books-organizing.jpg',
         excerpt: "가족들에게 남겨질 내 디지털 흔적을 미리 깔끔하고 안전하게 정돈하는 '디지털 유세거니'의 시작법을 소개합니다.",
-        content: '<p>현대인의 삶은 스마트폰 속에 고스란히 담겨 있습니다. 지난 10여 년간 찍어온 사진, 메신저 대화록... 소중한 100장의 기억을 선별해보세요.</p>',
+        content: `
+          <p>현대인의 삶은 스마트폰 속에 고스란히 담겨 있습니다. 지난 10여 년간 찍어온 수만 장의 가족사진, 은행 및 금융 앱 인증서, SNS 계정과 메신저 대화록... 우리가 세상을 떠난 뒤 이 방대한 디지털 유산은 어떻게 처리될까요?</p>
+          <blockquote>"물건을 정리하는 것만큼이나 내 손안의 작은 우주인 스마트폰 속 기록을 스스로 갈무리하는 것이 진정한 웰다잉의 첫걸음입니다."</blockquote>
+          <h3>디지털 유품 정리 3단계 가이드</h3>
+          <p>첫째, 남기고 싶은 사진 100장을 선별하여 실물 앨범으로 인화하거나 별도 클라우드 앨범에 모아두세요. 둘째, 유료 구독 서비스 및 금융 계정 목록을 종이 노트에 안전하게 기록해 가족에게 위치를 알려주세요. 셋째, 주요 포털 및 스마트폰의 '사후 디지털 계정 관리자' 기능을 미리 활성화해 두세요.</p>
+        `,
+        readTime: '읽는 시간 3분',
         date: '2026.09.25',
         isFeatured: true
       },
@@ -1281,7 +2105,13 @@
         category: '웰다잉',
         image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=75',
         excerpt: "내가 살아있을 때 소중한 사람들을 초대해 맛있는 음식을 대접하고 고마움을 전하는 인생 감사 파티의 품격 있는 미학.",
-        content: '<p>떠난 후에 바쳐지는 국화꽃보다, 살아있을 때 마주 잡는 따뜻한 손과 감사의 한마디가 훨씬 눈부십니다.</p>',
+        content: `
+          <p>내가 세상을 떠난 뒤 정작 주인공은 볼 수도 들을 수도 없는 엄숙하고 슬픈 장례식 대신, 살아 숨 쉬며 온전한 정신일 때 소중한 이들을 초대해 감사를 전하는 문화가 확산되고 있습니다. 바로 '생전 장례식(生前葬)', 혹은 '인생 감사 파티'입니다.</p>
+          <blockquote>"떠난 후에 바쳐지는 백 송이 국화꽃보다, 살아있을 때 마주 잡는 따뜻한 손과 '고마웠다'는 한마디의 포옹이 훨씬 눈부십니다."</blockquote>
+          <h3>슬픔을 지우고 감사를 채우는 축제</h3>
+          <p>내가 살아온 여정에서 힘이 되어준 친구, 동료, 가족들을 초대해 함께 와인 한 잔을 기울이며 지난 추억을 회상하는 유쾌한 축제입니다. 참석자들은 평상복이나 화사한 옷을 입고 오며, 주인공은 각 사람에게 자신이 직접 쓴 감사 편지를 낭독합니다.</p>
+        `,
+        readTime: '읽는 시간 4분',
         date: '2026.09.24',
         isFeatured: true
       },
@@ -1291,25 +2121,71 @@
         category: '웰라이프',
         image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75',
         excerpt: "무리한 통제가 아닌 미네랄 밸런스와 일상 대사 루틴을 통해 남은 인생을 활기차게 걸어갈 수 있는 체력을 만듭니다.",
-        content: '<p>노년의 건강은 어느 날 갑자기 무너지는 것이 아닌 매일 축적된 미세한 생활 루틴의 결과입니다.</p>',
+        content: `
+          <p>은퇴 이후 가장 두려운 것 중 하나는 오랜 투병으로 인한 자존감 상실과 막대한 의료비입니다. 하지만 노년의 건강은 어느 날 갑자기 무너지는 것이 아닌 매일 축적된 미세한 생활 루틴의 결과입니다.</p>
+          <blockquote>"웰다잉(Well-Dying)의 진정한 출발점은 침대에 누워 보내는 시간을 줄이고, 내 두 발로 자연을 거닐 수 있는 활기찬 신체(Well-Living)를 가꾸는 것입니다."</blockquote>
+          <h3>소버 큐리어스(Sober Curious)의 라이프스타일</h3>
+          <p>맑은 정신과 깊은 수면이 주는 활력을 의식적으로 즐기는 태도입니다. 저녁 시간 술 한 잔 대신 따뜻한 차와 가벼운 스트레칭으로 신경계를 안정시킬 때 뇌세포의 자연 치유력이 극대화됩니다.</p>
+        `,
+        readTime: '읽는 시간 3분',
         date: '2026.09.23',
         isFeatured: true
       }
     ];
 
+    let adminBoardCategory = 'all';
+    let adminSearchQuery = '';
+
+    // 데이터 로드 & 기존 키와의 호환 병합
     function getArticles() {
-      const saved = localStorage.getItem(ARTICLES_KEY);
+      // 1) 기본 저장소 확인
+      let saved = localStorage.getItem(ARTICLES_KEY);
       if (saved) {
-        try { return JSON.parse(saved); } catch (e) { return defaultArticles; }
+        try {
+          const list = JSON.parse(saved);
+          if (Array.isArray(list) && list.length > 0) return list;
+        } catch (e) {}
       }
+
+      // 2) 이전 v2 키 데이터 확인 및 자동 마이그레이션
+      const legacySaved = localStorage.getItem('yebaek_custom_articles_v2');
+      if (legacySaved) {
+        try {
+          const list = JSON.parse(legacySaved);
+          if (Array.isArray(list) && list.length > 0) {
+            localStorage.setItem(ARTICLES_KEY, JSON.stringify(list));
+            return list;
+          }
+        } catch (e) {}
+      }
+
+      // 3) 기본 fallback 저장
+      localStorage.setItem(ARTICLES_KEY, JSON.stringify(defaultArticles));
       return defaultArticles;
     }
 
     function saveArticles(list) {
       localStorage.setItem(ARTICLES_KEY, JSON.stringify(list));
+      localStorage.setItem('yebaek_custom_articles_v2', JSON.stringify(list)); // 하위 호환
       renderArticlesTable();
     }
 
+    // 카테고리 필터링
+    function filterAdminMagazineCategory(cat, btn) {
+      adminBoardCategory = cat;
+      const btns = document.querySelectorAll('#adminBoardFilterTabs .filter-tab-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderArticlesTable();
+    }
+
+    // 실시간 검색
+    function handleAdminArticleSearch(query) {
+      adminSearchQuery = (query || '').trim().toLowerCase();
+      renderArticlesTable();
+    }
+
+    // 게시판 테이블 렌더링
     function renderArticlesTable() {
       const articles = getArticles();
       const tbody = document.getElementById('articleTableBody');
@@ -1322,39 +2198,84 @@
 
       if (!tbody) return;
 
-      if (articles.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 30px; color: #94a3b8;">등록된 칼럼이 없습니다.</td></tr>';
+      // 필터링 적용
+      let filtered = articles;
+      if (adminBoardCategory !== 'all') {
+        filtered = filtered.filter(a => a.category === adminBoardCategory);
+      }
+      if (adminSearchQuery) {
+        filtered = filtered.filter(a => 
+          (a.title && a.title.toLowerCase().includes(adminSearchQuery)) ||
+          (a.excerpt && a.excerpt.toLowerCase().includes(adminSearchQuery)) ||
+          (a.content && a.content.toLowerCase().includes(adminSearchQuery))
+        );
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align:center; padding: 40px 20px; color: var(--text-muted); font-size: 0.95rem;">
+              일치하는 칼럼이 없습니다. 상단의 <strong>[+ 새 칼럼 작성하기]</strong> 버튼을 눌러 새 글을 등록해보세요.
+            </td>
+          </tr>
+        `;
         return;
       }
 
-      tbody.innerHTML = articles.map(a => `
+      tbody.innerHTML = filtered.map(a => `
         <tr>
           <td>
-            ${a.image ? `<img src="${a.image}" alt="사진" style="width: 52px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color);">` : '<div style="width:52px; height:40px; background:#f1f5f9; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:#94a3b8;">무사진</div>'}
+            <div style="cursor: pointer;" onclick="openArticleReader('${a.id}')" title="클릭 시 본문 미리보기">
+              ${a.image ? `
+                <img src="${escapeHtml(a.image)}" alt="대표사진" style="width: 60px; height: 46px; object-fit: cover; border-radius: 8px; border: 1.5px solid var(--border-color); display: block;">
+              ` : `
+                <div style="width:60px; height:46px; background:#f1f5f9; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.75rem; color:#94a3b8; border: 1.5px dashed #cbd5e1;">무사진</div>
+              `}
+            </div>
           </td>
           <td>
-            <div style="font-weight: 800; font-size: 0.95rem; margin-bottom: 2px;">${escapeHtml(a.title)}</div>
-            <div style="font-size: 0.82rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 480px;">${escapeHtml(a.excerpt || '')}</div>
+            <div style="cursor: pointer;" onclick="openArticleReader('${a.id}')" title="클릭 시 칼럼 전문 미리보기">
+              <div style="font-weight: 850; font-size: 0.98rem; color: var(--text-main); margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                <span>${escapeHtml(a.title)}</span>
+                ${a.isFeatured ? '<span style="color:#d4af37; font-size: 0.82rem;">⭐ 대표</span>' : ''}
+              </div>
+              <div style="font-size: 0.84rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 480px; line-height: 1.4;">
+                ${escapeHtml(a.excerpt || '')}
+              </div>
+            </div>
           </td>
           <td>
-            <span style="display:inline-block; padding: 3px 8px; border-radius: 6px; background: var(--bg-body); font-size: 0.78rem; font-weight: 750;">[${escapeHtml(a.category)}]</span>
+            <span style="display:inline-block; padding: 4px 10px; border-radius: 6px; background: var(--bg-body); font-size: 0.8rem; font-weight: 800; color: var(--accent);">
+              ${escapeHtml(a.category)}
+            </span>
           </td>
-          <td style="color: var(--text-muted); font-size: 0.85rem;">${a.date || '2026.09.25'}</td>
+          <td style="color: var(--text-muted); font-size: 0.85rem; white-space: nowrap;">
+            ${escapeHtml(a.date || '2026.09.25')}<br>
+            <span style="font-size: 0.76rem; color: #94a3b8;">${escapeHtml(a.readTime || '3분')}</span>
+          </td>
           <td style="text-align: center;">
-            <button class="badge-pin ${a.isFeatured ? 'pinned' : 'unpinned'}" onclick="toggleArticlePin('${a.id}')">
+            <button type="button" class="badge-pin ${a.isFeatured ? 'pinned' : 'unpinned'}" onclick="toggleArticlePin('${a.id}')" title="${a.isFeatured ? '클릭 시 메인 전면 노출에서 제외됩니다' : '클릭 시 메인 전면 대표 카드로 노출됩니다'}">
               ${a.isFeatured ? '⭐ 전면 노출 중' : '☆ 미노출'}
             </button>
           </td>
           <td style="text-align: center;">
-            <div style="display: inline-flex; gap: 6px;">
-              <button class="btn-action-sm edit" onclick="editArticle('${a.id}')">✏️ 수정</button>
-              <button class="btn-action-sm del" onclick="deleteArticle('${a.id}')">🗑️ 삭제</button>
+            <div style="display: inline-flex; gap: 6px; align-items: center;">
+              <button type="button" class="btn-action-sm edit" onclick="openTistoryEditor('${a.id}')" title="글 내용 수정">
+                ✏️ 수정
+              </button>
+              <button type="button" class="btn-action-sm" onclick="openArticleReader('${a.id}')" style="background: #f8fafc;" title="상세 본문 보기">
+                📖 보기
+              </button>
+              <button type="button" class="btn-action-sm del" onclick="deleteArticle('${a.id}')" title="칼럼 영구 삭제">
+                🗑️
+              </button>
             </div>
           </td>
         </tr>
       `).join('');
     }
 
+    // 메인 전면 노출 토글
     function toggleArticlePin(id) {
       const articles = getArticles();
       const target = articles.find(a => a.id === id);
@@ -1364,114 +2285,584 @@
       }
     }
 
-    function toggleArticleForm() {
-      const card = document.getElementById('articleFormCard');
-      if (card) {
-        card.style.display = card.style.display === 'none' ? 'block' : 'none';
-        if (card.style.display === 'block') {
-          clearArticleForm();
-          card.scrollIntoView({ behavior: 'smooth' });
+    // 칼럼 삭제
+    function deleteArticle(id) {
+      const articles = getArticles();
+      const target = articles.find(a => a.id === id);
+      if (!target) return;
+
+      if (confirm(`'${target.title}' 칼럼을 정말로 삭제하시겠습니까?\n삭제된 칼럼은 복구할 수 없습니다.`)) {
+        const updated = articles.filter(a => a.id !== id);
+        saveArticles(updated);
+        alert('칼럼이 안전하게 삭제되었습니다.');
+      }
+    }
+
+    // =========================================================================
+    // 프리미엄 에디터 엔진 (사진보관함, 캔버스 압축, 대표사진 지정, 리치 툴바)
+    // =========================================================================
+    let currentEditingArticleId = null; // 수정 중인 글 ID (null이면 신규 작성)
+    let editorPhotos = [];             // 사진 보관함 목록 [{ src }]
+    let mainThumbImg = "";             // 현재 선택된 대표사진
+    let editorSavedSelection = null;   // 커서 위치 보존용
+
+    function saveEditorSelection() {
+      const sel = window.getSelection();
+      if (sel.getRangeAt && sel.rangeCount) {
+        editorSavedSelection = sel.getRangeAt(0);
+      }
+    }
+
+    function restoreEditorSelection() {
+      if (editorSavedSelection) {
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(editorSavedSelection);
+      }
+    }
+
+    // FIT-FLUENCE 핵심: 캔버스 기반 800px / JPEG 0.45 압축 리사이징
+    function resizeImg(file, maxW = 800, quality = 0.45) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let w = img.width, h = img.height;
+            if (w > maxW) {
+              h = Math.round(h * (maxW / w));
+              w = maxW;
+            }
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // 복수 사진 업로드 및 압축 처리
+    async function processUploadedImgs(input) {
+      const files = Array.from(input.files);
+      if (!files.length) return;
+
+      for (const file of files) {
+        try {
+          const dataUrl = await resizeImg(file, 800, 0.45);
+          const isFirst = editorPhotos.length === 0 && !mainThumbImg;
+          addPhotoToSidebar(dataUrl);
+          if (isFirst) {
+            setAsMainThumb(dataUrl);
+          }
+        } catch (e) {
+          console.error('이미지 리사이징 압축 실패:', e);
         }
       }
+      input.value = '';
     }
 
-    function clearArticleForm() {
-      document.getElementById('editArticleId').value = '';
-      document.getElementById('articleTitleInput').value = '';
-      document.getElementById('articleCategoryInput').value = '비움과 갈무리';
-      document.getElementById('articleImageInput').value = '';
-      document.getElementById('articleExcerptInput').value = '';
-      document.getElementById('articleContentInput').value = '';
-      document.getElementById('articleFeaturedCheck').checked = true;
-      document.getElementById('articleImagePreviewBox').style.display = 'none';
-      document.getElementById('articleFormTitle').textContent = '새 칼럼 작성하기';
+    // 사진 보관함 사이드바 관리
+    function addPhotoToSidebar(src) {
+      if (!editorPhotos.some(p => p.src === src)) {
+        editorPhotos.push({ src });
+      }
+      renderPhotoSidebar();
     }
 
-    function cancelArticleEdit() {
-      clearArticleForm();
-      document.getElementById('articleFormCard').style.display = 'none';
+    function renderPhotoSidebar() {
+      const grid = document.getElementById('photoImgGrid');
+      const badge = document.getElementById('photoCountBadge');
+      if (!grid) return;
+
+      if (badge) badge.textContent = `${editorPhotos.length}장`;
+
+      if (editorPhotos.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: 24px 8px; text-align: center; color: #64748b; font-size: 0.78rem;">
+            등록된 사진이 없습니다.<br>위의 [+ 사진 불러오기]를 눌러보세요.
+          </div>
+        `;
+        updateMainThumbIndicator();
+        return;
+      }
+
+      grid.innerHTML = editorPhotos.map((photo, idx) => `
+        <div class="photo-item ${photo.src === mainThumbImg ? 'is-main' : ''}">
+          <button type="button" class="photo-del-btn" onclick="deletePhotoFromSidebar(${idx})" title="사진 삭제">✕</button>
+          <img src="${photo.src}" onclick="insertBodyImg('${photo.src}')" title="클릭 시 본문에 삽입">
+          <div class="photo-item-controls">
+            <button type="button" class="photo-btn photo-btn-ins" onclick="insertBodyImg('${photo.src}')">본문 삽입</button>
+            <button type="button" class="photo-btn photo-btn-rep ${photo.src === mainThumbImg ? 'active' : ''}" onclick="setAsMainThumb('${photo.src}')">
+              ${photo.src === mainThumbImg ? '⭐ 대표' : '대표 지정'}
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      updateMainThumbIndicator();
     }
 
-    function previewArticleImage(url) {
-      const box = document.getElementById('articleImagePreviewBox');
-      const img = document.getElementById('articleImagePreview');
-      if (url && url.trim()) {
-        img.src = url.trim();
-        box.style.display = 'block';
+    function deletePhotoFromSidebar(index) {
+      const removed = editorPhotos.splice(index, 1)[0];
+      if (removed && removed.src === mainThumbImg) {
+        mainThumbImg = editorPhotos.length > 0 ? editorPhotos[0].src : '';
+      }
+      renderPhotoSidebar();
+    }
+
+    function setAsMainThumb(src) {
+      mainThumbImg = src;
+      renderPhotoSidebar();
+    }
+
+    function updateMainThumbIndicator() {
+      const text = document.getElementById('editorMainThumbText');
+      if (!text) return;
+      if (mainThumbImg) {
+        text.innerHTML = `<span style="color: #e5c158; font-weight: 800;">⭐ 대표사진 지정됨</span>`;
       } else {
-        box.style.display = 'none';
+        text.innerHTML = `<span style="color: #94a3b8;">미지정 (좌측 보관함에서 지정)</span>`;
       }
     }
 
-    function editArticle(id) {
+    // 본문에 이미지 삽입
+    function insertBodyImg(src) {
+      const tag = `<img src="${src}" style="max-width:100%; border-radius:14px; margin:24px auto; display:block; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">`;
+      const editor = document.getElementById('editorContent');
+      editor.focus();
+      restoreEditorSelection();
+      document.execCommand('insertHTML', false, tag + '<p><br></p>');
+      saveEditorSelection();
+    }
+
+    // 프리미엄 에디터 열기 (신규 작성 또는 기존 글 수정)
+    function openTistoryEditor(articleId = null) {
+      currentEditingArticleId = articleId;
+      editorPhotos = [];
+      mainThumbImg = "";
+
+      const topTitle = document.querySelector('#tistoryEditorModal .editor-top-title');
+      const publishBtn = document.querySelector('#tistoryEditorModal .btn-editor-publish');
+
+      if (articleId) {
+        // 기존 글 수정 모드
+        const articles = getArticles();
+        const target = articles.find(a => a.id === articleId);
+        if (!target) {
+          alert('수정할 글을 찾을 수 없습니다.');
+          return;
+        }
+
+        document.getElementById('editorTitle').value = target.title || '';
+        document.getElementById('editorExcerpt').value = target.excerpt || '';
+        document.getElementById('editorCategory').value = target.category || '비움과 갈무리';
+        document.getElementById('editorIsFeatured').checked = !!target.isFeatured;
+        document.getElementById('editorContent').innerHTML = target.content || '';
+
+        // 기존 대표사진이 있으면 보관함에 로드
+        if (target.image) {
+          mainThumbImg = target.image;
+          editorPhotos.push({ src: target.image });
+        }
+
+        if (topTitle) topTitle.innerHTML = '<span>✏️</span> 여백의 서재 칼럼 수정 <span class="editor-top-badge">EDIT</span>';
+        if (publishBtn) publishBtn.innerHTML = '<span>💾</span> 수정 내용 저장';
+      } else {
+        // 신규 작성 모드
+        document.getElementById('editorTitle').value = '';
+        document.getElementById('editorExcerpt').value = '';
+        document.getElementById('editorContent').innerHTML = '';
+        document.getElementById('editorCategory').selectedIndex = 0;
+        document.getElementById('editorIsFeatured').checked = true;
+
+        if (topTitle) topTitle.innerHTML = '<span>✍️</span> 여백의 서재 프리미엄 에디터 <span class="editor-top-badge">PREMIUM BLACK</span>';
+        if (publishBtn) publishBtn.innerHTML = '<span>🚀</span> 발행하기';
+      }
+
+      renderPhotoSidebar();
+
+      const modal = document.getElementById('tistoryEditorModal');
+      if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+          document.getElementById('editorTitle').focus();
+        }, 150);
+      }
+    }
+
+    function closeTistoryEditor() {
+      const title = document.getElementById('editorTitle').value.trim();
+      const content = document.getElementById('editorContent').innerText.trim();
+      if ((title || content) && !confirm('작성 중인 내용이 저장되지 않을 수 있습니다. 창을 닫으시겠습니까?')) {
+        return;
+      }
+      currentEditingArticleId = null;
+      editorPhotos = [];
+      mainThumbImg = "";
+      const modal = document.getElementById('tistoryEditorModal');
+      if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function closeEditorOnOverlay(e) {
+      if (e.target.id === 'tistoryEditorModal') {
+        closeTistoryEditor();
+      }
+    }
+
+    // 티스토리 서식 툴바 커맨드
+    function execEditorCmd(cmd, value = null) {
+      const editor = document.getElementById('editorContent');
+      editor.focus();
+      restoreEditorSelection();
+      document.execCommand(cmd, false, value);
+      saveEditorSelection();
+    }
+
+    // 티스토리 시그니처 인용구 삽입
+    function insertEditorBlockquote() {
+      const editor = document.getElementById('editorContent');
+      editor.focus();
+      const selection = window.getSelection();
+      if (!selection.rangeCount) return;
+
+      const selectedText = selection.toString();
+      if (selectedText.length > 0) {
+        document.execCommand('formatBlock', false, 'blockquote');
+      } else {
+        const bq = document.createElement('blockquote');
+        bq.innerHTML = '마음에 새기고 싶은 소중한 한 줄 문장을 입력하세요.';
+        const range = selection.getRangeAt(0);
+        range.deleteContents();
+        range.insertNode(bq);
+        
+        // 커서를 인용구 뒤로 이동
+        const p = document.createElement('p');
+        p.innerHTML = '<br>';
+        bq.parentNode.insertBefore(p, bq.nextSibling);
+        
+        range.selectNodeContents(bq);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+      saveEditorSelection();
+    }
+
+    // 글자색 변경 팝업 제어
+    function toggleColorPopup(e) {
+      e.stopPropagation();
+      saveEditorSelection();
+      const menu = document.getElementById('editorColorMenu');
+      const symbolMenu = document.getElementById('editorSymbolMenu');
+      if (symbolMenu) symbolMenu.style.display = 'none';
+      if (menu) {
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+      }
+    }
+
+    function execEditorColor(color) {
+      const editor = document.getElementById('editorContent');
+      editor.focus();
+      restoreEditorSelection();
+      document.execCommand('foreColor', false, color);
+      saveEditorSelection();
+      const menu = document.getElementById('editorColorMenu');
+      if (menu) menu.style.display = 'none';
+    }
+
+    // 특수기호 팝업 제어
+    function toggleSymbolPopup(e) {
+      e.stopPropagation();
+      saveEditorSelection();
+      const menu = document.getElementById('editorSymbolMenu');
+      const colorMenu = document.getElementById('editorColorMenu');
+      if (colorMenu) colorMenu.style.display = 'none';
+      if (menu) {
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+      }
+    }
+
+    function insertSymbolChar(sym) {
+      const editor = document.getElementById('editorContent');
+      editor.focus();
+      restoreEditorSelection();
+      document.execCommand('insertText', false, sym);
+      saveEditorSelection();
+      const menu = document.getElementById('editorSymbolMenu');
+      if (menu) menu.style.display = 'none';
+    }
+
+    // 외부 이미지 URL 삽입
+    function insertExternalImgPrompt() {
+      const url = prompt('삽입할 이미지의 웹 주소(URL)를 입력해주세요:');
+      if (url && url.trim()) {
+        const cleanUrl = url.trim();
+        insertBodyImg(cleanUrl);
+        addPhotoToSidebar(cleanUrl);
+        if (!mainThumbImg) setAsMainThumb(cleanUrl);
+      }
+    }
+
+    // 유튜브 영상 삽입
+    function insertYoutubeVideoPrompt() {
+      const url = prompt('YouTube 동영상 주소(URL)를 입력해주세요:');
+      if (!url) return;
+      const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^#&?]*)/);
+      if (match && match[1]) {
+        const embedHtml = `
+          <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 14px; margin: 24px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+            <iframe src="https://www.youtube.com/embed/${match[1]}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border-radius: 14px;"></iframe>
+          </div><p><br></p>
+        `;
+        const editor = document.getElementById('editorContent');
+        editor.focus();
+        restoreEditorSelection();
+        document.execCommand('insertHTML', false, embedHtml);
+        saveEditorSelection();
+      } else {
+        alert('올바른 유튜브 영상 주소가 아닙니다.');
+      }
+    }
+
+    // 링크 삽입
+    function insertLinkPrompt() {
+      const url = prompt('연결할 웹 주소(URL)를 입력해주세요 (예: https://...):');
+      if (url && url.trim()) {
+        const editor = document.getElementById('editorContent');
+        editor.focus();
+        restoreEditorSelection();
+        document.execCommand('createLink', false, url.trim());
+        saveEditorSelection();
+      }
+    }
+
+    // ================= 임시저장 및 불러오기 기능 =================
+    function saveEditorDraft() {
+      const title = document.getElementById('editorTitle').value.trim() || '제목 없는 임시글';
+      const content = document.getElementById('editorContent').innerHTML;
+      const excerpt = document.getElementById('editorExcerpt').value.trim();
+      const category = document.getElementById('editorCategory').value;
+      const isFeatured = document.getElementById('editorIsFeatured').checked;
+
+      const draft = {
+        id: 'draft_' + Date.now(),
+        title,
+        content,
+        excerpt,
+        category,
+        isFeatured,
+        mainThumb: mainThumbImg,
+        photos: editorPhotos,
+        updatedAt: new Date().toLocaleString()
+      };
+
+      const drafts = JSON.parse(localStorage.getItem('yebaek_editor_drafts') || '[]');
+      drafts.unshift(draft);
+      localStorage.setItem('yebaek_editor_drafts', JSON.stringify(drafts.slice(0, 10))); // 최근 10개
+      alert('현재 작성 중인 내용과 사진 보관함이 안전하게 임시 저장되었습니다.');
+    }
+
+    function openEditorDraftsModal() {
+      const drafts = JSON.parse(localStorage.getItem('yebaek_editor_drafts') || '[]');
+      const container = document.getElementById('draftListContainer');
+      const modal = document.getElementById('editorDraftsModal');
+      if (!container || !modal) return;
+
+      if (drafts.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding: 24px; color: var(--text-muted); font-size: 0.92rem;">임시 저장된 글이 없습니다.</div>`;
+      } else {
+        container.innerHTML = drafts.map((d, idx) => `
+          <div style="padding: 12px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+            <div style="cursor: pointer; flex: 1;" onclick="loadEditorDraft(${idx})">
+              <strong style="color: var(--text-main); font-size: 0.95rem;">${escapeHtml(d.title)}</strong>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">${escapeHtml(d.updatedAt)} · [${escapeHtml(d.category)}]</div>
+            </div>
+            <button type="button" class="btn-action-sm del" onclick="deleteEditorDraft(${idx}, event)" style="font-size: 0.75rem;">삭제</button>
+          </div>
+        `).join('');
+      }
+      modal.classList.add('open');
+    }
+
+    function closeEditorDraftsModal() {
+      const modal = document.getElementById('editorDraftsModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function closeDraftsOnOverlay(e) {
+      if (e.target.id === 'editorDraftsModal') closeEditorDraftsModal();
+    }
+
+    function loadEditorDraft(index) {
+      const drafts = JSON.parse(localStorage.getItem('yebaek_editor_drafts') || '[]');
+      const target = drafts[index];
+      if (!target) return;
+
+      document.getElementById('editorTitle').value = target.title || '';
+      document.getElementById('editorExcerpt').value = target.excerpt || '';
+      document.getElementById('editorCategory').value = target.category || '비움과 갈무리';
+      document.getElementById('editorIsFeatured').checked = !!target.isFeatured;
+      document.getElementById('editorContent').innerHTML = target.content || '';
+      mainThumbImg = target.mainThumb || '';
+      editorPhotos = Array.isArray(target.photos) ? target.photos : [];
+      renderPhotoSidebar();
+      closeEditorDraftsModal();
+      alert(`'${target.title}' 임시저장 글을 불러왔습니다.`);
+    }
+
+    function deleteEditorDraft(index, e) {
+      if (e) e.stopPropagation();
+      const drafts = JSON.parse(localStorage.getItem('yebaek_editor_drafts') || '[]');
+      drafts.splice(index, 1);
+      localStorage.setItem('yebaek_editor_drafts', JSON.stringify(drafts));
+      openEditorDraftsModal();
+    }
+
+    // 칼럼 발행 또는 수정 저장 (대표사진 image 필드 포함)
+    function publishArticle() {
+      const title = document.getElementById('editorTitle').value.trim();
+      let excerpt = document.getElementById('editorExcerpt').value.trim();
+      const category = document.getElementById('editorCategory').value;
+      const isFeatured = document.getElementById('editorIsFeatured').checked;
+      const contentHtml = document.getElementById('editorContent').innerHTML.trim();
+      const contentText = document.getElementById('editorContent').innerText.trim();
+
+      if (!title) {
+        alert('칼럼 제목을 입력해 주세요.');
+        document.getElementById('editorTitle').focus();
+        return;
+      }
+
+      if (!contentText) {
+        alert('본문 내용을 작성해 주세요.');
+        document.getElementById('editorContent').focus();
+        return;
+      }
+
+      // 발췌문(요약)이 비어있으면 본문 앞부분에서 자동 추출
+      if (!excerpt) {
+        excerpt = contentText.slice(0, 110) + (contentText.length > 110 ? '...' : '');
+      }
+
+      // 읽는 시간 계산 (한글 기준 약 300자당 1분)
+      const estimatedMinutes = Math.max(1, Math.ceil(contentText.length / 320));
+      const readTime = `읽는 시간 ${estimatedMinutes}분`;
+
+      const articles = getArticles();
+
+      if (currentEditingArticleId) {
+        // 기존 글 수정
+        const targetIndex = articles.findIndex(a => a.id === currentEditingArticleId);
+        if (targetIndex !== -1) {
+          articles[targetIndex].title = title;
+          articles[targetIndex].excerpt = excerpt;
+          articles[targetIndex].category = category;
+          articles[targetIndex].content = contentHtml;
+          articles[targetIndex].readTime = readTime;
+          articles[targetIndex].isFeatured = isFeatured;
+          articles[targetIndex].image = mainThumbImg || articles[targetIndex].image || '';
+          saveArticles(articles);
+        }
+        currentEditingArticleId = null;
+        alert(`'${title}' 칼럼 수정이 완료되었습니다.`);
+      } else {
+        // 신규 글 발행
+        const now = new Date();
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        const dateString = `${yyyy}.${mm}.${dd}`;
+
+        const newArticle = {
+          id: 'mag_' + Date.now(),
+          title: title,
+          category: category,
+          image: mainThumbImg || '',
+          excerpt: excerpt,
+          content: contentHtml,
+          readTime: readTime,
+          date: dateString,
+          isFeatured: isFeatured
+        };
+
+        articles.unshift(newArticle); // 새 글을 맨 위에 추가
+        saveArticles(articles);
+        alert(`'${title}' 칼럼이 성공적으로 발행되었습니다!\n` + (isFeatured ? '⭐ 메인 화면 전면 대표글로 즉시 반영되었습니다.' : '전체 게시판에 등록되었습니다.'));
+      }
+
+      // 에디터 상태 초기화 및 닫기
+      editorPhotos = [];
+      mainThumbImg = "";
+      const modal = document.getElementById('tistoryEditorModal');
+      if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // ================= 칼럼 상세 뷰어 모달 =================
+    function openArticleReader(id) {
       const articles = getArticles();
       const a = articles.find(item => item.id === id);
       if (!a) return;
 
-      document.getElementById('editArticleId').value = a.id;
-      document.getElementById('articleTitleInput').value = a.title;
-      document.getElementById('articleCategoryInput').value = a.category;
-      document.getElementById('articleImageInput').value = a.image || '';
-      document.getElementById('articleExcerptInput').value = a.excerpt || '';
-      document.getElementById('articleContentInput').value = a.content || '';
-      document.getElementById('articleFeaturedCheck').checked = !!a.isFeatured;
-      previewArticleImage(a.image || '');
+      document.getElementById('readerCategory').textContent = `[${a.category}]`;
+      document.getElementById('readerTitle').textContent = a.title;
+      document.getElementById('readerDate').textContent = a.date || '2026.09.25';
+      document.getElementById('readerReadTime').textContent = a.readTime || '읽는 시간 3분';
+      document.getElementById('readerBody').innerHTML = a.content || '<p>본문 내용이 없습니다.</p>';
 
-      document.getElementById('articleFormTitle').textContent = '칼럼 수정하기';
-      const card = document.getElementById('articleFormCard');
-      card.style.display = 'block';
-      card.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function handleSaveArticle(e) {
-      e.preventDefault();
-      const id = document.getElementById('editArticleId').value;
-      const title = document.getElementById('articleTitleInput').value.trim();
-      const category = document.getElementById('articleCategoryInput').value;
-      const image = document.getElementById('articleImageInput').value.trim();
-      const excerpt = document.getElementById('articleExcerptInput').value.trim();
-      const content = document.getElementById('articleContentInput').value.trim();
-      const isFeatured = document.getElementById('articleFeaturedCheck').checked;
-
-      const articles = getArticles();
-
-      if (id) {
-        // 수정
-        const target = articles.find(a => a.id === id);
-        if (target) {
-          target.title = title;
-          target.category = category;
-          target.image = image;
-          target.excerpt = excerpt;
-          target.content = content;
-          target.isFeatured = isFeatured;
-        }
-      } else {
-        // 신규
-        const newArt = {
-          id: 'mag_' + Date.now(),
-          title,
-          category,
-          image,
-          excerpt,
-          content,
-          date: dateStr,
-          isFeatured
-        };
-        articles.unshift(newArt);
+      const featuredBadge = document.getElementById('readerFeaturedBadge');
+      if (featuredBadge) {
+        featuredBadge.style.display = a.isFeatured ? 'inline-flex' : 'none';
       }
 
-      saveArticles(articles);
-      cancelArticleEdit();
-      alert('칼럼이 성공적으로 저장되었습니다!');
+      const coverImg = document.getElementById('readerCoverImg');
+      if (coverImg) {
+        if (a.image) {
+          coverImg.src = a.image;
+          coverImg.style.display = 'block';
+        } else {
+          coverImg.style.display = 'none';
+        }
+      }
+
+      const editBtn = document.getElementById('readerEditBtn');
+      if (editBtn) {
+        editBtn.onclick = () => {
+          closeArticleReader();
+          openTistoryEditor(a.id);
+        };
+      }
+
+      const modal = document.getElementById('articleReaderModal');
+      if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
     }
 
-    function deleteArticle(id) {
-      if (confirm('이 칼럼을 영구 삭제하시겠습니까?')) {
-        let articles = getArticles();
-        articles = articles.filter(a => a.id !== id);
-        saveArticles(articles);
-        alert('칼럼이 삭제되었습니다.');
+    function closeArticleReader() {
+      const modal = document.getElementById('articleReaderModal');
+      if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function closeReaderOnOverlay(e) {
+      if (e.target.id === 'articleReaderModal') {
+        closeArticleReader();
       }
     }
 
