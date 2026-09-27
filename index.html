@@ -4792,10 +4792,6 @@
 
         <!-- 나의 아카이브 바로 옆의 독립 로그인 버튼 및 테마 토글, 관리자 홈 버튼 -->
         <div class="nav-actions">
-          <a href="admin.html" class="nav-admin-btn" title="전체 사이트 운영 관리자 홈 (비밀번호: 1223)" style="display: inline-flex; align-items: center; gap: 5px; padding: 7px 13px; border-radius: 999px; background: rgba(197, 155, 39, 0.12); color: var(--accent-gold); font-size: 0.85rem; font-weight: 850; border: 1.5px solid rgba(197, 155, 39, 0.4); text-decoration: none; transition: all 0.2s ease;">
-            <span>⚙️</span>
-            <span>관리자홈</span>
-          </a>
           <button class="nav-login-btn" onclick="openLoginModal(event)" aria-label="로그인">
             <span style="font-size: 1.15rem; line-height: 1;">👤</span>
             <span>로그인</span>
@@ -4817,7 +4813,6 @@
       <a href="academy.html" class="mobile-cat-item" data-target="programs" title="코치 아카데미"><span>🎓</span> <span>아카데미</span></a>
       <a href="my-room.html?mode=sample" class="mobile-cat-item" style="color: var(--accent-gold); font-weight: 800;" title="김순옥 어르신 완성 서재 체험"><span>👵</span> <span>샘플서재</span></a>
       <a href="javascript:void(0)" onclick="openLoginModal(event)" class="mobile-cat-item" data-target="archive"><span>🏛️</span> <span>나의서재</span></a>
-      <a href="admin.html" class="mobile-cat-item" style="color: var(--accent-gold); font-weight: 850;" title="전체 사이트 운영 관리자 홈 (비밀번호: 1223)"><span>⚙️</span> <span>관리자</span></a>
     </nav>
   </header>
 
@@ -4888,13 +4883,6 @@
             <span>나의 고유한 서재</span>
           </div>
           <span class="drawer-badge badge-room">온라인룸</span>
-        </a>
-        <a href="admin.html" class="drawer-nav-item" style="background: rgba(197, 155, 39, 0.12); border: 1.5px solid rgba(197, 155, 39, 0.35); margin-top: 6px;">
-          <div class="drawer-item-left">
-            <span class="drawer-icon">⚙️</span>
-            <span style="color: var(--accent-gold); font-weight: 850;">통합 관리자 홈 (ADMIN)</span>
-          </div>
-          <span class="drawer-badge" style="background: var(--accent-gold); color: #fff;">1223</span>
         </a>
         <a href="#login" class="drawer-nav-item drawer-login-btn" onclick="closeMobileDrawer(); openLoginModal(event)">
           <div class="drawer-item-left" style="justify-content: center; width: 100%;">
@@ -5122,13 +5110,6 @@
           <div class="mag-header-controls">
             <button class="btn-mag-action" onclick="openBoardModal()" title="전체 게시글 목록을 열람합니다">
               <span>📋</span> 전체 글 목록 보기
-            </button>
-            <!-- 관리자 모드 활성화 시 노출되는 전용 액션 버튼들 -->
-            <div id="adminControlsOnMagazine" style="display: inline-flex; gap: 8px;">
-              <!-- JS에서 관리자 로그인 상태에 따라 렌더링 -->
-            </div>
-            <button class="btn-mag-action" onclick="location.href='admin.html'" title="관리자 비밀번호(1223)를 입력하여 통합 관리자 홈으로 이동합니다" style="background: var(--bg-card); color: var(--accent-gold); border-color: var(--accent-gold); font-weight: 800;">
-              <span>⚙️</span> 통합 관리자 홈
             </button>
           </div>
         </div>
@@ -5986,7 +5967,7 @@
         <button class="drawer-close" onclick="closeBoardModal()" aria-label="닫기" style="border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">✕</button>
       </div>
       <p style="font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 16px;">
-        원하는 글을 클릭하면 상세 전문을 읽을 수 있으며, 우측의 ⭐ <strong>[메인 전면 노출]</strong> 버튼을 눌러 메인 대문에 띄울 글을 직접 선택/해제할 수 있습니다.
+        원하시는 글을 클릭하시면 인생 2막을 준비하는 따뜻하고 깊이 있는 지혜 칼럼 전문을 편안하게 읽으실 수 있습니다.
       </p>
 
       <!-- 카테고리 필터 탭 (3개 카테고리) -->
@@ -7935,14 +7916,7 @@
           <div>
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
               <span class="mag-tag">[${escapeHtml(article.category)}]</span>
-              <div style="display: flex; align-items: center; gap: 6px;">
-                <span class="mag-pin-badge">⭐ 메인 대표글</span>
-                ${isAdminLoggedIn() ? `
-                  <button type="button" class="admin-btn-action admin-btn-edit" onclick="event.stopPropagation(); openTistoryEditor('${article.id}')" title="이 글 바로 수정" style="padding: 2px 7px; font-size: 0.72rem;">
-                    ✏️ 수정
-                  </button>
-                ` : ''}
-              </div>
+              <span class="mag-pin-badge">⭐ 메인 대표글</span>
             </div>
             <h3 class="mag-title">${escapeHtml(article.title)}</h3>
             <p class="mag-excerpt">
@@ -7972,10 +7946,10 @@
 
       currentReadingArticleId = id;
 
-      // 관리자 툴바 노출 제어 (관리자 로그인 시 ✏️ 수정 / 🗑️ 삭제 버튼 노출)
+      // 관리자 툴바 노출 제어 (메인 사이트는 일반 방문자용이므로 항상 비노출)
       const adminToolbar = document.getElementById('readerAdminToolbar');
       if (adminToolbar) {
-        adminToolbar.style.display = isAdminLoggedIn() ? 'flex' : 'none';
+        adminToolbar.style.display = 'none';
       }
 
       document.getElementById('readerCategory').textContent = `[${article.category}]`;
@@ -8101,11 +8075,11 @@
       }
 
       listContainer.innerHTML = filtered.map(a => `
-        <div class="board-item-row" onclick="openArticleReader('${a.id}')">
+        <div class="board-item-row" onclick="openArticleReader('${a.id}')" style="cursor: pointer;">
           ${a.image ? `
             <img src="${escapeHtml(a.image)}" alt="대표사진" style="width: 68px; height: 52px; object-fit: cover; border-radius: 8px; flex-shrink: 0; border: 1px solid var(--border-color);">
           ` : ''}
-          <div class="board-item-left">
+          <div class="board-item-left" style="flex: 1;">
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
               <span class="mag-tag" style="font-size: 0.78rem;">[${escapeHtml(a.category)}]</span>
               <span style="font-size: 0.8rem; color: var(--text-muted);">${escapeHtml(a.date || '')}</span>
@@ -8115,18 +8089,8 @@
               ${escapeHtml(a.excerpt || '')}
             </div>
           </div>
-          <div class="board-item-right" onclick="event.stopPropagation()" style="display: flex; align-items: center; gap: 6px;">
-            <button class="btn-pin-toggle ${a.isFeatured ? 'pinned' : ''}" onclick="toggleArticleFeature('${a.id}', event)" title="${a.isFeatured ? '클릭 시 메인 전면 노출에서 제외됩니다' : '클릭 시 메인 전면 대표 카드로 노출됩니다'}">
-              ${a.isFeatured ? '⭐ 메인 전면 노출 중' : '☆ 메인 전면 노출하기'}
-            </button>
-            ${isAdminLoggedIn() ? `
-              <button class="admin-btn-action admin-btn-edit" onclick="closeBoardModal(); openTistoryEditor('${a.id}');" title="글 내용 수정" style="padding: 4px 9px; font-size: 0.78rem;">
-                ✏️ 수정
-              </button>
-              <button class="admin-btn-action admin-btn-delete" onclick="deleteArticle('${a.id}');" title="글 영구 삭제" style="padding: 4px 9px; font-size: 0.78rem;">
-                🗑️ 삭제
-              </button>
-            ` : ''}
+          <div class="board-item-right" style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+            <span style="font-size: 0.84rem; color: var(--accent); font-weight: 750;">전문 읽기 ➔</span>
           </div>
         </div>
       `).join('');
@@ -8215,20 +8179,12 @@
       alert('관리자 모드에서 로그아웃되었습니다.');
     }
 
-    // 메인 화면 관리자 UI 갱신 (관리자 로그인 시 메인 서재에도 글쓰기 버튼 노출)
+    // 메인 화면 관리자 UI 갱신
     function updateAdminUI() {
+      // 메인 사이트는 일반 방문자 전용이므로 관리자 조작 버튼을 주입하지 않습니다.
+      // 모든 글쓰기 및 글 관리는 별도 통합 관리자 홈(admin.html)에서 수행합니다.
       const adminContainer = document.getElementById('adminControlsOnMagazine');
-      if (!adminContainer) return;
-
-      if (isAdminLoggedIn()) {
-        adminContainer.innerHTML = `
-          <button class="btn-mag-action btn-mag-write" onclick="openTistoryEditor()" title="관리자 전용 새 칼럼 작성">
-            <span>✍️</span> 칼럼 글쓰기
-          </button>
-        `;
-      } else {
-        adminContainer.innerHTML = '';
-      }
+      if (adminContainer) adminContainer.innerHTML = '';
     }
 
     // ================= 관리자 홈 대시보드 모달 제어 =================
