@@ -1475,6 +1475,35 @@
       margin-top: 2px;
     }
 
+    /* 현장 관제 게시판 테이블 전용 스타일 */
+    .admin-table tr.control-row {
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+    .admin-table tr.control-row:hover td {
+      background-color: #f0fdf4 !important;
+    }
+    .admin-table tr.control-row.pending-row td {
+      background-color: #fffdf5;
+    }
+    .admin-table tr.control-row.pending-row:hover td {
+      background-color: #fef9c3 !important;
+    }
+    .control-mini-thumbs-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      vertical-align: middle;
+    }
+    .control-mini-thumb {
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
+      object-fit: cover;
+      border: 1px solid #cbd5e1;
+      display: inline-block;
+    }
+
     /* 피드형 검수 카드 그리드 */
     .control-feed-grid {
       display: grid;
@@ -2537,7 +2566,7 @@
           </div>
         </div>
 
-        <!-- 관제 필터 바 (상태별 & 코치별) -->
+        <!-- 관제 필터 바 (상태별 & 코치별 & 실시간 통합 검색) -->
         <div class="panel-card" style="padding: 14px 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
           <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
             <span style="font-size:0.85rem; font-weight:850; color:var(--text-main); margin-right:4px;">상태 필터:</span>
@@ -2545,20 +2574,58 @@
             <button type="button" class="btn-action-sm" id="btnFilterControl_pending" onclick="filterControlFeed('서비스완료', this)" style="padding: 6px 14px; font-weight: 850; border-radius: 20px; background:#fffbeb; color:#b45309; border:1.5px solid #fde68a;">⚡ 검수/입금 대기</button>
             <button type="button" class="btn-action-sm" id="btnFilterControl_working" onclick="filterControlFeed('진행중', this)" style="padding: 6px 14px; font-weight: 850; border-radius: 20px;">🏃 현장 진행중</button>
             <button type="button" class="btn-action-sm" id="btnFilterControl_settled" onclick="filterControlFeed('정산완료', this)" style="padding: 6px 14px; font-weight: 850; border-radius: 20px;">💰 송금 완료</button>
+            <button type="button" class="btn-action-sm" id="btnFilterControl_ready" onclick="filterControlFeed('배정완료', this)" style="padding: 6px 14px; font-weight: 850; border-radius: 20px;">⏳ 배정완료</button>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <label for="selectControlCoachFilter" style="font-size:0.85rem; font-weight:800; color:var(--text-main);">코치별:</label>
-            <select id="selectControlCoachFilter" onchange="filterControlFeedByCoach(this.value)" class="coach-select-sm" style="padding: 6px 12px; font-size: 0.85rem;">
-              <option value="all">전체 코칭스태프</option>
-              <!-- JS 동적 생성 -->
-            </select>
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <label for="selectControlCoachFilter" style="font-size:0.85rem; font-weight:800; color:var(--text-main);">코치:</label>
+              <select id="selectControlCoachFilter" onchange="filterControlFeedByCoach(this.value)" class="coach-select-sm" style="padding: 6px 12px; font-size: 0.85rem;">
+                <option value="all">전체 코칭스태프</option>
+                <!-- JS 동적 생성 -->
+              </select>
+            </div>
+            <div style="position: relative;">
+              <input type="text" id="inputControlSearch" placeholder="고객명, 연락처, 주소, 코치 검색..." oninput="handleControlSearch(this.value)" style="padding: 6px 12px 6px 30px; font-size: 0.85rem; border: 1.5px solid var(--border-color); border-radius: 20px; outline: none; width: 230px; background: #ffffff;">
+              <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 0.82rem; color: #94a3b8; pointer-events: none;">🔍</span>
+            </div>
           </div>
         </div>
 
-        <!-- 현장 검수 카드 피드 그리드 (Feed Grid) -->
-        <div class="control-feed-grid" id="controlFeedContainer">
-          <!-- JS 동적 렌더링 -->
+        <!-- 📋 현장 관제 및 활동비 정산 게시판 (수백 건도 가볍고 쾌적한 테이블 구조) -->
+        <div class="panel-card" style="padding: 0; overflow: hidden; margin-bottom: 24px;">
+          <div style="padding: 16px 20px; background: #fafbfc; border-bottom: 1.5px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 1.15rem;">📋</span>
+              <strong style="font-size: 1rem; color: var(--text-main); font-weight: 850;">현장 관제 &amp; 활동비 정산 현황 목록</strong>
+              <span id="controlTableCountBadge" style="background: var(--accent-light); color: var(--accent); padding: 2px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 850;">0건</span>
+            </div>
+            <span style="font-size: 0.82rem; color: #64748b;">
+              💡 목록의 행을 클릭하시면 <strong>[작업진행 카드 모달(사진 3종 &amp; 코치 소감 &amp; 송금 승인)]</strong>이 시원하게 열립니다.
+            </span>
+          </div>
+
+          <div class="admin-table-wrap" style="border: none; border-radius: 0;">
+            <table class="admin-table" id="coachControlTable">
+              <thead>
+                <tr>
+                  <th style="width: 50px; text-align: center;">No</th>
+                  <th style="width: 125px; text-align: center;">진행 상태</th>
+                  <th style="width: 135px;">신청 고객</th>
+                  <th style="width: 155px;">서비스 분야</th>
+                  <th style="width: 105px;">담당 코치</th>
+                  <th style="min-width: 170px;">방문 일시 &amp; 장소</th>
+                  <th style="width: 140px; text-align: center;">현장 스탬프</th>
+                  <th style="width: 110px; text-align: center;">📸 현장 사진</th>
+                  <th style="width: 110px; text-align: right;">💰 활동비</th>
+                  <th style="width: 120px; text-align: center;">작업진행 카드</th>
+                </tr>
+              </thead>
+              <tbody id="controlTableBody">
+                <!-- JS 동적 렌더링 -->
+              </tbody>
+            </table>
+          </div>
         </div>
 
       </section>
@@ -3228,12 +3295,16 @@
       <!-- 상단 핵심 메타 바 -->
       <div style="background: #f8fafc; border-radius: 12px; padding: 14px 18px; border: 1px solid var(--border-color); margin-bottom: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
         <div>
+          <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">신청 고객</div>
+          <div style="font-size:0.95rem; font-weight:850; color:var(--text-main);" id="reportCustomerInfo">-</div>
+        </div>
+        <div>
           <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">담당 배정 코치</div>
-          <div style="font-size:0.95rem; font-weight:850; color:var(--text-main);" id="reportCoachName">-</div>
+          <div style="font-size:0.95rem; font-weight:850; color:var(--accent);" id="reportCoachName">-</div>
         </div>
         <div>
           <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">서비스 종류</div>
-          <div style="font-size:0.95rem; font-weight:850; color:var(--accent);" id="reportServiceType">-</div>
+          <div style="font-size:0.95rem; font-weight:850; color:var(--text-main);" id="reportServiceType">-</div>
         </div>
         <div>
           <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">📍 현장 도착 스탬프</div>
@@ -3246,6 +3317,10 @@
         <div>
           <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">💰 코치 활동비</div>
           <div style="font-size:1.05rem; font-weight:900; color:#d97706;" id="reportCoachFee">150,000원</div>
+        </div>
+        <div style="grid-column: 1 / -1; padding-top: 6px; border-top: 1px dashed var(--border-color); font-size: 0.84rem; color: var(--text-sub);">
+          <strong style="color: var(--text-muted); font-size: 0.78rem;">방문 일정 및 장소:</strong>
+          <span id="reportScheduleAndAddress" style="font-weight: 800; color: var(--text-main); margin-left: 6px;">-</span>
         </div>
       </div>
 
@@ -3306,9 +3381,17 @@
 
       <!-- 하단 액션 버튼 바 -->
       <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; border-top: 1px solid var(--border-color); padding-top: 16px;">
-        <button type="button" class="btn-save-setting" onclick="copyCoachKakaoMsgCurrentMission()" style="background: #fef01b; color: #181600; border: 1px solid #e5d800; font-weight: 850;">
-          <span>💬</span> 코치 카톡 링크 전송
-        </button>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="btn-save-setting" onclick="copySettlementKakaoMsgCurrentMission()" style="background: #fef01b; color: #181600; border: 1px solid #e5d800; font-weight: 850; padding: 8px 14px;">
+            <span>💬</span> 입금완료 카톡 복사
+          </button>
+          <button type="button" class="btn-save-setting" onclick="copyCoachKakaoMsgCurrentMission()" style="background: #f1f5f9; color: #334155; border: 1.5px solid #cbd5e1; font-weight: 800; padding: 8px 14px;">
+            <span>📲</span> 배정 카톡 복사
+          </button>
+          <button type="button" class="btn-save-setting" id="btnRevertSettlement" onclick="revertCoachSettlementFromModal()" style="display:none; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; font-weight: 800; padding: 8px 12px;">
+            <span>↩️</span> 정산 되돌리기
+          </button>
+        </div>
 
         <div style="display: flex; gap: 8px;">
           <button type="button" class="btn-save-setting" onclick="closeDispatchReportModal()" style="background: #ffffff; color: var(--text-main); border: 1.5px solid var(--border-color);">
@@ -6426,12 +6509,18 @@
 
       activeReportMissionId = dispId;
 
-      document.getElementById('reportModalTitle').textContent = `📸 [${target.customerName}] 현장 코칭 검수 보고`;
+      document.getElementById('reportModalTitle').textContent = `📸 [${target.customerName}] 현장 작업진행 카드`;
+      const custInfoEl = document.getElementById('reportCustomerInfo');
+      if (custInfoEl) custInfoEl.textContent = `${target.customerName} (${target.phone || '연락처 없음'})`;
+
       document.getElementById('reportCoachName').textContent = target.coach || '미배정';
       document.getElementById('reportServiceType').textContent = target.serviceType || '일반 서비스';
       document.getElementById('reportArrivalStamp').textContent = target.arrivalStamp || '미도착 (현장 대기)';
       document.getElementById('reportCompletionDate').textContent = target.completionDate || '미완료';
-      document.getElementById('reportCoachFee').textContent = `${(target.fee || 150000).toLocaleString()}원`;
+      document.getElementById('reportCoachFee').textContent = `${(Number(target.fee) || 150000).toLocaleString()}원`;
+
+      const schedEl = document.getElementById('reportScheduleAndAddress');
+      if (schedEl) schedEl.textContent = `${target.preferredDate || '일정 미정'} | ${target.address || '주소 미입력'}`;
 
       // 1. 작업 전 사진
       renderPhotoBox('containerBeforePhoto', 'badgeBeforePhoto', target.beforePhoto, '작업 전 (Before)');
@@ -6446,17 +6535,20 @@
         memoEl.textContent = target.coachReport || target.notes || '(코치 현장 소감 및 특이사항 기록이 아직 없습니다)';
       }
 
-      // 송금 버튼 상태
+      // 송금 버튼 & 되돌리기 버튼 상태
       const approveBtn = document.getElementById('btnApproveSettlement');
+      const revertBtn = document.getElementById('btnRevertSettlement');
       if (approveBtn) {
         if (target.step === '정산완료') {
-          approveBtn.textContent = '✓ 이미 송금 및 정산 승인 완료됨';
+          approveBtn.innerHTML = '<span>✓</span> 송금 및 정산 승인 완료됨';
           approveBtn.style.background = '#64748b';
           approveBtn.disabled = true;
+          if (revertBtn) revertBtn.style.display = 'inline-flex';
         } else {
-          approveBtn.innerHTML = '<span>💰</span> 활동비 송금 확인 및 정산 완료 승인';
+          approveBtn.innerHTML = `<span>💰</span> 활동비 ${(Number(target.fee) || 150000).toLocaleString()}원 송금 확인 및 정산 완료 승인`;
           approveBtn.style.background = 'linear-gradient(135deg, #059669 0%, #047857 100%)';
           approveBtn.disabled = false;
+          if (revertBtn) revertBtn.style.display = 'none';
         }
       }
 
@@ -6507,13 +6599,39 @@
       const target = dispatches.find(d => d.id === activeReportMissionId);
       if (!target) return;
 
-      const feeStr = (target.fee || 150000).toLocaleString();
-      if (confirm(`[${target.coach || '담당 코치'}] 님께 활동비 (${feeStr}원)를 송금하셨습니까?\n\n[확인]을 누르면 상태가 '정산완료'로 변경되며, 코치 앱에도 실시간 '송금완료' 뱃지가 표기됩니다.`)) {
+      const feeStr = (Number(target.fee) || 150000).toLocaleString();
+      if (confirm(`[${target.coach || '담당 코치'}] 님께 활동비 (${feeStr}원)를 송금하셨습니까?\n\n[확인]을 누르면 상태가 '정산완료'로 변경되며,\n코치 파트너스 앱의 [정산/수익] 탭에도 실시간 '송금완료'로 표기됩니다.`)) {
         target.step = '정산완료';
         saveDispatches(dispatches);
-        closeDispatchReportModal();
-        alert(`🎉 [${target.customerName}] 건의 코치 활동비 정산이 최종 승인되었습니다!`);
+        renderCoachControlCenter();
+        renderDispatchesTable();
+        openDispatchReportModal(activeReportMissionId);
+        alert(`🎉 [${target.customerName}] 건의 코치 활동비(${feeStr}원) 정산이 최종 승인되었습니다!\n\n하단의 [💬 입금완료 카톡 복사]를 눌러 코치님께 안내 메시지를 전송하실 수 있습니다.`);
       }
+    }
+
+    function revertCoachSettlementFromModal() {
+      if (!activeReportMissionId) return;
+      const dispatches = getDispatches();
+      const target = dispatches.find(d => d.id === activeReportMissionId);
+      if (!target) return;
+
+      if (!confirm(`[${target.customerName}] 건의 정산 완료 상태를 취소하고 [검수대기] 상태로 되돌리시겠습니까?`)) return;
+      target.step = '서비스완료';
+      saveDispatches(dispatches);
+      renderCoachControlCenter();
+      renderDispatchesTable();
+      openDispatchReportModal(activeReportMissionId);
+    }
+
+    function copySettlementKakaoMsgCurrentMission() {
+      if (!activeReportMissionId) return;
+      copySettlementKakaoMsg(activeReportMissionId);
+    }
+
+    function copyCoachKakaoMsgCurrentMission() {
+      if (!activeReportMissionId) return;
+      copyCoachKakaoMsg(activeReportMissionId);
     }
 
     // 카카오톡 코치 알림 메시지 복사 유틸
@@ -7120,10 +7238,11 @@ ${coachAppUrl}
     }
 
     // =========================================================================
-    // 14. 📸 05-2. 코치 현장수행 관제 & 활동비 정산 센터 엔진 (Control Tower)
+    // 14. 📸 05-2. 코치 현장수행 관제 & 활동비 정산 센터 엔진 (Control Tower Board)
     // =========================================================================
     let currentControlStatusFilter = 'all';
     let currentControlCoachFilter = 'all';
+    let currentControlSearchTerm = '';
 
     function updateSidebarPendingBadge() {
       const dispatches = getDispatches();
@@ -7138,11 +7257,17 @@ ${coachAppUrl}
       }
     }
 
+    function handleControlSearch(keyword) {
+      currentControlSearchTerm = (keyword || '').trim().toLowerCase();
+      renderCoachControlCenter(currentControlStatusFilter, currentControlCoachFilter);
+    }
+
     function renderCoachControlCenter(statusFilter = currentControlStatusFilter, coachFilter = currentControlCoachFilter) {
       currentControlStatusFilter = statusFilter;
       currentControlCoachFilter = coachFilter;
 
-      const container = document.getElementById('controlFeedContainer');
+      const tbody = document.getElementById('controlTableBody');
+      const countBadge = document.getElementById('controlTableCountBadge');
       const dispatches = getDispatches();
       const coaches = getCoaches();
 
@@ -7192,9 +7317,9 @@ ${coachAppUrl}
         });
       }
 
-      if (!container) return;
+      if (!tbody) return;
 
-      // 2. 필터링 적용
+      // 2. 다중 필터링 적용 (상태 + 코치 + 실시간 검색어)
       let filtered = dispatches;
       if (currentControlStatusFilter !== 'all') {
         filtered = filtered.filter(d => d.step === currentControlStatusFilter);
@@ -7202,20 +7327,32 @@ ${coachAppUrl}
       if (currentControlCoachFilter !== 'all') {
         filtered = filtered.filter(d => d.coach && d.coach.includes(currentControlCoachFilter));
       }
+      if (currentControlSearchTerm) {
+        filtered = filtered.filter(d => {
+          const text = `${d.customerName || ''} ${d.phone || ''} ${d.serviceType || ''} ${d.coach || ''} ${d.address || ''} ${d.preferredDate || ''}`.toLowerCase();
+          return text.includes(currentControlSearchTerm);
+        });
+      }
+
+      if (countBadge) {
+        countBadge.textContent = `총 ${filtered.length}건`;
+      }
 
       if (filtered.length === 0) {
-        container.innerHTML = `
-          <div style="grid-column: 1 / -1; background:#ffffff; border-radius:18px; border:1px solid #e2e8f0; padding:60px 20px; text-align:center;">
-            <span style="font-size:3rem; display:block; margin-bottom:12px;">🌿</span>
-            <strong style="font-size:1.15rem; color:#0f172a;">해당 조건의 현장 관제 및 정산 내역이 없습니다</strong>
-            <p style="color:#64748b; font-size:0.9rem; margin-top:6px;">상태 필터나 코치 필터를 변경해 보세요.</p>
-          </div>
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="10" style="text-align: center; padding: 50px 20px; color: #64748b;">
+              <span style="font-size: 2.4rem; display: block; margin-bottom: 8px;">🌿</span>
+              <strong style="font-size: 1.05rem; color: #0f172a;">조건에 부합하는 현장 관제 및 정산 내역이 없습니다</strong>
+              <p style="font-size: 0.84rem; margin: 6px 0 0; color: #94a3b8;">상태 필터나 코치 필터, 검색어를 변경해 보세요.</p>
+            </td>
+          </tr>
         `;
         return;
       }
 
-      // 3. 카드 렌더링
-      container.innerHTML = filtered.map(d => {
+      // 3. 게시판(테이블) 행 렌더링
+      tbody.innerHTML = filtered.map((d, index) => {
         const fee = Number(d.fee) || 150000;
         const isPending = d.step === '서비스완료';
         const isSettled = d.step === '정산완료';
@@ -7224,133 +7361,79 @@ ${coachAppUrl}
         // 상태 뱃지
         let statusBadge = '';
         if (isPending) {
-          statusBadge = '<span style="background:#fef3c7; color:#b45309; border:1.5px solid #fde68a; padding:4px 10px; border-radius:6px; font-size:0.8rem; font-weight:850;">⚡ 검수대기 (송금 필요)</span>';
+          statusBadge = '<span style="background:#fef3c7; color:#b45309; border:1px solid #fde68a; padding:4px 8px; border-radius:6px; font-size:0.76rem; font-weight:850; white-space:nowrap; display:inline-block;">⚡ 검수/송금대기</span>';
         } else if (isSettled) {
-          statusBadge = '<span style="background:#f0fdf4; color:#16a34a; border:1px solid #86efac; padding:4px 10px; border-radius:6px; font-size:0.8rem; font-weight:850;">✓ 송금완료</span>';
+          statusBadge = '<span style="background:#f0fdf4; color:#16a34a; border:1px solid #86efac; padding:4px 8px; border-radius:6px; font-size:0.76rem; font-weight:850; white-space:nowrap; display:inline-block;">✓ 송금완료</span>';
         } else if (isWorking) {
-          statusBadge = '<span style="background:#e0f2fe; color:#0284c7; padding:4px 10px; border-radius:6px; font-size:0.8rem; font-weight:850;">🏃 현장진행중</span>';
+          statusBadge = '<span style="background:#e0f2fe; color:#0284c7; padding:4px 8px; border-radius:6px; font-size:0.76rem; font-weight:850; white-space:nowrap; display:inline-block;">🏃 현장진행중</span>';
         } else {
-          statusBadge = '<span style="background:#f1f5f9; color:#475569; padding:4px 10px; border-radius:6px; font-size:0.8rem; font-weight:800;">⏳ 배정완료</span>';
+          statusBadge = '<span style="background:#f1f5f9; color:#475569; padding:4px 8px; border-radius:6px; font-size:0.76rem; font-weight:800; white-space:nowrap; display:inline-block;">⏳ 배정완료</span>';
         }
 
-        // 사진 썸네일 렌더러
-        function renderPhotoSlot(url, title, isAfter = false) {
-          if (url) {
-            return `
-              <div class="control-photo-item ${isAfter ? 'after' : ''}">
-                <div class="control-photo-tag">${title} (등록됨)</div>
-                <div class="control-photo-preview" onclick="window.open('${url}', '_blank')" title="클릭하여 원본 크게 보기">
-                  <img src="${url}" alt="${title}">
-                </div>
-              </div>
-            `;
-          } else {
-            return `
-              <div class="control-photo-item ${isAfter ? 'after' : ''}">
-                <div class="control-photo-tag">${title}</div>
-                <div class="control-photo-preview" style="cursor:default;">
-                  <span class="control-photo-empty">미등록</span>
-                </div>
-              </div>
-            `;
-          }
+        // 사진 카운트 및 미니 썸네일 박스
+        const photoCount = (d.beforePhoto ? 1 : 0) + (d.processPhoto ? 1 : 0) + (d.afterPhoto ? 1 : 0);
+        let photoThumbsHtml = '';
+        if (photoCount > 0) {
+          const thumbs = [d.beforePhoto, d.processPhoto, d.afterPhoto].filter(Boolean);
+          const thumbImgs = thumbs.map(src => `<img src="${src}" class="control-mini-thumb" alt="현장사진">`).join('');
+          photoThumbsHtml = `
+            <div style="display:flex; flex-direction:column; align-items:center; gap:3px;">
+              <div class="control-mini-thumbs-wrap">${thumbImgs}</div>
+              <span style="font-size:0.74rem; font-weight:850; color:#059669;">${photoCount}/3장 등록</span>
+            </div>
+          `;
+        } else {
+          photoThumbsHtml = `
+            <span style="font-size:0.76rem; color:#94a3b8; font-weight:700;">미등록</span>
+          `;
         }
-
-        const beforeSlot = renderPhotoSlot(d.beforePhoto, '1️⃣ 작업 전');
-        const processSlot = renderPhotoSlot(d.processPhoto, '2️⃣ 진행 과정');
-        const afterSlot = renderPhotoSlot(d.afterPhoto, '3️⃣ 최종 완료', true);
 
         return `
-          <div class="control-card ${isPending ? 'need-settle' : (isSettled ? 'settled' : '')}">
-            <div class="control-card-header">
-              <div>
-                <div class="control-client-title">
-                  <span>${escapeHtml(d.customerName)}</span>
-                  <a href="tel:${escapeHtml(d.phone)}" style="font-size:0.86rem; color:var(--accent); font-weight:750; text-decoration:none;">(${escapeHtml(d.phone)})</a>
-                </div>
-                <div style="margin-top:6px;">
-                  <span class="control-svc-badge">${escapeHtml(d.serviceType)}</span>
-                </div>
+          <tr class="control-row ${isPending ? 'pending-row' : ''}" onclick="openDispatchReportModal('${d.id}')" title="클릭하여 [${escapeHtml(d.customerName)}] 현장 작업진행 카드(사진 3종 &amp; 소감 &amp; 송금 승인)를 확인합니다.">
+            <td style="text-align: center; color: var(--text-muted); font-size: 0.82rem; font-weight: 750;">
+              ${index + 1}
+            </td>
+            <td style="text-align: center;">
+              ${statusBadge}
+            </td>
+            <td>
+              <div style="font-weight: 850; color: var(--text-main); font-size: 0.92rem;">${escapeHtml(d.customerName)}</div>
+              <div style="margin-top: 2px;">
+                <a href="tel:${escapeHtml(d.phone)}" onclick="event.stopPropagation()" style="font-size: 0.78rem; color: var(--accent); font-weight: 750; text-decoration: none;">
+                  ${escapeHtml(d.phone)}
+                </a>
               </div>
-              <div>${statusBadge}</div>
-            </div>
-
-            <!-- 메타 정보 그리드 -->
-            <div class="control-meta-grid">
-              <div class="control-meta-item">
-                <strong>담당 배정 코치</strong>
-                <span style="color:var(--accent);">${escapeHtml(d.coach || '미배정')}</span>
+            </td>
+            <td>
+              <span class="control-svc-badge" style="font-size: 0.76rem; padding: 3px 8px; white-space: nowrap;">
+                ${escapeHtml(d.serviceType)}
+              </span>
+            </td>
+            <td>
+              <strong style="color: var(--text-main); font-size: 0.88rem;">${escapeHtml(d.coach || '미배정')}</strong>
+            </td>
+            <td>
+              <div style="font-weight: 800; font-size: 0.84rem; color: #1e293b;">${escapeHtml(d.preferredDate)}</div>
+              <div style="font-size: 0.78rem; color: #64748b; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 2px;" title="${escapeHtml(d.address)}">
+                📍 ${escapeHtml(d.address)}
               </div>
-              <div class="control-meta-item">
-                <strong>💰 코치 활동비</strong>
-                <span style="color:#d97706; font-size:1.05rem;">${fee.toLocaleString()}원</span>
-              </div>
-              <div class="control-meta-item">
-                <strong>📍 현장 도착 스탬프</strong>
-                <span style="color:${d.arrivalStamp ? '#0284c7' : '#94a3b8'};">${escapeHtml(d.arrivalStamp || '미도착')}</span>
-              </div>
-              <div class="control-meta-item">
-                <strong>🏁 임무 완료 시간</strong>
-                <span style="color:${d.completionDate ? '#059669' : '#94a3b8'};">${escapeHtml(d.completionDate || '미완료')}</span>
-              </div>
-              <div class="control-meta-item" style="grid-column: 1 / -1;">
-                <strong>방문일시 / 주소</strong>
-                <span>${escapeHtml(d.preferredDate)} | ${escapeHtml(d.address)}</span>
-              </div>
-            </div>
-
-            <!-- 📸 현장 등록 사진 3종 -->
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <strong style="font-size:0.86rem; color:var(--text-main); display:flex; align-items:center; gap:5px;">
-                  <span>📸</span> 현장 등록 사진 3종 (클릭 시 원본 확대)
-                </strong>
-                <span style="font-size:0.75rem; color:#64748b;">
-                  등록: ${(d.beforePhoto?1:0)+(d.processPhoto?1:0)+(d.afterPhoto?1:0)} / 3장
-                </span>
-              </div>
-              <div class="control-photo-row">
-                ${beforeSlot}
-                ${processSlot}
-                ${afterSlot}
-              </div>
-            </div>
-
-            <!-- 📝 코치 현장 소감 및 특이사항 메모 -->
-            <div class="control-memo-card">
-              <strong><span>📝</span> 코치 현장 소감 &amp; 어르신 반응</strong>
-              <div>${escapeHtml(d.coachReport || d.notes || '(현장 소감 기록 대기중)')}</div>
-            </div>
-
-            <!-- 하단 관리자 액션 바 -->
-            <div class="control-action-bar">
-              ${isPending ? `
-                <button type="button" class="btn-settle-approve" onclick="approveCoachSettlementFromCard('${d.id}')">
-                  <span>💰</span> 활동비 ${fee.toLocaleString()}원 송금 확인 및 정산 완료 승인
-                </button>
-                <button type="button" class="btn-action-sm" onclick="copySettlementKakaoMsg('${d.id}')" style="background:#fef01b; color:#181600; padding:10px 14px; font-weight:850; border-radius:10px;" title="코치에게 보낼 입금 완료 카톡 메시지 복사">
-                  💬 카톡 복사
-                </button>
-              ` : (isSettled ? `
-                <div style="display:flex; align-items:center; gap:8px;">
-                  <span style="color:#16a34a; font-weight:850; font-size:0.92rem; display:flex; align-items:center; gap:4px;">
-                    <span>✓</span> 활동비 송금 및 정산 승인 완료
-                  </span>
-                  <button type="button" onclick="revertCoachSettlementFromCard('${d.id}')" style="background:none; border:none; color:#94a3b8; font-size:0.75rem; text-decoration:underline; cursor:pointer;">
-                    [되돌리기]
-                  </button>
-                </div>
-                <button type="button" class="btn-action-sm" onclick="copySettlementKakaoMsg('${d.id}')" style="background:#fef01b; color:#181600; padding:8px 14px; font-weight:850; border-radius:8px;">
-                  💬 입금완료 카톡 복사
-                </button>
-              ` : `
-                <span style="font-size:0.84rem; color:#64748b;">현장 완료 보고서 제출 대기 중입니다.</span>
-                <button type="button" class="btn-action-sm" onclick="copyCoachKakaoMsg('${d.id}')" style="background:#fef01b; color:#181600; padding:8px 12px; font-weight:850; border-radius:8px;">
-                  💬 배정 카톡 전송
-                </button>
-              `)}
-            </div>
-          </div>
+            </td>
+            <td style="text-align: center; font-size: 0.78rem; line-height: 1.45;">
+              <span style="color: ${d.arrivalStamp ? '#0284c7' : '#94a3b8'}; font-weight: 750;">도착: ${escapeHtml(d.arrivalStamp || '대기')}</span><br>
+              <span style="color: ${d.completionDate ? '#059669' : '#94a3b8'}; font-weight: 750;">완료: ${escapeHtml(d.completionDate || '대기')}</span>
+            </td>
+            <td style="text-align: center;">
+              ${photoThumbsHtml}
+            </td>
+            <td style="text-align: right;">
+              <strong style="color: #d97706; font-size: 0.94rem;">${fee.toLocaleString()}원</strong>
+            </td>
+            <td style="text-align: center;">
+              <button type="button" class="btn-action-sm edit" onclick="openDispatchReportModal('${d.id}'); event.stopPropagation();" style="font-weight: 850; padding: 6px 12px; background: var(--accent); color: #ffffff; border: none; border-radius: 8px; box-shadow: 0 2px 6px rgba(30,61,47,0.2); white-space: nowrap;" title="작업진행 카드 모달 열기">
+                <span>🔍</span> 작업카드
+              </button>
+            </td>
+          </tr>
         `;
       }).join('');
     }
@@ -7378,7 +7461,8 @@ ${coachAppUrl}
         target.step = '정산완료';
         saveDispatches(dispatches);
         renderCoachControlCenter();
-        alert(`🎉 [${target.customerName}] 건의 활동비(${feeStr}원) 정산이 최종 완료되었습니다!\n\n코치 앱에 실시간 반영되었으며, 우측 [💬 입금완료 카톡 복사]를 눌러 코치님께 안내 메시지를 보내실 수 있습니다.`);
+        renderDispatchesTable();
+        alert(`🎉 [${target.customerName}] 건의 활동비(${feeStr}원) 정산이 최종 완료되었습니다!\n\n코치 앱에 실시간 반영되었으며, [💬 입금완료 카톡 복사]를 눌러 코치님께 안내 메시지를 보내실 수 있습니다.`);
       }
     }
 
@@ -7390,6 +7474,7 @@ ${coachAppUrl}
         target.step = '서비스완료';
         saveDispatches(dispatches);
         renderCoachControlCenter();
+        renderDispatchesTable();
       }
     }
 
