@@ -3324,46 +3324,48 @@
         </div>
       </div>
 
-      <!-- 현장 사진 3종 검수 그리드 (Before / Process / After) -->
+      <!-- 📸 현장 등록 사진 3단계 멀티 갤러리 검수 (각 단계별 최대 3장 / 총 9장) -->
       <div style="margin-bottom: 20px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-          <h4 style="font-size: 0.95rem; font-weight: 850; color: var(--text-main); margin: 0;">
-            📸 현장 등록 사진 3종 검수 (작업 전 ➔ 진행 과정 ➔ 최종 완료)
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <h4 style="font-size: 0.95rem; font-weight: 850; color: var(--text-main); margin: 0; display:flex; align-items:center; gap:6px;">
+            <span>📸</span> 현장 등록 사진 검수 (작업 전 ➔ 진행 과정 ➔ 최종 완료)
           </h4>
-          <span style="font-size:0.78rem; color:var(--text-muted);">사진을 클릭하면 새 창에서 원본 크기로 확인됩니다.</span>
+          <span id="reportTotalPhotoBadge" style="font-size:0.78rem; font-weight:850; color:#059669; background:#ecfdf5; border:1px solid #a7f3d0; padding:3px 10px; border-radius:999px;">
+            총 0장 등록됨
+          </span>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
-          <!-- 1. 작업 전 (Before) -->
-          <div style="background:#ffffff; border:1.5px solid var(--border-color); border-radius:12px; overflow:hidden; display:flex; flex-direction:column;">
-            <div style="background:#f1f5f9; padding:8px 12px; font-size:0.8rem; font-weight:850; color:var(--text-main); display:flex; justify-content:space-between;">
-              <span>1️⃣ 작업 전 (Before)</span>
-              <span id="badgeBeforePhoto" style="font-size:0.72rem; color:#64748b;">대기</span>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <!-- 1️⃣ 작업 전 (Before) - 최대 3장 -->
+          <div style="background:#ffffff; border:1.5px solid var(--border-color); border-radius:12px; padding:12px 14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <strong style="font-size:0.84rem; font-weight:850; color:#1e293b;">1️⃣ 작업 전 (Before)</strong>
+              <span id="badgeBeforePhotos" style="font-size:0.74rem; font-weight:800; color:#64748b;">0/3장</span>
             </div>
-            <div style="height:180px; background:#f8fafc; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative;" id="containerBeforePhoto">
-              <span style="color:#94a3b8; font-size:0.85rem;">사진 미등록</span>
-            </div>
-          </div>
-
-          <!-- 2. 진행 과정 (Process) -->
-          <div style="background:#ffffff; border:1.5px solid var(--border-color); border-radius:12px; overflow:hidden; display:flex; flex-direction:column;">
-            <div style="background:#f1f5f9; padding:8px 12px; font-size:0.8rem; font-weight:850; color:var(--text-main); display:flex; justify-content:space-between;">
-              <span>2️⃣ 진행 과정 (Process)</span>
-              <span id="badgeProcessPhoto" style="font-size:0.72rem; color:#64748b;">대기</span>
-            </div>
-            <div style="height:180px; background:#f8fafc; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative;" id="containerProcessPhoto">
-              <span style="color:#94a3b8; font-size:0.85rem;">사진 미등록</span>
+            <div id="containerBeforePhotos" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px;">
+              <!-- 동적 렌더링 -->
             </div>
           </div>
 
-          <!-- 3. 최종 완료 (After) -->
-          <div style="background:#ffffff; border:1.5px solid var(--border-color); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; border-color:#86efac;">
-            <div style="background:#dcfce7; padding:8px 12px; font-size:0.8rem; font-weight:850; color:#15803d; display:flex; justify-content:space-between;">
-              <span>3️⃣ 최종 완료 (After)</span>
-              <span id="badgeAfterPhoto" style="font-size:0.72rem; color:#15803d; font-weight:800;">완료</span>
+          <!-- 2️⃣ 진행 과정 (Process) - 최대 3장 -->
+          <div style="background:#ffffff; border:1.5px solid var(--border-color); border-radius:12px; padding:12px 14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <strong style="font-size:0.84rem; font-weight:850; color:#1e293b;">2️⃣ 진행 과정 (Process)</strong>
+              <span id="badgeProcessPhotos" style="font-size:0.74rem; font-weight:800; color:#64748b;">0/3장</span>
             </div>
-            <div style="height:180px; background:#f8fafc; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative;" id="containerAfterPhoto">
-              <span style="color:#94a3b8; font-size:0.85rem;">사진 미등록</span>
+            <div id="containerProcessPhotos" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px;">
+              <!-- 동적 렌더링 -->
+            </div>
+          </div>
+
+          <!-- 3️⃣ 최종 완료 (After) - 최대 3장 -->
+          <div style="background:#f0fdf4; border:1.5px solid #86efac; border-radius:12px; padding:12px 14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <strong style="font-size:0.84rem; font-weight:850; color:#15803d;">3️⃣ 최종 완료 (After)</strong>
+              <span id="badgeAfterPhotos" style="font-size:0.74rem; font-weight:850; color:#15803d;">0/3장</span>
+            </div>
+            <div id="containerAfterPhotos" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px;">
+              <!-- 동적 렌더링 -->
             </div>
           </div>
         </div>
@@ -6522,12 +6524,23 @@
       const schedEl = document.getElementById('reportScheduleAndAddress');
       if (schedEl) schedEl.textContent = `${target.preferredDate || '일정 미정'} | ${target.address || '주소 미입력'}`;
 
-      // 1. 작업 전 사진
-      renderPhotoBox('containerBeforePhoto', 'badgeBeforePhoto', target.beforePhoto, '작업 전 (Before)');
-      // 2. 진행 과정 사진
-      renderPhotoBox('containerProcessPhoto', 'badgeProcessPhoto', target.processPhoto, '진행 과정 (Process)');
-      // 3. 최종 완료 사진
-      renderPhotoBox('containerAfterPhoto', 'badgeAfterPhoto', target.afterPhoto, '최종 완료 (After)');
+      // 단계별 사진 배열 추출 (하위 호환성 100% 보장)
+      const bPhotos = Array.isArray(target.beforePhotos) ? target.beforePhotos : (target.beforePhoto ? [target.beforePhoto] : []);
+      const pPhotos = Array.isArray(target.processPhotos) ? target.processPhotos : (target.processPhoto ? [target.processPhoto] : []);
+      const aPhotos = Array.isArray(target.afterPhotos) ? target.afterPhotos : (target.afterPhoto ? [target.afterPhoto] : []);
+      const totalPhotos = bPhotos.length + pPhotos.length + aPhotos.length;
+
+      const totalBadge = document.getElementById('reportTotalPhotoBadge');
+      if (totalBadge) {
+        totalBadge.textContent = `총 ${totalPhotos} / 9장 등록됨 (전 ${bPhotos.length} · 진행 ${pPhotos.length} · 완료 ${aPhotos.length})`;
+      }
+
+      // 1. 작업 전 사진 렌더링 (최대 3장)
+      renderStagePhotosAdmin('containerBeforePhotos', 'badgeBeforePhotos', bPhotos, '작업 전 (Before)');
+      // 2. 진행 과정 사진 렌더링 (최대 3장)
+      renderStagePhotosAdmin('containerProcessPhotos', 'badgeProcessPhotos', pPhotos, '진행 과정 (Process)');
+      // 3. 최종 완료 사진 렌더링 (최대 3장)
+      renderStagePhotosAdmin('containerAfterPhotos', 'badgeAfterPhotos', aPhotos, '최종 완료 (After)');
 
       // 코치 메모
       const memoEl = document.getElementById('reportCoachMemo');
@@ -6556,30 +6569,39 @@
       if (modal) modal.classList.add('open');
     }
 
-    function renderPhotoBox(containerId, badgeId, photoUrl, label) {
+    function renderStagePhotosAdmin(containerId, badgeId, photosArray, label) {
       const container = document.getElementById(containerId);
       const badge = document.getElementById(badgeId);
       if (!container) return;
 
-      if (photoUrl) {
-        if (badge) {
-          badge.textContent = '등록 완료';
-          badge.style.color = '#059669';
-          badge.style.fontWeight = '800';
-        }
-        container.innerHTML = `
-          <a href="${photoUrl}" target="_blank" title="새 창에서 원본 확대 보기" style="display:block; width:100%; height:100%;">
-            <img src="${photoUrl}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.src='https://placehold.co/400x300?text=Image+Load+Error';">
-          </a>
-        `;
-      } else {
-        if (badge) {
-          badge.textContent = '미등록';
-          badge.style.color = '#94a3b8';
-          badge.style.fontWeight = '500';
-        }
-        container.innerHTML = `<span style="color:#94a3b8; font-size:0.85rem;">${label} 사진 미등록</span>`;
+      const count = photosArray ? photosArray.length : 0;
+      if (badge) {
+        badge.textContent = `${count} / 3장 등록`;
+        badge.style.color = count > 0 ? '#059669' : '#94a3b8';
       }
+
+      if (!photosArray || photosArray.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; background:#f8fafc; border:1px dashed #cbd5e1; border-radius:8px; padding:18px; text-align:center; color:#94a3b8; font-size:0.82rem;">
+            ${label} 사진 미등록
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = photosArray.map((url, idx) => `
+        <div style="border:1.5px solid #cbd5e1; border-radius:10px; overflow:hidden; background:#ffffff; box-shadow:0 2px 6px rgba(0,0,0,0.04); position:relative;">
+          <div style="position:absolute; top:6px; left:6px; background:rgba(0,0,0,0.7); color:#fff; font-size:0.7rem; font-weight:850; padding:1px 6px; border-radius:4px; z-index:2;">
+            사진 ${idx + 1}
+          </div>
+          <a href="${url}" target="_blank" title="새 창에서 고화질 원본 크게 보기" style="display:block; height:120px; overflow:hidden; background:#f1f5f9;">
+            <img src="${url}" style="width:100%; height:100%; object-fit:cover; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" alt="${label} ${idx + 1}">
+          </a>
+          <div style="padding:4px 6px; font-size:0.72rem; text-align:center; color:#475569; font-weight:750; background:#f8fafc; border-top:1px solid #f1f5f9;">
+            🔍 클릭 시 확대
+          </div>
+        </div>
+      `).join('');
     }
 
     function closeDispatchReportModal() {
@@ -7370,16 +7392,21 @@ ${coachAppUrl}
           statusBadge = '<span style="background:#f1f5f9; color:#475569; padding:4px 8px; border-radius:6px; font-size:0.76rem; font-weight:800; white-space:nowrap; display:inline-block;">⏳ 배정완료</span>';
         }
 
-        // 사진 카운트 및 미니 썸네일 박스
-        const photoCount = (d.beforePhoto ? 1 : 0) + (d.processPhoto ? 1 : 0) + (d.afterPhoto ? 1 : 0);
+        // 사진 카운트 및 미니 썸네일 박스 (단계별 최대 3장씩, 총 9장 지원)
+        const allThumbs = [
+          ...(Array.isArray(d.beforePhotos) ? d.beforePhotos : (d.beforePhoto ? [d.beforePhoto] : [])),
+          ...(Array.isArray(d.processPhotos) ? d.processPhotos : (d.processPhoto ? [d.processPhoto] : [])),
+          ...(Array.isArray(d.afterPhotos) ? d.afterPhotos : (d.afterPhoto ? [d.afterPhoto] : []))
+        ];
+        const photoCount = allThumbs.length;
         let photoThumbsHtml = '';
         if (photoCount > 0) {
-          const thumbs = [d.beforePhoto, d.processPhoto, d.afterPhoto].filter(Boolean);
-          const thumbImgs = thumbs.map(src => `<img src="${src}" class="control-mini-thumb" alt="현장사진">`).join('');
+          const visibleThumbs = allThumbs.slice(0, 3);
+          const thumbImgs = visibleThumbs.map(src => `<img src="${src}" class="control-mini-thumb" alt="현장사진">`).join('');
           photoThumbsHtml = `
             <div style="display:flex; flex-direction:column; align-items:center; gap:3px;">
               <div class="control-mini-thumbs-wrap">${thumbImgs}</div>
-              <span style="font-size:0.74rem; font-weight:850; color:#059669;">${photoCount}/3장 등록</span>
+              <span style="font-size:0.74rem; font-weight:850; color:#059669;">총 ${photoCount}장 등록</span>
             </div>
           `;
         } else {

@@ -687,113 +687,127 @@
       gap: 5px;
     }
 
-    .photo-tri-grid {
+    /* 단계별 멀티 포토 갤러리 섹션 (각 최대 3장씩, 총 9장) */
+    .photo-stage-section {
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .photo-stage-section.stage-after {
+      border-color: #86efac;
+      background: #fdfefe;
+    }
+    .photo-stage-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .photo-stage-title {
+      font-size: 0.84rem;
+      font-weight: 850;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .photo-stage-badge {
+      font-size: 0.72rem;
+      font-weight: 850;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #64748b;
+    }
+    .photo-stage-badge.full {
+      background: #dcfce7;
+      color: #15803d;
+    }
+    .photo-stage-badge.has-photos {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .photo-stage-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin-bottom: 16px;
     }
-
-    .photo-slot-card {
-      background: #ffffff;
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
+    .photo-multi-slot {
+      height: 105px;
+      border-radius: 10px;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-
-    .photo-slot-card:active {
-      transform: scale(0.98);
-    }
-
-    .photo-slot-card.slot-after {
-      border-color: #86efac;
-    }
-
-    .photo-slot-head {
-      background: #f1f5f9;
-      padding: 7px 6px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.72rem;
-      font-weight: 850;
-      color: var(--text-main);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .photo-slot-card.slot-after .photo-slot-head {
-      background: #dcfce7;
-      color: #15803d;
-      border-bottom-color: #bbf7d0;
-    }
-
-    .photo-slot-badge {
-      font-size: 0.65rem;
-      font-weight: 800;
-      color: #64748b;
-    }
-
-    .photo-slot-badge.registered {
-      color: #059669;
-      font-weight: 850;
-    }
-
-    .photo-slot-body {
-      height: 140px;
+      position: relative;
       background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      position: relative;
-      overflow: hidden;
       text-align: center;
-      padding: 6px;
+      transition: all 0.2s ease;
     }
-
-    .photo-slot-body img {
+    .photo-multi-slot.has-img {
+      border-color: #cbd5e1;
+    }
+    .photo-multi-slot.is-add {
+      border: 1.5px dashed #38bdf8;
+      background: #f0f9ff;
+      cursor: pointer;
+    }
+    .photo-multi-slot.is-add:active {
+      transform: scale(0.97);
+      background: #e0f2fe;
+    }
+    .photo-multi-slot.is-empty-placeholder {
+      border: 1px dashed #e2e8f0;
+      opacity: 0.6;
+      cursor: default;
+    }
+    .photo-multi-slot img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       position: absolute;
       inset: 0;
     }
-
-    .photo-slot-icon {
-      font-size: 2rem;
-      margin-bottom: 4px;
-      line-height: 1;
-    }
-
-    .photo-slot-txt {
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: var(--text-main);
-      line-height: 1.25;
-    }
-
-    .photo-slot-subtxt {
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      margin-top: 3px;
-    }
-
-    .photo-slot-retake-badge {
+    .photo-slot-num-badge {
       position: absolute;
-      bottom: 6px;
-      left: 6px;
-      right: 6px;
-      background: rgba(0, 0, 0, 0.7);
+      top: 5px;
+      left: 5px;
+      background: rgba(0,0,0,0.65);
       color: #ffffff;
       font-size: 0.65rem;
-      font-weight: 750;
-      padding: 3px;
+      font-weight: 850;
+      padding: 1px 5px;
       border-radius: 4px;
-      backdrop-filter: blur(4px);
+      backdrop-filter: blur(2px);
+      z-index: 2;
+    }
+    .photo-slot-del-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(225, 29, 72, 0.88);
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      font-size: 0.72rem;
+      font-weight: 850;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .photo-slot-del-btn:active {
+      transform: scale(0.9);
     }
 
     /* 노란색 코치 현장 소감 박스 */
@@ -1139,69 +1153,51 @@
           </div>
         </div>
 
-        <!-- 📸 현장 등록 사진 (최대 3장까지 등록 가능) -->
+        <!-- 📸 현장 등록 사진 (각 단계별 최대 3장씩, 총 9장) -->
         <div class="photo-section-title-wrap">
           <h4 class="photo-section-title">
-            <span>📸</span> 현장 사진 등록 (최대 3장까지)
+            <span>📸</span> 현장 사진 등록 (각 단계별 최대 3장)
           </h4>
-          <span id="photoCountBadge" class="photo-counter-badge">0 / 3장 등록</span>
+          <span id="photoCountBadge" class="photo-counter-badge">총 0 / 9장 등록</span>
         </div>
-        <p style="font-size:0.75rem; color:#64748b; margin-bottom:10px;">
-          각 박스를 터치하시면 스마트폰 카메라가 열려 즉시 촬영됩니다. (최소 1장 ~ 최대 3장까지 자유롭게 등록)
+        <p style="font-size:0.75rem; color:#64748b; margin-bottom:12px;">
+          옷장 안, 바닥, 전경 등 필요한 각도를 단계별로 1~3장씩 촬영하세요. (최소 1장 이상 등록 시 완료 가능)
         </p>
 
-        <!-- 3개 박스 그리드 (최대 3장: 작업 전 / 진행 과정 / 최종 완료) -->
-        <div class="photo-tri-grid">
-          <!-- 1. 작업 전 (Before) -->
-          <div class="photo-slot-card" id="slotBefore" onclick="triggerFile('fileBefore')">
-            <div class="photo-slot-head">
-              <span>1️⃣ 작업 전 (Before)</span>
-              <div class="slot-head-right">
-                <span class="photo-slot-badge" id="badgeBefore">미등록</span>
-                <button type="button" class="btn-photo-delete" id="btnDelBefore" onclick="deletePhoto('before', event)">✕ 삭제</button>
-              </div>
-            </div>
-            <div class="photo-slot-body" id="bodyBefore">
-              <span class="photo-slot-icon">📷</span>
-              <div class="photo-slot-txt">작업 전 사진 촬영</div>
-              <div class="photo-slot-subtxt">터치하여 촬영</div>
-            </div>
-            <input type="file" id="fileBefore" accept="image/*" capture="environment" style="display:none" onchange="previewPhoto(this, 'bodyBefore', 'before', 'badgeBefore')">
+        <!-- 1️⃣ 작업 전 (Before) - 최대 3장 -->
+        <div class="photo-stage-section" id="stageBefore">
+          <div class="photo-stage-head">
+            <span class="photo-stage-title"><span>1️⃣</span> 작업 전 (Before)</span>
+            <span class="photo-stage-badge" id="stageBadgeBefore">0 / 3장</span>
           </div>
+          <div class="photo-stage-grid" id="gridBefore">
+            <!-- JS 동적 렌더링 -->
+          </div>
+          <input type="file" id="fileBefore" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoUploadInput(this, 'before')">
+        </div>
 
-          <!-- 2. 진행 과정 (Process) -->
-          <div class="photo-slot-card" id="slotProcess" onclick="triggerFile('fileProcess')">
-            <div class="photo-slot-head">
-              <span>2️⃣ 진행 과정 (Process)</span>
-              <div class="slot-head-right">
-                <span class="photo-slot-badge" id="badgeProcess">미등록</span>
-                <button type="button" class="btn-photo-delete" id="btnDelProcess" onclick="deletePhoto('process', event)">✕ 삭제</button>
-              </div>
-            </div>
-            <div class="photo-slot-body" id="bodyProcess">
-              <span class="photo-slot-icon">🛠️</span>
-              <div class="photo-slot-txt">진행 과정 사진 촬영</div>
-              <div class="photo-slot-subtxt">터치하여 촬영</div>
-            </div>
-            <input type="file" id="fileProcess" accept="image/*" capture="environment" style="display:none" onchange="previewPhoto(this, 'bodyProcess', 'process', 'badgeProcess')">
+        <!-- 2️⃣ 진행 과정 (Process) - 최대 3장 -->
+        <div class="photo-stage-section" id="stageProcess">
+          <div class="photo-stage-head">
+            <span class="photo-stage-title"><span>2️⃣</span> 진행 과정 (Process)</span>
+            <span class="photo-stage-badge" id="stageBadgeProcess">0 / 3장</span>
           </div>
+          <div class="photo-stage-grid" id="gridProcess">
+            <!-- JS 동적 렌더링 -->
+          </div>
+          <input type="file" id="fileProcess" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoUploadInput(this, 'process')">
+        </div>
 
-          <!-- 3. 최종 완료 (After) -->
-          <div class="photo-slot-card slot-after" id="slotAfter" onclick="triggerFile('fileAfter')">
-            <div class="photo-slot-head">
-              <span>3️⃣ 최종 완료 (After)</span>
-              <div class="slot-head-right">
-                <span class="photo-slot-badge" id="badgeAfter">미등록</span>
-                <button type="button" class="btn-photo-delete" id="btnDelAfter" onclick="deletePhoto('after', event)">✕ 삭제</button>
-              </div>
-            </div>
-            <div class="photo-slot-body" id="bodyAfter">
-              <span class="photo-slot-icon">✨</span>
-              <div class="photo-slot-txt">최종 완료 사진 촬영</div>
-              <div class="photo-slot-subtxt">터치하여 촬영</div>
-            </div>
-            <input type="file" id="fileAfter" accept="image/*" capture="environment" style="display:none" onchange="previewPhoto(this, 'bodyAfter', 'after', 'badgeAfter')">
+        <!-- 3️⃣ 최종 완료 (After) - 최대 3장 -->
+        <div class="photo-stage-section stage-after" id="stageAfter">
+          <div class="photo-stage-head">
+            <span class="photo-stage-title" style="color:#15803d;"><span>3️⃣</span> 최종 완료 (After)</span>
+            <span class="photo-stage-badge" id="stageBadgeAfter">0 / 3장</span>
           </div>
+          <div class="photo-stage-grid" id="gridAfter">
+            <!-- JS 동적 렌더링 -->
+          </div>
+          <input type="file" id="fileAfter" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoUploadInput(this, 'after')">
         </div>
 
         <!-- 코치 현장 소감 및 어르신 반응 보고 (노란색 박스 대표님 캡처 100% 동일) -->
@@ -1576,7 +1572,12 @@
         const isCompleted = m.step === '서비스완료';
         const statusBadge = getStatusBadge(m.step);
 
-        const hasPhotos = m.beforePhoto || m.processPhoto || m.afterPhoto;
+        const allPhotos = [
+          ...(Array.isArray(m.beforePhotos) ? m.beforePhotos : (m.beforePhoto ? [m.beforePhoto] : [])),
+          ...(Array.isArray(m.processPhotos) ? m.processPhotos : (m.processPhoto ? [m.processPhoto] : [])),
+          ...(Array.isArray(m.afterPhotos) ? m.afterPhotos : (m.afterPhoto ? [m.afterPhoto] : []))
+        ];
+        const hasPhotos = allPhotos.length > 0;
 
         return `
           <div class="history-card">
@@ -1602,11 +1603,9 @@
 
             ${hasPhotos ? `
               <div style="margin-top:10px;">
-                <span style="font-size:0.75rem; font-weight:800; color:#64748b;">📸 등록 사진:</span>
-                <div class="history-photos-preview">
-                  ${m.beforePhoto ? `<img src="${m.beforePhoto}" class="history-photo-thumb" alt="작업전" onclick="viewFullPhoto('${m.beforePhoto}')" title="작업 전">` : ''}
-                  ${m.processPhoto ? `<img src="${m.processPhoto}" class="history-photo-thumb" alt="진행과정" onclick="viewFullPhoto('${m.processPhoto}')" title="진행 과정">` : ''}
-                  ${m.afterPhoto ? `<img src="${m.afterPhoto}" class="history-photo-thumb" alt="최종완료" onclick="viewFullPhoto('${m.afterPhoto}')" title="최종 완료">` : ''}
+                <span style="font-size:0.75rem; font-weight:800; color:#64748b;">📸 등록 사진 (${allPhotos.length}장):</span>
+                <div class="history-photos-preview" style="flex-wrap: wrap;">
+                  ${allPhotos.map((src, pIdx) => `<img src="${src}" class="history-photo-thumb" alt="사진 ${pIdx + 1}" onclick="viewFullPhoto('${src}')" title="클릭하여 원본 보기">`).join('')}
                 </div>
               </div>
             ` : ''}
@@ -1721,16 +1720,16 @@
       // 🏁 완료 시간
       document.getElementById('modalCompletionDate').textContent = activeMission.completionDate || '미완료';
 
-      // 📸 3종 사진 복원 렌더링
+      // 📸 단계별 각각 최대 3장(총 9장) 사진 복원 렌더링
       uploadedPhotos = {
-        before: activeMission.beforePhoto || '',
-        process: activeMission.processPhoto || '',
-        after: activeMission.afterPhoto || ''
+        before: Array.isArray(activeMission.beforePhotos) ? [...activeMission.beforePhotos] : (activeMission.beforePhoto ? [activeMission.beforePhoto] : []),
+        process: Array.isArray(activeMission.processPhotos) ? [...activeMission.processPhotos] : (activeMission.processPhoto ? [activeMission.processPhoto] : []),
+        after: Array.isArray(activeMission.afterPhotos) ? [...activeMission.afterPhotos] : (activeMission.afterPhoto ? [activeMission.afterPhoto] : [])
       };
 
-      renderSlotPhoto('bodyBefore', 'badgeBefore', 'btnDelBefore', uploadedPhotos.before, '작업 전');
-      renderSlotPhoto('bodyProcess', 'badgeProcess', 'btnDelProcess', uploadedPhotos.process, '진행 과정');
-      renderSlotPhoto('bodyAfter', 'badgeAfter', 'btnDelAfter', uploadedPhotos.after, '최종 완료');
+      renderStageGrid('before');
+      renderStageGrid('process');
+      renderStageGrid('after');
       updatePhotoCountBadge();
 
       // 코치 현장 소감 메모 복원
@@ -1790,96 +1789,75 @@
       }
 
       updateArrivalAreaDisplay();
-      alert(`📍 현장 도착이 정상 기록되었습니다! (${timeStr})\n\n본사 시스템에 실시간으로 전송되었습니다.\n이제 아래 [1️⃣ 작업 전 (Before)] 박스를 터치하여 시술/정리 전 사진을 촬영해 주세요.`);
+      alert(`📍 현장 도착이 정상 기록되었습니다! (${timeStr})\n\n본사 시스템에 실시간으로 전송되었습니다.\n이제 아래 [1️⃣ 작업 전 (Before)] 박스의 [+ 사진 촬영]을 터치하여 현장 사진을 촬영해 주세요. (최대 3장까지 등록 가능)`);
     }
 
-    // 사진 3장 등록 수 카운터 뱃지 갱신
-    function updatePhotoCountBadge() {
-      const count = (uploadedPhotos.before ? 1 : 0) + 
-                    (uploadedPhotos.process ? 1 : 0) + 
-                    (uploadedPhotos.after ? 1 : 0);
-      const badge = document.getElementById('photoCountBadge');
-      if (!badge) return;
+    // 단계별 3칸 그리드 동적 렌더러
+    function renderStageGrid(type) {
+      const gridId = type === 'before' ? 'gridBefore' : (type === 'process' ? 'gridProcess' : 'gridAfter');
+      const badgeId = type === 'before' ? 'stageBadgeBefore' : (type === 'process' ? 'stageBadgeProcess' : 'stageBadgeAfter');
+      const gridEl = document.getElementById(gridId);
+      const badgeEl = document.getElementById(badgeId);
+      if (!gridEl) return;
 
-      if (count === 0) {
-        badge.textContent = '0 / 3장 등록';
-        badge.className = 'photo-counter-badge';
-      } else if (count === 3) {
-        badge.textContent = '3 / 3장 (최대 등록 완료)';
-        badge.className = 'photo-counter-badge full';
-      } else {
-        badge.textContent = `${count} / 3장 등록됨`;
-        badge.className = 'photo-counter-badge has-photos';
-      }
-    }
+      const photos = uploadedPhotos[type] || [];
+      const count = photos.length;
 
-    // 등록된 사진 삭제 기능
-    function deletePhoto(type, e) {
-      if (e) e.stopPropagation();
-      if (!confirm('등록된 사진을 삭제하시겠습니까?')) return;
-
-      uploadedPhotos[type] = '';
-      let bodyId = 'bodyBefore', badgeId = 'badgeBefore', delBtnId = 'btnDelBefore', label = '작업 전';
-      if (type === 'process') { bodyId = 'bodyProcess'; badgeId = 'badgeProcess'; delBtnId = 'btnDelProcess'; label = '진행 과정'; }
-      if (type === 'after') { bodyId = 'bodyAfter'; badgeId = 'badgeAfter'; delBtnId = 'btnDelAfter'; label = '최종 완료'; }
-
-      renderSlotPhoto(bodyId, badgeId, delBtnId, '', label);
-      updatePhotoCountBadge();
-
-      // 실시간 임시저장
-      if (activeMission) {
-        activeMission[type + 'Photo'] = '';
-        const all = getDispatches();
-        const idx = all.findIndex(m => m.id === activeMission.id);
-        if (idx !== -1) {
-          all[idx] = activeMission;
-          saveDispatches(all);
+      // 뱃지 갱신
+      if (badgeEl) {
+        badgeEl.textContent = `${count} / 3장`;
+        if (count === 3) {
+          badgeEl.className = 'photo-stage-badge full';
+        } else if (count > 0) {
+          badgeEl.className = 'photo-stage-badge has-photos';
+        } else {
+          badgeEl.className = 'photo-stage-badge';
         }
       }
-    }
 
-    function renderSlotPhoto(bodyId, badgeId, delBtnId, photoUrl, label) {
-      const body = document.getElementById(bodyId);
-      const badge = document.getElementById(badgeId);
-      const delBtn = document.getElementById(delBtnId);
-      if (!body) return;
-
-      if (photoUrl) {
-        if (badge) {
-          badge.textContent = '✓ 등록완료';
-          badge.className = 'photo-slot-badge registered';
+      let html = '';
+      for (let i = 0; i < 3; i++) {
+        if (i < count) {
+          html += `
+            <div class="photo-multi-slot has-img">
+              <span class="photo-slot-num-badge">사진 ${i + 1}</span>
+              <button type="button" class="photo-slot-del-btn" onclick="deleteStagePhoto('${type}', ${i}, event)" title="사진 삭제">✕</button>
+              <img src="${photos[i]}" alt="등록 사진 ${i + 1}" onclick="triggerStageUpload('${type}')" title="터치 시 새 사진으로 교체 가능">
+            </div>
+          `;
+        } else if (i === count) {
+          html += `
+            <div class="photo-multi-slot is-add" onclick="triggerStageUpload('${type}')">
+              <span style="font-size:1.5rem; line-height:1; margin-bottom:3px;">📷</span>
+              <strong style="font-size:0.75rem; color:#0284c7;">+ 사진 촬영</strong>
+              <span style="font-size:0.65rem; color:#64748b;">(${i + 1}번째 사진)</span>
+            </div>
+          `;
+        } else {
+          html += `
+            <div class="photo-multi-slot is-empty-placeholder">
+              <span style="font-size:0.72rem; color:#94a3b8; font-weight:700;">대기 ${i + 1}</span>
+            </div>
+          `;
         }
-        if (delBtn) {
-          delBtn.classList.add('visible');
-        }
-        body.innerHTML = `
-          <img src="${photoUrl}" alt="${label} 사진">
-          <div class="photo-slot-retake-badge">✓ 등록됨 (터치 시 재촬영)</div>
-        `;
-      } else {
-        if (badge) {
-          badge.textContent = '미등록';
-          badge.className = 'photo-slot-badge';
-        }
-        if (delBtn) {
-          delBtn.classList.remove('visible');
-        }
-        let icon = '📷';
-        if (label.includes('과정')) icon = '🛠️';
-        if (label.includes('완료')) icon = '✨';
-
-        body.innerHTML = `
-          <span class="photo-slot-icon">${icon}</span>
-          <div class="photo-slot-txt">${label} 사진 촬영</div>
-          <div class="photo-slot-subtxt">터치하여 촬영</div>
-        `;
       }
+
+      gridEl.innerHTML = html;
     }
 
-    // 파일 선택 트리거
-    function triggerFile(id) {
-      const inp = document.getElementById(id);
-      if (inp) inp.click();
+    // 파일 업로드 트리거
+    function triggerStageUpload(type) {
+      const photos = uploadedPhotos[type] || [];
+      if (photos.length >= 3) {
+        alert('이 단계는 최대 3장까지 등록할 수 있습니다.\n기존 사진의 [✕] 버튼을 눌러 삭제 후 다시 촬영해 주세요.');
+        return;
+      }
+      const fileId = type === 'before' ? 'fileBefore' : (type === 'process' ? 'fileProcess' : 'fileAfter');
+      const input = document.getElementById(fileId);
+      if (input) {
+        input.value = '';
+        input.click();
+      }
     }
 
     // 스마트폰 고화질 사진을 초경량(약 80~150KB)으로 고화질 압축 리사이징
@@ -1911,55 +1889,94 @@
       });
     }
 
-    // 사진 미리보기 및 스마트 압축 인코딩
-    async function previewPhoto(input, bodyId, type, badgeId) {
+    // 파일 선택 후 압축 및 배열 추가 핸들러
+    async function handlePhotoUploadInput(input, type) {
       if (!input.files || !input.files[0]) return;
       const file = input.files[0];
 
       try {
-        const body = document.getElementById(bodyId);
-        if (body) {
-          body.innerHTML = `<span style="font-size:0.8rem; font-weight:800; color:var(--primary);">사진 최적화 압축 중...</span>`;
-        }
-
         const dataUrl = await resizeImageCanvas(file, 800, 0.7);
-        uploadedPhotos[type] = dataUrl;
-
-        // 슬롯 뷰 갱신
-        let label = '작업 전';
-        let delBtnId = 'btnDelBefore';
-        if (type === 'process') { label = '진행 과정'; delBtnId = 'btnDelProcess'; }
-        if (type === 'after') { label = '최종 완료'; delBtnId = 'btnDelAfter'; }
-        renderSlotPhoto(bodyId, badgeId, delBtnId, dataUrl, label);
-        updatePhotoCountBadge();
-
-        // 실시간 임시저장
-        if (activeMission) {
-          activeMission[type + 'Photo'] = dataUrl;
-          if (activeMission.step === '배정완료' || activeMission.step === '배정대기') {
-            activeMission.step = '진행중';
-          }
-          const all = getDispatches();
-          const idx = all.findIndex(m => m.id === activeMission.id);
-          if (idx !== -1) {
-            all[idx] = activeMission;
-            saveDispatches(all);
-          }
+        if (!uploadedPhotos[type]) uploadedPhotos[type] = [];
+        if (uploadedPhotos[type].length < 3) {
+          uploadedPhotos[type].push(dataUrl);
         }
+
+        renderStageGrid(type);
+        updatePhotoCountBadge();
+        syncActiveMissionPhotos();
       } catch (err) {
         console.error('사진 압축 실패:', err);
         alert('사진을 처리하는 중 오류가 발생했습니다. 다시 시도해 주세요.');
       }
     }
 
-    // [최종] 🏁 현장 임무 최종 완료 및 본사 송금 요청 (최대 3장 / 최소 1장 이상 등록)
-    function handleFinalCompletion() {
-      const photoCount = (uploadedPhotos.before ? 1 : 0) + 
-                         (uploadedPhotos.process ? 1 : 0) + 
-                         (uploadedPhotos.after ? 1 : 0);
+    // 특정 단계의 특정 인덱스 사진 삭제
+    function deleteStagePhoto(type, index, e) {
+      if (e) e.stopPropagation();
+      if (!confirm(`등록된 ${index + 1}번째 사진을 삭제하시겠습니까?`)) return;
 
-      if (photoCount === 0) {
-        alert('현장 사진을 최소 1장 이상 등록해 주세요.\n(최대 3장까지 등록 가능합니다)');
+      if (uploadedPhotos[type] && uploadedPhotos[type][index] !== undefined) {
+        uploadedPhotos[type].splice(index, 1);
+        renderStageGrid(type);
+        updatePhotoCountBadge();
+        syncActiveMissionPhotos();
+      }
+    }
+
+    // 실시간 activeMission 동기화 및 localStorage 저장
+    function syncActiveMissionPhotos() {
+      if (!activeMission) return;
+      activeMission.beforePhotos = uploadedPhotos.before;
+      activeMission.processPhotos = uploadedPhotos.process;
+      activeMission.afterPhotos = uploadedPhotos.after;
+      // 하위 호환 필드 유지
+      activeMission.beforePhoto = uploadedPhotos.before[0] || '';
+      activeMission.processPhoto = uploadedPhotos.process[0] || '';
+      activeMission.afterPhoto = uploadedPhotos.after[0] || '';
+
+      if (activeMission.step === '배정완료' || activeMission.step === '배정대기') {
+        activeMission.step = '진행중';
+      }
+
+      const all = getDispatches();
+      const idx = all.findIndex(m => m.id === activeMission.id);
+      if (idx !== -1) {
+        all[idx] = activeMission;
+        saveDispatches(all);
+      }
+    }
+
+    // 사진 9장 등록 수 카운터 뱃지 갱신
+    function updatePhotoCountBadge() {
+      const bCount = (uploadedPhotos.before || []).length;
+      const pCount = (uploadedPhotos.process || []).length;
+      const aCount = (uploadedPhotos.after || []).length;
+      const totalCount = bCount + pCount + aCount;
+
+      const badge = document.getElementById('photoCountBadge');
+      if (!badge) return;
+
+      if (totalCount === 0) {
+        badge.textContent = '총 0 / 9장 등록';
+        badge.className = 'photo-counter-badge';
+      } else if (totalCount === 9) {
+        badge.textContent = '총 9 / 9장 (최대 완벽 등록)';
+        badge.className = 'photo-counter-badge full';
+      } else {
+        badge.textContent = `총 ${totalCount} / 9장 등록됨 (전 ${bCount}·진행 ${pCount}·완료 ${aCount})`;
+        badge.className = 'photo-counter-badge has-photos';
+      }
+    }
+
+    // [최종] 🏁 현장 임무 최종 완료 및 본사 송금 요청 (단계별 각 최대 3장 / 최소 1장 이상 등록)
+    function handleFinalCompletion() {
+      const bCount = (uploadedPhotos.before || []).length;
+      const pCount = (uploadedPhotos.process || []).length;
+      const aCount = (uploadedPhotos.after || []).length;
+      const totalCount = bCount + pCount + aCount;
+
+      if (totalCount === 0) {
+        alert('현장 사진을 최소 1장 이상 등록해 주세요.\n(각 단계별 최대 3장씩, 총 9장까지 등록 가능합니다)');
         return;
       }
 
@@ -1975,9 +1992,12 @@
 
       activeMission.step = '서비스완료';
       activeMission.completionDate = finishTime;
-      activeMission.beforePhoto = uploadedPhotos.before;
-      activeMission.processPhoto = uploadedPhotos.process;
-      activeMission.afterPhoto = uploadedPhotos.after;
+      activeMission.beforePhotos = uploadedPhotos.before;
+      activeMission.processPhotos = uploadedPhotos.process;
+      activeMission.afterPhotos = uploadedPhotos.after;
+      activeMission.beforePhoto = uploadedPhotos.before[0] || '';
+      activeMission.processPhoto = uploadedPhotos.process[0] || '';
+      activeMission.afterPhoto = uploadedPhotos.after[0] || '';
       activeMission.coachReport = memo;
 
       // 전체 저장소 갱신
@@ -1989,7 +2009,7 @@
       }
 
       closeExecutionModal();
-      alert(`🎉 [${activeMission.customerName}] 현장 케어가 완벽하게 완료 제출되었습니다!\n\n• 등록 사진: 총 ${photoCount}장 전송 완료\n• 본사 관리자 화면으로 도착시간, 완료시간, 현장 사진이 실시간 전송되었습니다.\n• 본사 검수 확인 후 코치님 계좌로 활동비(${(activeMission.fee || 150000).toLocaleString()}원)가 송금됩니다.\n\n수고 많으셨습니다!`);
+      alert(`🎉 [${activeMission.customerName}] 현장 케어가 완벽하게 완료 제출되었습니다!\n\n• 등록 사진: 총 ${totalCount}장 전송 완료 (작업전 ${bCount}장 · 진행 ${pCount}장 · 완료 ${aCount}장)\n• 본사 관리자 화면으로 도착시간, 완료시간, 현장 사진이 실시간 전송되었습니다.\n• 본사 검수 확인 후 코치님 계좌로 활동비(${(activeMission.fee || 150000).toLocaleString()}원)가 송금됩니다.\n\n수고 많으셨습니다!`);
     }
   </script>
 </body>
