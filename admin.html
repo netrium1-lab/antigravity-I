@@ -5002,7 +5002,7 @@
         pages: 184,
         coach: '이선영 코치',
         date: '2026.09.20',
-        coverImg: 'showcase_senior_memoir_1790478734278.jpg',
+        coverImg: 'images/showcase-senior-memoir.jpg',
         pdfFileName: '김순옥_어르신_인생평전_184쪽_완성본.pdf',
         pdfFileSize: '18.4 MB',
         pdfDataUrl: '',
@@ -5017,7 +5017,7 @@
         pages: 120,
         coach: '정우성 코치',
         date: '2026.09.24',
-        coverImg: 'showcase_senior_writing_1790478715781.jpg',
+        coverImg: 'images/showcase-senior-writing.jpg',
         pdfFileName: '이만수_어르신_50년_항해_회고록_완성본.pdf',
         pdfFileSize: '12.1 MB',
         pdfDataUrl: '',
@@ -5032,7 +5032,7 @@
         pages: 96,
         coach: '김민희 코치',
         date: '2026.09.26',
-        coverImg: 'showcase_senior_happy_book_1790478755451.jpg',
+        coverImg: 'images/showcase-senior-happy-book.jpg',
         pdfFileName: '박정희_모친_비움일기_자서전_완성본.pdf',
         pdfFileSize: '8.5 MB',
         pdfDataUrl: '',
@@ -5047,7 +5047,15 @@
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            // 구버전 이미지 경로 안전 보정
+            return parsed.map(m => {
+              if (m.coverImg && m.coverImg.includes('1790478734278')) m.coverImg = 'images/showcase-senior-memoir.jpg';
+              if (m.coverImg && m.coverImg.includes('1790478715781')) m.coverImg = 'images/showcase-senior-writing.jpg';
+              if (m.coverImg && m.coverImg.includes('1790478755451')) m.coverImg = 'images/showcase-senior-happy-book.jpg';
+              return m;
+            });
+          }
         } catch (e) {
           console.error('출판 자서전 파싱 오류:', e);
         }
@@ -5072,13 +5080,14 @@
       }
 
       tbody.innerHTML = list.map(m => {
-        const coverSrc = m.coverImg || 'showcase_senior_memoir_1790478734278.jpg';
+        let coverSrc = m.coverImg || 'images/showcase-senior-memoir.jpg';
+        if (coverSrc.includes('1790478734278')) coverSrc = 'images/showcase-senior-memoir.jpg';
         const isPub = m.isPublic !== false;
 
         return `
           <tr>
             <td style="text-align: center;">
-              <img src="${escapeHtml(coverSrc)}" alt="표지" style="width: 44px; height: 58px; object-fit: cover; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);" onerror="this.src='showcase_senior_memoir_1790478734278.jpg'">
+              <img src="${escapeHtml(coverSrc)}" alt="표지" style="width: 44px; height: 58px; object-fit: cover; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);" onerror="this.onerror=null; this.src='images/showcase-senior-memoir.jpg';">
             </td>
             <td>
               <div style="font-weight: 850; color: var(--text-main); font-size: 0.92rem; line-height: 1.3;">

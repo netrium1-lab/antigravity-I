@@ -4386,7 +4386,15 @@
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            // 구버전 이미지 경로 안전 보정
+            return parsed.map(m => {
+              if (m.coverImg && m.coverImg.includes('1790478734278')) m.coverImg = 'images/showcase-senior-memoir.jpg';
+              if (m.coverImg && m.coverImg.includes('1790478715781')) m.coverImg = 'images/showcase-senior-writing.jpg';
+              if (m.coverImg && m.coverImg.includes('1790478755451')) m.coverImg = 'images/showcase-senior-happy-book.jpg';
+              return m;
+            });
+          }
         } catch (e) {
           console.error('서재 출판 자서전 파싱 오류:', e);
         }
@@ -4399,7 +4407,7 @@
           pages: 184,
           coach: '이선영 코치',
           date: '2026.09.20',
-          coverImg: 'showcase_senior_memoir_1790478734278.jpg',
+          coverImg: 'images/showcase-senior-memoir.jpg',
           pdfFileName: '김순옥_어르신_인생평전_184쪽_완성본.pdf',
           pdfFileSize: '18.4 MB',
           pdfDataUrl: '',
@@ -4414,7 +4422,7 @@
           pages: 120,
           coach: '정우성 코치',
           date: '2026.09.24',
-          coverImg: 'showcase_senior_writing_1790478715781.jpg',
+          coverImg: 'images/showcase-senior-writing.jpg',
           pdfFileName: '이만수_어르신_50년_항해_회고록_완성본.pdf',
           pdfFileSize: '12.1 MB',
           pdfDataUrl: '',
@@ -4429,7 +4437,7 @@
           pages: 96,
           coach: '김민희 코치',
           date: '2026.09.26',
-          coverImg: 'showcase_senior_happy_book_1790478755451.jpg',
+          coverImg: 'images/showcase-senior-happy-book.jpg',
           pdfFileName: '박정희_모친_비움일기_자서전_완성본.pdf',
           pdfFileSize: '8.5 MB',
           pdfDataUrl: '',
@@ -4451,10 +4459,11 @@
       }
 
       container.innerHTML = list.map(m => {
-        const cover = m.coverImg || 'showcase_senior_memoir_1790478734278.jpg';
+        let cover = m.coverImg || 'images/showcase-senior-memoir.jpg';
+        if (cover.includes('1790478734278')) cover = 'images/showcase-senior-memoir.jpg';
         return `
           <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; display: flex; gap: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
-            <img src="${escapeHtml(cover)}" alt="표지" style="width: 80px; height: 110px; object-fit: cover; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); flex-shrink: 0;" onerror="this.src='showcase_senior_memoir_1790478734278.jpg'">
+            <img src="${escapeHtml(cover)}" alt="표지" style="width: 80px; height: 110px; object-fit: cover; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); flex-shrink: 0;" onerror="this.onerror=null; this.src='images/showcase-senior-memoir.jpg';">
             <div style="display: flex; flex-direction: column; justify-content: space-between; flex: 1; min-width: 0;">
               <div>
                 <div style="font-size: 0.76rem; color: var(--accent); font-weight: 800; margin-bottom: 2px;">
