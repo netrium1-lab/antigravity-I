@@ -4198,22 +4198,56 @@
 
     /* ================= 6대 핵심 서비스 카테고리 비주얼 쇼케이스 덱 ================= */
     .hero-category-showcase {
+      width: 100%;
+      margin-top: 36px;
+      margin-bottom: 28px;
+    }
+    .cat-showcase-header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+    .cat-showcase-tag {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 850;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 4px 14px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(43, 90, 66, 0.2);
+    }
+    .cat-showcase-headline {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 0;
+      font-family: 'Noto Serif KR', Georgia, serif;
+      letter-spacing: -0.5px;
+    }
+    @media (max-width: 600px) {
+      .cat-showcase-headline {
+        font-size: 1.15rem;
+      }
+    }
+
+    .cat-showcase-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-top: 36px;
-      margin-bottom: 24px;
+      gap: 20px;
+      width: 100%;
+      box-sizing: border-box;
     }
-    @media (max-width: 960px) {
-      .hero-category-showcase {
+    @media (max-width: 900px) {
+      .cat-showcase-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 14px;
+        gap: 16px;
       }
     }
     @media (max-width: 580px) {
-      .hero-category-showcase {
+      .cat-showcase-grid {
         grid-template-columns: 1fr;
-        gap: 14px;
+        gap: 16px;
       }
     }
 
@@ -4229,54 +4263,57 @@
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
+      box-sizing: border-box;
     }
     .cat-showcase-card:hover {
       transform: translateY(-4px);
       border-color: var(--accent);
       box-shadow: 0 12px 28px rgba(43, 90, 66, 0.14);
     }
-    .cat-showcase-card.highlight:hover {
-      border-color: var(--accent-gold);
-      box-shadow: 0 12px 28px rgba(197, 155, 39, 0.22);
-    }
 
-    .cat-showcase-img-wrap {
+    .cat-showcase-thumb {
       position: relative;
       width: 100%;
-      height: 145px;
+      height: 160px;
+      max-height: 160px;
       overflow: hidden;
       background: var(--bg-secondary);
+      flex-shrink: 0;
     }
-    .cat-showcase-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    @media (max-width: 580px) {
+      .cat-showcase-thumb {
+        height: 175px;
+        max-height: 175px;
+      }
+    }
+    .cat-showcase-thumb img {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      object-fit: cover !important;
+      object-position: center !important;
+      display: block !important;
       transition: transform 0.5s ease;
     }
-    .cat-showcase-card:hover .cat-showcase-img {
+    .cat-showcase-card:hover .cat-showcase-thumb img {
       transform: scale(1.05);
     }
 
-    .cat-showcase-badge {
+    .cat-showcase-num {
       position: absolute;
       top: 12px;
-      left: 12px;
+      right: 12px;
+      background: rgba(0, 0, 0, 0.75);
+      color: #ffffff;
+      font-size: 0.76rem;
+      font-weight: 850;
       padding: 4px 10px;
       border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 850;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       letter-spacing: 0.5px;
-      background: rgba(22, 26, 24, 0.85);
-      color: #ffffff;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .cat-showcase-badge.gold {
-      background: rgba(197, 155, 39, 0.9);
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.3);
+      z-index: 2;
     }
 
     .cat-showcase-body {
@@ -4284,7 +4321,46 @@
       display: flex;
       flex-direction: column;
       flex: 1;
+      box-sizing: border-box;
+      background: var(--bg-card);
     }
+    .cat-showcase-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      width: fit-content;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 850;
+      margin-bottom: 8px;
+    }
+    .cat-showcase-badge.green {
+      background: rgba(43, 90, 66, 0.12);
+      color: var(--accent);
+    }
+    .cat-showcase-badge.tea {
+      background: rgba(142, 107, 72, 0.14);
+      color: #8E6B48;
+    }
+    .cat-showcase-badge.orange {
+      background: rgba(217, 119, 6, 0.14);
+      color: #D97706;
+    }
+    .cat-showcase-badge.rose {
+      background: rgba(190, 24, 93, 0.12);
+      color: #BE185D;
+    }
+    .cat-showcase-badge.blue {
+      background: rgba(30, 64, 175, 0.12);
+      color: #1E40AF;
+    }
+    .cat-showcase-badge.gold {
+      background: rgba(197, 155, 39, 0.16);
+      color: var(--accent-gold);
+      border: 1px solid rgba(197, 155, 39, 0.3);
+    }
+
     .cat-showcase-title {
       font-size: 1.15rem;
       font-weight: 800;
@@ -4293,25 +4369,22 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      font-family: 'Noto Serif KR', Georgia, serif;
+    }
+    .cat-showcase-arrow {
+      font-size: 1.1rem;
+      color: var(--accent);
+      transition: transform 0.2s ease;
+    }
+    .cat-showcase-card:hover .cat-showcase-arrow {
+      transform: translateX(4px);
     }
     .cat-showcase-desc {
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       color: var(--text-secondary);
-      line-height: 1.5;
-      margin-bottom: 14px;
-      flex: 1;
-    }
-    .cat-showcase-link-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.84rem;
-      font-weight: 800;
-      color: var(--accent);
-      margin-top: auto;
-    }
-    .cat-showcase-card.highlight .cat-showcase-link-row {
-      color: var(--accent-gold);
+      line-height: 1.55;
+      margin: 0;
+      word-break: keep-all;
     }
 
     /* ================= 각 카테고리 진입부 랜드마크 비주얼 배너 카드 ================= */
@@ -4349,10 +4422,12 @@
       }
     }
     .slb-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      object-fit: cover !important;
+      object-position: center !important;
+      display: block !important;
     }
     .slb-tag {
       position: absolute;
