@@ -2459,44 +2459,6 @@
     </div>
   </header>
 
-  <!-- 🧭 빠른 화면 이동 콤보박스 네비게이터 (시니어 & 모바일 원클릭 바로가기) -->
-  <nav class="quick-nav-combo-container" aria-label="빠른 화면 이동 선택">
-    <div class="combo-label-wrap">
-      <span class="combo-guide-icon">🧭</span>
-      <span class="combo-guide-text">빠른 이동:</span>
-    </div>
-    <div class="combo-select-wrap">
-      <select id="roomQuickNavSelect" onchange="handleQuickNavChange(this.value)" class="room-quick-combo-select" aria-label="화면 카테고리 빠른 이동">
-        <optgroup label="↩️ 스마트 화면 복귀 & 서재 모드">
-          <option value="action-smart-back">← 방금 보던 이전 화면(스크롤 복원)으로 가기</option>
-          <option value="url:index.html#home">🏠 여백과 결 메인 대문</option>
-          <option value="mode-sample" id="optSample">👵 김순옥 어르신 완성 서재 (184쪽 샘플)</option>
-          <option value="mode-user" id="optUser">👤 나의 프라이빗 독립 서재</option>
-        </optgroup>
-        <optgroup label="🌿 여백과 결 전체 서비스 카테고리">
-          <option value="url:index.html#magazine">📚 1. 고유한 여백서재 (기록/인터뷰)</option>
-          <option value="url:index.html#lounge">☕ 2. 비움 한 줄 라운지 (커뮤니티)</option>
-          <option value="url:index.html#test">🧩 3. 나의 마음 비움 자가진단</option>
-          <option value="url:index.html#memoir">✍️ 4. AI 구술 자서전 제작</option>
-          <option value="url:academy.html">🎓 5. 인생정리 코치 아카데미</option>
-          <option value="url:index.html#archive">🏛️ 6. 보물 서재 소개 섹션</option>
-        </optgroup>
-        <optgroup label="📚 4대 보물 서가 바로가기">
-          <option value="tab-memoir" selected>📖 1. 디지털 자서전 (인생 평전 e-Book)</option>
-          <option value="tab-gallery">📸 2. 기억 복원 갤러리 (추억 사진관)</option>
-          <option value="tab-diary">✍️ 3. 비움 일기 (삶의 회고록 28편)</option>
-          <option value="tab-vault">🗝️ 4. 안심 엔딩 금고 (사전의료/유품 메모)</option>
-          <option value="tab-coach">🌿 5. 전담 코치 케어 리포트</option>
-        </optgroup>
-        <optgroup label="✨ 간편 올리기 & 관리">
-          <option value="action-upload">📸+✍️ 추억 사진·글 올리기</option>
-          <option value="action-vault-write">🗝️ 엔딩 금고 새 메모 보관하기</option>
-          <option value="action-share">💌 내 서재 가족에게 주소 공유</option>
-        </optgroup>
-      </select>
-      <div class="combo-select-arrow">▼</div>
-    </div>
-  </nav>
 
   <!-- 서재 모드 안내 배너 (김순옥 둘러보기 모드 vs 개인 서재 모드 실시간 안내) -->
   <div id="roomModeBanner" class="room-mode-banner" style="display: none;"></div>
