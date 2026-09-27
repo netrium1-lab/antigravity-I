@@ -2256,6 +2256,9 @@
           <span class="editor-top-badge">PREMIUM BLACK</span>
         </div>
         <div class="editor-btn-group">
+          <button type="button" class="btn-editor-action" onclick="openAiArticleGeneratorModal()" style="background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #ffffff; border: none; font-weight: 800; box-shadow: 0 2px 10px rgba(99,102,241,0.4); display: inline-flex; align-items: center; gap: 6px;" title="네이버 황금 키워드 기반 고품질 칼럼을 AI가 원클릭으로 자동 작성합니다">
+            <span>🪄 AI 자동 글쓰기</span>
+          </button>
           <button type="button" class="btn-editor-action" onclick="saveEditorDraft()" title="작성 중인 내용을 임시 저장합니다">
             <span>💾</span> 임시저장
           </button>
@@ -2419,6 +2422,50 @@
         <!-- JS로 동적 렌더링 -->
       </div>
       <button type="button" class="btn-save-setting" onclick="closeEditorDraftsModal()" style="width: 100%; justify-content: center; padding: 11px; background: #64748b;">닫기</button>
+  </div>
+
+  <!-- ================= 모달 2-1) 🪄 AI 황금키워드 자동 칼럼 생성기 모달 ================= -->
+  <div class="cms-modal-overlay" id="aiArticleGeneratorModal" onclick="closeAiArticleModalOnOverlay(event)">
+    <div class="auth-card" style="max-width: 680px; text-align: left; padding: 28px; max-height: 90vh; overflow-y: auto;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1.5px solid var(--border-color); padding-bottom: 14px;">
+        <div>
+          <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.35rem; font-weight: 800; color: var(--text-main); margin: 0; display: flex; align-items: center; gap: 8px;">
+            <span>🪄</span> AI 황금키워드 칼럼 원클릭 자동 생성기
+          </h3>
+          <p style="font-size: 0.86rem; color: var(--text-muted); margin: 4px 0 0;">
+            네이버 데이터랩 및 4050 자녀·6070 시니어 검색 트렌드 기반의 고품질 칼럼을 에디터에 즉시 집필합니다.
+          </p>
+        </div>
+        <button type="button" onclick="closeAiArticleGeneratorModal()" aria-label="닫기" style="border: 1px solid var(--border-color); background: var(--bg-body); border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;">✕</button>
+      </div>
+
+      <!-- 빠른 맞춤 키워드 직접 입력 -->
+      <div style="margin-bottom: 20px; padding: 14px 16px; background: #f8fafc; border-radius: 12px; border: 1.5px dashed #cbd5e1;">
+        <label style="font-size: 0.88rem; font-weight: 800; color: #1e293b; display: block; margin-bottom: 6px;">
+          🔍 원하는 특정 키워드로 즉석 맞춤 집필하기
+        </label>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="aiCustomKeywordInput" class="setting-input" placeholder="예: 부모님 팔순 선물, 은퇴 후 자서전, 디지털 유품" style="background:#fff;">
+          <button type="button" onclick="generateAiCustomArticle()" style="padding: 10px 18px; border-radius: 10px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; color: #fff; font-weight: 800; font-size: 0.9rem; cursor: pointer; white-space: nowrap; box-shadow: 0 2px 8px rgba(99,102,241,0.35);">
+            ⚡ 즉시 생성
+          </button>
+        </div>
+      </div>
+
+      <div style="font-size: 0.92rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+        <span>🔥</span> 검증된 네이버 상위노출 황금 주제 프리셋 (클릭 시 원클릭 완성)
+      </div>
+
+      <!-- 프리셋 카드 목록 -->
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;" id="aiPresetList">
+        <!-- JS로 동적 렌더링 -->
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button type="button" class="btn-save-setting" onclick="closeAiArticleGeneratorModal()" style="background: #64748b; color: #fff;">
+          닫기
+        </button>
+      </div>
     </div>
   </div>
 
@@ -2854,6 +2901,42 @@
     // 기본 칼럼 데이터셋 (fallback)
     const defaultArticles = [
       {
+        id: 'mag_filial_memoir',
+        title: "칠순 잔치 대신 부모님께 '184쪽의 인생 서재'를 선물해 드렸습니다",
+        category: '웰라이프',
+        image: 'images/showcase-senior-memoir.jpg',
+        excerpt: "뻔한 돈 봉투나 일회성 식사 대접 대신, 평생을 헌신해오신 부모님의 70년 인생 서사를 양장본 디지털 자서전으로 엮어드린 어느 자녀의 가슴 뭉클한 이야기.",
+        content: `
+          <p>"아버지 칠순 때 무엇을 해드려야 할까?"</p>
+          <p>형제들과 몇 달을 고민했습니다. 고급 한정식집에서의 식사, 현금 돈 봉투, 해외여행... 모두 좋은 선물이었지만 며칠 지나면 기억 속에서 희미해질 일회성 이벤트에 불과하다는 아쉬움이 남았습니다. 평생을 우리 삼 남매를 위해 묵묵히 헌신해 오신 아버지의 삶에 '진짜 가치 있는 헌정'을 해드리고 싶었습니다.</p>
+          
+          <blockquote>
+            "자식이 부모에게 드릴 수 있는 가장 위대한 효도는, 부모님이 걸어오신 험난했던 인생의 모든 굽이굽이를 '눈부신 역사'로 인정하고 기록해 드리는 것입니다."
+          </blockquote>
+
+          <h3>1. "내 인생에 쓸 게 뭐가 있냐" 하시던 아버지의 눈물</h3>
+          <p>처음 자서전 제작 이야기를 꺼냈을 때, 아버지는 손사래를 치셨습니다. "대통령이나 재벌도 아닌데 평범한 내가 무슨 자서전이냐"고 하셨지요. 하지만 전문 구술 코칭스태프가 찾아와 옛날 흑백 사진첩을 한 장씩 넘기며 질문을 던지자, 아버지의 눈빛이 달라지기 시작했습니다.</p>
+          <p>어린 시절 고향 마을의 풍경, 어머니를 처음 만났던 설레던 날, 자식들 등록금을 마련하려 밤낮없이 뛰었던 치열한 일터의 기억까지... 아버지는 평생 가슴에만 묻어두었던 이야기들을 밤이 깊도록 털어놓으시며 소년처럼 웃으시기도 하고, 남몰래 눈시울을 붉히시기도 했습니다.</p>
+
+          <h3>2. 4주간의 구술 녹음과 184쪽의 디지털 자서전 완성</h3>
+          <p>녹음된 구술 음성은 AI 음성 텍스트 변환과 전문 에디터의 세심한 윤문을 거쳐 한 권의 품격 있는 책으로 빚어졌습니다. 낡은 앨범 속 빛바랜 사진들은 디지털로 복원되어 고화질로 실렸고, 아버지가 자식들과 손주들에게 남기고 싶은 따뜻한 인생 교훈과 당부의 말씀이 '인생 후반전 선언문'이라는 챕터로 갈무리되었습니다.</p>
+
+          <h3>3. 온 가족이 함께 눈물 흘린 칠순 헌정식</h3>
+          <p>칠순 당일, 양장본으로 제작된 184쪽의 자서전을 보자기에 싸서 건네드렸습니다. 책 표지에 박힌 본인의 존함과 사진을 어루만지시던 아버지의 손이 파르르 떨렸습니다. 손주들이 할아버지의 어린 시절 이야기를 소리 내어 읽자, 온 가족의 눈가에 눈물이 맺혔습니다.</p>
+          <p>그날 아버지는 제 손을 꼭 잡고 말씀하셨습니다. <strong>"내가 살아온 70년 세월이 결코 헛되지 않았구나. 내 평생 받은 선물 중 가장 눈부시고 자랑스럽다."</strong></p>
+
+          <div style="margin: 28px 0; padding: 20px; background: #faf8f5; border-left: 4px solid var(--accent); border-radius: 8px;">
+            <h4 style="margin: 0 0 8px; color: var(--text-primary); font-size: 1.05rem;">🌿 부모님의 세월이 사라지기 전에, 이야기를 기록해 주세요</h4>
+            <p style="margin: 0; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
+              시간은 부모님을 기다려주지 않습니다. 부모님의 목소리와 온기가 남아있는 지금, 부모님의 찬란했던 인생의 결을 여백과 결 디지털 자서전으로 남겨보세요.
+            </p>
+          </div>
+        `,
+        readTime: '읽는 시간 4분',
+        date: '2026.09.27',
+        isFeatured: true
+      },
+      {
         id: 'mag_1',
         title: '스마트폰 속 3만 장의 사진, 사후에는 어떻게 될까?',
         category: '비움과 갈무리',
@@ -2913,7 +2996,19 @@
       if (saved) {
         try {
           const list = JSON.parse(saved);
-          if (Array.isArray(list) && list.length > 0) return list;
+          if (Array.isArray(list) && list.length > 0) {
+            let migrated = false;
+            defaultArticles.forEach(defArt => {
+              if (!list.some(item => item.id === defArt.id)) {
+                list.unshift(defArt);
+                migrated = true;
+              }
+            });
+            if (migrated) {
+              localStorage.setItem(ARTICLES_KEY, JSON.stringify(list));
+            }
+            return list;
+          }
         } catch (e) {}
       }
 
@@ -3525,6 +3620,245 @@
       drafts.splice(index, 1);
       localStorage.setItem('yebaek_editor_drafts', JSON.stringify(drafts));
       openEditorDraftsModal();
+    }
+
+    // =========================================================================
+    // 🪄 AI 황금키워드 자동 칼럼 생성 엔진 (네이버 D.I.A.+ & 4050/6070 트렌드 최적화)
+    // =========================================================================
+    const aiArticlePresets = [
+      {
+        badge: "🎁 4050 자녀 타깃 / 효도선물 1위",
+        keywords: "부모님 칠순 선물, 자서전 제작, 감동 효도 선물",
+        category: "웰라이프",
+        title: "칠순 잔치 대신 부모님께 '184쪽의 인생 서재'를 선물해 드렸습니다",
+        excerpt: "뻔한 돈 봉투나 일회성 식사 대접 대신, 평생을 헌신해오신 부모님의 70년 인생 서사를 양장본 디지털 자서전으로 엮어드린 어느 자녀의 가슴 뭉클한 이야기.",
+        image: "images/showcase-senior-memoir.jpg",
+        content: `
+          <p>"아버지 칠순 때 무엇을 해드려야 할까?"</p>
+          <p>형제들과 몇 달을 고민했습니다. 고급 한정식집에서의 식사, 현금 돈 봉투, 해외여행... 모두 좋은 선물이었지만 며칠 지나면 기억 속에서 희미해질 일회성 이벤트에 불과하다는 아쉬움이 남았습니다. 평생을 우리 삼 남매를 위해 묵묵히 헌신해 오신 아버지의 삶에 '진짜 가치 있는 헌정'을 해드리고 싶었습니다.</p>
+          <blockquote>"자식이 부모에게 드릴 수 있는 가장 위대한 효도는, 부모님이 걸어오신 험난했던 인생의 모든 굽이굽이를 '눈부신 역사'로 인정하고 기록해 드리는 것입니다."</blockquote>
+          <h3>1. "내 인생에 쓸 게 뭐가 있냐" 하시던 아버지의 눈물</h3>
+          <p>처음 자서전 제작 이야기를 꺼냈을 때, 아버지는 손사래를 치셨습니다. "대통령이나 재벌도 아닌데 평범한 내가 무슨 자서전이냐"고 하셨지요. 하지만 전문 구술 코칭스태프가 찾아와 옛날 흑백 사진첩을 한 장씩 넘기며 질문을 던지자, 아버지의 눈빛이 달라지기 시작했습니다.</p>
+          <p>어린 시절 고향 마을의 풍경, 어머니를 처음 만났던 설레던 날, 자식들 등록금을 마련하려 밤낮없이 뛰었던 치열한 일터의 기억까지... 아버지는 평생 가슴에만 묻어두었던 이야기들을 밤이 깊도록 털어놓으시며 소년처럼 웃으시기도 하고, 남몰래 눈시울을 붉히시기도 했습니다.</p>
+          <h3>2. 4주간의 구술 녹음과 184쪽의 디지털 자서전 완성</h3>
+          <p>녹음된 구술 음성은 AI 음성 텍스트 변환과 전문 에디터의 세심한 윤문을 거쳐 한 권의 품격 있는 책으로 빚어졌습니다. 낡은 앨범 속 빛바랜 사진들은 디지털로 복원되어 고화질로 실렸고, 아버지가 자식들과 손주들에게 남기고 싶은 따뜻한 인생 교훈과 당부의 말씀이 '인생 후반전 선언문'이라는 챕터로 갈무리되었습니다.</p>
+          <h3>3. 온 가족이 함께 눈물 흘린 칠순 헌정식</h3>
+          <p>칠순 당일, 양장본으로 제작된 184쪽의 자서전을 보자기에 싸서 건네드렸습니다. 책 표지에 박힌 본인의 존함과 사진을 어루만지시던 아버지의 손이 파르르 떨렸습니다. 손주들이 할아버지의 어린 시절 이야기를 소리 내어 읽자, 온 가족의 눈가에 눈물이 맺혔습니다.</p>
+          <p>그날 아버지는 제 손을 꼭 잡고 말씀하셨습니다. <strong>"내가 살아온 70년 세월이 결코 헛되지 않았구나. 내 평생 받은 선물 중 가장 눈부시고 자랑스럽다."</strong></p>
+          <div style="margin: 28px 0; padding: 20px; background: #faf8f5; border-left: 4px solid var(--accent); border-radius: 8px;">
+            <h4 style="margin: 0 0 8px; color: var(--text-primary); font-size: 1.05rem;">🌿 부모님의 세월이 사라지기 전에, 이야기를 기록해 주세요</h4>
+            <p style="margin: 0; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
+              시간은 부모님을 기다려주지 않습니다. 부모님의 목소리와 온기가 남아있는 지금, 부모님의 찬란했던 인생의 결을 여백과 결 디지털 자서전으로 남겨보세요.
+            </p>
+          </div>
+        `
+      },
+      {
+        badge: "📱 6070 시니어 타깃 / 디지털 정리",
+        keywords: "디지털 유산 정리, 스마트폰 사진 정리, 엔딩노트 양식",
+        category: "비움과 갈무리",
+        title: "스마트폰 속 사진 3만 장, 사후에는 어떻게 정리될까? 웰다잉 디지털 갈무리 3단계",
+        excerpt: "가족들에게 남겨질 내 스마트폰 속 방대한 사진과 계정을 사전에 깔끔하고 안전하게 정돈하는 현대적 디지털 유산 정리법.",
+        image: "images/showcase-books-organizing.jpg",
+        content: `
+          <p>현대인의 삶은 손바닥만 한 스마트폰 속에 고스란히 담겨 있습니다. 지난 10여 년간 찍어온 3만 장이 넘는 사진, 메신저 대화록, 은행과 포털의 수많은 계정들... 만약 우리가 갑작스레 세상을 떠나게 된다면 이 디지털 흔적들은 어떻게 될까요?</p>
+          <blockquote>"물건을 정리하는 것만큼이나 내 손안의 작은 우주인 스마트폰 속 기록을 스스로 갈무리하는 것이 진정한 웰다잉의 첫걸음입니다."</blockquote>
+          <h3>1. 클라우드 자동 결제와 미사용 계정의 목록화</h3>
+          <p>첫 번째 단계는 매달 자동으로 결제되고 있는 구독 서비스(클라우드 저장소, OTT, 멤버십 등)의 목록을 시트나 워크북에 정리하는 것입니다. 가족들이 찾지 못해 수년간 비용이 청구되는 안타까운 사례가 늘고 있습니다.</p>
+          <h3>2. 가족에게 건넬 '디지털 유산 상속인' 지정</h3>
+          <p>애플과 구글은 이미 '디지털 유산 관리자' 및 '휴면 계정 관리자' 기능을 공식 지원합니다. 내가 3개월 이상 로그인하지 않을 때 사전에 지정한 신뢰할 수 있는 가족에게 사진과 문서의 열람 권한을 전달하도록 설정할 수 있습니다.</p>
+          <h3>3. 남기고 싶은 100장의 사진 선별하기</h3>
+          <p>3만 장을 모두 남기는 것은 유족들에게 또 다른 정리의 짐이 됩니다. 나의 청춘, 치열했던 일터, 가족과의 눈부신 여행 등 인생의 결이 묻어나는 소중한 사진 100장을 골라 '인생 아카이브 앨범'으로 갈무리해보세요.</p>
+        `
+      },
+      {
+        badge: "🌿 인생 2막 은퇴자 타깃 / 라이프 리셋",
+        keywords: "은퇴 후 버킷리스트, 5060 재취업, 라이프 리셋",
+        category: "웰라이프",
+        title: "정년퇴직 후 찾아온 텅 빈 하루, 나를 되찾는 4주 라이프 리셋 루틴",
+        excerpt: "30년 넘게 일하던 직장을 떠나 마주한 공허함. 무기력에서 벗어나 내 삶의 주권을 회복하고 두 번째 황금기를 여는 4주간의 기록 여행.",
+        image: "images/showcase-senior-writing.jpg",
+        content: `
+          <p>매일 아침 7시면 울리던 알람이 더 이상 울리지 않는 첫 월요일. 30년 넘게 직장인으로 살아온 이들에게 은퇴의 첫 주는 자유로움이 아니라 가슴 한구석이 텅 비어버리는 낯선 공허함으로 다가옵니다.</p>
+          <blockquote>"은퇴는 끝이 아니라, 내가 누구인지 온전히 탐색할 수 있는 생애 최초의 '안식년'입니다."</blockquote>
+          <h3>1주차: 명함 뒤에 숨겨진 '진짜 나'를 마주하기</h3>
+          <p>회사 이름과 직책을 떼어내고 나면 나는 누구일까요? 지난 세월 치열하게 살아온 나 자신을 따뜻하게 위로하고, 내가 진정으로 좋아했던 어린 시절의 꿈과 취향을 종이 위에 적어보는 것부터 시작합니다.</p>
+          <h3>2주차: 공간과 일상의 비움 루틴</h3>
+          <p>오래된 양복, 지나간 서류철, 쓰지 않는 물건들을 과감하게 정리합니다. 공간이 비워져야 새로운 영감과 활력이 채워집니다.</p>
+          <h3>3주차: 나의 이야기를 책으로 엮는 자서전 코호트</h3>
+          <p>비슷한 고민을 가진 동년배들과 함께 모여 내 지나온 궤적을 글로 쓰고 나누는 4주 코호트에 참여합니다. 내 삶이 누군가에게 지혜와 용기가 되는 경험을 통해 자존감이 비약적으로 회복됩니다.</p>
+          <h3>4주차: 앞으로 살아갈 30년의 라이프 지도 완성</h3>
+          <p>남은 인생의 버킷리스트를 구체화하고 매일 아침 설레는 마음으로 눈뜰 수 있는 나만의 일상 리듬을 확립합니다.</p>
+        `
+      },
+      {
+        badge: "🕊️ 웰다잉 엔딩노트 타깃",
+        keywords: "사전연명의료의향서, 엔딩노트 쓰는 법, 웰다잉 교육",
+        category: "웰다잉",
+        title: "자식에게 짐 되지 않는 부모의 아름다운 퇴장, 사전연명의료와 엔딩노트",
+        excerpt: "임종 직전 가족들이 겪는 죄책감과 갈등을 미리 덜어주는 현명한 부모의 사전 갈무리. 품격 있는 웰다잉 준비 가이드.",
+        image: "images/showcase-senior-happy-book.jpg",
+        content: `
+          <p>"내가 만약 의식을 잃고 회복 불가능한 상태가 된다면, 자식들이 나를 어떻게 해야 할까?"</p>
+          <p>많은 부모님들이 이 질문 앞에서 망설입니다. 연명치료를 중단하자니 자식들이 패륜이라는 죄책감에 시달릴까 두렵고, 그렇다고 무의미한 호흡기 치료로 막대한 병원비와 고통을 안겨주고 싶지는 않기 때문입니다.</p>
+          <blockquote>"가장 현명한 사랑은, 내가 결정할 수 있을 때 미리 내 삶의 마지막을 스스로 선택해 두는 것입니다."</blockquote>
+          <h3>1. 사전연명의료의향서의 법적 효력</h3>
+          <p>19세 이상 성인이라면 누구나 보건복지부 지정 등록기관에서 사전연명의료의향서를 작성할 수 있습니다. 심폐소생술, 인공호흡기, 혈액투석 등 무의미한 연명치료를 거부하고 존엄한 자연사를 선택할 수 있는 법적 권리입니다.</p>
+          <h3>2. 통장과 유품의 비밀번호를 담은 엔딩노트</h3>
+          <p>엔딩노트는 유언장보다 훨씬 따뜻하고 실용적인 기록입니다. 내가 아끼는 물건을 누구에게 물려주고 싶은지, 의료 결정은 누구에게 위임할 것인지, 장례식은 어떻게 치러지길 원하는지 상세히 남겨둡니다.</p>
+          <h3>3. "엄마가 남겨둔 가장 큰 선물은 평안이었습니다"</h3>
+          <p>부모님이 엔딩노트를 남겨주신 가정의 유족들은 장례 과정에서 갈등 없이 부모님을 온전히 추모하고 애도할 수 있었다고 입을 모읍니다.</p>
+        `
+      },
+      {
+        badge: "🎙️ 부모님 인터뷰 구술 타깃",
+        keywords: "부모님 자서전 질문, 부모님 인생 인터뷰, 생애 회고록",
+        category: "웰라이프",
+        title: "부모님이 건강하실 때 꼭 여쭤봐야 할 10가지 인생 질문",
+        excerpt: "시간이 더 흐르기 전에 부모님의 육성으로 듣고 기록해야 할 삶의 결정적 순간들. 감동적인 부모님 인터뷰 질문 리스트.",
+        image: "images/showcase-senior-memoir.jpg",
+        content: `
+          <p>우리는 부모님에 대해 얼마나 알고 있을까요? 부모님의 생년월일과 좋아하시는 음식은 알지만, 젊은 날 부모님이 품었던 가장 뜨거웠던 꿈이 무엇이었는지, 살면서 가장 깊이 후회했던 순간은 언제였는지 아는 자녀는 드뭅니다.</p>
+          <blockquote>"부모님이라는 거대한 도서관이 사라지기 전에, 그 안의 귀중한 책들을 펼쳐 읽어야 합니다."</blockquote>
+          <h3>질문 1: "어린 시절 가장 행복했던 기억은 무엇인가요?"</h3>
+          <h3>질문 2: "어머니/아버지를 처음 만났을 때 어떤 마음이 드셨나요?"</h3>
+          <h3>질문 3: "인생에서 가장 힘들었던 고비는 어떻게 버텨내셨나요?"</h3>
+          <h3>질문 4: "제가 태어났던 날, 어떤 기분이셨나요?"</h3>
+          <h3>질문 5: "다시 20대로 돌아간다면 꼭 도전해보고 싶은 것은 무엇인가요?"</h3>
+          <h3>질문 6: "인생을 살면서 가장 소중하게 지켜온 가치관은 무엇인가요?"</h3>
+          <p>스마트폰 음성 녹음기를 켜고 이번 주말, 부모님께 따뜻한 차 한 잔을 건네며 질문을 시작해 보세요. 한 번도 들어보지 못했던 부모님의 청춘 이야기가 마법처럼 펼쳐집니다.</p>
+        `
+      }
+    ];
+
+    function openAiArticleGeneratorModal() {
+      renderAiPresets();
+      const modal = document.getElementById('aiArticleGeneratorModal');
+      if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeAiArticleGeneratorModal() {
+      const modal = document.getElementById('aiArticleGeneratorModal');
+      if (modal) {
+        modal.classList.remove('open');
+        if (document.querySelectorAll('.cms-modal-overlay.open').length > 0) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
+      }
+    }
+
+    function closeAiArticleModalOnOverlay(e) {
+      if (e.target.id === 'aiArticleGeneratorModal') {
+        closeAiArticleGeneratorModal();
+      }
+    }
+
+    function renderAiPresets() {
+      const container = document.getElementById('aiPresetList');
+      if (!container) return;
+
+      container.innerHTML = aiArticlePresets.map((p, idx) => `
+        <div style="border: 1.5px solid var(--border-color); border-radius: 12px; padding: 16px; background: #ffffff; transition: all 0.2s ease; display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px;">
+            <span style="font-size: 0.82rem; font-weight: 800; color: #4338ca; background: #eef2ff; padding: 3px 8px; border-radius: 6px;">
+              ${escapeHtml(p.badge)}
+            </span>
+            <span style="font-size: 0.78rem; color: #64748b;">
+              🎯 핵심 키워드: <strong>${escapeHtml(p.keywords)}</strong>
+            </span>
+          </div>
+          <div style="font-size: 1.02rem; font-weight: 800; color: var(--text-main); line-height: 1.4;">
+            ${escapeHtml(p.title)}
+          </div>
+          <p style="font-size: 0.86rem; color: var(--text-muted); margin: 0; line-height: 1.5;">
+            ${escapeHtml(p.excerpt)}
+          </p>
+          <div style="display: flex; justify-content: flex-end; margin-top: 6px;">
+            <button type="button" onclick="applyAiPreset(${idx})" style="padding: 8px 16px; border-radius: 8px; background: linear-gradient(135deg, #4f46e5, #7c3aed); border: none; color: #fff; font-weight: 800; font-size: 0.86rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(79,70,229,0.3);">
+              <span>🪄 이 주제로 자동 집필하기</span> ➔
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function applyAiPreset(idx) {
+      const p = aiArticlePresets[idx];
+      if (!p) return;
+
+      if (!confirm(`'${p.title}'\n\n이 주제의 AI 완성형 칼럼을 에디터에 자동으로 채우시겠습니까?\n기존에 작성 중이던 내용이 대체됩니다.`)) {
+        return;
+      }
+
+      document.getElementById('editorTitle').value = p.title;
+      document.getElementById('editorExcerpt').value = p.excerpt;
+      document.getElementById('editorCategory').value = p.category;
+      document.getElementById('editorContent').innerHTML = p.content.trim();
+      document.getElementById('editorIsFeatured').checked = true;
+
+      // 대표사진 지정
+      mainThumbImg = p.image || '';
+      const thumbText = document.getElementById('editorMainThumbText');
+      if (thumbText) {
+        thumbText.textContent = mainThumbImg ? '지정됨' : '미지정';
+        thumbText.style.color = mainThumbImg ? '#34d399' : '#e2e8f0';
+      }
+
+      closeAiArticleGeneratorModal();
+      alert(`🎉 [${p.title}]\n\nAI 칼럼이 에디터에 자동으로 완벽하게 채워졌습니다!\n글을 한번 훑어보신 후 상단의 [🚀 발행하기]를 누르시면 메인 사이트에 즉시 배포됩니다.`);
+    }
+
+    // 맞춤 키워드 직접 입력 생성
+    function generateAiCustomArticle() {
+      const input = document.getElementById('aiCustomKeywordInput');
+      const kw = input ? input.value.trim() : '';
+      if (!kw) {
+        alert('원하시는 키워드나 주제를 입력해 주세요.\n예: 부모님 팔순 잔치, 은퇴 후 자서전, 디지털 유품');
+        if (input) input.focus();
+        return;
+      }
+
+      const customTitle = `${kw}, 뻔한 선물 대신 평생 남을 184쪽 인생 서재로 전하는 최고의 효도`;
+      const customExcerpt = `${kw}을(를) 고민하는 분들을 위해, 돈으로 환산할 수 없는 부모님의 70년 인생 서사를 양장본 디지털 자서전으로 엮어드리는 가장 우아하고 감동적인 솔루션을 제안합니다.`;
+      const customContent = `
+        <p>"${escapeHtml(kw)}에 대해 많은 분들이 고민하십니다."</p>
+        <p>하지만 며칠 지나면 사라질 일회성 선물이나 형식적인 식사 자리 대신, 평생을 자식들을 위해 묵묵히 헌신해오신 부모님의 삶에 '진짜 가치 있는 헌정'을 해드리는 것은 어떨까요?</p>
+        <blockquote>"자식이 부모에게 드릴 수 있는 가장 위대한 효도는, 부모님이 걸어오신 험난했던 인생의 모든 굽이굽이를 '눈부신 역사'로 인정하고 기록해 드리는 것입니다."</blockquote>
+        <h3>1. "내 인생에 쓸 게 뭐가 있냐" 하시던 부모님의 눈물</h3>
+        <p>처음 이야기를 꺼냈을 때, 부모님은 대부분 손사래를 치십니다. "대통령이나 재벌도 아닌데 평범한 내가 무슨 자서전이냐"고 하시지요. 하지만 전문 구술 코칭스태프가 찾아와 옛날 흑백 사진첩을 한 장씩 넘기며 질문을 던지자, 부모님의 눈빛이 달라지기 시작합니다.</p>
+        <h3>2. 4주간의 구술 녹음과 184쪽의 디지털 자서전 완성</h3>
+        <p>녹음된 구술 음성은 AI 음성 변환과 전문 에디터의 세심한 윤문을 거쳐 한 권의 품격 있는 양장본 책으로 빚어집니다. 낡은 앨범 속 빛바랜 사진들은 디지털로 복원되어 고화질로 실렸고, 자식들과 손주들에게 남기고 싶은 따뜻한 인생 교훈이 '인생 후반전 선언문'으로 갈무리됩니다.</p>
+        <h3>3. 온 가족이 함께 눈물 흘린 헌정의 순간</h3>
+        <p>양장본으로 제작된 184쪽의 자서전을 보자기에 싸서 건네드리는 날, 책 표지에 박힌 본인의 존함과 사진을 어루만지시던 부모님의 손이 파르르 떨립니다. "내가 살아온 세월이 결코 헛되지 않았구나. 내 평생 받은 선물 중 가장 눈부시고 자랑스럽다."</p>
+        <div style="margin: 28px 0; padding: 20px; background: #faf8f5; border-left: 4px solid var(--accent); border-radius: 8px;">
+          <h4 style="margin: 0 0 8px; color: var(--text-primary); font-size: 1.05rem;">🌿 부모님의 세월이 사라지기 전에, 이야기를 기록해 주세요</h4>
+          <p style="margin: 0; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
+            시간은 부모님을 기다려주지 않습니다. 부모님의 목소리와 온기가 남아있는 지금, 부모님의 찬란했던 인생의 결을 여백과 결 디지털 자서전으로 남겨보세요.
+          </p>
+        </div>
+      `;
+
+      document.getElementById('editorTitle').value = customTitle;
+      document.getElementById('editorExcerpt').value = customExcerpt;
+      document.getElementById('editorCategory').value = '웰라이프';
+      document.getElementById('editorContent').innerHTML = customContent.trim();
+      document.getElementById('editorIsFeatured').checked = true;
+
+      mainThumbImg = 'images/showcase-senior-memoir.jpg';
+      const thumbText = document.getElementById('editorMainThumbText');
+      if (thumbText) {
+        thumbText.textContent = '지정됨';
+        thumbText.style.color = '#34d399';
+      }
+
+      closeAiArticleGeneratorModal();
+      if (input) input.value = '';
+      alert(`🎉 [${kw}] 맞춤 AI 칼럼이 에디터에 생성되었습니다!\n내용을 확인하신 후 상단의 [🚀 발행하기]를 누르시면 완료됩니다.`);
     }
 
     // 칼럼 발행 또는 수정 저장 (대표사진 image 필드 포함)

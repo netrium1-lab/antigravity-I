@@ -7,7 +7,14 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  <!-- 여백의 서재 칼럼 매거진 -->
+  <!-- [황금키워드 칼럼 1호] 칠순 잔치 대신 부모님께 184쪽 인생 서재를 선물해 드렸습니다 -->
+  <url>
+    <loc>https://netrium1-lab.github.io/?article=mag_filial_memoir</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <!-- 여백의 서재 칼럼 매거진 전체 -->
   <url>
     <loc>https://netrium1-lab.github.io/#magazine</loc>
     <lastmod>2026-09-27</lastmod>
