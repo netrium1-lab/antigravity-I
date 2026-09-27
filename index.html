@@ -4196,6 +4196,229 @@
       }
     }
 
+    /* ================= 6대 핵심 서비스 카테고리 비주얼 쇼케이스 덱 ================= */
+    .hero-category-showcase {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 36px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 960px) {
+      .hero-category-showcase {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+    }
+    @media (max-width: 580px) {
+      .hero-category-showcase {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+    }
+
+    .cat-showcase-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .cat-showcase-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 28px rgba(43, 90, 66, 0.14);
+    }
+    .cat-showcase-card.highlight:hover {
+      border-color: var(--accent-gold);
+      box-shadow: 0 12px 28px rgba(197, 155, 39, 0.22);
+    }
+
+    .cat-showcase-img-wrap {
+      position: relative;
+      width: 100%;
+      height: 145px;
+      overflow: hidden;
+      background: var(--bg-secondary);
+    }
+    .cat-showcase-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .cat-showcase-card:hover .cat-showcase-img {
+      transform: scale(1.05);
+    }
+
+    .cat-showcase-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.5px;
+      background: rgba(22, 26, 24, 0.85);
+      color: #ffffff;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .cat-showcase-badge.gold {
+      background: rgba(197, 155, 39, 0.9);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .cat-showcase-body {
+      padding: 18px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .cat-showcase-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cat-showcase-desc {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 14px;
+      flex: 1;
+    }
+    .cat-showcase-link-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-top: auto;
+    }
+    .cat-showcase-card.highlight .cat-showcase-link-row {
+      color: var(--accent-gold);
+    }
+
+    /* ================= 각 카테고리 진입부 랜드마크 비주얼 배너 카드 ================= */
+    .section-landmark-banner {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: 22px;
+      overflow: hidden;
+      margin-bottom: 36px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+    @media (max-width: 860px) {
+      .section-landmark-banner {
+        grid-template-columns: 1fr;
+        margin-bottom: 28px;
+        border-radius: 18px;
+      }
+    }
+
+    .slb-img-wrap {
+      position: relative;
+      height: 100%;
+      min-height: 200px;
+      overflow: hidden;
+      background: var(--bg-secondary);
+    }
+    @media (max-width: 860px) {
+      .slb-img-wrap {
+        height: 160px;
+        min-height: 160px;
+      }
+    }
+    .slb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .slb-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 850;
+      background: rgba(22, 26, 24, 0.85);
+      color: #ffffff;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .slb-content {
+      padding: 24px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    @media (max-width: 860px) {
+      .slb-content {
+        padding: 20px 18px;
+      }
+    }
+    .slb-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 850;
+      width: fit-content;
+      margin-bottom: 8px;
+      border: 1px solid rgba(43, 90, 66, 0.25);
+    }
+    .slb-badge.gold {
+      background: rgba(197, 155, 39, 0.12);
+      color: var(--accent-gold);
+      border-color: rgba(197, 155, 39, 0.3);
+    }
+    .slb-title {
+      font-family: 'Noto Serif KR', Georgia, serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+    @media (max-width: 860px) {
+      .slb-title {
+        font-size: 1.25rem;
+      }
+    }
+    .slb-desc {
+      font-size: 0.90rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin: 0;
+    }
+
     /* -------------------- 카카오톡 실시간 상담 플로팅 버튼 -------------------- */
     .kakao-float-btn {
       position: fixed;
@@ -4681,71 +4904,110 @@
           전담 코칭스태프와 함께 온라인과 오프라인에서 당신만의 라이프 아카이브를 완성합니다.
         </p>
 
-        <!-- 🚀 고객 관심 집중 & 유저 모집 4대 핵심 서비스 퀵 액션 카드 -->
-        <div class="hero-cta-banner-wrap">
-          <!-- 1) 🎯 1분 인생진단 카드 -->
-          <a href="#test" class="hero-action-card test-card" title="1분 만에 나의 인생 후반전 준비도 무료 진단">
-            <div class="hero-card-icon test-bg">🎯</div>
-            <div class="hero-card-body">
-              <div class="hero-card-badge-row">
-                <span class="hero-mini-badge green">⚡ 1분 무료 자가진단</span>
-                <span class="hero-card-hint">로그인 없이 즉시 분석</span>
-              </div>
-              <div class="hero-card-title">
-                <span>🎯 1분 인생진단 시작하기</span>
-                <span class="hero-card-arrow">→</span>
-              </div>
-              <p class="hero-card-desc">나의 건강, 관계, 자서전, 엔딩 준비도를 5대 테마로 점검해보세요</p>
-            </div>
-          </a>
+        <!-- 🚀 [메인 대문 전면 개편] 6대 핵심 카테고리 비주얼 쇼케이스 덱 -->
+        <div class="hero-category-showcase">
+          <div class="cat-showcase-header">
+            <span class="cat-showcase-tag">🌿 6대 핵심 서비스 둘러보기</span>
+            <h2 class="cat-showcase-headline">원하시는 여백과 결의 카테고리를 선택하세요</h2>
+          </div>
 
-          <!-- 2) ✍️ 디지털 자서전 카드 -->
-          <a href="#memoir" class="hero-action-card memoir-card" title="내 인생의 서사 기록, 디지털 자서전 둘러보기">
-            <div class="hero-card-icon memoir-bg">✍️</div>
-            <div class="hero-card-body">
-              <div class="hero-card-badge-row">
-                <span class="hero-mini-badge rose">📖 인생의 서사 기록</span>
-                <span class="hero-card-hint">육성 오디오북 & 양장본</span>
+          <div class="cat-showcase-grid">
+            <!-- 01. 여백서재 -->
+            <a href="#magazine" class="cat-showcase-card" title="01 여백의 서재 - 칼럼 & 게시판">
+              <div class="cat-showcase-thumb">
+                <img src="https://images.unsplash.com/photo-1507842229451-7f01be7fe732?auto=format&fit=crop&w=800&q=80" alt="여백의 서재" loading="lazy">
+                <span class="cat-showcase-num">01</span>
               </div>
-              <div class="hero-card-title">
-                <span>✍️ 디지털 자서전 알아보기</span>
-                <span class="hero-card-arrow">→</span>
+              <div class="cat-showcase-body">
+                <span class="cat-showcase-badge green">인생 칼럼 & 지혜</span>
+                <div class="cat-showcase-title">
+                  <span>여백의 서재</span>
+                  <span class="cat-showcase-arrow">→</span>
+                </div>
+                <p class="cat-showcase-desc">선진 웰라이프 문화와 삶을 갈무리하는 깊이 있는 지혜 칼럼</p>
               </div>
-              <p class="hero-card-desc">전문 코칭스태프와 함께 일생의 궤적을 명작 회고록으로 남기세요</p>
-            </div>
-          </a>
+            </a>
 
-          <!-- 3) 🎓 코치 아카데미 카드 -->
-          <a href="academy.html" class="hero-action-card academy-card" title="시니어 라이프 리셋 코치 양성 아카데미">
-            <div class="hero-card-icon academy-bg">🎓</div>
-            <div class="hero-card-body">
-              <div class="hero-card-badge-row">
-                <span class="hero-mini-badge blue">📜 전문 코치 자격과정</span>
-                <span class="hero-card-hint">일본 4대 선진 자격 도입</span>
+            <!-- 02. 비움한줄 -->
+            <a href="#lounge" class="cat-showcase-card" title="02 오늘의 비움 한 줄 라운지">
+              <div class="cat-showcase-thumb">
+                <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80" alt="비움 한 줄 라운지" loading="lazy">
+                <span class="cat-showcase-num">02</span>
               </div>
-              <div class="hero-card-title">
-                <span>🎓 코치 아카데미 입학상담</span>
-                <span class="hero-card-arrow">→</span>
+              <div class="cat-showcase-body">
+                <span class="cat-showcase-badge tea">마음 쉼터 & 공감</span>
+                <div class="cat-showcase-title">
+                  <span>비움 한 줄 라운지</span>
+                  <span class="cat-showcase-arrow">→</span>
+                </div>
+                <p class="cat-showcase-desc">마음과 일상의 짐을 가볍게 덜어놓고 따뜻한 위로를 나누는 공간</p>
               </div>
-              <p class="hero-card-desc">뷰티·정리·유품·자서전 4대 전문 코치로 제2의 보람찬 커리어를 시작하세요</p>
-            </div>
-          </a>
+            </a>
 
-          <!-- 4) 🏛️ 나의 고유한 서재 카드 -->
-          <a href="javascript:void(0)" class="hero-action-card room-card" title="나만의 독립된 프라이빗 온라인 서재 입장 (로그인)" onclick="openLoginModal(event); return false;">
-            <div class="hero-card-icon room-bg">🏛️</div>
-            <div class="hero-card-body">
-              <div class="hero-card-badge-row">
-                <span class="hero-mini-badge gold">✨ 프라이빗 온라인룸</span>
-                <span class="hero-card-hint">무료 체험 & 열람</span>
+            <!-- 03. 자가진단 -->
+            <a href="#test" class="cat-showcase-card" title="03 1분 여백 자가진단">
+              <div class="cat-showcase-thumb">
+                <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80" alt="1분 여백 자가진단" loading="lazy">
+                <span class="cat-showcase-num">03</span>
               </div>
-              <div class="hero-card-title">
-                <span>🏛️ 나의 고유한 서재 입장하기</span>
-                <span class="hero-card-arrow">→</span>
+              <div class="cat-showcase-body">
+                <span class="cat-showcase-badge orange">1분 무료 체크</span>
+                <div class="cat-showcase-title">
+                  <span>1분 여백 자가진단</span>
+                  <span class="cat-showcase-arrow">→</span>
+                </div>
+                <p class="cat-showcase-desc">뷰티·정리·유품·엔딩 5대 테마 중 내게 가장 필요한 맞춤 솔루션</p>
               </div>
-              <p class="hero-card-desc">디지털 자서전, 추억 사진관, 비움 일기가 담긴 독립 서재입니다</p>
-            </div>
-          </a>
+            </a>
+
+            <!-- 04. 자서전 -->
+            <a href="#memoir" class="cat-showcase-card" title="04 내 인생의 서사, 디지털 자서전">
+              <div class="cat-showcase-thumb">
+                <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80" alt="디지털 자서전" loading="lazy">
+                <span class="cat-showcase-num">04</span>
+              </div>
+              <div class="cat-showcase-body">
+                <span class="cat-showcase-badge rose">생애사 회고록 & 양장본</span>
+                <div class="cat-showcase-title">
+                  <span>디지털 자서전 제작</span>
+                  <span class="cat-showcase-arrow">→</span>
+                </div>
+                <p class="cat-showcase-desc">1:1 찾아가는 구술 인터뷰와 옛 사진 복원으로 엮는 가문의 명작</p>
+              </div>
+            </a>
+
+            <!-- 05. 코치 아카데미 -->
+            <a href="academy.html" class="cat-showcase-card" title="05 라이프 리셋 코치 아카데미">
+              <div class="cat-showcase-thumb">
+                <img src="images/coach-academy-banner.jpg" alt="라이프 리셋 코치 아카데미" loading="lazy">
+                <span class="cat-showcase-num">05</span>
+              </div>
+              <div class="cat-showcase-body">
+                <span class="cat-showcase-badge blue">전문 코치 양성과정</span>
+                <div class="cat-showcase-title">
+                  <span>코치 아카데미</span>
+                  <span class="cat-showcase-arrow">→</span>
+                </div>
+                <p class="cat-showcase-desc">일본 4대 선진 자격 도입, 인생 2막 가장 보람찬 전문 커리어</p>
+              </div>
+            </a>
+
+            <!-- 06. 나의 보물 서재 -->
+            <a href="my-room.html?mode=sample" class="cat-showcase-card" title="06 나의 고유한 보물 서재 (김순옥 어르신 완성 서재 체험)">
+              <div class="cat-showcase-thumb">
+                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80" alt="나의 고유한 서재" loading="lazy">
+                <span class="cat-showcase-num">06</span>
+              </div>
+              <div class="cat-showcase-body">
+                <span class="cat-showcase-badge gold">프라이빗 온라인룸</span>
+                <div class="cat-showcase-title">
+                  <span>나의 고유한 서재</span>
+                  <span class="cat-showcase-arrow">→</span>
+                </div>
+                <p class="cat-showcase-desc">김순옥 어르신의 자서전과 추억 복원관이 담긴 완성 서재 둘러보기</p>
+              </div>
+            </a>
+          </div>
         </div>
       </section>
     </div>
@@ -4753,10 +5015,16 @@
     <!-- 2. [1단계] 인사이트 매거진: 여백의 서재 (칼럼 & 게시판) -->
     <section id="magazine" style="background-color: var(--bg-secondary);">
       <div class="container">
-        <!-- 모바일 전용 카테고리 랜드마크 배너 -->
-        <div class="mobile-section-badge">
-          <span class="msb-num">CATEGORY 01</span>
-          <span class="msb-title">📖 여백의 서재</span>
+        <!-- [신설] 카테고리 01 시각적 랜드마크 이미지 배너 -->
+        <div class="section-landmark-banner">
+          <div class="slb-img-wrap">
+            <img src="https://images.unsplash.com/photo-1507842229451-7f01be7fe732?auto=format&fit=crop&w=800&q=80" alt="여백의 서재 칼럼" class="slb-img" loading="lazy">
+          </div>
+          <div class="slb-content">
+            <div class="slb-badge">CATEGORY 01 · 📚 인생 칼럼 & 지혜</div>
+            <h3 class="slb-title">여백의 서재 (인사이트 매거진)</h3>
+            <p class="slb-desc">선진 웰라이프·종활 문화와 삶을 우아하게 갈무리하는 깊이 있는 통찰과 인터뷰 칼럼을 전합니다.</p>
+          </div>
         </div>
         <div class="mag-header-row">
           <div class="section-header" style="margin-bottom: 0; text-align: left;">
@@ -4788,10 +5056,16 @@
     <!-- 3. [2단계] 참여 라운지 (오늘의 비움 한 줄 - 따뜻한 커뮤니티 형성) -->
     <section id="lounge">
       <div class="container">
-        <!-- 모바일 전용 카테고리 랜드마크 배너 -->
-        <div class="mobile-section-badge">
-          <span class="msb-num">CATEGORY 02</span>
-          <span class="msb-title">💬 오늘의 비움 한 줄</span>
+        <!-- [신설] 카테고리 02 시각적 랜드마크 이미지 배너 -->
+        <div class="section-landmark-banner">
+          <div class="slb-img-wrap">
+            <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80" alt="오늘의 비움 한 줄 라운지" class="slb-img" loading="lazy">
+          </div>
+          <div class="slb-content">
+            <div class="slb-badge">CATEGORY 02 · ☕ 어르신 마음 쉼터</div>
+            <h3 class="slb-title">오늘의 비움 한 줄 라운지</h3>
+            <p class="slb-desc">마음과 일상의 무거운 짐을 가볍게 덜어놓는 익명 쉼터입니다. 동년배 회원들의 따뜻한 공감과 응원이 함께합니다.</p>
+          </div>
         </div>
         <div class="section-header">
           <p class="section-tag">Community Lounge</p>
@@ -4826,10 +5100,16 @@
     <!-- 4. [3단계] 1분 여백 자가진단 (참여 유도 위젯) -->
     <section id="test" style="background-color: var(--bg-secondary);">
       <div class="container">
-        <!-- 모바일 전용 카테고리 랜드마크 배너 -->
-        <div class="mobile-section-badge">
-          <span class="msb-num">CATEGORY 03</span>
-          <span class="msb-title">🎯 1분 여백 자가진단</span>
+        <!-- [신설] 카테고리 03 시각적 랜드마크 이미지 배너 -->
+        <div class="section-landmark-banner">
+          <div class="slb-img-wrap">
+            <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80" alt="1분 여백 자가진단" class="slb-img" loading="lazy">
+          </div>
+          <div class="slb-content">
+            <div class="slb-badge">CATEGORY 03 · 🎯 1분 인생 준비도</div>
+            <h3 class="slb-title">1분 여백 자가진단</h3>
+            <p class="slb-desc">뷰티·옷장·유품·엔딩·자서전 5대 테마 중 지금 나에게 가장 필요한 솔루션을 3초 만에 진단받고 맞춤 처방을 확인하세요.</p>
+          </div>
         </div>
         <div class="section-header">
           <p class="section-tag">Self Diagnosis</p>
@@ -4994,10 +5274,16 @@
     <!-- 4. [신설 독립 카테고리] 내 인생의 서사 기록, 디지털 자서전 -->
     <section id="memoir" class="memoir-section">
       <div class="container">
-        <!-- 모바일 전용 카테고리 랜드마크 배너 -->
-        <div class="mobile-section-badge">
-          <span class="msb-num">CATEGORY 04</span>
-          <span class="msb-title">✍️ 내 인생의 서사, 디지털 자서전</span>
+        <!-- [신설] 카테고리 04 시각적 랜드마크 이미지 배너 -->
+        <div class="section-landmark-banner">
+          <div class="slb-img-wrap">
+            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80" alt="내 인생의 서사, 디지털 자서전" class="slb-img" loading="lazy">
+          </div>
+          <div class="slb-content">
+            <div class="slb-badge">CATEGORY 04 · ✍️ 생애사 인터뷰 & 양장본</div>
+            <h3 class="slb-title">내 인생의 서사, 디지털 자서전</h3>
+            <p class="slb-desc">찾아가는 1:1 구술 채록과 옛 사진 복원으로 삶의 궤적을 명작 회고록과 육성 오디오북, 최고급 양장본으로 기록합니다.</p>
+          </div>
         </div>
         <div class="section-header">
           <p class="section-tag">Digital Memoir & Life Archive</p>
@@ -5178,10 +5464,16 @@
     <!-- 7. [6단계] 나의 아카이브 안내 (개인 고유한 서재 온라인룸) -->
     <section id="archive" style="background-color: var(--bg-secondary); padding: 80px 0;">
       <div class="container">
-        <!-- 모바일 전용 카테고리 랜드마크 배너 -->
-        <div class="mobile-section-badge">
-          <span class="msb-num">CATEGORY 06</span>
-          <span class="msb-title">🏛️ 나의 고유한 서재 (온라인룸)</span>
+        <!-- [신설] 카테고리 06 시각적 랜드마크 이미지 배너 -->
+        <div class="section-landmark-banner">
+          <div class="slb-img-wrap">
+            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80" alt="나의 고유한 보물 서재" class="slb-img" loading="lazy">
+          </div>
+          <div class="slb-content">
+            <div class="slb-badge gold">CATEGORY 06 · 🏛️ 프라이빗 온라인룸</div>
+            <h3 class="slb-title">나의 고유한 보물 서재</h3>
+            <p class="slb-desc">오직 나와 가족만을 위해 열리는 독립된 인생 보관소입니다. 디지털 자서전, 추억 사진관, 비움 일기를 영구 보관하세요.</p>
+          </div>
         </div>
         <div class="section-header">
           <p class="section-tag">Private Online Room & Sacred Shelf</p>
