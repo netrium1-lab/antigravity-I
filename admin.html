@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <!-- 📄 정식 출판 자서전 PDF 고화질 렌더러 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     :root {
       --bg-body: #f1f5f9;
@@ -7201,14 +7203,18 @@ ${coachAppUrl}
       }
     }
 
-    // PDF 파일 다운로드 유틸 (실제 base64 PDF 또는 소장본 텍스트/PDF 생성)
-    function downloadPublishedMemoirPdf(id) {
+    // 📄 고품질 자서전 양장본 e-Book PDF 실시간 생성 및 다운로드 (순수 PDF 포맷 보장)
+    async function downloadPublishedMemoirPdf(id) {
       const list = getPublishedMemoirs();
       const target = list.find(m => m.id === id);
       if (!target) return;
 
-      const fileName = target.pdfFileName || `${target.author}_자서전_완성본.pdf`;
+      let fileName = target.pdfFileName || `${target.author}_자서전_완성본.pdf`;
+      if (!fileName.toLowerCase().endsWith('.pdf')) {
+        fileName += '.pdf';
+      }
 
+      // 1. 이미 Base64 실제 PDF가 등록되어 있는 경우
       if (target.pdfDataUrl && target.pdfDataUrl.startsWith('data:application/pdf')) {
         const a = document.createElement('a');
         a.href = target.pdfDataUrl;
@@ -7216,37 +7222,210 @@ ${coachAppUrl}
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        alert(`📥 [${fileName}] PDF 파일이 다운로드되었습니다.`);
-      } else {
-        // 실제 PDF 첨부 전: 정갈한 자서전 양장본 텍스트/PDF 소장본 파일 즉시 생성 다운로드
-        const text = `[여백과 결 · 리셋 아카이브]\n\n` +
-          `도서명: ${target.title}\n` +
-          `저자: ${target.author} 구술 평전\n` +
-          `전담 감수: ${target.coach}\n` +
-          `완간 쪽수: ${target.pages} 페이지\n` +
-          `완간 일자: ${target.date}\n` +
-          `인쇄 및 배송: ${target.delivery}\n\n` +
-          `============================================================\n\n` +
-          `[생애 요약 및 서문]\n` +
-          `${target.summary || '지나온 삶의 귀한 발자취를 정갈한 문장과 사진으로 엮은 인생의 찬란한 기록입니다.'}\n\n` +
-          `============================================================\n` +
-          `발행처: 여백과 결 (메타큐 라이프)\n` +
-          `파일 규격: 디지털 e-Book / 양장본 출판 인쇄본\n` +
-          `============================================================\n`;
-
-        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        const downName = fileName.replace(/\.pdf$/i, '') + '_소장본.txt';
-        a.download = downName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-
-        alert(`📥 [${downName}] 자서전 소장본이 다운로드되었습니다!\n(※ 관리자 수정 모달에서 실제 .pdf 파일을 첨부하시면 PDF 바이너리로 즉시 다운로드됩니다.)`);
+        alert(`📥 [${fileName}] PDF 파일이 성공적으로 다운로드되었습니다.`);
+        return;
       }
+
+      // 2. Base64 PDF가 없는 경우 -> 정식 양장본 e-Book 규격의 실제 PDF 바이너리를 실시간 생성하여 다운로드
+      showPdfGeneratingToast(fileName);
+
+      try {
+        if (typeof html2pdf === 'undefined') {
+          await loadScriptDynamically('https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js');
+        }
+
+        const bookElement = createMemoirPrintElement(target);
+        document.body.appendChild(bookElement);
+
+        const opt = {
+          margin: [0, 0, 0, 0],
+          filename: fileName,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, logging: false },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        await html2pdf().set(opt).from(bookElement).save();
+        document.body.removeChild(bookElement);
+        hidePdfGeneratingToast();
+        alert(`📥 [${fileName}] 정식 양장본 자서전 PDF 파일이 성공적으로 생성 및 다운로드되었습니다!`);
+      } catch (err) {
+        console.error('PDF 생성 실패, 대체 인쇄 모달 실행:', err);
+        hidePdfGeneratingToast();
+        fallbackMemoirPdfPrint(target, fileName);
+      }
+    }
+
+    // 📚 A4 정식 양장본 e-Book 자서전 DOM 생성
+    function createMemoirPrintElement(target) {
+      const div = document.createElement('div');
+      div.id = 'tempMemoirPdfContainer';
+      div.style.cssText = 'position:absolute; left:-9999px; top:-9999px; width:794px; background:#ffffff; color:#1e293b; font-family:"Pretendard",sans-serif; box-sizing:border-box;';
+
+      const coverSrc = target.coverImg || 'images/showcase-senior-memoir.jpg';
+
+      div.innerHTML = `
+        <!-- 페이지 1: 양장본 하드커버 표지 -->
+        <div style="width:794px; height:1120px; padding:50px 45px; box-sizing:border-box; background:#ffffff; position:relative; border:12px double #c59b27; display:flex; flex-direction:column; justify-content:space-between; page-break-after:always;">
+          <div style="text-align:center; border-bottom:2px solid #2b5a42; padding-bottom:18px;">
+            <div style="font-size:0.92rem; font-weight:800; letter-spacing:4px; color:#c59b27; margin-bottom:5px;">
+              YEBAEK & GYEOL · LIFE ARCHIVE
+            </div>
+            <div style="font-size:1.15rem; font-weight:900; color:#2b5a42; letter-spacing:2px;">
+              여백과 결 인생 서사 평전 시리즈 · 정식 완간본
+            </div>
+          </div>
+
+          <div style="text-align:center; margin:20px 0;">
+            <div style="font-size:0.95rem; color:#64748b; font-weight:750; margin-bottom:10px; letter-spacing:1px;">
+              ${escapeHtml(target.delivery || '가족 헌정본 양장본 인쇄 완간')}
+            </div>
+            <h1 style="font-size:2.2rem; font-weight:900; color:#0f172a; line-height:1.35; margin-bottom:22px; word-break:keep-all;">
+              ${escapeHtml(target.title)}
+            </h1>
+
+            <div style="width:280px; height:340px; margin:0 auto 22px; border-radius:12px; overflow:hidden; box-shadow:0 12px 30px rgba(0,0,0,0.18); border:4px solid #ffffff; outline:2px solid #c59b27;">
+              <img src="${coverSrc}" alt="표지 사진" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+
+            <div style="font-size:1.35rem; font-weight:900; color:#2b5a42; letter-spacing:1px;">
+              저자 | ${escapeHtml(target.author)} 구술 평전
+            </div>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px 24px; display:flex; justify-content:space-between; align-items:center; font-size:0.88rem;">
+            <div>
+              <div style="color:#64748b; font-weight:700; margin-bottom:3px;">전담 감수 및 인터뷰 코치</div>
+              <div style="color:#0f172a; font-weight:850; font-size:0.98rem;">${escapeHtml(target.coach || '여백과 결 전문 코치진')}</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="color:#64748b; font-weight:700; margin-bottom:3px;">총 분량 / 판형</div>
+              <div style="color:#2b5a42; font-weight:900; font-size:0.98rem;">${escapeHtml(String(target.pages || 184))}쪽 / 양장본 A4</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="color:#64748b; font-weight:700; margin-bottom:3px;">완간 및 헌정 일자</div>
+              <div style="color:#0f172a; font-weight:850; font-size:0.98rem;">${escapeHtml(target.date || '2026.09.20')}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 페이지 2: 서문 & 목차 & 완간 인증 인장 -->
+        <div style="width:794px; height:1120px; padding:55px 45px; box-sizing:border-box; background:#ffffff; position:relative; border:12px double #2b5a42; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="border-bottom:2px solid #c59b27; padding-bottom:14px; margin-bottom:26px;">
+              <div style="font-size:0.85rem; font-weight:800; color:#c59b27; letter-spacing:2px;">PROLOGUE & DEDICATION</div>
+              <h2 style="font-size:1.55rem; font-weight:900; color:#2b5a42; margin-top:4px;">생애 요약 및 가족 헌정 서문</h2>
+            </div>
+
+            <div style="background:#fafaf9; border-left:4px solid #2b5a42; padding:22px 24px; border-radius:0 10px 10px 0; margin-bottom:30px; line-height:1.9; font-size:1.02rem; color:#334155; word-break:keep-all;">
+              “ ${escapeHtml(target.summary || '지나온 삶의 귀한 발자취를 정갈한 문장과 사진으로 엮은 인생의 찬란한 기록입니다. 사랑하는 가족과 후대에 건네는 세상에서 단 하나뿐인 지혜와 사랑의 유산입니다.')} ”
+            </div>
+
+            <div style="margin-bottom:30px;">
+              <div style="font-size:1.15rem; font-weight:900; color:#0f172a; margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+                <span>📖</span> <span>목차 및 인생 여정 구성</span>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:12px; font-size:0.92rem;">
+                <div style="display:flex; justify-content:space-between; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">
+                  <span style="font-weight:800; color:#2b5a42;">제1장. 유년의 기억과 봄날의 꿈</span>
+                  <span style="color:#64748b; font-weight:700;">지리산 자락, 따스했던 고향의 사계 ··· 12p</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">
+                  <span style="font-weight:800; color:#2b5a42;">제2장. 치열했던 청춘, 가족을 일구다</span>
+                  <span style="color:#64748b; font-weight:700;">새벽을 열던 헌신과 굳건한 삶의 터전 ··· 56p</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">
+                  <span style="font-weight:800; color:#2b5a42;">제3장. 삶의 굽이마다 피어난 지혜</span>
+                  <span style="color:#64748b; font-weight:700;">비움 속에서 마주한 마음의 참된 평온 ··· 108p</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; border-bottom:1px dashed #cbd5e1; padding-bottom:6px;">
+                  <span style="font-weight:800; color:#2b5a42;">제4장. 사랑하는 이들에게 전하는 축복</span>
+                  <span style="color:#64748b; font-weight:700;">자녀와 손주들의 앞날을 밝히는 편지 ··· 162p</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="border-top:2px solid #e2e8f0; padding-top:18px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-size:0.92rem; font-weight:900; color:#2b5a42; margin-bottom:4px;">여백과 결 (메타큐 라이프 출판연구소)</div>
+              <div style="font-size:0.78rem; color:#64748b;">본 도서는 인터뷰 녹취와 전문 코칭을 거쳐 정식 완간된 양장본 자서전 디지털 증본입니다.</div>
+            </div>
+            <div style="border:3px solid #dc2626; border-radius:8px; padding:6px 12px; color:#dc2626; font-weight:900; font-size:0.86rem; letter-spacing:2px; text-align:center; transform:rotate(-3deg);">
+              여백과결<br>완간인증
+            </div>
+          </div>
+        </div>
+      `;
+      return div;
+    }
+
+    function showPdfGeneratingToast(fileName) {
+      let toast = document.getElementById('pdfGenToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'pdfGenToast';
+        toast.style.cssText = 'position:fixed; bottom:30px; right:30px; background:#0f172a; color:#ffffff; padding:16px 22px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.25); display:flex; align-items:center; gap:12px; z-index:99999; font-size:0.9rem; font-weight:750; border:1px solid #334155;';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = `
+        <div style="width:20px; height:20px; border:3px solid #38bdf8; border-top-color:transparent; border-radius:50%; animation:spinPdf 0.8s linear infinite;"></div>
+        <div>
+          <div style="color:#38bdf8; font-size:0.75rem; font-weight:800;">PDF 실시간 변환 중</div>
+          <div>[${escapeHtml(fileName)}] 정식 양장본 PDF 생성 중...</div>
+        </div>
+        <style>@keyframes spinPdf { 100% { transform: rotate(360deg); } }</style>
+      `;
+      toast.style.display = 'flex';
+    }
+
+    function hidePdfGeneratingToast() {
+      const toast = document.getElementById('pdfGenToast');
+      if (toast) toast.style.display = 'none';
+    }
+
+    function loadScriptDynamically(src) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = () => resolve();
+        s.onerror = () => reject(new Error('Script load error: ' + src));
+        document.head.appendChild(s);
+      });
+    }
+
+    function fallbackMemoirPdfPrint(target, fileName) {
+      const printWin = window.open('', '_blank');
+      if (!printWin) {
+        alert('팝업 차단을 해제해 주시면 자서전 PDF 인쇄/저장 화면이 열립니다.');
+        return;
+      }
+      const bookEl = createMemoirPrintElement(target);
+      printWin.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>${escapeHtml(fileName)}</title>
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+          <style>
+            body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+            @media print {
+              body { padding: 0; }
+              @page { size: A4; margin: 0; }
+            }
+          </style>
+        </head>
+        <body>
+          ${bookEl.innerHTML}
+          <script>
+            window.onload = function() {
+              setTimeout(function() { window.print(); }, 500);
+            };
+          <\/script>
+        </body>
+        </html>
+      `);
+      printWin.document.close();
     }
 
     function exportPubMemoirsCSV() {
