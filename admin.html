@@ -1270,6 +1270,70 @@
     .admin-search-input:focus {
       border-color: var(--accent);
     }
+
+    /* 디지털 자서전 배너 실시간 미리보기 카드 (사용자 화면 100% 동일 구현) */
+    .memoir-preview-box {
+      background: #ffffff;
+      border: 1.5px solid #2e4a36;
+      border-radius: 20px;
+      padding: 22px 26px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+      margin-top: 14px;
+    }
+    .memoir-preview-title {
+      font-size: 1.18rem;
+      font-weight: 850;
+      color: #111827;
+      margin: 0 0 8px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .memoir-preview-desc {
+      font-size: 0.94rem;
+      color: #4b5563;
+      line-height: 1.6;
+      margin: 0 0 16px 0;
+    }
+    .memoir-preview-btns {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .memoir-preview-btn-primary {
+      padding: 11px 22px;
+      background: #4a634e;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.95rem;
+      border-radius: 12px;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .memoir-preview-btn-secondary {
+      padding: 11px 20px;
+      background: #ffffff;
+      color: #111827;
+      font-weight: 750;
+      font-size: 0.92rem;
+      border-radius: 12px;
+      border: 1.5px solid #e5e7eb;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .status-select-sm {
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      font-size: 0.80rem;
+      font-weight: 750;
+      background: #ffffff;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -1551,68 +1615,207 @@
         </div>
       </section>
 
-      <!-- ================= 탭 4: 🎯 03. 자가진단 관리 ================= -->
+      <!-- ================= 탭 4: 🎯 03. 맞춤 리셋 진단 & 칼럼 링크 관리 ================= -->
       <section class="tab-panel" id="tabTest">
+        <!-- 1. 진단 테마별 '관련 여백 칼럼' 연결 링크 설정 카드 -->
         <div class="panel-card">
           <div class="panel-header">
             <div class="panel-title-wrap">
-              <span class="panel-icon">🎯</span>
-              <h2 class="panel-title">03. 1분 여백 자가진단 관리</h2>
+              <span class="panel-icon">🔗</span>
+              <div>
+                <h2 class="panel-title">03-1. 맞춤 리셋 진단 결과별 [관련 여백 칼럼] 연결 링크 관리</h2>
+                <p style="color: var(--text-muted); font-size: 0.86rem; margin: 4px 0 0;">
+                  메인 화면 진단 결과창의 <strong>[📚 관련 여백 칼럼 읽기]</strong> 버튼을 고객이 클릭했을 때 이동할 칼럼 링크(URL 또는 앵커)를 테마별로 지정합니다.
+                </p>
+              </div>
             </div>
-          </div>
-          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 24px;">
-            고객이 자가진단 위젯에서 5대 테마(뷰티, 옷장, 유품, 엔딩파티, 자서전)를 선택했을 때 즉시 처방되는 1:1 맞춤 케어 솔루션 항목입니다.
-          </p>
-
-          <div class="setting-group-card">
-            <div class="setting-label-row">
-              <span>💄</span>
-              <span>#01 웰니스 & 뷰티 케어 솔루션</span>
-            </div>
-            <input type="text" class="setting-input" value="헤어·메이크업 맞춤 스타일링 / 빛나는 인생 프로필 촬영 / 방문 웰니스 힐링" readonly>
+            <button class="btn-save-setting" onclick="saveDiagColumnLinks()">
+              <span>💾</span> 칼럼 연결 링크 저장
+            </button>
           </div>
 
-          <div class="setting-group-card">
-            <div class="setting-label-row">
-              <span>👗</span>
-              <span>#02 일상과 비움의 미학 — 옷장 정리</span>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; margin-top: 10px;">
+            <div class="setting-group-card">
+              <div class="setting-label-row">
+                <span>💄</span>
+                <span>#01 웰니스 & 뷰티 케어 칼럼 링크</span>
+              </div>
+              <p class="setting-hint">기본값: #magazine (또는 특정 칼럼 URL)</p>
+              <input type="text" id="adminDiagLink_beauty" class="setting-input" placeholder="#magazine 또는 https://...">
             </div>
-            <input type="text" class="setting-input" value="오래된 옷 선별 및 공간 여백 확보 / 기부 및 친환경 나눔 연결 / 쾌적한 데일리 동선" readonly>
+
+            <div class="setting-group-card">
+              <div class="setting-label-row">
+                <span>👗</span>
+                <span>#02 일상과 비움의 미학 (옷장 정리) 칼럼 링크</span>
+              </div>
+              <p class="setting-hint">기본값: #magazine (또는 특정 칼럼 URL)</p>
+              <input type="text" id="adminDiagLink_wardrobe" class="setting-input" placeholder="#magazine 또는 https://...">
+            </div>
+
+            <div class="setting-group-card">
+              <div class="setting-label-row">
+                <span>📦</span>
+                <span>#03 기억의 계승 (오래된 짐/유품) 칼럼 링크</span>
+              </div>
+              <p class="setting-hint">기본값: #magazine (또는 특정 칼럼 URL)</p>
+              <input type="text" id="adminDiagLink_legacy" class="setting-input" placeholder="#magazine 또는 https://...">
+            </div>
+
+            <div class="setting-group-card">
+              <div class="setting-label-row">
+                <span>✍️</span>
+                <span>#04 디지털 자서전 (생애사) 칼럼/서재 링크</span>
+              </div>
+              <p class="setting-hint">기본값: my-room.html?mode=sample</p>
+              <input type="text" id="adminDiagLink_memoir" class="setting-input" placeholder="my-room.html?mode=sample 또는 https://...">
+            </div>
+
+            <div class="setting-group-card">
+              <div class="setting-label-row">
+                <span>💌</span>
+                <span>#05 아름다운 마침표 (생전 엔딩 파티) 칼럼 링크</span>
+              </div>
+              <p class="setting-hint">기본값: #magazine (또는 특정 칼럼 URL)</p>
+              <input type="text" id="adminDiagLink_party" class="setting-input" placeholder="#magazine 또는 https://...">
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. 맞춤 리셋 진단에서 접수된 1:1 방문 맞춤 상담 예약자 현황 테이블 -->
+        <div class="panel-card" style="margin-top: 24px;">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <span class="panel-icon">📋</span>
+              <div>
+                <h2 class="panel-title">03-2. 맞춤 리셋 진단 1:1 방문 상담 예약자 현황</h2>
+                <p style="color: var(--text-muted); font-size: 0.86rem; margin: 4px 0 0;">
+                  [지금 나를 위한 맞춤 리셋 진단] 결과에서 <strong>[✨ 1:1 방문 맞춤 상담 예약하기]</strong>를 신청한 고객 명단입니다.
+                </p>
+              </div>
+            </div>
+            <button class="btn-save-setting" onclick="exportDiagReservationsCSV()">
+              <span>📥</span> 엑셀(CSV) 다운로드
+            </button>
           </div>
 
-          <div class="setting-group-card">
-            <div class="setting-label-row">
-              <span>📦</span>
-              <span>#03 기억의 계승 — 오래된 짐 & 유품 정리</span>
-            </div>
-            <input type="text" class="setting-input" value="소중한 유품 선별 및 아카이빙 / 후손을 위한 유산 메모 작성 / 깔끔하고 안전한 처분" readonly>
-          </div>
-
-          <div class="setting-group-card">
-            <div class="setting-label-row">
-              <span>💌</span>
-              <span>#04 아름다운 마침표 — 생전 엔딩 파티</span>
-            </div>
-            <input type="text" class="setting-input" value="감사할 인연 명단 정리 / 진심 어린 감사 편지 채록 / 온기 가득한 생전 감사 모임 기획" readonly>
-          </div>
-
-          <div class="setting-group-card">
-            <div class="setting-label-row">
-              <span>✍️</span>
-              <span>#05 디지털 자서전 — 생애사 기록</span>
-            </div>
-            <input type="text" class="setting-input" value="찾아가는 1:1 구술 채록 인터뷰 / 옛 흑백사진 AI 고화질 복원 / 최고급 하드커버 양장본 제작" readonly>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 130px;">진단 주제 / 분야</th>
+                  <th style="width: 90px;">구분</th>
+                  <th style="width: 120px;">연락처</th>
+                  <th>상담 요청 메모</th>
+                  <th style="width: 110px;">접수 일시</th>
+                  <th style="width: 100px; text-align: center;">처리 상태</th>
+                  <th style="width: 70px; text-align: center;">관리</th>
+                </tr>
+              </thead>
+              <tbody id="diagReservationTableBody">
+                <!-- JS 동적 렌더링 -->
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
 
-      <!-- ================= 탭 5: ✍️ 04. 디지털 자서전 신청 관리 ================= -->
+      <!-- ================= 탭 5: ✍️ 04. 디지털 자서전 배너 및 상담 신청 관리 ================= -->
       <section class="tab-panel" id="tabMemoir">
+        <!-- 1. 메인 사이트 자서전 특별 혜택 및 신청 배너 (CTA 배너) 설정 관리 틀 -->
         <div class="panel-card">
+          <div class="panel-header" style="flex-wrap: wrap; gap: 10px;">
+            <div class="panel-title-wrap">
+              <span class="panel-icon">✨</span>
+              <div>
+                <h2 class="panel-title">04-1. 메인 화면 자서전 특별 혜택 배너 (CTA 배너) 관리 틀</h2>
+                <p style="color: var(--text-muted); font-size: 0.86rem; margin: 4px 0 0;">
+                  메인 화면의 디지털 자서전 하단 배너 문구와 <strong>[📖 자서전 예시 둘러보기] 이동 링크</strong>를 자유롭게 지정합니다.
+                </p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-save-setting" onclick="resetMemoirBannerToDefault()" style="background: #ffffff; color: var(--text-main); border: 1.5px solid var(--border-color);">
+                <span>🔄</span> 기본값 복원
+              </button>
+              <button class="btn-save-setting" onclick="saveMemoirBannerConfig()">
+                <span>💾</span> 배너 설정 저장하기
+              </button>
+            </div>
+          </div>
+
+          <div class="setting-group-card">
+            <div class="setting-label-row">
+              <span>📢</span>
+              <span>배너 메인 타이틀 (혜택 안내)</span>
+            </div>
+            <input type="text" id="adminMemoirBannerTitle" class="setting-input" value="✨ 지금 신청 시 '30일 인생 서사 워크북' 무료 증정" oninput="updateMemoirLivePreview()">
+          </div>
+
+          <div class="setting-group-card">
+            <div class="setting-label-row">
+              <span>📝</span>
+              <span>상세 설명 문구</span>
+            </div>
+            <textarea id="adminMemoirBannerDesc" class="setting-textarea" rows="2" oninput="updateMemoirLivePreview()">인생을 돌아보는 첫걸음, 사전 무료 상담을 신청하시는 모든 분께 1:1 방문 상담과 함께 정가 35,000원 상당의 자서전 워크북을 자택으로 무료 배송해 드립니다.</textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px;">
+            <!-- 버튼 1 설정 -->
+            <div class="setting-group-card">
+              <div class="setting-label-row">
+                <span>🔘</span>
+                <span>버튼 1: 무료 상담 신청 버튼명</span>
+              </div>
+              <input type="text" id="adminMemoirConsultBtnText" class="setting-input" value="✨ 자서전 제작 1:1 무료 상담 신청" oninput="updateMemoirLivePreview()">
+              <p class="setting-hint">※ 클릭 시 1:1 시니어 안심 상담 모달이 자동으로 연결됩니다.</p>
+            </div>
+
+            <!-- 버튼 2 (예시 둘러보기) 링크 설정: 핵심 요구사항 -->
+            <div class="setting-group-card">
+              <div class="setting-label-row">
+                <span>🔗</span>
+                <span>버튼 2: 자서전 예시 둘러보기 이동 링크 (지정)</span>
+              </div>
+              <input type="text" id="adminMemoirSampleLink" class="setting-input" value="my-room.html?mode=sample" placeholder="예: my-room.html?mode=sample 또는 외부 주소" oninput="updateMemoirLivePreview()">
+              <p class="setting-hint" style="color: var(--accent); font-weight: 750;">
+                💡 관리자님께서 지정한 링크로 고객이 이동합니다. (기본: my-room.html?mode=sample)
+              </p>
+            </div>
+          </div>
+
+          <div style="background: rgba(43, 90, 66, 0.08); border-left: 4px solid var(--accent); padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; color: var(--accent); font-weight: 750; margin: 12px 0;">
+            ✓ 사용자 요청 반영 완료: 메인 화면의 [카톡 1분 간편 문의] 노란색 버튼은 완전히 제거되었습니다.
+          </div>
+
+          <!-- 실시간 미리보기 카드 (사용자가 업로드한 스크린샷과 100% 동일) -->
+          <div style="margin-top: 18px;">
+            <div style="font-size: 0.88rem; font-weight: 850; color: var(--text-main); margin-bottom: 6px;">
+              👁️ 메인 화면 실시간 미리보기 (Live Preview)
+            </div>
+            <div class="memoir-preview-box">
+              <h4 class="memoir-preview-title" id="previewMemoirTitle">✨ 지금 신청 시 '30일 인생 서사 워크북' 무료 증정</h4>
+              <p class="memoir-preview-desc" id="previewMemoirDesc">
+                인생을 돌아보는 첫걸음, 사전 무료 상담을 신청하시는 모든 분께 1:1 방문 상담과 함께 정가 35,000원 상당의 자서전 워크북을 자택으로 무료 배송해 드립니다.
+              </p>
+              <div class="memoir-preview-btns">
+                <button type="button" class="memoir-preview-btn-primary" id="previewConsultBtn">
+                  ✨ 자서전 제작 1:1 무료 상담 신청
+                </button>
+                <button type="button" class="memoir-preview-btn-secondary" id="previewSampleBtn">
+                  📖 자서전 예시 둘러보기
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. 디지털 자서전 제작 상담 신청자 명단 카드 -->
+        <div class="panel-card" style="margin-top: 24px;">
           <div class="panel-header">
             <div class="panel-title-wrap">
               <span class="panel-icon">✍️</span>
-              <h2 class="panel-title">04. 디지털 자서전 제작 상담 신청자 명단</h2>
+              <h2 class="panel-title">04-2. 디지털 자서전 제작 상담 신청자 명단</h2>
             </div>
             <button class="btn-save-setting" onclick="exportMemoirCSV()">
               <span>📥</span> 엑셀(CSV) 다운로드
@@ -1626,7 +1829,7 @@
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th style="width: 90px;">신청자 성함</th>
+                  <th style="width: 100px;">신청자 성함</th>
                   <th style="width: 120px;">연락처</th>
                   <th>배송 주소 / 상담 메모</th>
                   <th style="width: 110px;">신청 일시</th>
@@ -1678,24 +1881,70 @@
         </div>
       </section>
 
-      <!-- ================= 탭 7: 🏛️ 06. 보물서재 관리 ================= -->
+      <!-- ================= 탭 7: 🏛️ 06. 나의 고유한 보물서재 관리 ================= -->
       <section class="tab-panel" id="tabArchive">
+        <!-- 1. 나의 서재 신청 명단 및 상담 내용 관리 카드: 사용자 핵심 요구사항 -->
         <div class="panel-card">
           <div class="panel-header">
             <div class="panel-title-wrap">
               <span class="panel-icon">🏛️</span>
-              <h2 class="panel-title">06. 나의 고유한 보물 서재 (프라이빗 룸) 설정</h2>
+              <div>
+                <h2 class="panel-title">06-1. 나의 서재 구축 신청 명단 & 전담 코치 상담 내용 관리</h2>
+                <p style="color: var(--text-muted); font-size: 0.86rem; margin: 4px 0 0;">
+                  나만의 독립 서재 구축, 자서전 구술, 옛 사진 복원, 비움 일기, 엔딩 금고 보관을 신청한 고객 명단 및 상담 진행 일지를 관리합니다.
+                </p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-save-setting" onclick="promptAddRoomClient()" style="background: #ffffff; color: var(--text-main); border: 1.5px solid var(--border-color);">
+                <span>+</span> 신규 서재 고객 등록
+              </button>
+              <button class="btn-save-setting" onclick="exportArchiveClientsCSV()">
+                <span>📥</span> 엑셀(CSV) 다운로드
+              </button>
+            </div>
+          </div>
+
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 95px;">고객 성함</th>
+                  <th style="width: 120px;">연락처</th>
+                  <th style="width: 120px;">신청 서재 분야</th>
+                  <th>상담 내용 및 전담 코치 메모</th>
+                  <th style="width: 100px;">신청 일자</th>
+                  <th style="width: 110px; text-align: center;">구축 단계</th>
+                  <th style="width: 120px; text-align: center;">관리</th>
+                </tr>
+              </thead>
+              <tbody id="archiveClientsTableBody">
+                <!-- JS 동적 렌더링 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 2. 김순옥 어르신 완성 서재 공개 체험 링크 -->
+        <div class="panel-card" style="margin-top: 24px;">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <span class="panel-icon">👵</span>
+              <h2 class="panel-title">06-2. 김순옥 어르신 완성 서재 공개 체험 링크</h2>
             </div>
           </div>
           <div class="setting-group-card">
             <div class="setting-label-row">
-              <span>👵</span>
-              <span>김순옥 어르신 완성 서재 공개 체험 링크</span>
+              <span>🔗</span>
+              <span>184쪽 완성 샘플 서재 URL</span>
             </div>
             <input type="text" class="setting-input" value="my-room.html?mode=sample" readonly>
-            <div style="margin-top: 10px;">
-              <a href="my-room.html?mode=sample" target="_blank" class="btn-save-setting" style="text-decoration: none; font-size: 0.88rem; padding: 6px 14px;">
-                서재 직접 열람해보기 ➔
+            <div style="margin-top: 10px; display: flex; gap: 10px;">
+              <a href="my-room.html?mode=sample" target="_blank" class="btn-save-setting" style="text-decoration: none; font-size: 0.88rem; padding: 7px 16px;">
+                샘플 서재 직접 열람해보기 ➔
+              </a>
+              <a href="my-room.html?mode=user" target="_blank" class="btn-save-setting" style="text-decoration: none; font-size: 0.88rem; padding: 7px 16px; background: #ffffff; color: var(--text-main); border: 1.5px solid var(--border-color);">
+                독립 내 서재 체험해보기 ➔
               </a>
             </div>
           </div>
@@ -3192,6 +3441,434 @@
         .replace(/'/g, '&#039;');
     }
 
+    // ================= 7. 맞춤 리셋 진단 테마별 칼럼 링크 관리 =================
+    const DIAG_COLUMN_LINKS_KEY = 'yebaek_diag_column_links';
+    const DEFAULT_DIAG_LINKS = {
+      beauty: '#magazine',
+      wardrobe: '#magazine',
+      legacy: '#magazine',
+      memoir: 'my-room.html?mode=sample',
+      party: '#magazine'
+    };
+
+    function loadDiagColumnLinks() {
+      let links = DEFAULT_DIAG_LINKS;
+      const saved = localStorage.getItem(DIAG_COLUMN_LINKS_KEY);
+      if (saved) {
+        try {
+          links = { ...DEFAULT_DIAG_LINKS, ...JSON.parse(saved) };
+        } catch (e) {
+          console.error('진단 링크 파싱 오류:', e);
+        }
+      }
+
+      const inputBeauty = document.getElementById('adminDiagLink_beauty');
+      const inputWardrobe = document.getElementById('adminDiagLink_wardrobe');
+      const inputLegacy = document.getElementById('adminDiagLink_legacy');
+      const inputMemoir = document.getElementById('adminDiagLink_memoir');
+      const inputParty = document.getElementById('adminDiagLink_party');
+
+      if (inputBeauty) inputBeauty.value = links.beauty || '#magazine';
+      if (inputWardrobe) inputWardrobe.value = links.wardrobe || '#magazine';
+      if (inputLegacy) inputLegacy.value = links.legacy || '#magazine';
+      if (inputMemoir) inputMemoir.value = links.memoir || 'my-room.html?mode=sample';
+      if (inputParty) inputParty.value = links.party || '#magazine';
+    }
+
+    function saveDiagColumnLinks() {
+      const inputBeauty = document.getElementById('adminDiagLink_beauty');
+      const inputWardrobe = document.getElementById('adminDiagLink_wardrobe');
+      const inputLegacy = document.getElementById('adminDiagLink_legacy');
+      const inputMemoir = document.getElementById('adminDiagLink_memoir');
+      const inputParty = document.getElementById('adminDiagLink_party');
+
+      const links = {
+        beauty: (inputBeauty && inputBeauty.value.trim()) || '#magazine',
+        wardrobe: (inputWardrobe && inputWardrobe.value.trim()) || '#magazine',
+        legacy: (inputLegacy && inputLegacy.value.trim()) || '#magazine',
+        memoir: (inputMemoir && inputMemoir.value.trim()) || 'my-room.html?mode=sample',
+        party: (inputParty && inputParty.value.trim()) || '#magazine'
+      };
+
+      localStorage.setItem(DIAG_COLUMN_LINKS_KEY, JSON.stringify(links));
+      alert('맞춤 리셋 진단 결과별 관련 여백 칼럼 연결 링크가 성공적으로 저장되었습니다.\n고객이 [관련 여백 칼럼 읽기]를 클릭하면 지정한 링크로 이동합니다.');
+    }
+
+    // ================= 8. 맞춤 리셋 진단 1:1 방문 상담 예약자 현황 관리 =================
+    const DIAG_RESERVATION_KEY = 'reset_consult_list';
+
+    function getDiagReservations() {
+      const saved = localStorage.getItem(DIAG_RESERVATION_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        } catch (e) {
+          console.error('진단 예약자 파싱 실패:', e);
+        }
+      }
+      // 기본 샘플 데이터
+      const defaultSamples = [
+        {
+          id: 'cs_diag_1',
+          category: '💄 웰니스 & 뷰티 케어',
+          role: '본인 어르신',
+          phone: '010-3841-9210',
+          note: '거동이 다소 불편하여 집으로 찾아오는 메이크업 코디 상담 희망',
+          status: '대기',
+          createdAt: '2026.09.25 14:20'
+        },
+        {
+          id: 'cs_diag_2',
+          category: '👗 일상과 비움의 미학',
+          role: '자녀 / 가족 대리',
+          phone: '010-8271-6453',
+          note: '어머니 댁 옷장 정리 및 수납 코칭 문의 (따님이 대신 신청)',
+          status: '진행',
+          createdAt: '2026.09.25 11:05'
+        },
+        {
+          id: 'cs_diag_3',
+          category: '📦 오래된 짐 및 유품 정리',
+          role: '본인 어르신',
+          phone: '010-5192-3301',
+          note: '서재 오래된 책과 서류들 비우기 방문 견적 요청',
+          status: '대기',
+          createdAt: '2026.09.24 16:40'
+        },
+        {
+          id: 'cs_diag_4',
+          category: '✍️ 내 인생의 디지털 자서전',
+          role: '본인 어르신',
+          phone: '010-9944-1234',
+          note: '30일 서사 워크북 및 가족 기념 자서전 출판 상담 희망',
+          status: '완료',
+          createdAt: '2026.09.24 10:15'
+        }
+      ];
+      localStorage.setItem(DIAG_RESERVATION_KEY, JSON.stringify(defaultSamples));
+      return defaultSamples;
+    }
+
+    function saveDiagReservations(list) {
+      localStorage.setItem(DIAG_RESERVATION_KEY, JSON.stringify(list));
+      renderDiagReservationTable();
+    }
+
+    function renderDiagReservationTable() {
+      const tbody = document.getElementById('diagReservationTableBody');
+      if (!tbody) return;
+
+      const list = getDiagReservations();
+      if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 24px; color:#94a3b8;">맞춤 리셋 진단에서 접수된 상담 예약 내역이 없습니다.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map(item => {
+        const cat = item.category || '진단 일반';
+        const role = item.role || item.name || '본인';
+        const phone = item.phone || '-';
+        const note = item.note || item.memo || '-';
+        const date = item.createdAt || item.date || '-';
+        const status = item.status || '대기';
+
+        const statusClass = status === '완료' ? 'pinned' : (status === '진행' ? 'active-step' : 'unpinned');
+        const statusStyle = status === '진행' ? 'background:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc;' : '';
+
+        return `
+          <tr>
+            <td>
+              <span style="display:inline-block; padding:3px 8px; border-radius:6px; background:rgba(43,90,66,0.08); color:var(--accent); font-size:0.8rem; font-weight:800;">
+                ${escapeHtml(cat)}
+              </span>
+            </td>
+            <td style="font-weight:700;">${escapeHtml(role)}</td>
+            <td><a href="tel:${escapeHtml(phone)}" style="color:var(--accent); font-weight:700;">${escapeHtml(phone)}</a></td>
+            <td style="max-width:280px; line-height:1.4; font-size:0.88rem;">${escapeHtml(note)}</td>
+            <td style="color:var(--text-muted); font-size:0.85rem;">${escapeHtml(date)}</td>
+            <td style="text-align:center;">
+              <button class="badge-pin ${statusClass}" style="${statusStyle}" onclick="toggleDiagReservationStatus('${item.id}')" title="클릭하여 상태 변경">
+                ${escapeHtml(status)}
+              </button>
+            </td>
+            <td style="text-align:center;">
+              <button class="btn-action-sm del" onclick="deleteDiagReservation('${item.id}')">삭제</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function toggleDiagReservationStatus(id) {
+      const list = getDiagReservations();
+      const target = list.find(item => item.id === id);
+      if (target) {
+        if (target.status === '대기') target.status = '진행';
+        else if (target.status === '진행') target.status = '완료';
+        else target.status = '대기';
+        saveDiagReservations(list);
+      }
+    }
+
+    function deleteDiagReservation(id) {
+      if (confirm('해당 진단 예약 내역을 삭제하시겠습니까?')) {
+        let list = getDiagReservations();
+        list = list.filter(item => item.id !== id);
+        saveDiagReservations(list);
+      }
+    }
+
+    function exportDiagReservationsCSV() {
+      const list = getDiagReservations();
+      let csv = "진단주제,신청구분,연락처,상담요청메모,접수일시,처리상태\n";
+      list.forEach(item => {
+        csv += `"${item.category || ''}","${item.role || item.name || ''}","${item.phone || ''}","${(item.note || item.memo || '').replace(/"/g, '""')}","${item.createdAt || item.date || ''}","${item.status || '대기'}"\n`;
+      });
+      const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      downloadCSV(`여백과결_맞춤리셋진단예약명단_${stamp}.csv`, csv);
+    }
+
+    // ================= 9. 디지털 자서전 CTA 배너 설정 관리 =================
+    const MEMOIR_BANNER_CONFIG_KEY = 'yebaek_memoir_banner_config';
+    const DEFAULT_MEMOIR_BANNER_CONFIG = {
+      enabled: true,
+      title: "✨ 지금 신청 시 '30일 인생 서사 워크북' 무료 증정",
+      desc: "인생을 돌아보는 첫걸음, 사전 무료 상담을 신청하시는 모든 분께 1:1 방문 상담과 함께 정가 35,000원 상당의 자서전 워크북을 자택으로 무료 배송해 드립니다.",
+      consultBtnText: "✨ 자서전 제작 1:1 무료 상담 신청",
+      sampleBtnText: "📖 자서전 예시 둘러보기",
+      sampleLink: "my-room.html?mode=sample"
+    };
+
+    function loadMemoirBannerConfigToAdmin() {
+      let cfg = DEFAULT_MEMOIR_BANNER_CONFIG;
+      const saved = localStorage.getItem(MEMOIR_BANNER_CONFIG_KEY);
+      if (saved) {
+        try {
+          cfg = { ...DEFAULT_MEMOIR_BANNER_CONFIG, ...JSON.parse(saved) };
+        } catch (e) {
+          console.error('자서전 배너 설정 파싱 오류:', e);
+        }
+      }
+
+      const inputTitle = document.getElementById('adminMemoirBannerTitle');
+      const inputDesc = document.getElementById('adminMemoirBannerDesc');
+      const inputConsult = document.getElementById('adminMemoirConsultBtnText');
+      const inputSampleLink = document.getElementById('adminMemoirSampleLink');
+
+      if (inputTitle) inputTitle.value = cfg.title;
+      if (inputDesc) inputDesc.value = cfg.desc;
+      if (inputConsult) inputConsult.value = cfg.consultBtnText;
+      if (inputSampleLink) inputSampleLink.value = cfg.sampleLink;
+
+      updateMemoirLivePreview();
+    }
+
+    function updateMemoirLivePreview() {
+      const inputTitle = document.getElementById('adminMemoirBannerTitle');
+      const inputDesc = document.getElementById('adminMemoirBannerDesc');
+      const inputConsult = document.getElementById('adminMemoirConsultBtnText');
+
+      const previewTitle = document.getElementById('previewMemoirTitle');
+      const previewDesc = document.getElementById('previewMemoirDesc');
+      const previewConsultBtn = document.getElementById('previewConsultBtn');
+
+      if (previewTitle && inputTitle) previewTitle.textContent = inputTitle.value || DEFAULT_MEMOIR_BANNER_CONFIG.title;
+      if (previewDesc && inputDesc) previewDesc.textContent = inputDesc.value || DEFAULT_MEMOIR_BANNER_CONFIG.desc;
+      if (previewConsultBtn && inputConsult) previewConsultBtn.textContent = inputConsult.value || DEFAULT_MEMOIR_BANNER_CONFIG.consultBtnText;
+    }
+
+    function saveMemoirBannerConfig() {
+      const inputTitle = document.getElementById('adminMemoirBannerTitle');
+      const inputDesc = document.getElementById('adminMemoirBannerDesc');
+      const inputConsult = document.getElementById('adminMemoirConsultBtnText');
+      const inputSampleLink = document.getElementById('adminMemoirSampleLink');
+
+      const cfg = {
+        enabled: true,
+        title: (inputTitle && inputTitle.value.trim()) || DEFAULT_MEMOIR_BANNER_CONFIG.title,
+        desc: (inputDesc && inputDesc.value.trim()) || DEFAULT_MEMOIR_BANNER_CONFIG.desc,
+        consultBtnText: (inputConsult && inputConsult.value.trim()) || DEFAULT_MEMOIR_BANNER_CONFIG.consultBtnText,
+        sampleBtnText: DEFAULT_MEMOIR_BANNER_CONFIG.sampleBtnText,
+        sampleLink: (inputSampleLink && inputSampleLink.value.trim()) || DEFAULT_MEMOIR_BANNER_CONFIG.sampleLink
+      };
+
+      localStorage.setItem(MEMOIR_BANNER_CONFIG_KEY, JSON.stringify(cfg));
+      updateMemoirLivePreview();
+      alert('자서전 배너 설정(예시 둘러보기 지정 링크 포함)이 성공적으로 저장되었습니다.\n메인 사이트에 즉시 반영됩니다.');
+    }
+
+    function resetMemoirBannerToDefault() {
+      if (confirm('자서전 배너 설정을 기본값으로 초기화하시겠습니까?')) {
+        localStorage.setItem(MEMOIR_BANNER_CONFIG_KEY, JSON.stringify(DEFAULT_MEMOIR_BANNER_CONFIG));
+        loadMemoirBannerConfigToAdmin();
+        alert('기본값으로 복원되었습니다.');
+      }
+    }
+
+    // ================= 10. 나의 서재 신청 명단 및 코치 상담 관리 =================
+    const ARCHIVE_CLIENTS_KEY = 'yebaek_archive_clients_v1';
+    const DEFAULT_ARCHIVE_CLIENTS = [
+      {
+        id: 'arc_1',
+        name: '김순옥 어르신',
+        phone: '010-3841-9210',
+        category: '디지털 자서전 양장본',
+        memo: '184쪽 분량 완성본 제작 완료. 가족 헌정본 10권 인쇄 배송 및 서재 온라인 전시 등록 완료.',
+        date: '2026.09.20',
+        stage: '완료'
+      },
+      {
+        id: 'arc_2',
+        name: '이만수 어르신',
+        phone: '010-7712-4459',
+        category: '추억의 옛 사진 복원관',
+        memo: '1960~70년대 흑백 앨범 2권 고해상도 디지털 스캔 및 AI 복원 작업 의뢰. 1차 구술 인터뷰 완료.',
+        date: '2026.09.24',
+        stage: '진행중'
+      },
+      {
+        id: 'arc_3',
+        name: '박정희 님',
+        phone: '010-6321-8902',
+        category: '비움 일기장 & 금고 보관',
+        memo: '모친 생전 비움 일기 및 디지털 유언/유품 금고 지정 보관 서비스 사전 상담 신청.',
+        date: '2026.09.26',
+        stage: '접수'
+      }
+    ];
+
+    function getArchiveClients() {
+      const saved = localStorage.getItem(ARCHIVE_CLIENTS_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        } catch (e) {
+          console.error('서재 고객 명단 파싱 오류:', e);
+        }
+      }
+      localStorage.setItem(ARCHIVE_CLIENTS_KEY, JSON.stringify(DEFAULT_ARCHIVE_CLIENTS));
+      return DEFAULT_ARCHIVE_CLIENTS;
+    }
+
+    function saveArchiveClients(list) {
+      localStorage.setItem(ARCHIVE_CLIENTS_KEY, JSON.stringify(list));
+      renderArchiveClientsTable();
+    }
+
+    function renderArchiveClientsTable() {
+      const tbody = document.getElementById('archiveClientsTableBody');
+      if (!tbody) return;
+
+      const list = getArchiveClients();
+      if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 24px; color:#94a3b8;">나의 서재 신청 및 관리 내역이 없습니다.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map(c => {
+        const stage = c.stage || '접수';
+        return `
+          <tr>
+            <td style="font-weight:800; color:var(--text-main);">${escapeHtml(c.name)}</td>
+            <td><a href="tel:${escapeHtml(c.phone)}" style="color:var(--accent); font-weight:700;">${escapeHtml(c.phone)}</a></td>
+            <td>
+              <span style="display:inline-block; padding:3px 8px; border-radius:6px; background:rgba(43,90,66,0.08); color:var(--accent); font-size:0.8rem; font-weight:800;">
+                ${escapeHtml(c.category || '서재 구축')}
+              </span>
+            </td>
+            <td style="max-width:320px; line-height:1.45; font-size:0.88rem; color:var(--text-main);">
+              <div style="cursor:pointer;" onclick="editArchiveClientMemo('${c.id}')" title="클릭하여 상담 메모 수정">
+                ${escapeHtml(c.memo || '(상담 메모 없음 - 클릭하여 입력)')}
+                <span style="font-size:0.75rem; color:var(--accent); margin-left:4px;">✏️</span>
+              </div>
+            </td>
+            <td style="color:var(--text-muted); font-size:0.85rem;">${escapeHtml(c.date || '-')}</td>
+            <td style="text-align:center;">
+              <select class="status-select-sm" onchange="updateArchiveClientStage('${c.id}', this.value)" style="padding:4px 8px; border-radius:6px; border:1px solid var(--border-color); font-size:0.82rem; font-weight:700; background:#fff;">
+                <option value="접수" ${stage === '접수' ? 'selected' : ''}>⏳ 접수</option>
+                <option value="진행중" ${stage === '진행중' ? 'selected' : ''}>🏃 진행중</option>
+                <option value="완료" ${stage === '완료' ? 'selected' : ''}>✅ 완료</option>
+              </select>
+            </td>
+            <td style="text-align:center;">
+              <div style="display:inline-flex; gap:6px;">
+                <button class="btn-action-sm" onclick="editArchiveClientMemo('${c.id}')" style="background:var(--accent-light); color:var(--accent);">메모</button>
+                <button class="btn-action-sm del" onclick="deleteArchiveClient('${c.id}')">삭제</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function promptAddRoomClient() {
+      const name = prompt('고객 성함을 입력해주세요:');
+      if (!name || !name.trim()) return;
+
+      const phone = prompt('연락처를 입력해주세요:', '010-');
+      if (!phone || !phone.trim()) return;
+
+      const category = prompt('신청 서재 분야를 입력해주세요:\n(예: 디지털 자서전 / 추억 복원 / 비움 일기 / 엔딩 금고)', '디지털 자서전 양장본');
+      const memo = prompt('상담 내용 및 전담 코치 메모를 입력해주세요:', '1차 구술 상담 및 서재 아카이빙 신청');
+
+      const today = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
+      const newClient = {
+        id: 'arc_' + Date.now(),
+        name: name.trim(),
+        phone: phone.trim(),
+        category: (category && category.trim()) || '서재 구축',
+        memo: (memo && memo.trim()) || '신규 접수',
+        date: today,
+        stage: '접수'
+      };
+
+      const list = getArchiveClients();
+      list.unshift(newClient);
+      saveArchiveClients(list);
+      alert('신규 서재 고객이 등록되었습니다.');
+    }
+
+    function editArchiveClientMemo(id) {
+      const list = getArchiveClients();
+      const target = list.find(c => c.id === id);
+      if (!target) return;
+
+      const newMemo = prompt(`[${target.name}] 고객 상담 및 전담 코치 메모 수정:`, target.memo || '');
+      if (newMemo !== null) {
+        target.memo = newMemo.trim();
+        saveArchiveClients(list);
+      }
+    }
+
+    function updateArchiveClientStage(id, stage) {
+      const list = getArchiveClients();
+      const target = list.find(c => c.id === id);
+      if (target) {
+        target.stage = stage;
+        saveArchiveClients(list);
+      }
+    }
+
+    function deleteArchiveClient(id) {
+      if (confirm('해당 서재 고객 및 상담 내역을 삭제하시겠습니까?')) {
+        let list = getArchiveClients();
+        list = list.filter(c => c.id !== id);
+        saveArchiveClients(list);
+      }
+    }
+
+    function exportArchiveClientsCSV() {
+      const list = getArchiveClients();
+      let csv = "고객성함,연락처,신청서재분야,상담내용및코치메모,신청일자,구축단계\n";
+      list.forEach(c => {
+        csv += `"${c.name}","${c.phone}","${c.category || ''}","${(c.memo || '').replace(/"/g, '""')}","${c.date || ''}","${c.stage || '접수'}"\n`;
+      });
+      const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      downloadCSV(`여백과결_나의서재_구축신청및상담관리_${stamp}.csv`, csv);
+    }
+
     function loadAllData() {
       loadSiteSettings();
       renderArticlesTable();
@@ -3199,6 +3876,11 @@
       renderMemoirTable();
       renderAcademyTable();
       renderConsultTable();
+      // 신규 추가 탭 데이터 로딩
+      loadDiagColumnLinks();
+      renderDiagReservationTable();
+      loadMemoirBannerConfigToAdmin();
+      renderArchiveClientsTable();
     }
 
     // 초기 실행
