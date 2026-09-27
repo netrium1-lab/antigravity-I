@@ -2776,6 +2776,27 @@
         </div>
       </div>
 
+      <!-- 📚 관리자 홈 연동: 출판 완료된 인생 자서전 서가 & 전문 PDF 다운로드 센터 (핵심) -->
+      <div class="user-written-section" style="margin-top: 28px; background: #fffdf9; border: 1.5px solid #e7dfd5; border-radius: 16px; padding: 22px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <h3 style="font-family: 'Noto Serif KR', Georgia, serif; font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin: 0; display: flex; align-items: center; gap: 8px;">
+              <span>📚</span> 출판 완료된 인생 자서전 서가 & 전문 PDF 다운로드 센터
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-sub); margin: 4px 0 0;">
+              전담 코치와 함께 완성한 정규 출판본 자서전을 열람하고 <strong>고화질 인쇄용 PDF 파일</strong>을 소장용으로 다운로드하세요.
+            </p>
+          </div>
+          <span style="font-size: 0.80rem; padding: 4px 10px; border-radius: 20px; background: rgba(43,90,66,0.1); color: var(--accent); font-weight: 800;">
+            실시간 서재 다운로드 지원
+          </span>
+        </div>
+
+        <div id="roomPublishedMemoirGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;">
+          <!-- JS에서 동적 렌더링 -->
+        </div>
+      </div>
+
       <!-- 👵 김순옥 어르신 완성 샘플 영역 -->
       <div id="sampleMemoirArea" style="margin-top: 36px; padding-top: 24px; border-top: 1.5px dashed var(--paper-border);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
@@ -4357,34 +4378,140 @@
       }
     }
 
-    // ================= 📥 완성본 e-Book PDF 다운로드 =================
-    function downloadMemoirPdf() {
-      const data = getCoachData();
-      const fileName = data.pdfFileName || '김순옥_어르신_인생평전_디지털_양장본.pdf';
+    // ================= 📚 관리자 홈 연동: 출판 자서전 서가 & PDF 다운로드 =================
+    const ROOM_PUBLISHED_MEMOIRS_KEY = 'yebaek_published_memoirs_v1';
 
-      if (data.pdfDataUrl && data.pdfDataUrl.startsWith('data:application/pdf')) {
-        // 실제 업로드된 PDF 파일 다운로드
+    function getRoomPublishedMemoirs() {
+      const saved = localStorage.getItem(ROOM_PUBLISHED_MEMOIRS_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        } catch (e) {
+          console.error('서재 출판 자서전 파싱 오류:', e);
+        }
+      }
+      return [
+        {
+          id: 'memoir_pub_1',
+          title: '지리산 자락에서 피워낸 꽃 한 송이',
+          author: '김순옥 어르신',
+          pages: 184,
+          coach: '이선영 코치',
+          date: '2026.09.20',
+          coverImg: 'showcase_senior_memoir_1790478734278.jpg',
+          pdfFileName: '김순옥_어르신_인생평전_184쪽_완성본.pdf',
+          pdfFileSize: '18.4 MB',
+          pdfDataUrl: '',
+          isPublic: true,
+          delivery: '가족 헌정본 10권 인쇄 배송 완료',
+          summary: '184쪽 분량의 인생 평전, 지리산에서의 어린 시절부터 가족을 일궈낸 80년 삶의 대서사시'
+        },
+        {
+          id: 'memoir_pub_2',
+          title: '뜨거웠던 청춘, 50년 항해의 기록',
+          author: '이만수 어르신',
+          pages: 120,
+          coach: '정우성 코치',
+          date: '2026.09.24',
+          coverImg: 'showcase_senior_writing_1790478715781.jpg',
+          pdfFileName: '이만수_어르신_50년_항해_회고록_완성본.pdf',
+          pdfFileSize: '12.1 MB',
+          pdfDataUrl: '',
+          isPublic: true,
+          delivery: '양장본 5권 배송 완료',
+          summary: '원양 어선 기관장으로 오대양 육대주를 누비며 써 내려간 파도와 가족에 대한 그리움의 기록'
+        },
+        {
+          id: 'memoir_pub_3',
+          title: '비움으로 찾은 인생의 참된 여백',
+          author: '박정희 님 모친',
+          pages: 96,
+          coach: '김민희 코치',
+          date: '2026.09.26',
+          coverImg: 'showcase_senior_happy_book_1790478755451.jpg',
+          pdfFileName: '박정희_모친_비움일기_자서전_완성본.pdf',
+          pdfFileSize: '8.5 MB',
+          pdfDataUrl: '',
+          isPublic: true,
+          delivery: '1차 인쇄 교정 진행중',
+          summary: '오래된 물건을 비우며 마음의 평안을 찾아간 1년의 생전 정리 일기 및 지혜의 말씀'
+        }
+      ];
+    }
+
+    function renderRoomPublishedMemoirs() {
+      const container = document.getElementById('roomPublishedMemoirGrid');
+      if (!container) return;
+
+      const list = getRoomPublishedMemoirs().filter(m => m.isPublic !== false);
+      if (list.length === 0) {
+        container.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 24px; color: var(--text-sub);">아직 출판 등록된 자서전이 없습니다.</div>';
+        return;
+      }
+
+      container.innerHTML = list.map(m => {
+        const cover = m.coverImg || 'showcase_senior_memoir_1790478734278.jpg';
+        return `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; display: flex; gap: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+            <img src="${escapeHtml(cover)}" alt="표지" style="width: 80px; height: 110px; object-fit: cover; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); flex-shrink: 0;" onerror="this.src='showcase_senior_memoir_1790478734278.jpg'">
+            <div style="display: flex; flex-direction: column; justify-content: space-between; flex: 1; min-width: 0;">
+              <div>
+                <div style="font-size: 0.76rem; color: var(--accent); font-weight: 800; margin-bottom: 2px;">
+                  ${escapeHtml(m.delivery || '출판 완료본')}
+                </div>
+                <h4 style="font-family: 'Noto Serif KR', Georgia, serif; font-size: 0.98rem; font-weight: 800; color: var(--text-main); margin: 0 0 4px; line-height: 1.35; word-break: keep-all;">
+                  ${escapeHtml(m.title)}
+                </h4>
+                <div style="font-size: 0.82rem; color: var(--text-sub); display: flex; gap: 6px; flex-wrap: wrap;">
+                  <span>${escapeHtml(m.author)}</span>
+                  <span>·</span>
+                  <span style="color: var(--accent); font-weight: 750;">${escapeHtml(String(m.pages || 184))}쪽</span>
+                  <span>·</span>
+                  <span>감수: ${escapeHtml(m.coach || '-')}</span>
+                </div>
+              </div>
+
+              <div style="margin-top: 10px;">
+                <button type="button" onclick="downloadRoomMemoirPdf('${m.id}')" style="width: 100%; padding: 8px 12px; border-radius: 8px; background: var(--accent); color: #ffffff; border: none; font-size: 0.84rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 2px 6px rgba(43,90,66,0.25);">
+                  <span>📥 자서전 PDF 받기</span>
+                  <span style="font-size: 0.72rem; opacity: 0.85; font-weight: normal;">(${escapeHtml(m.pdfFileSize || '18.4 MB')})</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function downloadRoomMemoirPdf(memoirId) {
+      const list = getRoomPublishedMemoirs();
+      const target = list.find(m => m.id === memoirId);
+      if (!target) return;
+
+      const fileName = target.pdfFileName || `${target.author}_자서전_완성본.pdf`;
+
+      if (target.pdfDataUrl && target.pdfDataUrl.startsWith('data:application/pdf')) {
         const a = document.createElement('a');
-        a.href = data.pdfDataUrl;
+        a.href = target.pdfDataUrl;
         a.download = fileName;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+        alert(`📥 [${fileName}] 자서전 완성본 PDF 파일이 성공적으로 다운로드되었습니다!`);
       } else {
-        // 등록된 실제 PDF가 없을 경우: 정갈한 전자책 텍스트 소장본 Blob 파일 즉시 생성 다운로드
-        const textContent = `[여백과 결 · 리셋 아카이브]\n\n` +
-          `제목: 지리산 자락에서 피워낸 꽃 한 송이\n` +
-          `저자: 김순옥 어르신 구술 평전\n` +
-          `전담 코치 감수: ${data.coachProfile ? data.coachProfile.name : '박지은 수석코치'} (${data.coachProfile ? data.coachProfile.badge : ''})\n` +
-          `총 분량: ${data.pdfPages || 184} 페이지\n\n` +
+        const textContent = `[여백과 결 · 리셋 나의 서재 출판 자서전]\n\n` +
+          `도서명: ${target.title}\n` +
+          `저자: ${target.author} 구술 평전\n` +
+          `전담 코치 감수: ${target.coach}\n` +
+          `총 분량: ${target.pages} 페이지 (${target.delivery})\n` +
+          `완간 일시: ${target.date}\n\n` +
           `============================================================\n\n` +
-          data.chapters.map((ch, idx) => `[${ch.title}]\n\n${ch.content}\n\n`).join('------------------------------------------------------------\n\n') +
-          `\n============================================================\n` +
-          `[김순옥 어르신의 1분 육성 회고록 육성 메시지]\n` +
-          `"${data.audioSubtitle}"\n\n` +
-          `발행일: 2026년 9월 한정판\n` +
-          `발행처: 메타큐 라이프 (여백과 결 아카이브)\n` +
-          `실물 양장본 배송 송장: ${data.deliveryCourier} ${data.deliveryTrackingNo}\n` +
+          `[생애 요약 및 가족 헌정사]\n` +
+          `${target.summary || '지나온 삶의 귀한 발자취를 정갈한 문장과 사진으로 엮은 인생의 찬란한 기록입니다.'}\n\n` +
+          `============================================================\n` +
+          `발행처: 여백과 결 아카이브 (메타큐 라이프)\n` +
+          `보관 형태: 서재 영구 보관 디지털 e-Book / 인쇄 양장본\n` +
           `============================================================\n`;
 
         const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
@@ -4398,7 +4525,52 @@
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
 
-        alert(`📥 [${downName}] 자서전 디지털 소장본이 다운로드되었습니다!\n(※ 코치 관리홈에서 인쇄용 .pdf 파일을 업로드하시면 실제 PDF 파일로 즉시 다운로드됩니다.)`);
+        alert(`📥 [${downName}] 자서전 디지털 소장본이 다운로드되었습니다!\n(※ 관리자 홈에서 업로드된 고화질 .pdf 파일로 언제든 소장하실 수 있습니다.)`);
+      }
+    }
+
+    // ================= 📥 완성본 e-Book PDF 다운로드 (상단 헤더 버튼 연동) =================
+    function downloadMemoirPdf() {
+      // 1. 관리자 홈에서 등록된 출판 자서전 중 첫 번째 항목(대표본) 우선 확인
+      const pubList = getRoomPublishedMemoirs();
+      if (pubList && pubList.length > 0) {
+        const first = pubList[0];
+        downloadRoomMemoirPdf(first.id);
+        return;
+      }
+
+      // 2. 기본 코치 데이터 다운로드 폴백
+      const data = getCoachData();
+      const fileName = data.pdfFileName || '김순옥_어르신_인생평전_디지털_양장본.pdf';
+
+      if (data.pdfDataUrl && data.pdfDataUrl.startsWith('data:application/pdf')) {
+        const a = document.createElement('a');
+        a.href = data.pdfDataUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } else {
+        const textContent = `[여백과 결 · 리셋 아카이브]\n\n` +
+          `제목: 지리산 자락에서 피워낸 꽃 한 송이\n` +
+          `저자: 김순옥 어르신 구술 평전\n` +
+          `전담 코치 감수: ${data.coachProfile ? data.coachProfile.name : '박지은 수석코치'}\n` +
+          `총 분량: ${data.pdfPages || 184} 페이지\n\n` +
+          `발행일: 2026년 9월 한정판\n` +
+          `발행처: 메타큐 라이프 (여백과 결 아카이브)\n`;
+
+        const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const downName = fileName.replace(/\.pdf$/i, '') + '_전자책_소장본.txt';
+        a.download = downName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        alert(`📥 [${downName}] 자서전 디지털 소장본이 다운로드되었습니다!`);
       }
     }
 
@@ -6227,6 +6399,9 @@
       renderCustomMemories();
       // 저장된 사용자 엔딩 금고 렌더링
       renderCustomVaultItems();
+
+      // 📚 관리자 홈 연동: 출판 완료된 자서전 서가 및 PDF 렌더링
+      renderRoomPublishedMemoirs();
 
       // 카카오 SDK 초기화
       initKakaoSDK();

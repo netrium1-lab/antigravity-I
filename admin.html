@@ -1890,6 +1890,50 @@
             </table>
           </div>
         </div>
+
+        <!-- 3. 출판 완료된 디지털 자서전 도서 & PDF 관리 (나의 서재 실시간 다운로드 연동) -->
+        <div class="panel-card" style="margin-top: 24px;">
+          <div class="panel-header" style="flex-wrap: wrap; gap: 10px;">
+            <div class="panel-title-wrap">
+              <span class="panel-icon">📚</span>
+              <div>
+                <h2 class="panel-title">04-3. 출판 완료된 디지털 자서전 도서 & PDF 파일 관리 (서재 자동 연동)</h2>
+                <p style="color: var(--text-muted); font-size: 0.86rem; margin: 4px 0 0;">
+                  전문 구술 인터뷰와 교정을 거쳐 완간된 디지털 자서전 도서와 <strong>PDF 파일</strong>을 관리합니다. 등록된 도서는 <strong>[나의 서재(my-room.html)]</strong>에 자동 전시되어 어르신과 가족이 직접 다운로드할 수 있습니다.
+                </p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-save-setting" onclick="openPubMemoirModal()" style="background: var(--accent); color: #ffffff;">
+                <span>➕</span> 신규 완성 자서전 & PDF 등록
+              </button>
+              <button class="btn-save-setting" onclick="exportPubMemoirsCSV()" style="background: #ffffff; color: var(--text-main); border: 1.5px solid var(--border-color);">
+                <span>📥</span> 도서 목록(CSV) 다운로드
+              </button>
+            </div>
+          </div>
+
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 70px; text-align: center;">표지</th>
+                  <th style="width: 180px;">자서전 도서명</th>
+                  <th style="width: 100px;">저자 (어르신)</th>
+                  <th style="width: 85px; text-align: center;">총 분량</th>
+                  <th style="width: 100px;">전담 코치</th>
+                  <th style="width: 100px;">완간 일자</th>
+                  <th style="width: 220px;">자서전 PDF 파일 & 다운로드</th>
+                  <th style="width: 100px; text-align: center;">서재 공개</th>
+                  <th style="width: 110px; text-align: center;">관리</th>
+                </tr>
+              </thead>
+              <tbody id="publishedMemoirsTableBody">
+                <!-- JS 동적 렌더링 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
 
       <!-- ================= 탭 6: 🎓 05. 코치 아카데미 & 코치 배정 관리 ================= -->
@@ -2545,6 +2589,110 @@
           </button>
           <button type="submit" class="btn-save-setting" style="background: var(--accent); color: #ffffff;">
             💾 배정 정보 저장하기
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= 모달 6) 출판 완료된 자서전 및 PDF 등록/수정 모달 ================= -->
+  <div class="cms-modal-overlay" id="pubMemoirModal" onclick="closePubMemoirModalOnOverlay(event)">
+    <div class="coach-modal-card" style="max-width: 620px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; border-bottom: 1.5px solid var(--border-color); padding-bottom: 14px;">
+        <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin: 0;" id="pubMemoirModalTitle">
+          📚 출판 완료 자서전 도서 & PDF 등록
+        </h3>
+        <button type="button" onclick="closePubMemoirModal()" aria-label="닫기" style="border: 1px solid var(--border-color); background: var(--bg-body); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;">✕</button>
+      </div>
+
+      <form onsubmit="handlePubMemoirFormSubmit(event)" style="display: flex; flex-direction: column; gap: 14px;">
+        <input type="hidden" id="pubMemoirFormId">
+
+        <div>
+          <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">자서전 도서명 *</label>
+          <input type="text" id="inputPubMemoirTitle" class="setting-input" placeholder="예: 지리산 자락에서 피워낸 꽃 한 송이" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">저자 (어르신 성함) *</label>
+            <input type="text" id="inputPubMemoirAuthor" class="setting-input" placeholder="예: 김순옥 어르신" required>
+          </div>
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">총 분량 (쪽수) *</label>
+            <input type="number" id="inputPubMemoirPages" class="setting-input" placeholder="184" value="184" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">전담 감수 코치 *</label>
+            <input type="text" id="inputPubMemoirCoach" class="setting-input" placeholder="예: 이선영 코치" value="이선영 코치" required>
+          </div>
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">완간 / 출판 일자 *</label>
+            <input type="text" id="inputPubMemoirDate" class="setting-input" placeholder="2026.09.20" required>
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">도서 표지 이미지 (선택)</label>
+          <input type="text" id="inputPubMemoirCover" class="setting-input" placeholder="showcase_senior_memoir_1790478734278.jpg 또는 이미지 URL" value="showcase_senior_memoir_1790478734278.jpg">
+        </div>
+
+        <!-- 📄 핵심: PDF 파일 첨부 및 파일명/용량 관리 -->
+        <div style="background: #f8fafc; border: 1.5px dashed var(--accent); border-radius: 12px; padding: 14px 16px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <label style="font-size: 0.86rem; font-weight: 850; color: var(--accent); display: flex; align-items: center; gap: 6px;">
+              <span>📄</span> 자서전 완성본 PDF 파일 첨부 / 업로드
+            </label>
+            <button type="button" class="btn-action-sm" onclick="document.getElementById('inputPubMemoirPdfFile').click()" style="background: var(--accent); color: #fff; padding: 5px 12px;">
+              📁 PDF 파일 찾기
+            </button>
+          </div>
+          <input type="file" id="inputPubMemoirPdfFile" accept="application/pdf" style="display: none;" onchange="handlePubMemoirPdfFileChange(event)">
+          
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-top: 8px;">
+            <div>
+              <span style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 3px;">등록된 PDF 파일명</span>
+              <input type="text" id="inputPubMemoirPdfName" class="setting-input" placeholder="김순옥_어르신_인생평전_184쪽_완성본.pdf" style="font-size: 0.84rem;">
+            </div>
+            <div>
+              <span style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 3px;">파일 용량</span>
+              <input type="text" id="inputPubMemoirPdfSize" class="setting-input" placeholder="18.4 MB" style="font-size: 0.84rem;">
+            </div>
+          </div>
+          <input type="hidden" id="inputPubMemoirPdfData">
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0 0;">
+            ※ .pdf 파일을 첨부하시면 [나의 서재(my-room.html)]에서 어르신/가족이 해당 PDF를 즉시 다운로드할 수 있습니다. (미첨부 시 품격 있는 전자책 텍스트 소장본으로 자동 다운로드 생성됩니다)
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">나의 서재 공개 상태 *</label>
+            <select id="selectPubMemoirPublic" class="setting-input" style="background:#fff;">
+              <option value="true">🌐 공개 (나의 서재에 노출 및 PDF 다운로드 허용)</option>
+              <option value="false">🔒 비공개 (관리자 전용 보관)</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">배송 / 인쇄 상태</label>
+            <input type="text" id="inputPubMemoirDelivery" class="setting-input" placeholder="가족 헌정본 10권 인쇄 배송 완료" value="양장본 10권 배송 완료">
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">도서 소개 및 한 줄 평전 요약</label>
+          <textarea id="inputPubMemoirSummary" class="setting-textarea" rows="2" placeholder="자서전의 핵심 생애 메시지나 가족 헌정사를 간략히 기록하세요."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+          <button type="button" class="btn-save-setting" onclick="closePubMemoirModal()" style="background: #ffffff; color: var(--text-main); border: 1.5px solid var(--border-color);">
+            취소
+          </button>
+          <button type="submit" class="btn-save-setting" style="background: var(--accent); color: #ffffff;">
+            💾 완성 자서전 & PDF 저장하기
           </button>
         </div>
       </form>
@@ -4841,6 +4989,361 @@
       }
     }
 
+    // =========================================================================
+    // 13. 📚 출판 완료된 디지털 자서전 도서 & PDF 관리 엔진 (서재 연동)
+    // =========================================================================
+    const PUBLISHED_MEMOIRS_STORAGE_KEY = 'yebaek_published_memoirs_v1';
+
+    const DEFAULT_PUBLISHED_MEMOIRS = [
+      {
+        id: 'memoir_pub_1',
+        title: '지리산 자락에서 피워낸 꽃 한 송이',
+        author: '김순옥 어르신',
+        pages: 184,
+        coach: '이선영 코치',
+        date: '2026.09.20',
+        coverImg: 'showcase_senior_memoir_1790478734278.jpg',
+        pdfFileName: '김순옥_어르신_인생평전_184쪽_완성본.pdf',
+        pdfFileSize: '18.4 MB',
+        pdfDataUrl: '',
+        isPublic: true,
+        delivery: '가족 헌정본 10권 인쇄 배송 완료',
+        summary: '184쪽 분량의 인생 평전, 지리산에서의 어린 시절부터 가족을 일궈낸 80년 삶의 대서사시'
+      },
+      {
+        id: 'memoir_pub_2',
+        title: '뜨거웠던 청춘, 50년 항해의 기록',
+        author: '이만수 어르신',
+        pages: 120,
+        coach: '정우성 코치',
+        date: '2026.09.24',
+        coverImg: 'showcase_senior_writing_1790478715781.jpg',
+        pdfFileName: '이만수_어르신_50년_항해_회고록_완성본.pdf',
+        pdfFileSize: '12.1 MB',
+        pdfDataUrl: '',
+        isPublic: true,
+        delivery: '양장본 5권 배송 완료',
+        summary: '원양 어선 기관장으로 오대양 육대주를 누비며 써 내려간 파도와 가족에 대한 그리움의 기록'
+      },
+      {
+        id: 'memoir_pub_3',
+        title: '비움으로 찾은 인생의 참된 여백',
+        author: '박정희 님 모친',
+        pages: 96,
+        coach: '김민희 코치',
+        date: '2026.09.26',
+        coverImg: 'showcase_senior_happy_book_1790478755451.jpg',
+        pdfFileName: '박정희_모친_비움일기_자서전_완성본.pdf',
+        pdfFileSize: '8.5 MB',
+        pdfDataUrl: '',
+        isPublic: true,
+        delivery: '1차 인쇄 교정 진행중',
+        summary: '오래된 물건을 비우며 마음의 평안을 찾아간 1년의 생전 정리 일기 및 지혜의 말씀'
+      }
+    ];
+
+    function getPublishedMemoirs() {
+      const saved = localStorage.getItem(PUBLISHED_MEMOIRS_STORAGE_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        } catch (e) {
+          console.error('출판 자서전 파싱 오류:', e);
+        }
+      }
+      localStorage.setItem(PUBLISHED_MEMOIRS_STORAGE_KEY, JSON.stringify(DEFAULT_PUBLISHED_MEMOIRS));
+      return DEFAULT_PUBLISHED_MEMOIRS;
+    }
+
+    function savePublishedMemoirs(list) {
+      localStorage.setItem(PUBLISHED_MEMOIRS_STORAGE_KEY, JSON.stringify(list));
+      renderPublishedMemoirsTable();
+    }
+
+    function renderPublishedMemoirsTable() {
+      const tbody = document.getElementById('publishedMemoirsTableBody');
+      if (!tbody) return;
+
+      const list = getPublishedMemoirs();
+      if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 24px; color:#94a3b8;">출판 완료된 자서전 도서가 없습니다. [신규 완성 자서전 & PDF 등록] 버튼을 눌러 등록하세요.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map(m => {
+        const coverSrc = m.coverImg || 'showcase_senior_memoir_1790478734278.jpg';
+        const isPub = m.isPublic !== false;
+
+        return `
+          <tr>
+            <td style="text-align: center;">
+              <img src="${escapeHtml(coverSrc)}" alt="표지" style="width: 44px; height: 58px; object-fit: cover; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);" onerror="this.src='showcase_senior_memoir_1790478734278.jpg'">
+            </td>
+            <td>
+              <div style="font-weight: 850; color: var(--text-main); font-size: 0.92rem; line-height: 1.3;">
+                ${escapeHtml(m.title)}
+              </div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 3px;">
+                ${escapeHtml(m.delivery || '인쇄본 배송 완료')}
+              </div>
+            </td>
+            <td style="font-weight: 750; color: var(--text-main);">${escapeHtml(m.author)}</td>
+            <td style="text-align: center; font-weight: 800; color: var(--accent);">${escapeHtml(String(m.pages || 184))}쪽</td>
+            <td style="font-size: 0.86rem; color: var(--text-main);">${escapeHtml(m.coach || '-')}</td>
+            <td style="font-size: 0.84rem; color: var(--text-muted);">${escapeHtml(m.date || '-')}</td>
+            <td>
+              <div style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-size: 0.82rem; font-weight: 750; color: var(--text-main); word-break: break-all;">
+                  📄 ${escapeHtml(m.pdfFileName || '자서전_완성본.pdf')}
+                </span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; color: #475569;">
+                    ${escapeHtml(m.pdfFileSize || '18.4 MB')}
+                  </span>
+                  <button type="button" class="btn-action-sm" onclick="downloadPublishedMemoirPdf('${m.id}')" style="background: var(--accent-light); color: var(--accent); padding: 3px 8px; font-size: 0.76rem; font-weight: 800;">
+                    📥 PDF 다운로드
+                  </button>
+                </div>
+              </div>
+            </td>
+            <td style="text-align: center;">
+              <select class="status-select-sm" onchange="togglePubMemoirPublic('${m.id}', this.value)" style="background:#fff;">
+                <option value="true" ${isPub ? 'selected' : ''}>🌐 서재 공개</option>
+                <option value="false" ${!isPub ? 'selected' : ''}>🔒 비공개</option>
+              </select>
+            </td>
+            <td style="text-align: center;">
+              <div style="display: inline-flex; gap: 6px;">
+                <button class="btn-action-sm" onclick="openPubMemoirModal('${m.id}')" style="background: var(--accent-light); color: var(--accent);">수정</button>
+                <button class="btn-action-sm del" onclick="deletePubMemoir('${m.id}')">삭제</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function togglePubMemoirPublic(id, val) {
+      const list = getPublishedMemoirs();
+      const target = list.find(m => m.id === id);
+      if (target) {
+        target.isPublic = (val === 'true');
+        savePublishedMemoirs(list);
+      }
+    }
+
+    function openPubMemoirModal(id) {
+      const modal = document.getElementById('pubMemoirModal');
+      const form = document.querySelector('#pubMemoirModal form');
+      if (!modal || !form) return;
+
+      const titleEl = document.getElementById('pubMemoirModalTitle');
+      const idInput = document.getElementById('pubMemoirFormId');
+      const titleInput = document.getElementById('inputPubMemoirTitle');
+      const authorInput = document.getElementById('inputPubMemoirAuthor');
+      const pagesInput = document.getElementById('inputPubMemoirPages');
+      const coachInput = document.getElementById('inputPubMemoirCoach');
+      const dateInput = document.getElementById('inputPubMemoirDate');
+      const coverInput = document.getElementById('inputPubMemoirCover');
+      const pdfNameInput = document.getElementById('inputPubMemoirPdfName');
+      const pdfSizeInput = document.getElementById('inputPubMemoirPdfSize');
+      const pdfDataInput = document.getElementById('inputPubMemoirPdfData');
+      const publicSelect = document.getElementById('selectPubMemoirPublic');
+      const deliveryInput = document.getElementById('inputPubMemoirDelivery');
+      const summaryInput = document.getElementById('inputPubMemoirSummary');
+
+      if (id) {
+        const list = getPublishedMemoirs();
+        const target = list.find(m => m.id === id);
+        if (target) {
+          if (titleEl) titleEl.textContent = `📚 [${target.title}] 자서전 및 PDF 수정`;
+          if (idInput) idInput.value = target.id;
+          if (titleInput) titleInput.value = target.title || '';
+          if (authorInput) authorInput.value = target.author || '';
+          if (pagesInput) pagesInput.value = target.pages || 184;
+          if (coachInput) coachInput.value = target.coach || '';
+          if (dateInput) dateInput.value = target.date || '';
+          if (coverInput) coverInput.value = target.coverImg || '';
+          if (pdfNameInput) pdfNameInput.value = target.pdfFileName || '';
+          if (pdfSizeInput) pdfSizeInput.value = target.pdfFileSize || '';
+          if (pdfDataInput) pdfDataInput.value = target.pdfDataUrl || '';
+          if (publicSelect) publicSelect.value = target.isPublic !== false ? 'true' : 'false';
+          if (deliveryInput) deliveryInput.value = target.delivery || '';
+          if (summaryInput) summaryInput.value = target.summary || '';
+        }
+      } else {
+        if (titleEl) titleEl.textContent = '📚 신규 완성 자서전 도서 및 PDF 등록';
+        form.reset();
+        if (idInput) idInput.value = '';
+        if (pagesInput) pagesInput.value = '184';
+        if (dateInput) {
+          const nowStr = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
+          dateInput.value = nowStr;
+        }
+        if (coverInput) coverInput.value = 'showcase_senior_memoir_1790478734278.jpg';
+        if (pdfSizeInput) pdfSizeInput.value = '18.4 MB';
+        if (deliveryInput) deliveryInput.value = '가족 헌정본 10권 인쇄 배송 완료';
+        if (publicSelect) publicSelect.value = 'true';
+      }
+
+      modal.classList.add('open');
+    }
+
+    function closePubMemoirModal() {
+      const modal = document.getElementById('pubMemoirModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function closePubMemoirModalOnOverlay(e) {
+      if (e.target.id === 'pubMemoirModal') closePubMemoirModal();
+    }
+
+    function handlePubMemoirPdfFileChange(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+      const nameInput = document.getElementById('inputPubMemoirPdfName');
+      const sizeInput = document.getElementById('inputPubMemoirPdfSize');
+      const dataInput = document.getElementById('inputPubMemoirPdfData');
+
+      if (nameInput) nameInput.value = file.name;
+      if (sizeInput) sizeInput.value = `${sizeMb} MB`;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        if (dataInput) dataInput.value = evt.target.result;
+        alert(`📄 [${file.name}] (${sizeMb} MB) PDF 파일이 성공적으로 준비되었습니다!\n저장 버튼을 누르시면 [나의 서재(my-room.html)]에 즉시 연동됩니다.`);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handlePubMemoirFormSubmit(e) {
+      e.preventDefault();
+      const idInput = document.getElementById('pubMemoirFormId');
+      const titleInput = document.getElementById('inputPubMemoirTitle');
+      const authorInput = document.getElementById('inputPubMemoirAuthor');
+      const pagesInput = document.getElementById('inputPubMemoirPages');
+      const coachInput = document.getElementById('inputPubMemoirCoach');
+      const dateInput = document.getElementById('inputPubMemoirDate');
+      const coverInput = document.getElementById('inputPubMemoirCover');
+      const pdfNameInput = document.getElementById('inputPubMemoirPdfName');
+      const pdfSizeInput = document.getElementById('inputPubMemoirPdfSize');
+      const pdfDataInput = document.getElementById('inputPubMemoirPdfData');
+      const publicSelect = document.getElementById('selectPubMemoirPublic');
+      const deliveryInput = document.getElementById('inputPubMemoirDelivery');
+      const summaryInput = document.getElementById('inputPubMemoirSummary');
+
+      const title = titleInput ? titleInput.value.trim() : '';
+      const author = authorInput ? authorInput.value.trim() : '';
+      if (!title || !author) {
+        alert('자서전 도서명과 저자 성함을 입력해주세요.');
+        return;
+      }
+
+      const list = getPublishedMemoirs();
+      const existingId = idInput ? idInput.value : '';
+
+      const bookData = {
+        title: title,
+        author: author,
+        pages: parseInt(pagesInput ? pagesInput.value : '184', 10) || 184,
+        coach: coachInput ? coachInput.value.trim() : '이선영 코치',
+        date: dateInput ? dateInput.value.trim() : '2026.09.20',
+        coverImg: (coverInput && coverInput.value.trim()) || 'showcase_senior_memoir_1790478734278.jpg',
+        pdfFileName: (pdfNameInput && pdfNameInput.value.trim()) || `${author}_자서전_완성본.pdf`,
+        pdfFileSize: (pdfSizeInput && pdfSizeInput.value.trim()) || '18.4 MB',
+        pdfDataUrl: (pdfDataInput && pdfDataInput.value) || '',
+        isPublic: publicSelect ? publicSelect.value === 'true' : true,
+        delivery: deliveryInput ? deliveryInput.value.trim() : '인쇄본 배송 완료',
+        summary: summaryInput ? summaryInput.value.trim() : ''
+      };
+
+      if (existingId) {
+        const target = list.find(m => m.id === existingId);
+        if (target) {
+          Object.assign(target, bookData);
+        }
+      } else {
+        bookData.id = 'memoir_pub_' + Date.now();
+        list.unshift(bookData);
+      }
+
+      savePublishedMemoirs(list);
+      closePubMemoirModal();
+      alert(`📚 [${title}] 자서전 도서 및 PDF가 성공적으로 저장되었습니다.\n[나의 서재(my-room.html)]에서 어르신/가족이 즉시 다운로드할 수 있습니다.`);
+    }
+
+    function deletePubMemoir(id) {
+      const list = getPublishedMemoirs();
+      const target = list.find(m => m.id === id);
+      if (!target) return;
+
+      if (confirm(`[${target.title}] 자서전을 도서 목록에서 삭제하시겠습니까?\n(나의 서재에서도 노출이 중단됩니다)`)) {
+        const updated = list.filter(m => m.id !== id);
+        savePublishedMemoirs(updated);
+      }
+    }
+
+    // PDF 파일 다운로드 유틸 (실제 base64 PDF 또는 소장본 텍스트/PDF 생성)
+    function downloadPublishedMemoirPdf(id) {
+      const list = getPublishedMemoirs();
+      const target = list.find(m => m.id === id);
+      if (!target) return;
+
+      const fileName = target.pdfFileName || `${target.author}_자서전_완성본.pdf`;
+
+      if (target.pdfDataUrl && target.pdfDataUrl.startsWith('data:application/pdf')) {
+        const a = document.createElement('a');
+        a.href = target.pdfDataUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        alert(`📥 [${fileName}] PDF 파일이 다운로드되었습니다.`);
+      } else {
+        // 실제 PDF 첨부 전: 정갈한 자서전 양장본 텍스트/PDF 소장본 파일 즉시 생성 다운로드
+        const text = `[여백과 결 · 리셋 아카이브]\n\n` +
+          `도서명: ${target.title}\n` +
+          `저자: ${target.author} 구술 평전\n` +
+          `전담 감수: ${target.coach}\n` +
+          `완간 쪽수: ${target.pages} 페이지\n` +
+          `완간 일자: ${target.date}\n` +
+          `인쇄 및 배송: ${target.delivery}\n\n` +
+          `============================================================\n\n` +
+          `[생애 요약 및 서문]\n` +
+          `${target.summary || '지나온 삶의 귀한 발자취를 정갈한 문장과 사진으로 엮은 인생의 찬란한 기록입니다.'}\n\n` +
+          `============================================================\n` +
+          `발행처: 여백과 결 (메타큐 라이프)\n` +
+          `파일 규격: 디지털 e-Book / 양장본 출판 인쇄본\n` +
+          `============================================================\n`;
+
+        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const downName = fileName.replace(/\.pdf$/i, '') + '_소장본.txt';
+        a.download = downName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        alert(`📥 [${downName}] 자서전 소장본이 다운로드되었습니다!\n(※ 관리자 수정 모달에서 실제 .pdf 파일을 첨부하시면 PDF 바이너리로 즉시 다운로드됩니다.)`);
+      }
+    }
+
+    function exportPubMemoirsCSV() {
+      const list = getPublishedMemoirs();
+      let csv = "도서명,저자,총쪽수,전담코치,완간일자,PDF파일명,파일용량,공개여부,배송상태,도서요약\n";
+      list.forEach(m => {
+        csv += `"${m.title}","${m.author}","${m.pages}쪽","${m.coach}","${m.date}","${m.pdfFileName || ''}","${m.pdfFileSize || ''}","${m.isPublic !== false ? '공개' : '비공개'}","${m.delivery || ''}","${(m.summary || '').replace(/"/g, '""')}"\n`;
+      });
+      const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      downloadCSV(`여백과결_출판자서전도서목록_${stamp}.csv`, csv);
+    }
+
     function loadAllData() {
       loadSiteSettings();
       renderArticlesTable();
@@ -4857,6 +5360,8 @@
       renderCoachesTable();
       renderDispatchesTable();
       updateAcademyStats();
+      // 출판 완료 자서전 및 PDF 목록 로딩
+      renderPublishedMemoirsTable();
     }
 
     // 초기 실행
