@@ -705,12 +705,18 @@
       left: 0;
       width: 100%;
       height: 100%;
+      height: 100dvh;
       background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(5px);
       z-index: 300;
       display: none;
       align-items: center;
       justify-content: center;
+      padding: 16px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
       opacity: 0;
       transition: opacity 0.25s ease;
     }
@@ -726,7 +732,12 @@
       border-radius: 20px;
       padding: 36px 30px;
       max-width: 380px;
-      width: 90%;
+      width: 100%;
+      max-height: calc(100dvh - 32px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      box-sizing: border-box;
       box-shadow: var(--shadow-lg);
       text-align: center;
       animation: modalSlideUp 0.3s ease;
@@ -742,11 +753,47 @@
       position: absolute;
       top: 16px;
       right: 18px;
-      background: none;
-      border: none;
-      font-size: 1.3rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
       cursor: pointer;
-      color: var(--text-muted);
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+    .modal-close-btn:hover {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    /* 모달 닫기/뒤로가기 알약 버튼 공통 스타일 */
+    .btn-modal-close-back {
+      background: var(--accent-light);
+      border: 1.5px solid var(--accent);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--accent);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+    .btn-modal-close-back:hover {
+      background: var(--accent);
+      color: #ffffff;
+      transform: translateY(-1px);
     }
 
     /* -------------------- 메인 히어로 섹션 -------------------- */
@@ -2358,6 +2405,7 @@
       left: 0;
       width: 100%;
       height: 100%;
+      height: 100dvh;
       background: rgba(0, 0, 0, 0.88);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
@@ -2365,7 +2413,11 @@
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px 12px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
       opacity: 0;
       transition: opacity 0.25s ease;
     }
@@ -2402,8 +2454,9 @@
       border-radius: 20px;
       max-width: 1080px;
       width: 100%;
-      height: 90vh;
-      max-height: 90vh;
+      height: calc(100dvh - 32px);
+      max-height: calc(100dvh - 32px);
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95);
@@ -2976,10 +3029,13 @@
       border-radius: 20px;
       max-width: 780px;
       width: 100%;
-      max-height: 90vh;
+      max-height: calc(100dvh - 32px);
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      box-sizing: border-box;
       box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
-      padding: 44px 36px;
+      padding: 32px 28px 24px;
       position: relative;
       animation: modalSlideUp 0.3s ease;
     }
@@ -3050,10 +3106,13 @@
       border-radius: 20px;
       max-width: 860px;
       width: 100%;
-      max-height: 90vh;
+      max-height: calc(100dvh - 32px);
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      box-sizing: border-box;
       box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
-      padding: 36px 30px;
+      padding: 32px 26px;
       position: relative;
       animation: modalSlideUp 0.3s ease;
     }
@@ -3281,10 +3340,13 @@
       border-radius: 20px;
       max-width: 1040px;
       width: 100%;
-      max-height: 92vh;
+      max-height: calc(100dvh - 32px);
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      box-sizing: border-box;
       box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65);
-      padding: 34px 30px;
+      padding: 30px 24px;
       position: relative;
       animation: modalSlideUp 0.3s ease;
       z-index: 10;
@@ -3527,8 +3589,13 @@
       border-radius: 20px;
       max-width: 420px;
       width: 100%;
+      max-height: calc(100dvh - 32px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      box-sizing: border-box;
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
-      padding: 36px 28px;
+      padding: 32px 26px;
       text-align: center;
       position: relative;
       animation: modalSlideUp 0.3s ease;
@@ -3556,11 +3623,14 @@
       border: 1.5px solid var(--border-color);
       border-radius: 24px;
       max-width: 520px;
-      width: 92%;
-      max-height: 90vh;
+      width: 100%;
+      max-height: calc(100dvh - 32px);
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      box-sizing: border-box;
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
-      padding: 32px 26px;
+      padding: 30px 24px;
       text-align: center;
       position: relative;
       animation: modalSlideUp 0.3s ease;
@@ -4588,6 +4658,11 @@
           👵 김순옥 어르신 완성 서재 예시 먼저 둘러보기 ➔
         </a>
       </div>
+
+      <!-- 하단 전용 명확한 닫기 버튼 (스크롤 후 언제든 바로 닫기 가능) -->
+      <button type="button" onclick="closeLoginModal()" style="margin-top: 16px; width: 100%; padding: 12px; background: var(--bg-secondary); border: 1.5px solid var(--border-color); border-radius: 12px; color: var(--text-primary); font-size: 0.92rem; font-weight: 750; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        <span>✕ 창 닫고 이전 화면으로</span>
+      </button>
     </div>
   </div>
 
@@ -5450,7 +5525,15 @@
   <!-- ================= 모달 2) 글 본문 상세 뷰어 모달 ================= -->
   <div class="cms-modal-overlay" id="articleReaderModal" onclick="closeReaderOnOverlay(event)">
     <div class="reader-card">
-      <button class="drawer-close" onclick="closeArticleReader()" aria-label="닫기" style="position: absolute; top: 24px; right: 24px; border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">✕</button>
+      <!-- 📌 상단 스티키 고정 닫기 바 (스크롤을 내려도 항상 노출) -->
+      <div style="position: sticky; top: -32px; z-index: 60; background: var(--bg-card); padding: 10px 0 12px; margin: -32px -28px 16px; padding-left: 28px; padding-right: 28px; border-bottom: 1.5px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);">
+        <span style="font-size: 0.88rem; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 6px;">
+          <span>📖</span> 여백의 서재 칼럼 전문
+        </span>
+        <button type="button" onclick="closeArticleReader()" class="btn-modal-close-back" style="padding: 6px 14px; border-radius: 999px; background: var(--accent-light); border: 1.5px solid var(--accent); color: var(--accent); font-weight: 800; font-size: 0.86rem; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" aria-label="닫기">
+          <span>✕ 닫고 돌아가기</span>
+        </button>
+      </div>
       
       <!-- 관리자 전용 글 수정/삭제 액션바 (관리자 로그인 시 노출) -->
       <div id="readerAdminToolbar" class="reader-admin-toolbar" style="display: none;">
@@ -5506,6 +5589,10 @@
             💬 오늘의 비움 한 줄 남기기
           </a>
         </div>
+        <!-- 하단 전용 명확한 닫기 버튼 -->
+        <button type="button" onclick="closeArticleReader()" style="margin-top: 20px; width: 100%; padding: 13px; background: var(--bg-secondary); border: 1.5px solid var(--border-color); border-radius: 12px; color: var(--text-primary); font-size: 0.95rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <span>✕ 글 닫고 이전 화면으로 복귀</span>
+        </button>
       </div>
     </div>
   </div>
@@ -5535,6 +5622,11 @@
       <div id="boardItemList" style="margin-top: 10px;">
         <!-- JS로 동적 렌더링 -->
       </div>
+
+      <!-- 하단 닫기 버튼 -->
+      <button type="button" onclick="closeBoardModal()" style="margin-top: 20px; width: 100%; padding: 12px; background: var(--bg-secondary); border: 1.5px solid var(--border-color); border-radius: 12px; color: var(--text-primary); font-size: 0.92rem; font-weight: 750; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        <span>✕ 목록 닫고 이전 화면으로</span>
+      </button>
     </div>
   </div>
 
@@ -5557,9 +5649,12 @@
           관리자 홈 입장하기
         </button>
       </form>
-      <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 14px;">
+      <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 14px; margin-bottom: 12px;">
         (설정된 기본 관리자 비밀번호: 1223)
       </p>
+      <button type="button" onclick="closeAdminAuthModal()" style="width: 100%; padding: 10px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-muted); font-size: 0.88rem; font-weight: 700; cursor: pointer;">
+        취소하고 닫기
+      </button>
     </div>
   </div>
 
@@ -5644,6 +5739,10 @@
           🔒 회원가입 없이 전화번호로만 안전하게 상담 연락을 드립니다.
         </p>
       </form>
+      <!-- 하단 닫기 버튼 -->
+      <button type="button" onclick="closeSeniorConsultModal()" style="margin-top: 14px; width: 100%; padding: 12px; background: var(--bg-secondary); border: 1.5px solid var(--border-color); border-radius: 12px; color: var(--text-primary); font-size: 0.92rem; font-weight: 750; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        <span>✕ 창 닫고 이전 화면으로</span>
+      </button>
     </div>
   </div>
 
@@ -5655,6 +5754,10 @@
       <div id="memoirBookSampleModalContent">
         <!-- JS 동적 렌더링 (openMemoirBookSample): 책자 등록 여부에 따라 준비 중 안내 또는 완성본 책자 열람 뷰가 꽂힙니다 -->
       </div>
+      <!-- 하단 닫기 버튼 -->
+      <button type="button" onclick="closeMemoirBookSampleModal()" style="margin-top: 16px; width: 100%; padding: 12px; background: var(--bg-secondary); border: 1.5px solid var(--border-color); border-radius: 12px; color: var(--text-primary); font-size: 0.92rem; font-weight: 750; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        <span>✕ 창 닫고 이전 화면으로</span>
+      </button>
     </div>
   </div>
 
@@ -6190,6 +6293,13 @@
           <span>💡</span>
           <span>[⭐ 대표글 지정] 버튼을 누르면 해당 글이 메인 페이지 최상단에 추천글로 우선 노출됩니다. [메인 노출 상태]를 클릭하여 부적절한 글을 숨기거나 [🗑️] 버튼으로 영구 삭제할 수 있습니다.</span>
         </div>
+      </div>
+
+      <!-- 관리자 모달 하단 닫기 바 -->
+      <div style="margin-top: 24px; padding-top: 16px; border-top: 1.5px solid var(--border-color); display: flex; justify-content: flex-end; gap: 10px;">
+        <button type="button" onclick="closeAdminDashboardModal()" style="padding: 11px 24px; background: var(--bg-secondary); border: 1.5px solid var(--border-color); border-radius: 10px; color: var(--text-primary); font-size: 0.92rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+          <span>✕ 관리자 홈 닫고 메인으로 돌아가기</span>
+        </button>
       </div>
     </div>
   </div>

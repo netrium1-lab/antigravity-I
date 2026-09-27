@@ -399,25 +399,28 @@
       display: none;
     }
 
-    /* 모달 상단 닫기/뒤로가기 버튼 */
+    /* 모달 상단 닫기/뒤로가기 버튼 (눈에 띄는 선명한 스타일) */
     .btn-modal-close-back {
-      background: rgba(0, 0, 0, 0.05);
-      border: 1px solid var(--paper-border);
+      background: var(--paper-warm);
+      border: 1.5px solid var(--accent-green);
       border-radius: 999px;
-      padding: 4px 10px;
-      font-size: 0.85rem;
-      font-weight: 750;
-      color: var(--text-sub);
+      padding: 6px 14px;
+      font-size: 0.88rem;
+      font-weight: 850;
+      color: var(--accent-green);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      transition: all 0.2s;
+      gap: 5px;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
     }
     .btn-modal-close-back:hover {
-      background: var(--accent-gold);
+      background: var(--accent-green);
       color: #ffffff;
-      border-color: var(--accent-gold);
+      border-color: var(--accent-green);
+      transform: translateY(-1px);
     }
 
     /* 헤더 축약 텍스트 제어 (모바일 최적화) */
@@ -1573,13 +1576,20 @@
       left: 0;
       right: 0;
       bottom: 0;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
       background: rgba(0, 0, 0, 0.65);
       backdrop-filter: blur(4px);
       z-index: 200;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px 12px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
     }
     .modal-overlay.open {
       display: flex;
@@ -1590,10 +1600,16 @@
       border-radius: 20px;
       max-width: 460px;
       width: 100%;
-      padding: 36px 28px;
+      max-height: calc(100dvh - 32px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      box-sizing: border-box;
+      padding: 30px 24px;
       box-shadow: var(--shadow-lift);
       text-align: center;
       animation: popIn 0.25s ease;
+      position: relative;
     }
     @keyframes popIn {
       from { transform: scale(0.95); opacity: 0; }
@@ -2017,12 +2033,15 @@
     .coach-admin-modal {
       width: 100%;
       max-width: 780px;
-      max-height: 90vh;
+      max-height: calc(100dvh - 32px);
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      box-sizing: border-box;
       background: var(--paper-card);
       border: 1.5px solid var(--paper-border);
       border-radius: 20px;
-      padding: 30px 28px;
+      padding: 26px 24px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
       position: relative;
     }
@@ -3175,6 +3194,11 @@
         <button type="submit" class="btn-login-submit" style="background: var(--accent-gold); font-size: 1.1rem; padding: 14px;">
           💖 내 서재에 안전하게 보관하기
         </button>
+
+        <!-- 하단 취소 닫기 버튼 -->
+        <button type="button" onclick="closeUploadModal()" style="margin-top: 10px; width: 100%; padding: 12px; background: var(--paper-warm); border: 1.5px solid var(--paper-border); border-radius: 10px; color: var(--text-sub); font-size: 0.95rem; font-weight: 750; cursor: pointer;">
+          ✕ 취소하고 닫기
+        </button>
       </form>
     </div>
   </div>
@@ -3329,6 +3353,11 @@
         <!-- 저장 버튼 -->
         <button type="submit" class="btn-login-submit" style="background: var(--accent-gold); font-size: 1.1rem; padding: 14px;">
           💖 엔딩 금고에 안전하게 보관하기
+        </button>
+
+        <!-- 하단 취소 닫기 버튼 -->
+        <button type="button" onclick="closeVaultWriteModal()" style="margin-top: 10px; width: 100%; padding: 12px; background: var(--paper-warm); border: 1.5px solid var(--paper-border); border-radius: 10px; color: var(--text-sub); font-size: 0.95rem; font-weight: 750; cursor: pointer;">
+          ✕ 취소하고 닫기
         </button>
       </form>
     </div>
