@@ -436,6 +436,29 @@
       color: #191816;
     }
 
+    .nav-admin-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(197, 155, 39, 0.12);
+      color: var(--accent-gold);
+      font-size: 0.86rem;
+      font-weight: 850;
+      border: 1.5px solid rgba(197, 155, 39, 0.4);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-admin-btn:hover {
+      background: var(--accent-gold);
+      color: #0b0c0e;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(197, 155, 39, 0.35);
+    }
+
     .nav-actions {
       display: flex;
       align-items: center;
@@ -4790,8 +4813,12 @@
           </li>
         </ul>
 
-        <!-- 나의 아카이브 바로 옆의 독립 로그인 버튼 및 테마 토글, 관리자 홈 버튼 -->
+        <!-- 상단 관리자 홈 버튼, 독립 로그인 버튼 및 테마 토글 -->
         <div class="nav-actions">
+          <a href="admin.html" class="nav-admin-btn" title="전체 사이트 운영 관리자 홈 (비밀번호: 1223)" style="display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 999px; background: rgba(197, 155, 39, 0.12); color: var(--accent-gold); font-size: 0.86rem; font-weight: 850; border: 1.5px solid rgba(197, 155, 39, 0.4); text-decoration: none; transition: all 0.2s ease;">
+            <span>⚙️</span>
+            <span>관리자홈</span>
+          </a>
           <button class="nav-login-btn" onclick="openLoginModal(event)" aria-label="로그인">
             <span style="font-size: 1.15rem; line-height: 1;">👤</span>
             <span>로그인</span>
@@ -4813,6 +4840,7 @@
       <a href="academy.html" class="mobile-cat-item" data-target="programs" title="코치 아카데미"><span>🎓</span> <span>아카데미</span></a>
       <a href="my-room.html?mode=sample" class="mobile-cat-item" style="color: var(--accent-gold); font-weight: 800;" title="김순옥 어르신 완성 서재 체험"><span>👵</span> <span>샘플서재</span></a>
       <a href="javascript:void(0)" onclick="openLoginModal(event)" class="mobile-cat-item" data-target="archive"><span>🏛️</span> <span>나의서재</span></a>
+      <a href="admin.html" class="mobile-cat-item" style="color: var(--accent-gold); font-weight: 850;" title="통합 관리자 홈 (ADMIN 1223)"><span>⚙️</span> <span>관리자</span></a>
     </nav>
   </header>
 
@@ -4883,6 +4911,13 @@
             <span>나의 고유한 서재</span>
           </div>
           <span class="drawer-badge badge-room">온라인룸</span>
+        </a>
+        <a href="admin.html" class="drawer-nav-item" style="background: rgba(197, 155, 39, 0.1); border: 1.5px solid rgba(197, 155, 39, 0.35); margin-top: 6px;">
+          <div class="drawer-item-left">
+            <span class="drawer-icon">⚙️</span>
+            <span style="color: var(--accent-gold); font-weight: 850;">통합 관리자 홈 (ADMIN)</span>
+          </div>
+          <span class="drawer-badge" style="background: var(--accent-gold); color: #fff;">1223</span>
         </a>
         <a href="#login" class="drawer-nav-item drawer-login-btn" onclick="closeMobileDrawer(); openLoginModal(event)">
           <div class="drawer-item-left" style="justify-content: center; width: 100%;">
