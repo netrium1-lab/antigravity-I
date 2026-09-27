@@ -1421,6 +1421,244 @@
       font-weight: 800;
       font-size: 0.82rem;
     }
+
+    /* ------------------------------------------------------------- */
+    /* 05-2. 현장관제 & 정산센터 전용 스타일                         */
+    /* ------------------------------------------------------------- */
+    .control-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .kpi-card.pending {
+      border: 2px solid #f59e0b;
+      background: #fffbeb;
+    }
+    .kpi-card.active {
+      border: 1.5px solid #38bdf8;
+      background: #f0f9ff;
+    }
+    .kpi-card.settled {
+      border: 1.5px solid #86efac;
+      background: #f0fdf4;
+    }
+    .kpi-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+    .kpi-val {
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: var(--text-main);
+    }
+    .kpi-sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 750;
+      margin-top: 2px;
+    }
+
+    /* 피드형 검수 카드 그리드 */
+    .control-feed-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .control-feed-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .control-card {
+      background: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: all 0.2s ease;
+    }
+    .control-card.need-settle {
+      border-color: #f59e0b;
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.12);
+    }
+    .control-card.settled {
+      border-color: #cbd5e1;
+      opacity: 0.94;
+    }
+
+    .control-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1.5px solid #f1f5f9;
+      padding-bottom: 14px;
+    }
+    .control-client-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .control-svc-badge {
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #eef7f2;
+      color: var(--accent);
+    }
+
+    .control-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      background: #f8fafc;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 0.86rem;
+    }
+    .control-meta-item strong {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .control-meta-item span {
+      font-weight: 850;
+      color: var(--text-main);
+    }
+
+    /* 📸 등록 사진 3종 대형 그리드 */
+    .control-photo-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .control-photo-item {
+      background: #f8fafc;
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .control-photo-item.after {
+      border-color: #86efac;
+    }
+    .control-photo-tag {
+      background: #f1f5f9;
+      padding: 6px 8px;
+      font-size: 0.72rem;
+      font-weight: 850;
+      color: var(--text-sub);
+      text-align: center;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .control-photo-item.after .control-photo-tag {
+      background: #dcfce7;
+      color: #15803d;
+      border-color: #bbf7d0;
+    }
+    .control-photo-preview {
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: #f8fafc;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .control-photo-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.2s ease;
+    }
+    .control-photo-preview:hover img {
+      transform: scale(1.05);
+    }
+    .control-photo-empty {
+      font-size: 0.78rem;
+      color: #94a3b8;
+      font-weight: 700;
+    }
+
+    /* 노란색 코치 소감 박스 */
+    .control-memo-card {
+      background: #fdf8eb;
+      border: 1.5px solid #fde68a;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: #78350f;
+    }
+    .control-memo-card strong {
+      color: #92400e;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 4px;
+      font-size: 0.82rem;
+    }
+
+    /* 하단 액션 버튼 바 */
+    .control-action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1.5px solid #f1f5f9;
+      flex-wrap: wrap;
+    }
+    .btn-settle-approve {
+      flex: 1;
+      padding: 12px 18px;
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 850;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
+      transition: transform 0.15s ease;
+    }
+    .btn-settle-approve:hover {
+      transform: translateY(-1px);
+    }
+    .btn-settle-approve:active {
+      transform: scale(0.99);
+    }
   </style>
 </head>
 <body>
@@ -1494,6 +1732,11 @@
         <button class="nav-tab-btn" onclick="switchTab('tabAcademy', this)">
           <span class="nav-tab-icon">🎓</span>
           <span>05. 아카데미 & 코치배정</span>
+        </button>
+        <button class="nav-tab-btn" onclick="switchTab('tabCoachControl', this)" id="navBtnCoachControl" style="background: rgba(5, 150, 105, 0.08); border-left: 3px solid var(--accent);">
+          <span class="nav-tab-icon">📸</span>
+          <span>05-2. 현장관제 &amp; 정산</span>
+          <span id="sidebarPendingBadge" style="display:none; background:#ef4444; color:#fff; font-size:0.72rem; font-weight:900; padding:2px 7px; border-radius:999px; margin-left:auto;">0</span>
         </button>
         <button class="nav-tab-btn" onclick="switchTab('tabArchive', this)">
           <span class="nav-tab-icon">🏛️</span>
@@ -2224,6 +2467,100 @@
             </table>
           </div>
         </div>
+      </section>
+
+      <!-- ================= 탭: 📸 05-2. 코치 현장관제 & 정산센터 ================= -->
+      <section class="tab-panel" id="tabCoachControl">
+        
+        <!-- 상단 헤더 & 원클릭 바로가기 -->
+        <div class="panel-card" style="margin-bottom: 20px;">
+          <div class="panel-header" style="flex-wrap: wrap; gap: 12px;">
+            <div class="panel-title-wrap">
+              <span class="panel-icon" style="background:#eef7f2; color:#059669; font-size:1.6rem; padding:8px; border-radius:12px;">📸</span>
+              <div>
+                <h2 class="panel-title" style="font-size:1.35rem; font-weight:900;">05-2. 코치 현장수행 관제 &amp; 활동비 정산 센터</h2>
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin: 4px 0 0;">
+                  현장 코치들이 등록한 <strong>도착 스탬프, 현장 사진 3종(Before/Process/After), 완료 보고</strong>를 실시간 검수하고, 활동비 송금 확인 후 <strong>원클릭 입금완료 승인</strong>을 처리합니다.
+                </p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <a href="coach.html" target="_blank" class="btn-save-setting" style="background: linear-gradient(135deg, #1e3d2f 0%, #2d5a45 100%); color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(30,61,47,0.3); font-weight: 850;">
+                <span>📱</span> 코치 현장앱 열기 ➔
+              </a>
+              <button type="button" class="btn-save-setting" onclick="renderCoachControlCenter()" style="background: #ffffff; color: var(--text-main); border: 1.5px solid var(--border-color);">
+                <span>🔄</span> 현장 실시간 새로고침
+              </button>
+              <button type="button" class="btn-save-setting" onclick="exportDispatchesCSV()" style="background: #ffffff; color: var(--text-main); border: 1.5px solid var(--border-color);">
+                <span>📥</span> 정산 내역(CSV) 다운로드
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 실시간 핵심 KPI 요약 카드 4종 -->
+        <div class="control-kpi-grid">
+          <!-- 1. 검수 및 입금 대기 (집중 관리) -->
+          <div class="kpi-card pending">
+            <div class="kpi-icon-wrap" style="background: #fef3c7; color: #d97706;">⚡</div>
+            <div>
+              <div class="kpi-sub" style="color:#b45309; font-weight:850;">📸 검수 및 송금 대기</div>
+              <div class="kpi-val" style="color:#b45309;" id="kpiControlPending">0건 (0원)</div>
+            </div>
+          </div>
+
+          <!-- 2. 실시간 현장 진행 중 -->
+          <div class="kpi-card active">
+            <div class="kpi-icon-wrap" style="background: #e0f2fe; color: #0284c7;">🏃</div>
+            <div>
+              <div class="kpi-sub" style="color:#0369a1; font-weight:850;">📍 실시간 현장 진행 중</div>
+              <div class="kpi-val" style="color:#0284c7;" id="kpiControlActive">0건</div>
+            </div>
+          </div>
+
+          <!-- 3. 송금 및 정산 완료 -->
+          <div class="kpi-card settled">
+            <div class="kpi-icon-wrap" style="background: #dcfce7; color: #16a34a;">💰</div>
+            <div>
+              <div class="kpi-sub" style="color:#15803d; font-weight:850;">✓ 송금 및 정산 완료</div>
+              <div class="kpi-val" style="color:#16a34a;" id="kpiControlSettled">0건 (0원)</div>
+            </div>
+          </div>
+
+          <!-- 4. 전체 배정 케어 -->
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap" style="background: #f1f5f9; color: #475569;">📋</div>
+            <div>
+              <div class="kpi-sub">총 배정 및 케어 누적</div>
+              <div class="kpi-val" id="kpiControlTotal">0건</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 관제 필터 바 (상태별 & 코치별) -->
+        <div class="panel-card" style="padding: 14px 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+            <span style="font-size:0.85rem; font-weight:850; color:var(--text-main); margin-right:4px;">상태 필터:</span>
+            <button type="button" class="btn-action-sm active" id="btnFilterControl_all" onclick="filterControlFeed('all', this)" style="padding: 6px 14px; font-weight: 850; border-radius: 20px;">전체 보기</button>
+            <button type="button" class="btn-action-sm" id="btnFilterControl_pending" onclick="filterControlFeed('서비스완료', this)" style="padding: 6px 14px; font-weight: 850; border-radius: 20px; background:#fffbeb; color:#b45309; border:1.5px solid #fde68a;">⚡ 검수/입금 대기</button>
+            <button type="button" class="btn-action-sm" id="btnFilterControl_working" onclick="filterControlFeed('진행중', this)" style="padding: 6px 14px; font-weight: 850; border-radius: 20px;">🏃 현장 진행중</button>
+            <button type="button" class="btn-action-sm" id="btnFilterControl_settled" onclick="filterControlFeed('정산완료', this)" style="padding: 6px 14px; font-weight: 850; border-radius: 20px;">💰 송금 완료</button>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <label for="selectControlCoachFilter" style="font-size:0.85rem; font-weight:800; color:var(--text-main);">코치별:</label>
+            <select id="selectControlCoachFilter" onchange="filterControlFeedByCoach(this.value)" class="coach-select-sm" style="padding: 6px 12px; font-size: 0.85rem;">
+              <option value="all">전체 코칭스태프</option>
+              <!-- JS 동적 생성 -->
+            </select>
+          </div>
+        </div>
+
+        <!-- 현장 검수 카드 피드 그리드 (Feed Grid) -->
+        <div class="control-feed-grid" id="controlFeedContainer">
+          <!-- JS 동적 렌더링 -->
+        </div>
+
       </section>
 
       <!-- ================= 탭 7: 🏛️ 06. 나의 고유한 보물서재 관리 ================= -->
@@ -3161,6 +3498,11 @@
       const btns = document.querySelectorAll('.nav-tab-btn');
       btns.forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
+
+      // 05-2 현장관제 & 정산센터 진입 시 실시간 렌더링
+      if (tabId === 'tabCoachControl' && typeof renderCoachControlCenter === 'function') {
+        renderCoachControlCenter();
+      }
 
       // 모바일인 경우 사이드바 닫기
       const sidebar = document.getElementById('adminSidebar');
@@ -5891,6 +6233,9 @@
       renderDispatchesTable(currentDispatchFilter);
       renderCoachesTable();
       updateAcademyStats();
+      if (typeof renderCoachControlCenter === 'function') {
+        renderCoachControlCenter();
+      }
     }
 
     function filterDispatches(category, btnEl) {
@@ -6774,6 +7119,310 @@ ${coachAppUrl}
       downloadCSV(`여백과결_출판자서전도서목록_${stamp}.csv`, csv);
     }
 
+    // =========================================================================
+    // 14. 📸 05-2. 코치 현장수행 관제 & 활동비 정산 센터 엔진 (Control Tower)
+    // =========================================================================
+    let currentControlStatusFilter = 'all';
+    let currentControlCoachFilter = 'all';
+
+    function updateSidebarPendingBadge() {
+      const dispatches = getDispatches();
+      const pendingCount = dispatches.filter(d => d.step === '서비스완료').length;
+      const badge = document.getElementById('sidebarPendingBadge');
+      if (!badge) return;
+      if (pendingCount > 0) {
+        badge.textContent = pendingCount;
+        badge.style.display = 'inline-block';
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+
+    function renderCoachControlCenter(statusFilter = currentControlStatusFilter, coachFilter = currentControlCoachFilter) {
+      currentControlStatusFilter = statusFilter;
+      currentControlCoachFilter = coachFilter;
+
+      const container = document.getElementById('controlFeedContainer');
+      const dispatches = getDispatches();
+      const coaches = getCoaches();
+
+      // 사이드바 미정산 뱃지 갱신
+      updateSidebarPendingBadge();
+
+      // 1. KPI 실시간 집계
+      let pendingCount = 0, pendingAmount = 0;
+      let activeCount = 0;
+      let settledCount = 0, settledAmount = 0;
+      let totalAmount = 0;
+
+      dispatches.forEach(d => {
+        const fee = Number(d.fee) || 150000;
+        totalAmount += fee;
+        if (d.step === '서비스완료') {
+          pendingCount++;
+          pendingAmount += fee;
+        } else if (d.step === '진행중') {
+          activeCount++;
+        } else if (d.step === '정산완료') {
+          settledCount++;
+          settledAmount += fee;
+        }
+      });
+
+      // KPI 카드 갱신
+      const kpiPending = document.getElementById('kpiControlPending');
+      const kpiActive = document.getElementById('kpiControlActive');
+      const kpiSettled = document.getElementById('kpiControlSettled');
+      const kpiTotal = document.getElementById('kpiControlTotal');
+
+      if (kpiPending) kpiPending.textContent = `${pendingCount}건 (${pendingAmount.toLocaleString()}원)`;
+      if (kpiActive) kpiActive.textContent = `${activeCount}건`;
+      if (kpiSettled) kpiSettled.textContent = `${settledCount}건 (${settledAmount.toLocaleString()}원)`;
+      if (kpiTotal) kpiTotal.textContent = `${dispatches.length}건 (${totalAmount.toLocaleString()}원)`;
+
+      // 코치 필터 셀렉트박스 채우기
+      const coachSelect = document.getElementById('selectControlCoachFilter');
+      if (coachSelect && coachSelect.options.length <= 1) {
+        const coachNames = [...new Set(coaches.map(c => c.name))];
+        coachNames.forEach(name => {
+          const opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = `${name} 코치`;
+          coachSelect.appendChild(opt);
+        });
+      }
+
+      if (!container) return;
+
+      // 2. 필터링 적용
+      let filtered = dispatches;
+      if (currentControlStatusFilter !== 'all') {
+        filtered = filtered.filter(d => d.step === currentControlStatusFilter);
+      }
+      if (currentControlCoachFilter !== 'all') {
+        filtered = filtered.filter(d => d.coach && d.coach.includes(currentControlCoachFilter));
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; background:#ffffff; border-radius:18px; border:1px solid #e2e8f0; padding:60px 20px; text-align:center;">
+            <span style="font-size:3rem; display:block; margin-bottom:12px;">🌿</span>
+            <strong style="font-size:1.15rem; color:#0f172a;">해당 조건의 현장 관제 및 정산 내역이 없습니다</strong>
+            <p style="color:#64748b; font-size:0.9rem; margin-top:6px;">상태 필터나 코치 필터를 변경해 보세요.</p>
+          </div>
+        `;
+        return;
+      }
+
+      // 3. 카드 렌더링
+      container.innerHTML = filtered.map(d => {
+        const fee = Number(d.fee) || 150000;
+        const isPending = d.step === '서비스완료';
+        const isSettled = d.step === '정산완료';
+        const isWorking = d.step === '진행중';
+
+        // 상태 뱃지
+        let statusBadge = '';
+        if (isPending) {
+          statusBadge = '<span style="background:#fef3c7; color:#b45309; border:1.5px solid #fde68a; padding:4px 10px; border-radius:6px; font-size:0.8rem; font-weight:850;">⚡ 검수대기 (송금 필요)</span>';
+        } else if (isSettled) {
+          statusBadge = '<span style="background:#f0fdf4; color:#16a34a; border:1px solid #86efac; padding:4px 10px; border-radius:6px; font-size:0.8rem; font-weight:850;">✓ 송금완료</span>';
+        } else if (isWorking) {
+          statusBadge = '<span style="background:#e0f2fe; color:#0284c7; padding:4px 10px; border-radius:6px; font-size:0.8rem; font-weight:850;">🏃 현장진행중</span>';
+        } else {
+          statusBadge = '<span style="background:#f1f5f9; color:#475569; padding:4px 10px; border-radius:6px; font-size:0.8rem; font-weight:800;">⏳ 배정완료</span>';
+        }
+
+        // 사진 썸네일 렌더러
+        function renderPhotoSlot(url, title, isAfter = false) {
+          if (url) {
+            return `
+              <div class="control-photo-item ${isAfter ? 'after' : ''}">
+                <div class="control-photo-tag">${title} (등록됨)</div>
+                <div class="control-photo-preview" onclick="window.open('${url}', '_blank')" title="클릭하여 원본 크게 보기">
+                  <img src="${url}" alt="${title}">
+                </div>
+              </div>
+            `;
+          } else {
+            return `
+              <div class="control-photo-item ${isAfter ? 'after' : ''}">
+                <div class="control-photo-tag">${title}</div>
+                <div class="control-photo-preview" style="cursor:default;">
+                  <span class="control-photo-empty">미등록</span>
+                </div>
+              </div>
+            `;
+          }
+        }
+
+        const beforeSlot = renderPhotoSlot(d.beforePhoto, '1️⃣ 작업 전');
+        const processSlot = renderPhotoSlot(d.processPhoto, '2️⃣ 진행 과정');
+        const afterSlot = renderPhotoSlot(d.afterPhoto, '3️⃣ 최종 완료', true);
+
+        return `
+          <div class="control-card ${isPending ? 'need-settle' : (isSettled ? 'settled' : '')}">
+            <div class="control-card-header">
+              <div>
+                <div class="control-client-title">
+                  <span>${escapeHtml(d.customerName)}</span>
+                  <a href="tel:${escapeHtml(d.phone)}" style="font-size:0.86rem; color:var(--accent); font-weight:750; text-decoration:none;">(${escapeHtml(d.phone)})</a>
+                </div>
+                <div style="margin-top:6px;">
+                  <span class="control-svc-badge">${escapeHtml(d.serviceType)}</span>
+                </div>
+              </div>
+              <div>${statusBadge}</div>
+            </div>
+
+            <!-- 메타 정보 그리드 -->
+            <div class="control-meta-grid">
+              <div class="control-meta-item">
+                <strong>담당 배정 코치</strong>
+                <span style="color:var(--accent);">${escapeHtml(d.coach || '미배정')}</span>
+              </div>
+              <div class="control-meta-item">
+                <strong>💰 코치 활동비</strong>
+                <span style="color:#d97706; font-size:1.05rem;">${fee.toLocaleString()}원</span>
+              </div>
+              <div class="control-meta-item">
+                <strong>📍 현장 도착 스탬프</strong>
+                <span style="color:${d.arrivalStamp ? '#0284c7' : '#94a3b8'};">${escapeHtml(d.arrivalStamp || '미도착')}</span>
+              </div>
+              <div class="control-meta-item">
+                <strong>🏁 임무 완료 시간</strong>
+                <span style="color:${d.completionDate ? '#059669' : '#94a3b8'};">${escapeHtml(d.completionDate || '미완료')}</span>
+              </div>
+              <div class="control-meta-item" style="grid-column: 1 / -1;">
+                <strong>방문일시 / 주소</strong>
+                <span>${escapeHtml(d.preferredDate)} | ${escapeHtml(d.address)}</span>
+              </div>
+            </div>
+
+            <!-- 📸 현장 등록 사진 3종 -->
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="font-size:0.86rem; color:var(--text-main); display:flex; align-items:center; gap:5px;">
+                  <span>📸</span> 현장 등록 사진 3종 (클릭 시 원본 확대)
+                </strong>
+                <span style="font-size:0.75rem; color:#64748b;">
+                  등록: ${(d.beforePhoto?1:0)+(d.processPhoto?1:0)+(d.afterPhoto?1:0)} / 3장
+                </span>
+              </div>
+              <div class="control-photo-row">
+                ${beforeSlot}
+                ${processSlot}
+                ${afterSlot}
+              </div>
+            </div>
+
+            <!-- 📝 코치 현장 소감 및 특이사항 메모 -->
+            <div class="control-memo-card">
+              <strong><span>📝</span> 코치 현장 소감 &amp; 어르신 반응</strong>
+              <div>${escapeHtml(d.coachReport || d.notes || '(현장 소감 기록 대기중)')}</div>
+            </div>
+
+            <!-- 하단 관리자 액션 바 -->
+            <div class="control-action-bar">
+              ${isPending ? `
+                <button type="button" class="btn-settle-approve" onclick="approveCoachSettlementFromCard('${d.id}')">
+                  <span>💰</span> 활동비 ${fee.toLocaleString()}원 송금 확인 및 정산 완료 승인
+                </button>
+                <button type="button" class="btn-action-sm" onclick="copySettlementKakaoMsg('${d.id}')" style="background:#fef01b; color:#181600; padding:10px 14px; font-weight:850; border-radius:10px;" title="코치에게 보낼 입금 완료 카톡 메시지 복사">
+                  💬 카톡 복사
+                </button>
+              ` : (isSettled ? `
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="color:#16a34a; font-weight:850; font-size:0.92rem; display:flex; align-items:center; gap:4px;">
+                    <span>✓</span> 활동비 송금 및 정산 승인 완료
+                  </span>
+                  <button type="button" onclick="revertCoachSettlementFromCard('${d.id}')" style="background:none; border:none; color:#94a3b8; font-size:0.75rem; text-decoration:underline; cursor:pointer;">
+                    [되돌리기]
+                  </button>
+                </div>
+                <button type="button" class="btn-action-sm" onclick="copySettlementKakaoMsg('${d.id}')" style="background:#fef01b; color:#181600; padding:8px 14px; font-weight:850; border-radius:8px;">
+                  💬 입금완료 카톡 복사
+                </button>
+              ` : `
+                <span style="font-size:0.84rem; color:#64748b;">현장 완료 보고서 제출 대기 중입니다.</span>
+                <button type="button" class="btn-action-sm" onclick="copyCoachKakaoMsg('${d.id}')" style="background:#fef01b; color:#181600; padding:8px 12px; font-weight:850; border-radius:8px;">
+                  💬 배정 카톡 전송
+                </button>
+              `)}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterControlFeed(status, btnEl) {
+      currentControlStatusFilter = status;
+      const btns = document.querySelectorAll('#tabCoachControl .btn-action-sm');
+      btns.forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      renderCoachControlCenter(status, currentControlCoachFilter);
+    }
+
+    function filterControlFeedByCoach(coachName) {
+      currentControlCoachFilter = coachName;
+      renderCoachControlCenter(currentControlStatusFilter, coachName);
+    }
+
+    function approveCoachSettlementFromCard(dispId) {
+      const dispatches = getDispatches();
+      const target = dispatches.find(d => d.id === dispId);
+      if (!target) return;
+
+      const feeStr = (Number(target.fee) || 150000).toLocaleString();
+      if (confirm(`[${target.coach || '담당 코치'}] 님께 활동비 (${feeStr}원)를 송금하셨습니까?\n\n[확인]을 누르면 상태가 '정산완료'로 변경되며,\n코치 파트너스 앱의 [정산/수익] 탭에도 실시간 '송금완료'로 표기됩니다.`)) {
+        target.step = '정산완료';
+        saveDispatches(dispatches);
+        renderCoachControlCenter();
+        alert(`🎉 [${target.customerName}] 건의 활동비(${feeStr}원) 정산이 최종 완료되었습니다!\n\n코치 앱에 실시간 반영되었으며, 우측 [💬 입금완료 카톡 복사]를 눌러 코치님께 안내 메시지를 보내실 수 있습니다.`);
+      }
+    }
+
+    function revertCoachSettlementFromCard(dispId) {
+      if (!confirm('정산 완료 상태를 취소하고 [검수대기] 상태로 되돌리시겠습니까?')) return;
+      const dispatches = getDispatches();
+      const target = dispatches.find(d => d.id === dispId);
+      if (target) {
+        target.step = '서비스완료';
+        saveDispatches(dispatches);
+        renderCoachControlCenter();
+      }
+    }
+
+    function copySettlementKakaoMsg(dispId) {
+      const dispatches = getDispatches();
+      const target = dispatches.find(d => d.id === dispId);
+      if (!target) return;
+
+      const cleanCoachName = (target.coach || '코치').replace(/ 코치$/, '');
+      const feeStr = (Number(target.fee) || 150000).toLocaleString();
+
+      const text = `[여백과 결] 현장 코칭 활동비 입금 완료 안내
+
+안녕하세요, ${cleanCoachName} 코치님!
+여백과 결 본사 운영팀입니다.
+
+오늘 [${target.customerName}] 고객님의 현장 케어를 정성껏 수행해 주셔서 진심으로 감사드립니다.
+등록해 주신 현장 사진 검수가 완료되어 활동비가 코치님 등록 계좌로 정상 입금되었습니다.
+
+■ 고객명: ${target.customerName}
+■ 서비스: ${target.serviceType}
+■ 정산 활동비: ${feeStr}원 (입금완료)
+
+수고 많으셨습니다. 다음 일정 때 뵙겠습니다!
+- 여백과 결 코칭센터 드림 -`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        alert(`📋 [${cleanCoachName} 코치] 님께 보낼 '활동비 입금완료 카톡 안내문'이 클립보드에 복사되었습니다!\n\n카카오톡 대화창에서 [붙여넣기(Ctrl+V)] 하시면 됩니다.`);
+      }).catch(() => {
+        prompt('아래 입금완료 안내문을 복사하여 코치님께 전송하세요:', text);
+      });
+    }
+
     function loadAllData() {
       loadSiteSettings();
       renderArticlesTable();
@@ -6790,6 +7439,8 @@ ${coachAppUrl}
       renderCoachesTable();
       renderDispatchesTable();
       updateAcademyStats();
+      // 05-2 코치 현장관제 & 정산센터 로딩
+      renderCoachControlCenter();
       // 출판 완료 자서전 및 PDF 목록 로딩
       renderPublishedMemoirsTable();
     }
