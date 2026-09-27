@@ -6887,19 +6887,27 @@
 
     // 모바일 하단 바 '이전' 버튼 스마트 뒤로가기 동작
     function handleSmartGoBack() {
-      // 1) 만약 드로어가 열려있으면 드로어 닫기
+      // 1) 열려있는 모달이 있으면 모달 먼저 닫기
+      const activeModals = document.querySelectorAll('.cms-modal-overlay.active, .modal-overlay.active, .login-modal-overlay.active, [id$="Modal"].active');
+      for (const m of activeModals) {
+        if (m.style.display !== 'none') {
+          m.classList.remove('active');
+          m.style.display = 'none';
+          document.body.style.overflow = '';
+          return;
+        }
+      }
+      // 2) 만약 드로어가 열려있으면 드로어 닫기
       const drawer = document.getElementById('mobileDrawer');
       if (drawer && drawer.classList.contains('open')) {
         closeMobileDrawer();
         return;
       }
-      // 2) 이전 히스토리가 있는 경우 뒤로가기
-      if (window.history.length > 1 && document.referrer && document.referrer.indexOf(window.location.host) !== -1) {
-        window.history.back();
-      } else if (window.history.length > 1 && window.history.state) {
+      // 3) 이전 히스토리가 있는 경우 직전 방문 위치/페이지로 복귀
+      if (window.history.length > 1) {
         window.history.back();
       } else {
-        // 최상단으로 부드럽게 이동
+        // 첫 진입 시 최상단으로 부드럽게 이동
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }

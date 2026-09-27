@@ -211,6 +211,110 @@
       gap: 14px;
     }
 
+    /* ↩️ 스마트 이전 화면 복귀 버튼 */
+    .btn-smart-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: var(--accent-light);
+      border: 1.5px solid rgba(43, 106, 56, 0.35);
+      color: var(--accent);
+      font-size: 0.88rem;
+      font-weight: 850;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(43, 106, 56, 0.10);
+    }
+    .btn-smart-back:hover {
+      background: var(--accent);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(43, 106, 56, 0.25);
+    }
+    .btn-smart-back .back-arrow {
+      font-size: 1.05rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    /* 🧭 상세페이지 공통 카테고리 빠른 이동 콤보박스 바 */
+    .quick-nav-combo-container {
+      width: 100%;
+      box-sizing: border-box;
+      background: linear-gradient(135deg, rgba(239, 243, 235, 0.98) 0%, rgba(254, 247, 230, 0.98) 100%);
+      border-bottom: 2px solid rgba(197, 155, 39, 0.35);
+      padding: 8px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      position: sticky;
+      top: 68px;
+      z-index: 95;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+    .combo-label-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .combo-guide-icon {
+      font-size: 1.15rem;
+      line-height: 1;
+    }
+    .combo-guide-text {
+      font-size: 0.90rem;
+      font-weight: 850;
+      color: var(--text-primary);
+      letter-spacing: -0.2px;
+    }
+    .combo-select-wrap {
+      flex: 1;
+      max-width: 520px;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .global-category-combo-select {
+      width: 100%;
+      height: 40px;
+      padding: 0 36px 0 14px;
+      font-size: 0.92rem;
+      font-weight: 750;
+      font-family: inherit;
+      color: var(--text-primary);
+      background: var(--bg-card);
+      border: 2px solid var(--accent);
+      border-radius: 10px;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .global-category-combo-select:focus {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.25);
+    }
+    .combo-select-arrow {
+      position: absolute;
+      right: 12px;
+      pointer-events: none;
+      color: var(--accent);
+      font-size: 0.80rem;
+      font-weight: 900;
+    }
+
     /* 심플해진 메인홈 링크 */
     .nav-home-link {
       font-size: 0.88rem;
@@ -222,6 +326,7 @@
       padding: 6px 10px;
       border-radius: 6px;
       transition: var(--transition);
+      cursor: pointer;
     }
     .nav-home-link:hover {
       color: var(--text-primary);
@@ -1219,49 +1324,78 @@
       }
     }
 
-    /* -------------------- 모바일 전용 하단 고정 바 (뒤로가기 & 바로신청) -------------------- */
+    /* -------------------- 모바일 전용 하단 고정 바 (스마트 이전복귀 & 홈 & 지원하기) -------------------- */
     .mobile-bottom-bar {
       display: none;
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 60px;
-      background: var(--bg-card);
+      height: 56px;
+      background: rgba(253, 251, 247, 0.98);
       border-top: 1.5px solid var(--border-color);
-      padding: 8px 14px;
+      padding: 6px 10px;
       z-index: 998;
       box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 6px;
+      backdrop-filter: blur(12px);
     }
     @media (max-width: 768px) {
       .mobile-bottom-bar {
         display: flex;
       }
       body {
-        padding-bottom: 66px; /* 하단 고정 바 가림 방지 */
+        padding-bottom: 64px; /* 하단 고정 바 가림 방지 */
       }
       /* 카카오톡 플로팅 버튼 위치를 바 위로 안전하게 올림 */
       .kakao-float-btn {
-        bottom: 74px !important;
+        bottom: 70px !important;
         right: 14px !important;
         padding: 9px 14px !important;
         font-size: 0.82rem !important;
       }
     }
+    .mobile-btn-smart-back {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 8px 12px;
+      background: var(--accent-light);
+      border: 1.5px solid rgba(43, 106, 56, 0.35);
+      border-radius: 10px;
+      color: var(--accent);
+      font-size: 0.84rem;
+      font-weight: 850;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: var(--transition);
+      box-shadow: 0 2px 6px rgba(43, 106, 56, 0.10);
+    }
+    .mobile-btn-smart-back:hover {
+      background: var(--accent);
+      color: #ffffff;
+    }
+    .mobile-btn-smart-back .back-arrow {
+      font-size: 0.95rem;
+      font-weight: 900;
+      line-height: 1;
+    }
     .mobile-btn-home {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
-      padding: 10px 14px;
+      gap: 4px;
+      padding: 8px 10px;
       background: var(--bg-primary);
       border: 1.5px solid var(--border-color);
       border-radius: 10px;
       color: var(--text-primary);
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 750;
       text-decoration: none;
       white-space: nowrap;
@@ -1276,15 +1410,16 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      padding: 10px 16px;
+      gap: 4px;
+      padding: 9px 12px;
       background: var(--accent);
       color: #ffffff;
       border-radius: 10px;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 850;
       text-decoration: none;
       flex-grow: 1;
+      white-space: nowrap;
       box-shadow: 0 3px 10px rgba(43, 90, 66, 0.25);
       transition: var(--transition);
     }
@@ -1720,12 +1855,13 @@
         <a href="#faq" class="nav-link">자주 묻는 질문</a>
       </nav>
 
-      <!-- 우측 액션: 간단한 홈 링크 + 단정한 지원 버튼 + 테마 버튼 -->
+      <!-- 우측 액션: 스마트 이전 화면 복귀 + 관리자 + 단정한 지원 버튼 + 테마 버튼 -->
       <div class="nav-actions">
-        <!-- 간단해진 메인홈 링크 -->
-        <a href="index.html" class="nav-home-link" title="여백과 결 서비스 메인 홈으로 이동">
-          <span>← 메인홈</span>
-        </a>
+        <!-- ↩️ 스마트 이전 화면(직전 스크롤 위치 완벽 복귀) 버튼 -->
+        <button type="button" onclick="goSmartBack('index.html#programs')" class="btn-smart-back" title="방금 보던 이전 화면(정확한 스크롤 위치)으로 되돌아가기">
+          <span class="back-arrow">←</span>
+          <span>이전으로</span>
+        </button>
         <!-- ⚙️ 아카데미 관리자 모드 진입 버튼 -->
         <button type="button" id="academyAdminHeaderBtn" onclick="openAcademyAdminAuthModal()" class="nav-admin-btn" title="여백과 결 아카데미 총괄 관리실">
           <span>⚙️ 관리자</span>
@@ -1737,6 +1873,28 @@
       </div>
     </div>
   </header>
+
+  <!-- ================= 🧭 상세페이지 공통 카테고리 빠른 이동 네비게이터 ================= -->
+  <div class="quick-nav-combo-container" id="quickNavComboContainer">
+    <div class="combo-label-wrap">
+      <span class="combo-guide-icon">🧭</span>
+      <span class="combo-guide-text">화면 이동:</span>
+    </div>
+    <div class="combo-select-wrap">
+      <select class="global-category-combo-select" id="globalCategoryCombo" onchange="handleGlobalCategoryChange(this.value)" aria-label="전체 서비스 카테고리 바로가기">
+        <option value="" disabled>── 🌿 전체 서비스 카테고리 바로가기 ──</option>
+        <option value="index.html#home">🏠 여백과 결 메인 대문</option>
+        <option value="index.html#magazine">📚 1. 고유한 여백서재 (기록/인터뷰)</option>
+        <option value="index.html#lounge">☕ 2. 비움 한 줄 라운지 (커뮤니티)</option>
+        <option value="index.html#test">🧩 3. 나의 마음 비움 자가진단</option>
+        <option value="index.html#memoir">✍️ 4. AI 구술 자서전 제작</option>
+        <option value="academy.html" selected>🎓 5. 인생정리 코치 아카데미 (현재 화면)</option>
+        <option value="my-room.html?user=kim_soon_ok">👵 6. 김순옥 어르신 샘플 서재 둘러보기</option>
+        <option value="my-room.html">🏛️ 7. 나의 고유한 서재 (개인 서재)</option>
+      </select>
+      <span class="combo-select-arrow">▼</span>
+    </div>
+  </div>
 
   <!-- ================= Hero 섹션 (가독성 높은 고딕 위주 + 핵심 문구 볼드) ================= -->
   <section class="hero-section">
@@ -2465,11 +2623,14 @@
     </div>
   </footer>
 
-  <!-- ================= 모바일 전용 하단 고정 액션 & 뒤로가기 바 ================= -->
+  <!-- ================= 모바일 전용 하단 고정 액션 & 스마트 복귀 바 ================= -->
   <div class="mobile-bottom-bar" id="mobileBottomBar">
-    <a href="index.html" class="mobile-btn-home" title="여백과 결 메인 서비스 홈으로 뒤돌아가기">
-      <span>←</span>
-      <span>메인홈</span>
+    <button type="button" onclick="goSmartBack('index.html#programs')" class="mobile-btn-smart-back" title="방금 보던 이전 화면(정확한 스크롤 위치)으로 복귀">
+      <span class="back-arrow">←</span>
+      <span>이전으로</span>
+    </button>
+    <a href="index.html#home" class="mobile-btn-home" title="여백과 결 서비스 첫 화면(홈)으로 가기">
+      <span>🏠 홈</span>
     </a>
     <a href="#apply" class="mobile-btn-apply" onclick="document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth' });">
       <span>🎓 1기 장학생 지원하기 ↓</span>
@@ -3310,6 +3471,31 @@
   </div>
 
   <script>
+    /**
+     * ↩️ 스마트 이전 화면 복귀 함수
+     * 사용자가 메인 홈에서 스크롤을 내리며 탐색하다가 상세페이지로 들어온 경우,
+     * 브라우저의 history.back()을 호출해야만 직전의 정확한 스크롤 위치(아카데미/프로그램 섹션 등)로 100% 복원됩니다!
+     * 만약 직접 URL로 접속했거나 이전 방문 이력이 없는 경우, 안전하게 지정된 fallbackUrl(기본: index.html#programs)로 이동합니다.
+     */
+    function goSmartBack(fallbackUrl) {
+      const fallback = fallbackUrl || 'index.html#programs';
+      const ref = document.referrer;
+      // 이전 페이지가 브라우저 히스토리에 있고, 동일 출처이거나 메인 페이지(index.html)에서 넘어온 경우
+      if (window.history.length > 1 && ref && (ref.indexOf(window.location.hostname) !== -1 || ref.indexOf('index.html') !== -1)) {
+        window.history.back();
+      } else {
+        window.location.href = fallback;
+      }
+    }
+
+    /**
+     * 🧭 상세페이지 공통 카테고리 빠른 점프 콤보박스 변경 핸들러
+     */
+    function handleGlobalCategoryChange(targetUrl) {
+      if (!targetUrl) return;
+      window.location.href = targetUrl;
+    }
+
     // 테마 전환
     const themeBtn = document.getElementById('themeToggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;

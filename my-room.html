@@ -2377,12 +2377,12 @@
   <header class="room-header">
     <div class="header-inner">
       <div class="header-left-group">
-        <!-- 🌟 1. 맨 좌측 최우선: 시니어 친화적 [← 메인 홈] 복귀 버튼 -->
-        <a href="index.html" class="btn-header-back-home" title="여백과 결 메인 포털 홈으로 돌아가기">
+        <!-- 🌟 1. 맨 좌측 최우선: 시니어 친화적 스마트 [← 이전으로] 복귀 버튼 (직전 스크롤 위치 완벽 복원) -->
+        <button type="button" onclick="goSmartBack('index.html#archive')" class="btn-header-back-home" title="방금 보던 이전 화면(정확한 스크롤 위치)으로 돌아가기">
           <span class="back-icon">←</span>
-          <span class="back-label-full">메인 홈</span>
-          <span class="back-label-short">메인</span>
-        </a>
+          <span class="back-label-full">이전으로</span>
+          <span class="back-label-short">이전으로</span>
+        </button>
 
         <!-- 2. 브랜드 로고 & 배지 -->
         <a href="index.html" class="logo-area" aria-label="여백과 결 메인으로 이동">
@@ -2448,10 +2448,19 @@
     </div>
     <div class="combo-select-wrap">
       <select id="roomQuickNavSelect" onchange="handleQuickNavChange(this.value)" class="room-quick-combo-select" aria-label="화면 카테고리 빠른 이동">
-        <optgroup label="🏛️ 메인 포털 & 서재 모드">
-          <option value="go-home">🏠 여백과 결 메인 홈으로 나가기</option>
+        <optgroup label="↩️ 스마트 화면 복귀 & 서재 모드">
+          <option value="action-smart-back">← 방금 보던 이전 화면(스크롤 복원)으로 가기</option>
+          <option value="url:index.html#home">🏠 여백과 결 메인 대문</option>
           <option value="mode-sample" id="optSample">👵 김순옥 어르신 완성 서재 (184쪽 샘플)</option>
           <option value="mode-user" id="optUser">👤 나의 프라이빗 독립 서재</option>
+        </optgroup>
+        <optgroup label="🌿 여백과 결 전체 서비스 카테고리">
+          <option value="url:index.html#magazine">📚 1. 고유한 여백서재 (기록/인터뷰)</option>
+          <option value="url:index.html#lounge">☕ 2. 비움 한 줄 라운지 (커뮤니티)</option>
+          <option value="url:index.html#test">🧩 3. 나의 마음 비움 자가진단</option>
+          <option value="url:index.html#memoir">✍️ 4. AI 구술 자서전 제작</option>
+          <option value="url:academy.html">🎓 5. 인생정리 코치 아카데미</option>
+          <option value="url:index.html#archive">🏛️ 6. 보물 서재 소개 섹션</option>
         </optgroup>
         <optgroup label="📚 4대 보물 서가 바로가기">
           <option value="tab-memoir" selected>📖 1. 디지털 자서전 (인생 평전 e-Book)</option>
@@ -3675,10 +3684,10 @@
 
   <!-- 📱 모바일 하단 고정 빠른 복귀 네비게이션 바 (언제든 메인홈 및 각 서가 원터치 이동) -->
   <aside class="mobile-bottom-quick-bar" aria-label="모바일 하단 빠른 메뉴">
-    <a href="index.html" class="mb-quick-btn back-home" title="메인 포털 홈으로 복귀">
-      <span class="btn-icon">🏠</span>
-      <span>메인 홈</span>
-    </a>
+    <button type="button" onclick="goSmartBack('index.html#archive')" class="mb-quick-btn back-home" title="방금 보던 이전 화면(정확한 스크롤 위치)으로 복귀">
+      <span class="btn-icon">←</span>
+      <span>이전으로</span>
+    </button>
     <button type="button" class="mb-quick-btn active" id="mbBtnMemoir" onclick="switchTab('tab-memoir')">
       <span class="btn-icon">📖</span>
       <span>자서전</span>
@@ -3721,11 +3730,35 @@
         .replace(/'/g, '&#39;');
     }
 
+    /**
+     * ↩️ 스마트 이전 화면 복귀 함수
+     * 사용자가 메인 홈에서 스크롤을 내리며 서재로 들어온 경우,
+     * 브라우저의 history.back()을 호출해야만 직전의 정확한 스크롤 위치(#archive 섹션 등)로 100% 복원됩니다!
+     * 만약 직접 URL로 접속했거나 이전 방문 이력이 없는 경우, 안전하게 지정된 fallbackUrl(기본: index.html#archive)로 이동합니다.
+     */
+    function goSmartBack(fallbackUrl) {
+      const fallback = fallbackUrl || 'index.html#archive';
+      const ref = document.referrer;
+      if (window.history.length > 1 && ref && (ref.indexOf(window.location.hostname) !== -1 || ref.indexOf('index.html') !== -1)) {
+        window.history.back();
+      } else {
+        window.location.href = fallback;
+      }
+    }
+
     // 🧭 빠른 화면 이동 콤보박스 핸들러
     function handleQuickNavChange(value) {
       if (!value) return;
+      if (value === 'action-smart-back') {
+        goSmartBack('index.html#archive');
+        return;
+      }
+      if (value.startsWith('url:')) {
+        window.location.href = value.replace('url:', '');
+        return;
+      }
       if (value === 'go-home') {
-        window.location.href = 'index.html';
+        window.location.href = 'index.html#home';
         return;
       }
       if (value === 'mode-sample') {
