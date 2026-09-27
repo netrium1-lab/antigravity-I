@@ -1334,6 +1334,53 @@
       background: #ffffff;
       cursor: pointer;
     }
+    .coach-select-sm {
+      padding: 5px 8px;
+      border-radius: 6px;
+      border: 1.5px solid var(--accent);
+      font-size: 0.82rem;
+      font-weight: 800;
+      background: #ffffff;
+      color: var(--accent);
+      cursor: pointer;
+      outline: none;
+    }
+    .coach-select-sm:focus {
+      box-shadow: 0 0 0 2px rgba(43, 90, 66, 0.2);
+    }
+    .coach-modal-card {
+      background: #ffffff;
+      border-radius: 16px;
+      max-width: 580px;
+      width: 100%;
+      padding: 28px;
+      box-sizing: border-box;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .coach-badge-assigned {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(43, 90, 66, 0.1);
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 0.82rem;
+    }
+    .coach-badge-unassigned {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #fee2e2;
+      color: #b91c1c;
+      font-weight: 800;
+      font-size: 0.82rem;
+    }
   </style>
 </head>
 <body>
@@ -1401,7 +1448,7 @@
         </button>
         <button class="nav-tab-btn" onclick="switchTab('tabAcademy', this)">
           <span class="nav-tab-icon">🎓</span>
-          <span>05. 아카데미 관리</span>
+          <span>05. 아카데미 & 코치배정</span>
         </button>
         <button class="nav-tab-btn" onclick="switchTab('tabArchive', this)">
           <span class="nav-tab-icon">🏛️</span>
@@ -1845,21 +1892,155 @@
         </div>
       </section>
 
-      <!-- ================= 탭 6: 🎓 05. 코치 아카데미 관리 ================= -->
+      <!-- ================= 탭 6: 🎓 05. 코치 아카데미 & 코치 배정 관리 ================= -->
       <section class="tab-panel" id="tabAcademy">
+
+        <!-- 상단 실시간 코칭스태프 & 배정 현황 카드 -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-bottom: 24px;">
+          <div class="panel-card" style="padding: 16px 20px; display: flex; align-items: center; gap: 14px;">
+            <div style="font-size: 2rem; background: rgba(43,90,66,0.1); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">🎓</div>
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">교육 수료 공인 코치</div>
+              <div style="font-size: 1.4rem; font-weight: 900; color: var(--accent);" id="statCoachTotal">5명</div>
+            </div>
+          </div>
+          <div class="panel-card" style="padding: 16px 20px; display: flex; align-items: center; gap: 14px;">
+            <div style="font-size: 2rem; background: #e0f2fe; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">🏃</div>
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">활동 및 파견 중 코치</div>
+              <div style="font-size: 1.4rem; font-weight: 900; color: #0284c7;" id="statCoachActive">3명</div>
+            </div>
+          </div>
+          <div class="panel-card" style="padding: 16px 20px; display: flex; align-items: center; gap: 14px;">
+            <div style="font-size: 2rem; background: #fef3c7; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">🤝</div>
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">서비스 배정/진행 건수</div>
+              <div style="font-size: 1.4rem; font-weight: 900; color: #d97706;" id="statDispatchCount">4건</div>
+            </div>
+          </div>
+          <div class="panel-card" style="padding: 16px 20px; display: flex; align-items: center; gap: 14px;">
+            <div style="font-size: 2rem; background: #fee2e2; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">⏳</div>
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">코치 배정 대기 건수</div>
+              <div style="font-size: 1.4rem; font-weight: 900; color: #dc2626;" id="statDispatchPending">1건</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. 핵심: 각종 서비스별 전담 코치 배정 및 파견 관리 툴 -->
         <div class="panel-card">
+          <div class="panel-header" style="flex-wrap: wrap; gap: 10px;">
+            <div class="panel-title-wrap">
+              <span class="panel-icon">🤝</span>
+              <div>
+                <h2 class="panel-title">05-1. 각종 서비스별 전담 코치 배정 및 파견 관리 툴 (Dispatch Center)</h2>
+                <p style="color: var(--text-muted); font-size: 0.86rem; margin: 4px 0 0;">
+                  고객의 서비스 신청(뷰티, 옷장비움, 유품정리, 자서전, 서재, 엔딩파티)에 <strong>교육을 이수한 공인 코치를 직접 배정</strong>하고 방문·코칭 일정을 관리합니다.
+                </p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-save-setting" onclick="openDispatchModal()" style="background: #ffffff; color: var(--text-main); border: 1.5px solid var(--border-color);">
+                <span>➕</span> 신규 서비스 배정 등록
+              </button>
+              <button class="btn-save-setting" onclick="exportDispatchesCSV()">
+                <span>📥</span> 배정 현황(CSV) 다운로드
+              </button>
+            </div>
+          </div>
+
+          <!-- 서비스 카테고리 필터 바 -->
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;">
+            <button class="btn-action-sm active" id="filterDispatch_all" onclick="filterDispatches('all', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">전체 (<span id="countDispAll">0</span>)</button>
+            <button class="btn-action-sm" id="filterDispatch_beauty" onclick="filterDispatches('뷰티', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">💄 뷰티 케어</button>
+            <button class="btn-action-sm" id="filterDispatch_wardrobe" onclick="filterDispatches('옷장', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">👗 옷장 비움</button>
+            <button class="btn-action-sm" id="filterDispatch_legacy" onclick="filterDispatches('유품', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">📦 유품/짐정리</button>
+            <button class="btn-action-sm" id="filterDispatch_memoir" onclick="filterDispatches('자서전', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">✍️ 자서전 구술</button>
+            <button class="btn-action-sm" id="filterDispatch_archive" onclick="filterDispatches('서재', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">🏛️ 나의 서재</button>
+          </div>
+
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 100px;">고객 성함</th>
+                  <th style="width: 120px;">연락처</th>
+                  <th style="width: 140px;">신청 서비스</th>
+                  <th style="width: 120px;">방문/희망일시</th>
+                  <th style="width: 140px;">지역 / 주소</th>
+                  <th style="width: 190px;">담당 배정 코치 (선택 툴)</th>
+                  <th style="width: 110px; text-align: center;">진행 단계</th>
+                  <th>코칭 메모 / 특이사항</th>
+                  <th style="width: 70px; text-align: center;">관리</th>
+                </tr>
+              </thead>
+              <tbody id="dispatchTableBody">
+                <!-- JS 동적 렌더링 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 2. 교육 이수 공인 코치(Coach) 명단 및 프로필 관리 -->
+        <div class="panel-card" style="margin-top: 24px;">
+          <div class="panel-header" style="flex-wrap: wrap; gap: 10px;">
+            <div class="panel-title-wrap">
+              <span class="panel-icon">🏅</span>
+              <div>
+                <h2 class="panel-title">05-2. 교육 이수 공인 코칭스태프(Coach) 명단 및 프로필 관리</h2>
+                <p style="color: var(--text-muted); font-size: 0.86rem; margin: 4px 0 0;">
+                  여백과 결 아카데미 전문 과정을 이수하고 공인 자격을 획득한 정예 코치 명단입니다. (각종 서비스 배정 툴의 코치 풀로 자동 연동됩니다)
+                </p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-save-setting" onclick="openCoachModal()" style="background: var(--accent); color: #ffffff;">
+                <span>➕</span> 신규 수료 코치 등록
+              </button>
+              <button class="btn-save-setting" onclick="exportCoachesCSV()" style="background: #ffffff; color: var(--text-main); border: 1.5px solid var(--border-color);">
+                <span>📥</span> 코치 명단(CSV) 다운로드
+              </button>
+            </div>
+          </div>
+
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 90px;">코치 성함</th>
+                  <th style="width: 110px;">수료 기수</th>
+                  <th style="width: 140px;">전문 코칭 분야</th>
+                  <th style="width: 120px;">연락처</th>
+                  <th style="width: 140px;">활동 가능 지역</th>
+                  <th style="width: 85px; text-align: center;">만족도</th>
+                  <th style="width: 85px; text-align: center;">배정 건수</th>
+                  <th style="width: 110px; text-align: center;">활동 상태</th>
+                  <th style="width: 100px; text-align: center;">관리</th>
+                </tr>
+              </thead>
+              <tbody id="coachTableBody">
+                <!-- JS 동적 렌더링 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3. 코칭스태프 양성 아카데미 지원자 명단 (기존 기능) -->
+        <div class="panel-card" style="margin-top: 24px;">
           <div class="panel-header">
             <div class="panel-title-wrap">
               <span class="panel-icon">🎓</span>
-              <h2 class="panel-title">05. 코칭스태프 양성 아카데미 지원자 명단</h2>
+              <div>
+                <h2 class="panel-title">05-3. 코칭스태프 양성 아카데미 지원 신청자 명단</h2>
+                <p style="color: var(--text-muted); font-size: 0.86rem; margin: 4px 0 0;">
+                  2026년 [여백과 결] 공식 코칭스태프 입학 상담 및 교육과정 지원자 명단입니다.
+                </p>
+              </div>
             </div>
             <button class="btn-save-setting" onclick="exportAcademyCSV()">
-              <span>📥</span> 엑셀(CSV) 다운로드
+              <span>📥</span> 지원자 엑셀(CSV) 다운로드
             </button>
           </div>
-          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px;">
-            2026년 [여백과 결] 공식 코칭스태프 1기 입학 상담 및 지원 신청자 명단입니다.
-          </p>
 
           <div class="admin-table-wrap">
             <table class="admin-table">
@@ -2210,6 +2391,163 @@
           ✕ 닫고 돌아가기
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- ================= 모달 4) 교육 이수 코치 등록/수정 모달 ================= -->
+  <div class="cms-modal-overlay" id="coachFormModal" onclick="closeCoachModalOnOverlay(event)">
+    <div class="coach-modal-card">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; border-bottom: 1.5px solid var(--border-color); padding-bottom: 14px;">
+        <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin: 0;" id="coachModalTitle">
+          🏅 공인 코칭스태프 등록 및 정보 수정
+        </h3>
+        <button type="button" onclick="closeCoachModal()" aria-label="닫기" style="border: 1px solid var(--border-color); background: var(--bg-body); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;">✕</button>
+      </div>
+
+      <form onsubmit="handleCoachFormSubmit(event)" style="display: flex; flex-direction: column; gap: 14px;">
+        <input type="hidden" id="coachFormId">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">코치 성함 *</label>
+            <input type="text" id="inputCoachName" class="setting-input" placeholder="예: 김민희" required>
+          </div>
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">수료 기수 *</label>
+            <input type="text" id="inputCoachCohort" class="setting-input" placeholder="예: 1기 수료 (수석)" value="1기 수료" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">전문 코칭 분야 *</label>
+            <select id="selectCoachSpecialty" class="setting-input" style="background:#fff;">
+              <option value="💄 웰니스 & 시니어 뷰티">💄 웰니스 & 시니어 뷰티</option>
+              <option value="👗 옷장 비움 & 공간 코칭">👗 옷장 비움 & 공간 코칭</option>
+              <option value="📦 오래된 짐 & 유품 정리">📦 오래된 짐 & 유품 정리</option>
+              <option value="✍️ 디지털 자서전 구술 코칭">✍️ 디지털 자서전 구술 코칭</option>
+              <option value="🏛️ 나의 서재 아카이빙">🏛️ 나의 서재 아카이빙</option>
+              <option value="💌 웰다잉 엔딩 파티 기획">💌 웰다잉 엔딩 파티 기획</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">활동 연락처 *</label>
+            <input type="text" id="inputCoachPhone" class="setting-input" placeholder="010-0000-0000" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">활동 가능 지역 *</label>
+            <input type="text" id="inputCoachRegion" class="setting-input" placeholder="예: 서울 강남/서초/송파" value="서울 / 수도권" required>
+          </div>
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">코치 활동 상태 *</label>
+            <select id="selectCoachStatus" class="setting-input" style="background:#fff;">
+              <option value="활동중">🏃 활동중 (배정 가능)</option>
+              <option value="배정대기">⏳ 배정대기 (대기중)</option>
+              <option value="휴식중">💤 휴식중 (일시 중단)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">코치 프로필 소개 / 주요 이력</label>
+          <textarea id="inputCoachIntro" class="setting-textarea" rows="3" placeholder="어르신 맞춤 코칭 전문성 및 주요 자격 사항을 간략히 입력하세요."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+          <button type="button" class="btn-save-setting" onclick="closeCoachModal()" style="background: #ffffff; color: var(--text-main); border: 1.5px solid var(--border-color);">
+            취소
+          </button>
+          <button type="submit" class="btn-save-setting" style="background: var(--accent); color: #ffffff;">
+            💾 코치 정보 저장하기
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= 모달 5) 각종 서비스 코치 배정 등록/수정 모달 ================= -->
+  <div class="cms-modal-overlay" id="dispatchFormModal" onclick="closeDispatchModalOnOverlay(event)">
+    <div class="coach-modal-card">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; border-bottom: 1.5px solid var(--border-color); padding-bottom: 14px;">
+        <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin: 0;" id="dispatchModalTitle">
+          🤝 서비스 신청 고객 전담 코치 배정
+        </h3>
+        <button type="button" onclick="closeDispatchModal()" aria-label="닫기" style="border: 1px solid var(--border-color); background: var(--bg-body); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;">✕</button>
+      </div>
+
+      <form onsubmit="handleDispatchFormSubmit(event)" style="display: flex; flex-direction: column; gap: 14px;">
+        <input type="hidden" id="dispatchFormId">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">고객 성함 *</label>
+            <input type="text" id="inputDispClientName" class="setting-input" placeholder="예: 정옥희 어르신" required>
+          </div>
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">고객 연락처 *</label>
+            <input type="text" id="inputDispClientPhone" class="setting-input" placeholder="010-0000-0000" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">신청 서비스 분야 *</label>
+            <select id="selectDispServiceType" class="setting-input" style="background:#fff;">
+              <option value="💄 웰니스 & 시니어 뷰티">💄 웰니스 & 시니어 뷰티</option>
+              <option value="👗 옷장 비움 & 공간 코칭">👗 옷장 비움 & 공간 코칭</option>
+              <option value="📦 오래된 짐 & 유품 정리">📦 오래된 짐 & 유품 정리</option>
+              <option value="✍️ 디지털 자서전 구술 코칭">✍️ 디지털 자서전 구술 코칭</option>
+              <option value="🏛️ 나의 서재 아카이빙">🏛️ 나의 서재 아카이빙</option>
+              <option value="💌 웰다잉 엔딩 파티 기획">💌 웰다잉 엔딩 파티 기획</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">방문 / 상담 희망일시</label>
+            <input type="text" id="inputDispSchedule" class="setting-input" placeholder="예: 2026.09.30 14:00">
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">방문 장소 / 고객 주소</label>
+          <input type="text" id="inputDispLocation" class="setting-input" placeholder="예: 서울 서초구 반포동 자택">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px;">
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--accent); display: block; margin-bottom: 5px;">⭐ 담당 배정 코치 (선택 툴)</label>
+            <select id="selectDispCoach" class="coach-select-sm" style="width: 100%; padding: 10px;">
+              <option value="">⚠️ 미배정 (코치를 선택하세요)</option>
+              <!-- JS로 공인 코치 옵션 동적 렌더링 -->
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">진행 상태</label>
+            <select id="selectDispStatus" class="setting-input" style="background:#fff;">
+              <option value="배정대기">⏳ 배정대기</option>
+              <option value="배정완료">🤝 배정완료</option>
+              <option value="코칭중">🏃 방문/코칭중</option>
+              <option value="완료">✅ 코칭완료</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">코칭 메모 및 사전 요청사항</label>
+          <textarea id="inputDispMemo" class="setting-textarea" rows="2" placeholder="고객의 사전 특이사항, 준비물, 코칭 방문 시 유의점을 기록하세요."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+          <button type="button" class="btn-save-setting" onclick="closeDispatchModal()" style="background: #ffffff; color: var(--text-main); border: 1.5px solid var(--border-color);">
+            취소
+          </button>
+          <button type="submit" class="btn-save-setting" style="background: var(--accent); color: #ffffff;">
+            💾 배정 정보 저장하기
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -3869,6 +4207,640 @@
       downloadCSV(`여백과결_나의서재_구축신청및상담관리_${stamp}.csv`, csv);
     }
 
+    // =========================================================================
+    // 11. 🎓 교육 이수 공인 코치(Coach) 명단 및 활동 관리 엔진
+    // =========================================================================
+    const COACHES_STORAGE_KEY = 'yebaek_certified_coaches_v1';
+    const DEFAULT_COACHES = [
+      {
+        id: 'coach_1',
+        name: '김민희',
+        cohort: '1기 수료 (수석)',
+        specialty: '💄 웰니스 & 시니어 뷰티',
+        phone: '010-3841-9210',
+        region: '서울 강남 / 서초 / 송파',
+        rating: '4.95',
+        status: '활동중',
+        intro: '15년 뷰티 스타일리스트 경력, 시니어 맞춤 퍼스널 컬러 및 품격 메이크업 코디'
+      },
+      {
+        id: 'coach_2',
+        name: '정우성',
+        cohort: '1기 수료',
+        specialty: '👗 옷장 비움 & 공간 코칭',
+        phone: '010-5512-8871',
+        region: '경기 성남 / 분당 / 판교',
+        rating: '5.0',
+        status: '활동중',
+        intro: '공간 정리 수납 전문가 1급, 무리한 버림이 아닌 질서와 안전 중심의 비움 코칭'
+      },
+      {
+        id: 'coach_3',
+        name: '이선영',
+        cohort: '1기 수료',
+        specialty: '✍️ 디지털 자서전 구술 코칭',
+        phone: '010-8271-6453',
+        region: '서울 전지역 / 경기 북부',
+        rating: '4.9',
+        status: '활동중',
+        intro: '방송 작가 및 출판 기획 12년 경력, 어르신 생애 구술 인터뷰 및 양장본 출판 전담'
+      },
+      {
+        id: 'coach_4',
+        name: '박준혁',
+        cohort: '1기 수료',
+        specialty: '📦 오래된 짐 & 유품 정리',
+        phone: '010-9943-1288',
+        region: '수도권 (서울/경기/인천)',
+        rating: '4.85',
+        status: '배정대기',
+        intro: '장례지도사 자격 및 사전 엔딩 노트 컨설팅, 존엄한 생전 정리를 돕는 안심 코치'
+      },
+      {
+        id: 'coach_5',
+        name: '한지은',
+        cohort: '2기 수료 예정',
+        specialty: '🏛️ 나의 서재 아카이빙',
+        phone: '010-6321-8902',
+        region: '서울 마포 / 용산 / 여의도',
+        rating: '4.9',
+        status: '배정대기',
+        intro: '기록 관리학 전공, 옛 사진 고해상도 디지털 복원 및 생애 디지털 금고 전담'
+      }
+    ];
+
+    function getCoaches() {
+      const saved = localStorage.getItem(COACHES_STORAGE_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        } catch (e) {
+          console.error('코치 목록 파싱 오류:', e);
+        }
+      }
+      localStorage.setItem(COACHES_STORAGE_KEY, JSON.stringify(DEFAULT_COACHES));
+      return DEFAULT_COACHES;
+    }
+
+    function saveCoaches(list) {
+      localStorage.setItem(COACHES_STORAGE_KEY, JSON.stringify(list));
+      renderCoachesTable();
+      renderDispatchesTable();
+      updateAcademyStats();
+    }
+
+    function countCoachDispatches(coachId) {
+      const dispatches = getDispatches();
+      return dispatches.filter(d => d.coachId === coachId && d.status !== '완료').length;
+    }
+
+    function renderCoachesTable() {
+      const tbody = document.getElementById('coachTableBody');
+      if (!tbody) return;
+
+      const coaches = getCoaches();
+      if (coaches.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 24px; color:#94a3b8;">등록된 공인 코칭스태프가 없습니다. [신규 수료 코치 등록] 버튼을 눌러 등록하세요.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = coaches.map(c => {
+        const activeCount = countCoachDispatches(c.id);
+        const countBadge = activeCount > 0 
+          ? `<span class="coach-badge-assigned">${activeCount}건 배정중</span>`
+          : `<span style="color:#94a3b8; font-size:0.82rem;">0건</span>`;
+
+        return `
+          <tr>
+            <td style="font-weight: 850; color: var(--text-main); font-size: 0.95rem;">${escapeHtml(c.name)}</td>
+            <td><span style="display:inline-block; padding:3px 8px; border-radius:6px; background:#f1f5f9; color:#475569; font-size:0.8rem; font-weight:750;">${escapeHtml(c.cohort || '1기 수료')}</span></td>
+            <td><span style="display:inline-block; padding:3px 8px; border-radius:6px; background:rgba(43,90,66,0.08); color:var(--accent); font-size:0.8rem; font-weight:800;">${escapeHtml(c.specialty || '-')}</span></td>
+            <td><a href="tel:${escapeHtml(c.phone)}" style="color:var(--accent); font-weight:700;">${escapeHtml(c.phone)}</a></td>
+            <td style="color:var(--text-muted); font-size:0.85rem;">${escapeHtml(c.region || '전국')}</td>
+            <td style="text-align:center; font-weight:800; color:#d97706;">⭐ ${escapeHtml(c.rating || '5.0')}</td>
+            <td style="text-align:center;">${countBadge}</td>
+            <td style="text-align:center;">
+              <select class="status-select-sm" onchange="updateCoachStatus('${c.id}', this.value)" style="background:#fff;">
+                <option value="활동중" ${c.status === '활동중' ? 'selected' : ''}>🏃 활동중</option>
+                <option value="배정대기" ${c.status === '배정대기' ? 'selected' : ''}>⏳ 배정대기</option>
+                <option value="휴식중" ${c.status === '휴식중' ? 'selected' : ''}>💤 휴식중</option>
+              </select>
+            </td>
+            <td style="text-align:center;">
+              <div style="display:inline-flex; gap:6px;">
+                <button class="btn-action-sm" onclick="openCoachModal('${c.id}')" style="background:var(--accent-light); color:var(--accent);">수정</button>
+                <button class="btn-action-sm del" onclick="deleteCoach('${c.id}')">삭제</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function updateCoachStatus(coachId, status) {
+      const list = getCoaches();
+      const target = list.find(c => c.id === coachId);
+      if (target) {
+        target.status = status;
+        saveCoaches(list);
+      }
+    }
+
+    function openCoachModal(coachId) {
+      const modal = document.getElementById('coachFormModal');
+      const form = document.querySelector('#coachFormModal form');
+      if (!modal || !form) return;
+
+      const titleEl = document.getElementById('coachModalTitle');
+      const idInput = document.getElementById('coachFormId');
+      const nameInput = document.getElementById('inputCoachName');
+      const cohortInput = document.getElementById('inputCoachCohort');
+      const specialtySelect = document.getElementById('selectCoachSpecialty');
+      const phoneInput = document.getElementById('inputCoachPhone');
+      const regionInput = document.getElementById('inputCoachRegion');
+      const statusSelect = document.getElementById('selectCoachStatus');
+      const introInput = document.getElementById('inputCoachIntro');
+
+      if (coachId) {
+        const coaches = getCoaches();
+        const target = coaches.find(c => c.id === coachId);
+        if (target) {
+          if (titleEl) titleEl.textContent = `🏅 [${target.name} 코치] 프로필 정보 수정`;
+          if (idInput) idInput.value = target.id;
+          if (nameInput) nameInput.value = target.name || '';
+          if (cohortInput) cohortInput.value = target.cohort || '1기 수료';
+          if (specialtySelect) specialtySelect.value = target.specialty || '💄 웰니스 & 시니어 뷰티';
+          if (phoneInput) phoneInput.value = target.phone || '';
+          if (regionInput) regionInput.value = target.region || '';
+          if (statusSelect) statusSelect.value = target.status || '활동중';
+          if (introInput) introInput.value = target.intro || '';
+        }
+      } else {
+        if (titleEl) titleEl.textContent = '🏅 신규 공인 코칭스태프 등록';
+        form.reset();
+        if (idInput) idInput.value = '';
+        if (cohortInput) cohortInput.value = '1기 수료';
+        if (regionInput) regionInput.value = '서울 / 수도권';
+        if (statusSelect) statusSelect.value = '활동중';
+      }
+
+      modal.classList.add('open');
+    }
+
+    function closeCoachModal() {
+      const modal = document.getElementById('coachFormModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function closeCoachModalOnOverlay(e) {
+      if (e.target.id === 'coachFormModal') closeCoachModal();
+    }
+
+    function handleCoachFormSubmit(e) {
+      e.preventDefault();
+      const idInput = document.getElementById('coachFormId');
+      const nameInput = document.getElementById('inputCoachName');
+      const cohortInput = document.getElementById('inputCoachCohort');
+      const specialtySelect = document.getElementById('selectCoachSpecialty');
+      const phoneInput = document.getElementById('inputCoachPhone');
+      const regionInput = document.getElementById('inputCoachRegion');
+      const statusSelect = document.getElementById('selectCoachStatus');
+      const introInput = document.getElementById('inputCoachIntro');
+
+      const name = nameInput ? nameInput.value.trim() : '';
+      if (!name) { alert('코치 성함을 입력해주세요.'); return; }
+
+      const list = getCoaches();
+      const existingId = idInput ? idInput.value : '';
+
+      if (existingId) {
+        const target = list.find(c => c.id === existingId);
+        if (target) {
+          target.name = name;
+          target.cohort = cohortInput ? cohortInput.value.trim() : '1기 수료';
+          target.specialty = specialtySelect ? specialtySelect.value : '';
+          target.phone = phoneInput ? phoneInput.value.trim() : '';
+          target.region = regionInput ? regionInput.value.trim() : '';
+          target.status = statusSelect ? statusSelect.value : '활동중';
+          target.intro = introInput ? introInput.value.trim() : '';
+        }
+      } else {
+        const newCoach = {
+          id: 'coach_' + Date.now(),
+          name: name,
+          cohort: cohortInput ? cohortInput.value.trim() : '1기 수료',
+          specialty: specialtySelect ? specialtySelect.value : '💄 웰니스 & 시니어 뷰티',
+          phone: phoneInput ? phoneInput.value.trim() : '',
+          region: regionInput ? regionInput.value.trim() : '서울 / 수도권',
+          rating: '5.0',
+          status: statusSelect ? statusSelect.value : '활동중',
+          intro: introInput ? introInput.value.trim() : ''
+        };
+        list.push(newCoach);
+      }
+
+      saveCoaches(list);
+      closeCoachModal();
+      alert('공인 코치 정보가 성공적으로 저장되었습니다.');
+    }
+
+    function deleteCoach(coachId) {
+      const list = getCoaches();
+      const target = list.find(c => c.id === coachId);
+      if (!target) return;
+
+      if (confirm(`[${target.name} 코치]를 명단에서 삭제하시겠습니까?\n(배정된 서비스가 있는 경우 배정 상태를 확인해주세요)`)) {
+        const updated = list.filter(c => c.id !== coachId);
+        saveCoaches(updated);
+      }
+    }
+
+    function exportCoachesCSV() {
+      const coaches = getCoaches();
+      let csv = "코치성함,수료기수,전문코칭분야,연락처,활동지역,만족도평점,현재배정건수,활동상태,주요이력\n";
+      coaches.forEach(c => {
+        const activeCount = countCoachDispatches(c.id);
+        csv += `"${c.name}","${c.cohort || ''}","${c.specialty || ''}","${c.phone || ''}","${c.region || ''}","${c.rating || '5.0'}","${activeCount}건","${c.status || '활동중'}","${(c.intro || '').replace(/"/g, '""')}"\n`;
+      });
+      const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      downloadCSV(`여백과결_공인코칭스태프명단_${stamp}.csv`, csv);
+    }
+
+    // =========================================================================
+    // 12. 🤝 각종 서비스별 전담 코치 배정 및 파견 관리 툴 엔진 (Dispatch Center)
+    // =========================================================================
+    const DISPATCH_STORAGE_KEY = 'yebaek_service_dispatches_v1';
+    let currentDispatchFilter = 'all';
+
+    const DEFAULT_DISPATCHES = [
+      {
+        id: 'disp_1',
+        clientName: '정옥희 어르신',
+        clientPhone: '010-9943-1288',
+        serviceType: '💄 웰니스 & 시니어 뷰티',
+        schedule: '2026.09.28 14:00',
+        location: '서울 서초구 반포동 자택',
+        coachId: 'coach_1',
+        coachName: '김민희',
+        status: '코칭중',
+        memo: '가족 모임 전 방문 헤어/메이크업 코디 상담 진행 중'
+      },
+      {
+        id: 'disp_2',
+        clientName: '강명숙 님 (모친 대리)',
+        clientPhone: '010-5512-8871',
+        serviceType: '👗 옷장 비움 & 공간 코칭',
+        schedule: '2026.09.29 10:30',
+        location: '경기 성남시 분당구 수내동',
+        coachId: 'coach_2',
+        coachName: '정우성',
+        status: '배정완료',
+        memo: '어머니 댁 옷장 비움 코칭 및 동선 안전 점검 파견 예정'
+      },
+      {
+        id: 'disp_3',
+        clientName: '김순옥 어르신',
+        clientPhone: '010-3841-9210',
+        serviceType: '✍️ 디지털 자서전 구술 코칭',
+        schedule: '2026.09.30 15:00',
+        location: '서울 강남구 압구정동',
+        coachId: 'coach_3',
+        coachName: '이선영',
+        status: '배정완료',
+        memo: '30일 인생 서사 워크북 1차 방문 인터뷰 배정'
+      },
+      {
+        id: 'disp_4',
+        clientName: '이만수 어르신',
+        clientPhone: '010-7712-4459',
+        serviceType: '🏛️ 나의 서재 아카이빙',
+        schedule: '2026.10.02 11:00',
+        location: '서울 마포구 공덕동 자택',
+        coachId: 'coach_5',
+        coachName: '한지은',
+        status: '배정완료',
+        memo: '흑백 사진 앨범 2권 원본 인수 및 디지털 복원 코디'
+      },
+      {
+        id: 'disp_5',
+        clientName: '박성민 님',
+        clientPhone: '010-5192-3301',
+        serviceType: '📦 오래된 짐 & 유품 정리',
+        schedule: '2026.10.04 14:00',
+        location: '인천 연수구 송도동',
+        coachId: '',
+        coachName: '',
+        status: '배정대기',
+        memo: '서재 오래된 책과 유품 비우기 견적 상담 (전담 코치 배정 필요)'
+      }
+    ];
+
+    function getDispatches() {
+      const saved = localStorage.getItem(DISPATCH_STORAGE_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        } catch (e) {
+          console.error('배정 데이터 파싱 오류:', e);
+        }
+      }
+      localStorage.setItem(DISPATCH_STORAGE_KEY, JSON.stringify(DEFAULT_DISPATCHES));
+      return DEFAULT_DISPATCHES;
+    }
+
+    function saveDispatches(list) {
+      localStorage.setItem(DISPATCH_STORAGE_KEY, JSON.stringify(list));
+      renderDispatchesTable(currentDispatchFilter);
+      renderCoachesTable();
+      updateAcademyStats();
+    }
+
+    function filterDispatches(category, btnEl) {
+      currentDispatchFilter = category;
+      const buttons = document.querySelectorAll('#tabAcademy .btn-action-sm');
+      buttons.forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      renderDispatchesTable(category);
+    }
+
+    function renderDispatchesTable(filterCat = 'all') {
+      const tbody = document.getElementById('dispatchTableBody');
+      if (!tbody) return;
+
+      const dispatches = getDispatches();
+      const coaches = getCoaches();
+
+      const countAll = document.getElementById('countDispAll');
+      if (countAll) countAll.textContent = dispatches.length;
+
+      let filtered = dispatches;
+      if (filterCat !== 'all') {
+        filtered = dispatches.filter(d => (d.serviceType || '').includes(filterCat));
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 24px; color:#94a3b8;">해당 서비스의 배정 내역이 없습니다. [신규 서비스 배정 등록]으로 코치를 배정해보세요.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(d => {
+        const isAssigned = !!d.coachId;
+        const coachOptions = coaches.map(c => `
+          <option value="${c.id}" ${d.coachId === c.id ? 'selected' : ''}>
+            ${escapeHtml(c.name)} 코치 (${c.specialty.replace(/^[^\s]+ /, '')}) [${c.status}]
+          </option>
+        `).join('');
+
+        return `
+          <tr>
+            <td style="font-weight: 850; color: var(--text-main); font-size: 0.95rem;">${escapeHtml(d.clientName)}</td>
+            <td><a href="tel:${escapeHtml(d.clientPhone)}" style="color:var(--accent); font-weight:700;">${escapeHtml(d.clientPhone)}</a></td>
+            <td>
+              <span style="display:inline-block; padding:3px 8px; border-radius:6px; background:rgba(43,90,66,0.08); color:var(--accent); font-size:0.8rem; font-weight:800;">
+                ${escapeHtml(d.serviceType || '일반 서비스')}
+              </span>
+            </td>
+            <td style="color:var(--text-muted); font-size:0.85rem;">${escapeHtml(d.schedule || '-')}</td>
+            <td style="max-width:140px; font-size:0.85rem; color:var(--text-main); line-height:1.3;">${escapeHtml(d.location || '-')}</td>
+            <td>
+              <select class="coach-select-sm" onchange="assignCoachToDispatch('${d.id}', this.value)" style="width: 100%;">
+                <option value="">⚠️ 미배정 (코치 선택)</option>
+                ${coachOptions}
+              </select>
+            </td>
+            <td style="text-align:center;">
+              <select class="status-select-sm" onchange="updateDispatchStatus('${d.id}', this.value)" style="background:#fff;">
+                <option value="배정대기" ${d.status === '배정대기' ? 'selected' : ''}>⏳ 배정대기</option>
+                <option value="배정완료" ${d.status === '배정완료' ? 'selected' : ''}>🤝 배정완료</option>
+                <option value="코칭중" ${d.status === '코칭중' ? 'selected' : ''}>🏃 코칭중</option>
+                <option value="완료" ${d.status === '완료' ? 'selected' : ''}>✅ 코칭완료</option>
+              </select>
+            </td>
+            <td style="max-width:220px; font-size:0.85rem; line-height:1.4; color:var(--text-main);">
+              <div style="cursor:pointer;" onclick="editDispatchMemo('${d.id}')" title="클릭하여 메모 수정">
+                ${escapeHtml(d.memo || '(메모 없음 - 클릭하여 입력)')}
+                <span style="font-size:0.75rem; color:var(--accent); margin-left:4px;">✏️</span>
+              </div>
+            </td>
+            <td style="text-align:center;">
+              <button class="btn-action-sm del" onclick="deleteDispatch('${d.id}')">삭제</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // 담당 코치 즉시 배정/변경 핸들러 (핵심 툴)
+    function assignCoachToDispatch(dispId, coachId) {
+      const dispatches = getDispatches();
+      const coaches = getCoaches();
+      const target = dispatches.find(d => d.id === dispId);
+      if (!target) return;
+
+      if (!coachId) {
+        target.coachId = '';
+        target.coachName = '';
+        target.status = '배정대기';
+        saveDispatches(dispatches);
+        return;
+      }
+
+      const coach = coaches.find(c => c.id === coachId);
+      if (coach) {
+        target.coachId = coach.id;
+        target.coachName = coach.name;
+        if (target.status === '배정대기') {
+          target.status = '배정완료';
+        }
+        saveDispatches(dispatches);
+        alert(`[${target.clientName}] 고객 건에 [${coach.name} 코치]가 성공적으로 배정되었습니다.`);
+      }
+    }
+
+    function updateDispatchStatus(dispId, status) {
+      const dispatches = getDispatches();
+      const target = dispatches.find(d => d.id === dispId);
+      if (target) {
+        target.status = status;
+        saveDispatches(dispatches);
+      }
+    }
+
+    function editDispatchMemo(dispId) {
+      const dispatches = getDispatches();
+      const target = dispatches.find(d => d.id === dispId);
+      if (!target) return;
+
+      const newMemo = prompt(`[${target.clientName}] 코칭 메모 및 사전 특이사항 수정:`, target.memo || '');
+      if (newMemo !== null) {
+        target.memo = newMemo.trim();
+        saveDispatches(dispatches);
+      }
+    }
+
+    function openDispatchModal(dispId) {
+      const modal = document.getElementById('dispatchFormModal');
+      const form = document.querySelector('#dispatchFormModal form');
+      if (!modal || !form) return;
+
+      const coachSelect = document.getElementById('selectDispCoach');
+      if (coachSelect) {
+        const coaches = getCoaches();
+        coachSelect.innerHTML = '<option value="">⚠️ 미배정 (코치를 선택하세요)</option>' + coaches.map(c => `
+          <option value="${c.id}">${escapeHtml(c.name)} 코치 (${c.specialty.replace(/^[^\s]+ /, '')}) [${c.status}]</option>
+        `).join('');
+      }
+
+      const titleEl = document.getElementById('dispatchModalTitle');
+      const idInput = document.getElementById('dispatchFormId');
+      const nameInput = document.getElementById('inputDispClientName');
+      const phoneInput = document.getElementById('inputDispClientPhone');
+      const serviceSelect = document.getElementById('selectDispServiceType');
+      const scheduleInput = document.getElementById('inputDispSchedule');
+      const locationInput = document.getElementById('inputDispLocation');
+      const statusSelect = document.getElementById('selectDispStatus');
+      const memoInput = document.getElementById('inputDispMemo');
+
+      if (dispId) {
+        const dispatches = getDispatches();
+        const target = dispatches.find(d => d.id === dispId);
+        if (target) {
+          if (titleEl) titleEl.textContent = `🤝 [${target.clientName}] 서비스 배정 수정`;
+          if (idInput) idInput.value = target.id;
+          if (nameInput) nameInput.value = target.clientName || '';
+          if (phoneInput) phoneInput.value = target.clientPhone || '';
+          if (serviceSelect) serviceSelect.value = target.serviceType || '💄 웰니스 & 시니어 뷰티';
+          if (scheduleInput) scheduleInput.value = target.schedule || '';
+          if (locationInput) locationInput.value = target.location || '';
+          if (coachSelect) coachSelect.value = target.coachId || '';
+          if (statusSelect) statusSelect.value = target.status || '배정대기';
+          if (memoInput) memoInput.value = target.memo || '';
+        }
+      } else {
+        if (titleEl) titleEl.textContent = '🤝 신규 서비스 고객 코치 배정 등록';
+        form.reset();
+        if (idInput) idInput.value = '';
+        if (scheduleInput) {
+          const tom = new Date(Date.now() + 86400000);
+          scheduleInput.value = `${tom.getFullYear()}.${String(tom.getMonth()+1).padStart(2,'0')}.${String(tom.getDate()).padStart(2,'0')} 14:00`;
+        }
+        if (statusSelect) statusSelect.value = '배정대기';
+      }
+
+      modal.classList.add('open');
+    }
+
+    function closeDispatchModal() {
+      const modal = document.getElementById('dispatchFormModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function closeDispatchModalOnOverlay(e) {
+      if (e.target.id === 'dispatchFormModal') closeDispatchModal();
+    }
+
+    function handleDispatchFormSubmit(e) {
+      e.preventDefault();
+      const idInput = document.getElementById('dispatchFormId');
+      const nameInput = document.getElementById('inputDispClientName');
+      const phoneInput = document.getElementById('inputDispClientPhone');
+      const serviceSelect = document.getElementById('selectDispServiceType');
+      const scheduleInput = document.getElementById('inputDispSchedule');
+      const locationInput = document.getElementById('inputDispLocation');
+      const coachSelect = document.getElementById('selectDispCoach');
+      const statusSelect = document.getElementById('selectDispStatus');
+      const memoInput = document.getElementById('inputDispMemo');
+
+      const clientName = nameInput ? nameInput.value.trim() : '';
+      if (!clientName) { alert('고객 성함을 입력해주세요.'); return; }
+
+      const coachId = coachSelect ? coachSelect.value : '';
+      let coachName = '';
+      if (coachId) {
+        const coaches = getCoaches();
+        const found = coaches.find(c => c.id === coachId);
+        if (found) coachName = found.name;
+      }
+
+      const list = getDispatches();
+      const existingId = idInput ? idInput.value : '';
+
+      if (existingId) {
+        const target = list.find(d => d.id === existingId);
+        if (target) {
+          target.clientName = clientName;
+          target.clientPhone = phoneInput ? phoneInput.value.trim() : '';
+          target.serviceType = serviceSelect ? serviceSelect.value : '';
+          target.schedule = scheduleInput ? scheduleInput.value.trim() : '';
+          target.location = locationInput ? locationInput.value.trim() : '';
+          target.coachId = coachId;
+          target.coachName = coachName;
+          target.status = statusSelect ? statusSelect.value : (coachId ? '배정완료' : '배정대기');
+          target.memo = memoInput ? memoInput.value.trim() : '';
+        }
+      } else {
+        const newDisp = {
+          id: 'disp_' + Date.now(),
+          clientName: clientName,
+          clientPhone: phoneInput ? phoneInput.value.trim() : '',
+          serviceType: serviceSelect ? serviceSelect.value : '💄 웰니스 & 시니어 뷰티',
+          schedule: scheduleInput ? scheduleInput.value.trim() : '',
+          location: locationInput ? locationInput.value.trim() : '',
+          coachId: coachId,
+          coachName: coachName,
+          status: statusSelect ? statusSelect.value : (coachId ? '배정완료' : '배정대기'),
+          memo: memoInput ? memoInput.value.trim() : ''
+        };
+        list.unshift(newDisp);
+      }
+
+      saveDispatches(list);
+      closeDispatchModal();
+      alert('서비스 코치 배정 정보가 성공적으로 저장되었습니다.');
+    }
+
+    function deleteDispatch(dispId) {
+      if (confirm('해당 서비스 배정 내역을 삭제하시겠습니까?')) {
+        let list = getDispatches();
+        list = list.filter(d => d.id !== dispId);
+        saveDispatches(list);
+      }
+    }
+
+    function exportDispatchesCSV() {
+      const list = getDispatches();
+      let csv = "고객성함,연락처,신청서비스,방문희망일시,방문장소,담당코치,진행상태,코칭메모\n";
+      list.forEach(d => {
+        csv += `"${d.clientName}","${d.clientPhone}","${d.serviceType || ''}","${d.schedule || ''}","${(d.location || '').replace(/"/g, '""')}","${d.coachName ? d.coachName + ' 코치' : '미배정'}","${d.status || '배정대기'}","${(d.memo || '').replace(/"/g, '""')}"\n`;
+      });
+      const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      downloadCSV(`여백과결_서비스별_코치배정현황_${stamp}.csv`, csv);
+    }
+
+    // 상단 요약 통계 갱신 유틸
+    function updateAcademyStats() {
+      const coaches = getCoaches();
+      const dispatches = getDispatches();
+
+      const statTotal = document.getElementById('statCoachTotal');
+      const statActive = document.getElementById('statCoachActive');
+      const statDispatch = document.getElementById('statDispatchCount');
+      const statPending = document.getElementById('statDispatchPending');
+
+      if (statTotal) statTotal.textContent = `${coaches.length}명`;
+      if (statActive) {
+        const activeCount = coaches.filter(c => c.status === '활동중').length;
+        statActive.textContent = `${activeCount}명`;
+      }
+      if (statDispatch) statDispatch.textContent = `${dispatches.length}건`;
+      if (statPending) {
+        const pendingCount = dispatches.filter(d => !d.coachId || d.status === '배정대기').length;
+        statPending.textContent = `${pendingCount}건`;
+      }
+    }
+
     function loadAllData() {
       loadSiteSettings();
       renderArticlesTable();
@@ -3881,6 +4853,10 @@
       renderDiagReservationTable();
       loadMemoirBannerConfigToAdmin();
       renderArchiveClientsTable();
+      // 코치 명단 및 서비스 배정 툴 로딩
+      renderCoachesTable();
+      renderDispatchesTable();
+      updateAcademyStats();
     }
 
     // 초기 실행
