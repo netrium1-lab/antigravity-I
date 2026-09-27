@@ -3078,6 +3078,25 @@
       color: #e8dfc8;
       font-weight: 600;
     }
+    .editor-content-area figure,
+    .reader-body figure {
+      margin: 28px auto;
+      text-align: center;
+      clear: both;
+      display: block;
+      max-width: 100%;
+    }
+    .editor-content-area figure img,
+    .reader-body figure img,
+    .editor-content-area img,
+    .reader-body img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+      margin: 0 auto;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+    }
 
     /* 본문 뷰어 및 사이트 전역 인용구 */
     blockquote, .reader-body blockquote {
@@ -5837,7 +5856,7 @@
               <span>📸 사진 보관함</span>
               <span id="photoCountBadge" style="font-size: 0.72rem; color: var(--text-muted);">0장</span>
             </div>
-            <button type="button" class="btn-photo-upload" onclick="document.getElementById('editorImgInput').click()">
+            <button type="button" class="btn-photo-upload" onmousedown="event.preventDefault()" onclick="document.getElementById('editorImgInput').click()">
               <span>+ 사진 불러오기</span>
             </button>
             <input type="file" id="editorImgInput" style="display:none" onchange="processUploadedImgs(this)" multiple accept="image/*">
@@ -5936,7 +5955,7 @@
           <div class="editor-scroll-body">
             <input type="text" id="editorTitle" class="editor-title-input" placeholder="제목을 입력하세요 (예: 품격 있는 생전 정리의 첫걸음)" maxlength="120">
             <textarea id="editorExcerpt" class="editor-excerpt-input" placeholder="글 요약 한 줄을 적어주세요 (메인 카드 미리보기에 노출됩니다)" rows="2"></textarea>
-            <div id="editorContent" class="editor-content-area" contenteditable="true" data-placeholder="이곳에 따뜻하고 깊이 있는 글을 자유롭게 작성해보세요. 좌측 사진 보관함에서 사진을 본문에 삽입하거나 대표사진을 지정할 수 있습니다..."></div>
+            <div id="editorContent" class="editor-content-area" contenteditable="true" onkeyup="saveEditorSelection()" onmouseup="saveEditorSelection()" onclick="saveEditorSelection()" oninput="saveEditorSelection()" onfocus="saveEditorSelection()" data-placeholder="이곳에 따뜻하고 깊이 있는 글을 자유롭게 작성해보세요. 좌측 사진 보관함에서 사진을 본문에 삽입하거나 대표사진을 지정할 수 있습니다..."></div>
           </div>
         </div>
       </div>
@@ -8764,10 +8783,27 @@
 
     function saveEditorSelection() {
       const sel = window.getSelection();
-      if (sel.getRangeAt && sel.rangeCount) {
-        editorSavedSelection = sel.getRangeAt(0);
+      if (sel && sel.rangeCount > 0) {
+        const range = sel.getRangeAt(0);
+        const editor = document.getElementById('editorContent');
+        if (editor && editor.contains(range.commonAncestorContainer)) {
+          editorSavedSelection = range.cloneRange();
+        }
       }
     }
+
+    // 문서 어디서든 에디터 내 커서가 바뀌면 실시간 추적
+    document.addEventListener('selectionchange', () => {
+      const editor = document.getElementById('editorContent');
+      if (!editor) return;
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount > 0) {
+        const range = sel.getRangeAt(0);
+        if (editor.contains(range.commonAncestorContainer)) {
+          editorSavedSelection = range.cloneRange();
+        }
+      }
+    });
 
     function restoreEditorSelection() {
       if (editorSavedSelection) {
@@ -8851,11 +8887,11 @@
 
       grid.innerHTML = editorPhotos.map((photo, idx) => `
         <div class="photo-item ${photo.src === mainThumbImg ? 'is-main' : ''}">
-          <button type="button" class="photo-del-btn" onclick="deletePhotoFromSidebar(${idx})" title="사진 삭제">✕</button>
-          <img src="${photo.src}" onclick="insertBodyImg('${photo.src}')" title="클릭 시 본문에 삽입">
+          <button type="button" class="photo-del-btn" onmousedown="event.preventDefault()" onclick="deletePhotoFromSidebar(${idx})" title="사진 삭제">✕</button>
+          <img src="${photo.src}" onmousedown="event.preventDefault()" onclick="insertBodyImg('${photo.src}')" title="클릭 시 본문에 삽입">
           <div class="photo-item-controls">
-            <button type="button" class="photo-btn photo-btn-ins" onclick="insertBodyImg('${photo.src}')">본문 삽입</button>
-            <button type="button" class="photo-btn photo-btn-rep ${photo.src === mainThumbImg ? 'active' : ''}" onclick="setAsMainThumb('${photo.src}')">
+            <button type="button" class="photo-btn photo-btn-ins" onmousedown="event.preventDefault()" onclick="insertBodyImg('${photo.src}')">본문 삽입</button>
+            <button type="button" class="photo-btn photo-btn-rep ${photo.src === mainThumbImg ? 'active' : ''}" onmousedown="event.preventDefault()" onclick="setAsMainThumb('${photo.src}')">
               ${photo.src === mainThumbImg ? '⭐ 대표' : '대표 지정'}
             </button>
           </div>
@@ -8888,13 +8924,80 @@
       }
     }
 
-    // 본문에 이미지 삽입
+    // 본문에 이미지 삽입 (원하는 문단 사이에 독립된 블록으로 깔끔하게 안착)
     function insertBodyImg(src) {
-      const tag = `<img src="${src}" style="max-width:100%; border-radius:14px; margin:24px auto; display:block; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">`;
       const editor = document.getElementById('editorContent');
+      if (!editor) return;
+
       editor.focus();
-      restoreEditorSelection();
-      document.execCommand('insertHTML', false, tag + '<p><br></p>');
+
+      // 삽입할 독립된 이미지 블록 (<figure>)
+      const figure = document.createElement('figure');
+      figure.className = 'article-body-img-block';
+      figure.style.cssText = 'margin: 28px auto; text-align: center; clear: both; display: block; max-width: 100%;';
+      figure.innerHTML = `
+        <img src="${src}" alt="본문 삽입 사진" style="max-width: 100%; height: auto; border-radius: 12px; display: block; margin: 0 auto; box-shadow: 0 4px 18px rgba(0,0,0,0.18);">
+      `;
+
+      // 이미지 뒤에 사용자가 계속 글을 쓰거나 다음 줄로 넘어갈 수 있는 새 문단
+      const nextP = document.createElement('p');
+      nextP.innerHTML = '<br>';
+
+      // 커서 위치 확인 (실시간 selection 우선, 없으면 저장된 selection)
+      let range = null;
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount > 0) {
+        const testRange = sel.getRangeAt(0);
+        if (editor.contains(testRange.commonAncestorContainer)) {
+          range = testRange;
+        }
+      }
+      if (!range && editorSavedSelection && editor.contains(editorSavedSelection.commonAncestorContainer)) {
+        range = editorSavedSelection;
+      }
+
+      if (range && editor.contains(range.commonAncestorContainer)) {
+        // 커서가 위치한 블록 태그(p, h3, blockquote, div 등)를 탐색
+        let targetBlock = range.commonAncestorContainer;
+        if (targetBlock.nodeType === 3) {
+          targetBlock = targetBlock.parentNode; // 텍스트 노드면 부모 엘리먼트
+        }
+
+        // editor 직계 자식 블록 요소를 찾음
+        while (targetBlock && targetBlock.parentNode && targetBlock.parentNode !== editor && targetBlock !== editor) {
+          targetBlock = targetBlock.parentNode;
+        }
+
+        if (targetBlock && targetBlock.parentNode === editor) {
+          // 해당 문단 바로 뒤에 이미지와 빈 문단을 순서대로 삽입!
+          targetBlock.parentNode.insertBefore(figure, targetBlock.nextSibling);
+          figure.parentNode.insertBefore(nextP, figure.nextSibling);
+        } else {
+          // fallback: range 위치에 직접 삽입
+          range.collapse(false);
+          range.insertNode(nextP);
+          range.insertNode(figure);
+        }
+      } else {
+        // 커서가 없거나 선택된 적 없는 경우 에디터 맨 끝에 추가
+        editor.appendChild(figure);
+        editor.appendChild(nextP);
+      }
+
+      // 커서를 이미지 바로 다음 빈 문단(<p>)으로 이동시켜 다음 입력/사진이 자연스럽게 이어지도록 설정
+      try {
+        const newRange = document.createRange();
+        newRange.setStart(nextP, 0);
+        newRange.collapse(true);
+        if (sel) {
+          sel.removeAllRanges();
+          sel.addRange(newRange);
+        }
+        editorSavedSelection = newRange.cloneRange();
+      } catch (e) {
+        console.warn('Selection move error:', e);
+      }
+
       saveEditorSelection();
     }
 
