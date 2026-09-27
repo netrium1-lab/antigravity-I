@@ -2808,8 +2808,13 @@
               <button type="button" class="btn-photo-upload" onmousedown="event.preventDefault()" onclick="document.getElementById('editorImgInput').click()" style="flex: 1; justify-content: center; padding: 7px 8px; font-size: 0.8rem;">
                 <span>+ 내 사진</span>
               </button>
-              <button type="button" class="btn-photo-upload" onmousedown="event.preventDefault()" onclick="loadConceptPhotosForCurrentArticle()" style="flex: 1.3; justify-content: center; padding: 7px 8px; font-size: 0.8rem; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; border: none; font-weight: 800; box-shadow: 0 2px 6px rgba(79,70,229,0.35);" title="현재 글 컨셉에 어울리는 감동 사진 5장을 즉시 보관함에 채웁니다">
-                <span>🪄 AI 추천 5장</span>
+              <button type="button" class="btn-photo-upload" onmousedown="event.preventDefault()" onclick="loadConceptPhotosForCurrentArticle(false)" style="flex: 1.4; justify-content: center; padding: 7px 8px; font-size: 0.8rem; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; border: none; font-weight: 800; box-shadow: 0 2px 6px rgba(79,70,229,0.35);" title="현재 글 제목과 내용에 완벽하게 어울리는 고화질 감동 사진 5장을 AI가 분석하여 즉시 제작/선별합니다">
+                <span>🪄 글 맞춤 AI 5장</span>
+              </button>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <button type="button" onmousedown="event.preventDefault()" onclick="loadConceptPhotosForCurrentArticle(true)" style="background:none; border:none; color:#a5b4fc; font-size:0.75rem; font-weight:750; cursor:pointer; padding:2px 0; display:inline-flex; align-items:center; gap:4px;" title="현재 글 주제의 다른 감동 사진 5장으로 새로고침합니다">
+                <span>🔄 다른 AI 사진 5장으로 교체</span>
               </button>
             </div>
             <input type="file" id="editorImgInput" style="display:none" onchange="processUploadedImgs(this)" multiple accept="image/*">
@@ -4456,7 +4461,160 @@
     }
 
     // =========================================================================
-    // 🪄 AI 황금키워드 자동 칼럼 생성 엔진 (네이버 D.I.A.+ & 4050/6070 트렌드 최적화)
+    // 📸 AI 스마트 고화질 감성 이미지 라이브러리 (주제별 70여 종 엄선 풀)
+    // =========================================================================
+    const AI_IMAGE_LIBRARY = {
+      // 1. 부모님, 효도, 칠순/팔순, 가족 사랑
+      family: [
+        "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1506863530036-1efeddceb993?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1476703993599-0035a21b17a9?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80"
+      ],
+      // 2. 자서전, 글쓰기, 회고록, 만년필, 책, 서재
+      writing: [
+        "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1507842229451-7f01be7ff612?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80"
+      ],
+      // 3. 사진첩, 흑백 추억, 시간의 기억
+      memories: [
+        "https://images.unsplash.com/photo-1526726538690-5cbf956ae2fd?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1516962215378-7fa2e137ae93?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80"
+      ],
+      // 4. 비움과 갈무리, 정리수납, 미니멀 라이프
+      organizing: [
+        "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1540518614846-7ede433c4ef7?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80"
+      ],
+      // 5. 웰다잉, 엔딩노트, 마음의 평온, 사색, 치유
+      welldying: [
+        "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1528722828814-77b9b83aafb2?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=800&q=80"
+      ],
+      // 6. 인생 2막, 은퇴, 새로운 시작, 활력
+      reset: [
+        "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1472653431158-6364773b2a56?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=800&q=80"
+      ],
+      // 7. 대화, 인터뷰, 경청, 차 한 잔
+      dialogue: [
+        "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?auto=format&fit=crop&w=800&q=80"
+      ],
+      // 8. 고향, 자연, 들꽃, 힐링
+      nature: [
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=800&q=80"
+      ]
+    };
+
+    // 🧠 글 맥락 지능형 분석 및 최적 고화질 사진 5장 큐레이션 엔진
+    function generateSmartAiPhotos(text = '', category = '', avoidUrls = []) {
+      const lower = (text + ' ' + category).toLowerCase();
+      
+      const scores = {
+        family: 0,
+        writing: 0,
+        memories: 0,
+        organizing: 0,
+        welldying: 0,
+        reset: 0,
+        dialogue: 0,
+        nature: 0
+      };
+
+      if (/칠순|팔순|환갑|부모님|어머니|아버지|엄마|아빠|가족|효도|손주|자녀|자식/.test(lower)) scores.family += 5;
+      if (/자서전|회고록|평전|글쓰기|원고|만년필|도서|책|출판|기록|집필/.test(lower)) scores.writing += 5;
+      if (/사진|앨범|추억|흑백|기억|청춘|세월|옛날|그리움|과거/.test(lower)) scores.memories += 5;
+      if (/정리|비움|옷장|수납|물건|유품|미니멀|공간|청소|갈무리/.test(lower)) scores.organizing += 5;
+      if (/웰다잉|엔딩노트|사전연명|임종|마지막|평온|안식|장례|죽음|사후/.test(lower)) scores.welldying += 5;
+      if (/은퇴|퇴직|인생2막|리셋|버킷리스트|루틴|5060|새로운|도전|활력/.test(lower)) scores.reset += 5;
+      if (/인터뷰|질문|대화|목소리|구술|경청|코치|상담|이야기/.test(lower)) scores.dialogue += 5;
+      if (/고향|지리산|자연|들꽃|산|강|꽃|풍경|사계절|들판/.test(lower)) scores.nature += 5;
+
+      if (category === '비움과 갈무리') { scores.organizing += 3; scores.memories += 2; }
+      if (category === '웰라이프') { scores.family += 2; scores.writing += 2; scores.reset += 2; }
+      if (category === '웰다잉') { scores.welldying += 3; scores.dialogue += 2; }
+
+      const sortedThemes = Object.keys(scores).sort((a, b) => scores[b] - scores[a]);
+      const primaryTheme = sortedThemes[0] || 'family';
+      const secondaryTheme = sortedThemes[1] || 'writing';
+
+      const shuffle = arr => {
+        const copy = [...arr];
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+      };
+
+      const filterUnused = list => {
+        const unused = list.filter(u => !avoidUrls.includes(u));
+        return unused.length >= 3 ? unused : list;
+      };
+
+      const primaryPool = filterUnused(AI_IMAGE_LIBRARY[primaryTheme] || AI_IMAGE_LIBRARY.family);
+      const secondaryPool = filterUnused(AI_IMAGE_LIBRARY[secondaryTheme] || AI_IMAGE_LIBRARY.writing);
+
+      const shuffledPrimary = shuffle(primaryPool);
+      const shuffledSecondary = shuffle(secondaryPool);
+
+      const result = [];
+      if (shuffledPrimary[0]) result.push(shuffledPrimary[0]);
+      if (shuffledSecondary[0]) result.push(shuffledSecondary[0]);
+      if (shuffledPrimary[1]) result.push(shuffledPrimary[1]);
+      if (shuffledSecondary[1]) result.push(shuffledSecondary[1]);
+      if (shuffledPrimary[2]) result.push(shuffledPrimary[2]);
+
+      if (result.length < 5) {
+        const allPhotos = shuffle(Object.values(AI_IMAGE_LIBRARY).flat());
+        for (const p of allPhotos) {
+          if (!result.includes(p)) result.push(p);
+          if (result.length >= 5) break;
+        }
+      }
+
+      return result.slice(0, 5);
+    }
+
+    // =========================================================================
+    // 🪄 AI 황금키워드 자동 칼럼 생성 프리셋 (테마별 완전 독립 고화질 사진 세트)
     // =========================================================================
     const aiArticlePresets = [
       {
@@ -4465,13 +4623,13 @@
         category: "웰라이프",
         title: "칠순 잔치 대신 부모님께 '184쪽의 인생 서재'를 선물해 드렸습니다",
         excerpt: "뻔한 돈 봉투나 일회성 식사 대접 대신, 평생을 헌신해오신 부모님의 70년 인생 서사를 양장본 디지털 자서전으로 엮어드린 어느 자녀의 가슴 뭉클한 이야기.",
-        image: "images/showcase-senior-memoir.jpg",
+        image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=80",
         photos: [
-          "images/showcase-senior-memoir.jpg",
-          "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=75",
-          "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=75",
-          "images/showcase-senior-writing.jpg",
-          "images/showcase-senior-happy-book.jpg"
+          "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1506863530036-1efeddceb993?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80"
         ],
         content: `
           <p>"아버지 칠순 때 무엇을 해드려야 할까?"</p>
@@ -4499,13 +4657,13 @@
         category: "비움과 갈무리",
         title: "스마트폰 속 사진 3만 장, 사후에는 어떻게 정리될까? 웰다잉 디지털 갈무리 3단계",
         excerpt: "가족들에게 남겨질 내 스마트폰 속 방대한 사진과 계정을 사전에 깔끔하고 안전하게 정돈하는 현대적 디지털 유산 정리법.",
-        image: "images/showcase-books-organizing.jpg",
+        image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80",
         photos: [
-          "images/showcase-books-organizing.jpg",
-          "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=75",
-          "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=75",
-          "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75",
-          "images/showcase-senior-memoir.jpg"
+          "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1526726538690-5cbf956ae2fd?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1540518614846-7ede433c4ef7?auto=format&fit=crop&w=800&q=80"
         ],
         content: `
           <p>현대인의 삶은 손바닥만 한 스마트폰 속에 고스란히 담겨 있습니다. 지난 10여 년간 찍어온 3만 장이 넘는 사진, 메신저 대화록, 은행과 포털의 수많은 계정들... 만약 우리가 갑작스레 세상을 떠나게 된다면 이 디지털 흔적들은 어떻게 될까요?</p>
@@ -4524,13 +4682,13 @@
         category: "웰라이프",
         title: "정년퇴직 후 찾아온 텅 빈 하루, 나를 되찾는 4주 라이프 리셋 루틴",
         excerpt: "30년 넘게 일하던 직장을 떠나 마주한 공허함. 무기력에서 벗어나 내 삶의 주권을 회복하고 두 번째 황금기를 여는 4주간의 기록 여행.",
-        image: "images/showcase-senior-writing.jpg",
+        image: "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&w=800&q=80",
         photos: [
-          "images/showcase-senior-writing.jpg",
-          "https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?auto=format&fit=crop&w=800&q=75",
-          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=75",
-          "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=75",
-          "images/showcase-senior-happy-book.jpg"
+          "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80"
         ],
         content: `
           <p>매일 아침 7시면 울리던 알람이 더 이상 울리지 않는 첫 월요일. 30년 넘게 직장인으로 살아온 이들에게 은퇴의 첫 주는 자유로움이 아니라 가슴 한구석이 텅 비어버리는 낯선 공허함으로 다가옵니다.</p>
@@ -4551,13 +4709,13 @@
         category: "웰다잉",
         title: "자식에게 짐 되지 않는 부모의 아름다운 퇴장, 사전연명의료와 엔딩노트",
         excerpt: "임종 직전 가족들이 겪는 죄책감과 갈등을 미리 덜어주는 현명한 부모의 사전 갈무리. 품격 있는 웰다잉 준비 가이드.",
-        image: "images/showcase-senior-happy-book.jpg",
+        image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80",
         photos: [
-          "images/showcase-senior-happy-book.jpg",
-          "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=75",
-          "images/showcase-books-organizing.jpg",
-          "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75",
-          "images/showcase-senior-memoir.jpg"
+          "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1528722828814-77b9b83aafb2?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=800&q=80"
         ],
         content: `
           <p>"내가 만약 의식을 잃고 회복 불가능한 상태가 된다면, 자식들이 나를 어떻게 해야 할까?"</p>
@@ -4577,13 +4735,13 @@
         category: "웰라이프",
         title: "부모님이 건강하실 때 꼭 여쭤봐야 할 10가지 인생 질문",
         excerpt: "시간이 더 흐르기 전에 부모님의 육성으로 듣고 기록해야 할 삶의 결정적 순간들. 감동적인 부모님 인터뷰 질문 리스트.",
-        image: "images/showcase-senior-memoir.jpg",
+        image: "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80",
         photos: [
-          "images/showcase-senior-memoir.jpg",
-          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=75",
-          "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=75",
-          "images/showcase-senior-writing.jpg",
-          "images/showcase-senior-happy-book.jpg"
+          "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1516962215378-7fa2e137ae93?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80"
         ],
         content: `
           <p>우리는 부모님에 대해 얼마나 알고 있을까요? 부모님의 생년월일과 좋아하시는 음식은 알지만, 젊은 날 부모님이 품었던 가장 뜨거웠던 꿈이 무엇이었는지, 살면서 가장 깊이 후회했던 순간은 언제였는지 아는 자녀는 드뭅니다.</p>
@@ -4724,62 +4882,42 @@
       document.getElementById('editorContent').innerHTML = customContent.trim();
       document.getElementById('editorIsFeatured').checked = true;
 
-      // 맞춤 추천 사진 5장 채우기
-      const customPhotos = [
-        "images/showcase-senior-memoir.jpg",
-        "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=75",
-        "images/showcase-senior-writing.jpg",
-        "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=75",
-        "images/showcase-senior-happy-book.jpg"
-      ];
-      editorPhotos = customPhotos.map(src => ({ src }));
-      mainThumbImg = customPhotos[0];
+      // 🧠 입력 키워드 및 본문 내용을 심층 분석하여 맞춤 감성 사진 5장 스마트 자동 배정
+      const smartPhotos = generateSmartAiPhotos(kw + ' ' + customTitle + ' ' + customExcerpt, '웰라이프');
+      editorPhotos = smartPhotos.map(src => ({ src }));
+      mainThumbImg = smartPhotos[0];
       renderPhotoSidebar();
       updateMainThumbIndicator();
 
       closeAiArticleGeneratorModal();
       if (input) input.value = '';
-      alert(`🎉 [${kw}] 맞춤 AI 칼럼이 에디터에 생성되었습니다!\n좌측 [사진 보관함]에도 추천 사진 5장이 담겼습니다.\n내용을 확인하신 후 상단의 [🚀 발행하기]를 누르시면 완료됩니다.`);
+      alert(`🎉 [${kw}] 맞춤 AI 칼럼이 에디터에 생성되었습니다!\n\n• 본문 내용과 입력하신 주제에 꼭 맞는 고화질 감동 사진 5장이 [사진 보관함]에 자동 배치되었습니다.\n• 좌측 보관함에서 원하는 사진을 [⭐ 대표]로 지정하거나 본문에 삽입해 보세요.\n• 마음에 들지 않을 경우 좌측 상단의 [🔄 다른 사진 5장]을 누르면 새로운 사진들로 언제든 교체할 수 있습니다.`);
     }
 
-    // 현재 작성 중인 글 컨셉에 맞추어 사진 보관함에 5장 채우기
-    function loadConceptPhotosForCurrentArticle() {
-      const title = document.getElementById('editorTitle').value || '';
-      const cat = document.getElementById('editorCategory').value || '';
-      
-      let set = [
-        "images/showcase-senior-memoir.jpg",
-        "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=75",
-        "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=75",
-        "images/showcase-senior-writing.jpg",
-        "images/showcase-senior-happy-book.jpg"
-      ];
+    // 현재 작성 중인 글 컨셉 및 본문 내용을 분석하여 사진 보관함에 5장 채우기 (새로고침 지원)
+    function loadConceptPhotosForCurrentArticle(forceRefresh = false) {
+      const title = (document.getElementById('editorTitle') ? document.getElementById('editorTitle').value : '') || '';
+      const excerpt = (document.getElementById('editorExcerpt') ? document.getElementById('editorExcerpt').value : '') || '';
+      const cat = (document.getElementById('editorCategory') ? document.getElementById('editorCategory').value : '') || '';
+      const content = (document.getElementById('editorContent') ? document.getElementById('editorContent').innerText : '') || '';
 
-      if (cat === '비움과 갈무리' || title.includes('사진') || title.includes('정리')) {
-        set = [
-          "images/showcase-books-organizing.jpg",
-          "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=75",
-          "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=75",
-          "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75",
-          "images/showcase-senior-memoir.jpg"
-        ];
-      } else if (cat === '웰다잉' || title.includes('웰다잉') || title.includes('엔딩노트')) {
-        set = [
-          "images/showcase-senior-happy-book.jpg",
-          "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=75",
-          "images/showcase-books-organizing.jpg",
-          "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75",
-          "images/showcase-senior-memoir.jpg"
-        ];
-      }
+      const fullText = `${title} ${excerpt} ${content}`;
+      const avoidUrls = forceRefresh ? editorPhotos.map(p => p.src) : [];
+
+      // 🧠 지능형 큐레이션 엔진 호출
+      const set = generateSmartAiPhotos(fullText, cat, avoidUrls);
 
       editorPhotos = set.map(src => ({ src }));
-      if (!mainThumbImg) {
-        mainThumbImg = set[0];
-      }
+      mainThumbImg = set[0];
+
       renderPhotoSidebar();
       updateMainThumbIndicator();
-      alert('📸 현재 글 컨셉에 꼭 맞는 감동 사진 5장이 [사진 보관함]에 담겼습니다!\n원하는 사진에서 [⭐ 대표]로 지정하거나 본문에 삽입해 보세요.');
+
+      if (forceRefresh) {
+        alert('🔄 [새로운 AI 사진 세트]\n글의 감성과 분위기에 꼭 맞는 또 다른 엄선 사진 5장으로 새로 교체되었습니다!');
+      } else {
+        alert('🪄 [글 맞춤 AI 5장 추출]\n현재 작성 중인 글의 제목과 내용을 정밀 분석하여 최적의 감성 사진 5장을 [사진 보관함]에 담았습니다!\n원하는 사진을 클릭해 [⭐ 대표]로 지정하거나 본문에 삽입해 보세요.');
+      }
     }
 
     // 칼럼 발행 또는 수정 저장 (대표사진 image 필드 포함)
