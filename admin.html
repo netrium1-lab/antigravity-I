@@ -2304,12 +2304,17 @@
               <span>📸 사진 보관함</span>
               <span id="photoCountBadge" style="font-size: 0.72rem; color: #94a3b8;">0장</span>
             </div>
-            <button type="button" class="btn-photo-upload" onclick="document.getElementById('editorImgInput').click()">
-              <span>+ 사진 불러오기</span>
-            </button>
+            <div style="display: flex; gap: 6px; width: 100%; margin: 4px 0 6px;">
+              <button type="button" class="btn-photo-upload" onclick="document.getElementById('editorImgInput').click()" style="flex: 1; justify-content: center; padding: 7px 8px; font-size: 0.8rem;">
+                <span>+ 내 사진</span>
+              </button>
+              <button type="button" class="btn-photo-upload" onclick="loadConceptPhotosForCurrentArticle()" style="flex: 1.3; justify-content: center; padding: 7px 8px; font-size: 0.8rem; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; border: none; font-weight: 800; box-shadow: 0 2px 6px rgba(79,70,229,0.35);" title="현재 글 컨셉에 어울리는 감동 사진 5장을 즉시 보관함에 채웁니다">
+                <span>🪄 AI 추천 5장</span>
+              </button>
+            </div>
             <input type="file" id="editorImgInput" style="display:none" onchange="processUploadedImgs(this)" multiple accept="image/*">
             <span style="font-size: 0.72rem; color: #94a3b8; line-height: 1.35;">
-              사진 업로드 후 <strong>[대표 지정]</strong>을 누르면 메인 카드 커버 사진으로 적용됩니다.
+              사진에서 <strong>[⭐ 대표]</strong>를 누르면 커버로, <strong>[본문 삽입]</strong>을 누르면 글 속에 들어갑니다.
             </span>
           </div>
           <!-- 업로드된 이미지 그리드 -->
@@ -3635,6 +3640,13 @@
         title: "칠순 잔치 대신 부모님께 '184쪽의 인생 서재'를 선물해 드렸습니다",
         excerpt: "뻔한 돈 봉투나 일회성 식사 대접 대신, 평생을 헌신해오신 부모님의 70년 인생 서사를 양장본 디지털 자서전으로 엮어드린 어느 자녀의 가슴 뭉클한 이야기.",
         image: "images/showcase-senior-memoir.jpg",
+        photos: [
+          "images/showcase-senior-memoir.jpg",
+          "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=75",
+          "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=75",
+          "images/showcase-senior-writing.jpg",
+          "images/showcase-senior-happy-book.jpg"
+        ],
         content: `
           <p>"아버지 칠순 때 무엇을 해드려야 할까?"</p>
           <p>형제들과 몇 달을 고민했습니다. 고급 한정식집에서의 식사, 현금 돈 봉투, 해외여행... 모두 좋은 선물이었지만 며칠 지나면 기억 속에서 희미해질 일회성 이벤트에 불과하다는 아쉬움이 남았습니다. 평생을 우리 삼 남매를 위해 묵묵히 헌신해 오신 아버지의 삶에 '진짜 가치 있는 헌정'을 해드리고 싶었습니다.</p>
@@ -3662,6 +3674,13 @@
         title: "스마트폰 속 사진 3만 장, 사후에는 어떻게 정리될까? 웰다잉 디지털 갈무리 3단계",
         excerpt: "가족들에게 남겨질 내 스마트폰 속 방대한 사진과 계정을 사전에 깔끔하고 안전하게 정돈하는 현대적 디지털 유산 정리법.",
         image: "images/showcase-books-organizing.jpg",
+        photos: [
+          "images/showcase-books-organizing.jpg",
+          "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=75",
+          "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=75",
+          "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75",
+          "images/showcase-senior-memoir.jpg"
+        ],
         content: `
           <p>현대인의 삶은 손바닥만 한 스마트폰 속에 고스란히 담겨 있습니다. 지난 10여 년간 찍어온 3만 장이 넘는 사진, 메신저 대화록, 은행과 포털의 수많은 계정들... 만약 우리가 갑작스레 세상을 떠나게 된다면 이 디지털 흔적들은 어떻게 될까요?</p>
           <blockquote>"물건을 정리하는 것만큼이나 내 손안의 작은 우주인 스마트폰 속 기록을 스스로 갈무리하는 것이 진정한 웰다잉의 첫걸음입니다."</blockquote>
@@ -3680,6 +3699,13 @@
         title: "정년퇴직 후 찾아온 텅 빈 하루, 나를 되찾는 4주 라이프 리셋 루틴",
         excerpt: "30년 넘게 일하던 직장을 떠나 마주한 공허함. 무기력에서 벗어나 내 삶의 주권을 회복하고 두 번째 황금기를 여는 4주간의 기록 여행.",
         image: "images/showcase-senior-writing.jpg",
+        photos: [
+          "images/showcase-senior-writing.jpg",
+          "https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?auto=format&fit=crop&w=800&q=75",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=75",
+          "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=75",
+          "images/showcase-senior-happy-book.jpg"
+        ],
         content: `
           <p>매일 아침 7시면 울리던 알람이 더 이상 울리지 않는 첫 월요일. 30년 넘게 직장인으로 살아온 이들에게 은퇴의 첫 주는 자유로움이 아니라 가슴 한구석이 텅 비어버리는 낯선 공허함으로 다가옵니다.</p>
           <blockquote>"은퇴는 끝이 아니라, 내가 누구인지 온전히 탐색할 수 있는 생애 최초의 '안식년'입니다."</blockquote>
@@ -3700,6 +3726,13 @@
         title: "자식에게 짐 되지 않는 부모의 아름다운 퇴장, 사전연명의료와 엔딩노트",
         excerpt: "임종 직전 가족들이 겪는 죄책감과 갈등을 미리 덜어주는 현명한 부모의 사전 갈무리. 품격 있는 웰다잉 준비 가이드.",
         image: "images/showcase-senior-happy-book.jpg",
+        photos: [
+          "images/showcase-senior-happy-book.jpg",
+          "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=75",
+          "images/showcase-books-organizing.jpg",
+          "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75",
+          "images/showcase-senior-memoir.jpg"
+        ],
         content: `
           <p>"내가 만약 의식을 잃고 회복 불가능한 상태가 된다면, 자식들이 나를 어떻게 해야 할까?"</p>
           <p>많은 부모님들이 이 질문 앞에서 망설입니다. 연명치료를 중단하자니 자식들이 패륜이라는 죄책감에 시달릴까 두렵고, 그렇다고 무의미한 호흡기 치료로 막대한 병원비와 고통을 안겨주고 싶지는 않기 때문입니다.</p>
@@ -3719,6 +3752,13 @@
         title: "부모님이 건강하실 때 꼭 여쭤봐야 할 10가지 인생 질문",
         excerpt: "시간이 더 흐르기 전에 부모님의 육성으로 듣고 기록해야 할 삶의 결정적 순간들. 감동적인 부모님 인터뷰 질문 리스트.",
         image: "images/showcase-senior-memoir.jpg",
+        photos: [
+          "images/showcase-senior-memoir.jpg",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=75",
+          "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=75",
+          "images/showcase-senior-writing.jpg",
+          "images/showcase-senior-happy-book.jpg"
+        ],
         content: `
           <p>우리는 부모님에 대해 얼마나 알고 있을까요? 부모님의 생년월일과 좋아하시는 음식은 알지만, 젊은 날 부모님이 품었던 가장 뜨거웠던 꿈이 무엇이었는지, 살면서 가장 깊이 후회했던 순간은 언제였는지 아는 자녀는 드뭅니다.</p>
           <blockquote>"부모님이라는 거대한 도서관이 사라지기 전에, 그 안의 귀중한 책들을 펼쳐 읽어야 합니다."</blockquote>
@@ -3780,7 +3820,10 @@
           <p style="font-size: 0.86rem; color: var(--text-muted); margin: 0; line-height: 1.5;">
             ${escapeHtml(p.excerpt)}
           </p>
-          <div style="display: flex; justify-content: flex-end; margin-top: 6px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; flex-wrap: wrap; gap: 8px;">
+            <span style="font-size: 0.8rem; color: #10b981; font-weight: 750;">
+              📸 추천 사진 5장 자동 담김 (대표 1장 + 내용 4장)
+            </span>
             <button type="button" onclick="applyAiPreset(${idx})" style="padding: 8px 16px; border-radius: 8px; background: linear-gradient(135deg, #4f46e5, #7c3aed); border: none; color: #fff; font-weight: 800; font-size: 0.86rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(79,70,229,0.3);">
               <span>🪄 이 주제로 자동 집필하기</span> ➔
             </button>
@@ -3793,7 +3836,7 @@
       const p = aiArticlePresets[idx];
       if (!p) return;
 
-      if (!confirm(`'${p.title}'\n\n이 주제의 AI 완성형 칼럼을 에디터에 자동으로 채우시겠습니까?\n기존에 작성 중이던 내용이 대체됩니다.`)) {
+      if (!confirm(`'${p.title}'\n\n이 주제의 AI 완성형 칼럼과 감동 사진 5장을 에디터에 자동으로 채우시겠습니까?\n기존에 작성 중이던 내용이 대체됩니다.`)) {
         return;
       }
 
@@ -3803,16 +3846,20 @@
       document.getElementById('editorContent').innerHTML = p.content.trim();
       document.getElementById('editorIsFeatured').checked = true;
 
-      // 대표사진 지정
-      mainThumbImg = p.image || '';
-      const thumbText = document.getElementById('editorMainThumbText');
-      if (thumbText) {
-        thumbText.textContent = mainThumbImg ? '지정됨' : '미지정';
-        thumbText.style.color = mainThumbImg ? '#34d399' : '#e2e8f0';
+      // 📸 좌측 사진 보관함에 컨셉별 사진 5장 자동 담기
+      if (Array.isArray(p.photos) && p.photos.length > 0) {
+        editorPhotos = p.photos.map(src => ({ src }));
+        mainThumbImg = p.photos[0]; // 첫 번째 사진을 기본 대표사진으로 자동 지정!
+      } else {
+        editorPhotos = [{ src: p.image }];
+        mainThumbImg = p.image;
       }
 
+      renderPhotoSidebar();
+      updateMainThumbIndicator();
+
       closeAiArticleGeneratorModal();
-      alert(`🎉 [${p.title}]\n\nAI 칼럼이 에디터에 자동으로 완벽하게 채워졌습니다!\n글을 한번 훑어보신 후 상단의 [🚀 발행하기]를 누르시면 메인 사이트에 즉시 배포됩니다.`);
+      alert(`🎉 [${p.title}]\n\n• AI 칼럼 본문이 에디터에 채워졌습니다!\n• 좌측 [사진 보관함]에 글 컨셉에 딱 맞는 감동 사진 5장이 담겼습니다!\n  (원하는 사진을 클릭해 [⭐ 대표]로 지정하거나 본문에 삽입하세요.)\n\n내용을 확인하신 후 상단의 [🚀 발행하기]를 누르시면 완료됩니다.`);
     }
 
     // 맞춤 키워드 직접 입력 생성
@@ -3832,7 +3879,7 @@
         <p>하지만 며칠 지나면 사라질 일회성 선물이나 형식적인 식사 자리 대신, 평생을 자식들을 위해 묵묵히 헌신해오신 부모님의 삶에 '진짜 가치 있는 헌정'을 해드리는 것은 어떨까요?</p>
         <blockquote>"자식이 부모에게 드릴 수 있는 가장 위대한 효도는, 부모님이 걸어오신 험난했던 인생의 모든 굽이굽이를 '눈부신 역사'로 인정하고 기록해 드리는 것입니다."</blockquote>
         <h3>1. "내 인생에 쓸 게 뭐가 있냐" 하시던 부모님의 눈물</h3>
-        <p>처음 이야기를 꺼냈을 때, 부모님은 대부분 손사래를 치십니다. "대통령이나 재벌도 아닌데 평범한 내가 무슨 자서전이냐"고 하시지요. 하지만 전문 구술 코칭스태프가 찾아와 옛날 흑백 사진첩을 한 장씩 넘기며 질문을 던지자, 부모님의 눈빛이 달라지기 시작합니다.</p>
+        <p>처음 이야기를 꺼냈을 때, 부모님은 대부분 손사래를 치십니다. "대통령이나 재벌도 아닌데 평범한 내가 무슨 자서전이냐"고 하시지요. 하지만 전문 구술 코칭스태프가 찾아와 옛날 흑백 사진첩을 한 장씩 넘기며 질문을 던지자, 부모님의 눈빛이 달라지기 시작했습니다.</p>
         <h3>2. 4주간의 구술 녹음과 184쪽의 디지털 자서전 완성</h3>
         <p>녹음된 구술 음성은 AI 음성 변환과 전문 에디터의 세심한 윤문을 거쳐 한 권의 품격 있는 양장본 책으로 빚어집니다. 낡은 앨범 속 빛바랜 사진들은 디지털로 복원되어 고화질로 실렸고, 자식들과 손주들에게 남기고 싶은 따뜻한 인생 교훈이 '인생 후반전 선언문'으로 갈무리됩니다.</p>
         <h3>3. 온 가족이 함께 눈물 흘린 헌정의 순간</h3>
@@ -3851,16 +3898,62 @@
       document.getElementById('editorContent').innerHTML = customContent.trim();
       document.getElementById('editorIsFeatured').checked = true;
 
-      mainThumbImg = 'images/showcase-senior-memoir.jpg';
-      const thumbText = document.getElementById('editorMainThumbText');
-      if (thumbText) {
-        thumbText.textContent = '지정됨';
-        thumbText.style.color = '#34d399';
-      }
+      // 맞춤 추천 사진 5장 채우기
+      const customPhotos = [
+        "images/showcase-senior-memoir.jpg",
+        "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=75",
+        "images/showcase-senior-writing.jpg",
+        "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=75",
+        "images/showcase-senior-happy-book.jpg"
+      ];
+      editorPhotos = customPhotos.map(src => ({ src }));
+      mainThumbImg = customPhotos[0];
+      renderPhotoSidebar();
+      updateMainThumbIndicator();
 
       closeAiArticleGeneratorModal();
       if (input) input.value = '';
-      alert(`🎉 [${kw}] 맞춤 AI 칼럼이 에디터에 생성되었습니다!\n내용을 확인하신 후 상단의 [🚀 발행하기]를 누르시면 완료됩니다.`);
+      alert(`🎉 [${kw}] 맞춤 AI 칼럼이 에디터에 생성되었습니다!\n좌측 [사진 보관함]에도 추천 사진 5장이 담겼습니다.\n내용을 확인하신 후 상단의 [🚀 발행하기]를 누르시면 완료됩니다.`);
+    }
+
+    // 현재 작성 중인 글 컨셉에 맞추어 사진 보관함에 5장 채우기
+    function loadConceptPhotosForCurrentArticle() {
+      const title = document.getElementById('editorTitle').value || '';
+      const cat = document.getElementById('editorCategory').value || '';
+      
+      let set = [
+        "images/showcase-senior-memoir.jpg",
+        "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=75",
+        "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=75",
+        "images/showcase-senior-writing.jpg",
+        "images/showcase-senior-happy-book.jpg"
+      ];
+
+      if (cat === '비움과 갈무리' || title.includes('사진') || title.includes('정리')) {
+        set = [
+          "images/showcase-books-organizing.jpg",
+          "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=75",
+          "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=75",
+          "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75",
+          "images/showcase-senior-memoir.jpg"
+        ];
+      } else if (cat === '웰다잉' || title.includes('웰다잉') || title.includes('엔딩노트')) {
+        set = [
+          "images/showcase-senior-happy-book.jpg",
+          "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=75",
+          "images/showcase-books-organizing.jpg",
+          "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75",
+          "images/showcase-senior-memoir.jpg"
+        ];
+      }
+
+      editorPhotos = set.map(src => ({ src }));
+      if (!mainThumbImg) {
+        mainThumbImg = set[0];
+      }
+      renderPhotoSidebar();
+      updateMainThumbIndicator();
+      alert('📸 현재 글 컨셉에 꼭 맞는 감동 사진 5장이 [사진 보관함]에 담겼습니다!\n원하는 사진에서 [⭐ 대표]로 지정하거나 본문에 삽입해 보세요.');
     }
 
     // 칼럼 발행 또는 수정 저장 (대표사진 image 필드 포함)
