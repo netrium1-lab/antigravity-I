@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>여백과 결 코칭 파트너 | 현장 수행 & 정산 관리 시스템</title>
+  
+  <!-- 모바일 웹앱 / PWA 홈화면 추가 메타 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="결 코치파트너">
+  <meta name="theme-color" content="#1e3d2f">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&family=Noto+Serif+KR:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #1e3d2f;
+      --primary-dark: #142a20;
+      --primary-light: #2d5a45;
+      --accent-gold: #c29b38;
+      --accent-gold-light: #fef9e7;
+      --accent-green: #059669;
+      --bg-app: #f4f6f8;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-sub: #475569;
+      --border: #e2e8f0;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-md: 0 6px 20px rgba(0,0,0,0.07);
+      --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      background: #0f172a;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* 모바일 프레임 컨테이너 */
+    .mobile-app-container {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background: var(--bg-app);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    }
+
+    /* 상단 앱바 */
+    .app-header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      color: #ffffff;
+      padding: 16px 20px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(20,42,32,0.3);
+    }
+
+    .app-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .app-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .app-brand-badge {
+      background: var(--accent-gold);
+      color: #0b0c0e;
+      font-size: 0.72rem;
+      font-weight: 850;
+      padding: 3px 8px;
+      border-radius: 999px;
+      letter-spacing: 0.05em;
+    }
+
+    .app-brand-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.12rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    /* 코치 프로필 스위처 */
+    .coach-profile-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      padding: 6px 12px 6px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .coach-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      color: #0b0c0e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 850;
+    }
+
+    .coach-select {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 0.86rem;
+      font-weight: 750;
+      outline: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .coach-select option {
+      background: #ffffff;
+      color: #0f172a;
+    }
+
+    /* 앱 탭 네비게이션 (상단) */
+    .app-nav-tabs {
+      display: flex;
+      background: rgba(0,0,0,0.22);
+      border-radius: 12px;
+      padding: 3px;
+      gap: 4px;
+    }
+
+    .app-tab-btn {
+      flex: 1;
+      padding: 9px 0;
+      text-align: center;
+      font-size: 0.86rem;
+      font-weight: 750;
+      color: rgba(255,255,255,0.7);
+      background: transparent;
+      border: none;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .app-tab-btn.active {
+      background: #ffffff;
+      color: var(--primary);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      font-weight: 850;
+    }
+
+    /* 메인 스크롤 콘텐츠 */
+    .app-content {
+      flex: 1;
+      padding: 18px 16px 80px;
+      overflow-y: auto;
+    }
+
+    /* 상단 일일 통계 브리핑 카드 */
+    .coach-daily-brief {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brief-left h2 {
+      font-size: 1.15rem;
+      font-weight: 850;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .brief-left p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .brief-stat-pill {
+      background: #ecfdf5;
+      border: 1.5px solid #a7f3d0;
+      color: #047857;
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      text-align: center;
+    }
+
+    .brief-stat-num {
+      font-size: 1.25rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .brief-stat-lbl {
+      font-size: 0.72rem;
+      font-weight: 750;
+      margin-top: 3px;
+    }
+
+    /* 섹션 제목 */
+    .section-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+
+    .section-title {
+      font-size: 0.96rem;
+      font-weight: 850;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* 미션 카드 리스트 */
+    .mission-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--border);
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mission-card:active {
+      transform: scale(0.99);
+    }
+
+    .mission-card.status-done {
+      border-color: #cbd5e1;
+      background: #fafafa;
+      opacity: 0.85;
+    }
+
+    .mission-badge-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .service-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .badge-beauty { background: #fdf2f8; color: #db2777; border: 1px solid #fbcfe8; }
+    .badge-wardrobe { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+    .badge-legacy { background: #fef3c7; color: #d97706; border: 1px solid #fde68a; }
+    .badge-memoir { background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; }
+    .badge-party { background: #fdf4ff; color: #c026d3; border: 1px solid #f5d0fe; }
+    .badge-archive { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+
+    .mission-status-pill {
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .status-assigned { background: #f1f5f9; color: #475569; }
+    .status-in-progress { background: #fef3c7; color: #b45309; animation: pulse 1.5s infinite; }
+    .status-completed { background: #ecfdf5; color: #059669; }
+    .status-settled { background: #f0fdf4; color: #15803d; border: 1px solid #86efac; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.65; }
+    }
+
+    .customer-name {
+      font-size: 1.22rem;
+      font-weight: 850;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .customer-info-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      font-size: 0.86rem;
+      color: var(--text-sub);
+      margin-bottom: 14px;
+      background: #f8fafc;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+    }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      word-break: keep-all;
+    }
+
+    .info-icon {
+      font-size: 0.95rem;
+      flex-shrink: 0;
+      width: 18px;
+      text-align: center;
+    }
+
+    /* 액션 버튼 바 */
+    .mission-action-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .btn-call {
+      flex: 1;
+      padding: 11px 0;
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      font-weight: 750;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .btn-start-mission {
+      flex: 2;
+      padding: 11px 0;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 0.92rem;
+      font-weight: 850;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(30,61,47,0.3);
+    }
+
+    .btn-view-report {
+      width: 100%;
+      padding: 10px 0;
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    /* ========================================================================= */
+    /* 5단계 현장 수행 풀스크린 모달                                            */
+    /* ========================================================================= */
+    .workflow-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #ffffff;
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .workflow-modal.open {
+      display: flex;
+    }
+
+    .workflow-header {
+      background: #1e3d2f;
+      color: #ffffff;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .wf-step-tracker {
+      background: #f1f5f9;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .wf-step-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      font-weight: 750;
+      color: #94a3b8;
+      position: relative;
+      flex: 1;
+    }
+
+    .wf-step-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 850;
+    }
+
+    .wf-step-node.active .wf-step-circle {
+      background: var(--primary);
+      box-shadow: 0 0 0 3px rgba(30,61,47,0.25);
+    }
+    .wf-step-node.active {
+      color: var(--primary);
+      font-weight: 850;
+    }
+
+    .wf-step-node.done .wf-step-circle {
+      background: #059669;
+    }
+    .wf-step-node.done {
+      color: #059669;
+    }
+
+    .workflow-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 18px 40px;
+      background: #f8fafc;
+    }
+
+    .step-box-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--border);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 18px;
+    }
+
+    .step-box-title {
+      font-size: 1.15rem;
+      font-weight: 850;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .step-box-desc {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    /* 사진 업로드/촬영 박스 */
+    .photo-capture-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .photo-box {
+      border: 2px dashed #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 16px 10px;
+      text-align: center;
+      background: #fdfdfd;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .photo-box:hover {
+      border-color: var(--primary);
+      background: #f4fbf7;
+    }
+
+    .photo-box.has-img {
+      border-style: solid;
+      border-color: #059669;
+      padding: 0;
+    }
+
+    .photo-box img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-box-label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-top: 6px;
+    }
+
+    .photo-badge-req {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      background: rgba(220, 38, 38, 0.9);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 850;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .photo-badge-done {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: rgba(5, 150, 105, 0.95);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 850;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* 체크리스트 */
+    .checklist-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: #f8fafc;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--primary);
+      margin-top: 1px;
+      cursor: pointer;
+    }
+
+    .check-item-text {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+
+    /* 단계 완료 액션 버튼 */
+    .btn-step-action {
+      width: 100%;
+      padding: 15px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: #ffffff;
+      border: none;
+      font-size: 1rem;
+      font-weight: 850;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(30,61,47,0.3);
+      transition: all 0.2s ease;
+    }
+    .btn-step-action:active {
+      transform: translateY(1px);
+    }
+    .btn-step-action:disabled {
+      background: #cbd5e1;
+      color: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    /* 정산 탭 화면 */
+    .settlement-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--border);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .settlement-total-box {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .settle-label { font-size: 0.84rem; color: rgba(255,255,255,0.75); margin-bottom: 6px; }
+    .settle-amount { font-size: 1.9rem; font-weight: 900; color: #fef08a; letter-spacing: -0.02em; }
+
+    /* 하단 고정 탭 바 */
+    .app-bottom-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 480px;
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+      z-index: 90;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+    }
+
+    .bottom-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 750;
+      padding: 4px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+    }
+
+    .bottom-nav-item.active {
+      color: var(--primary);
+      font-weight: 850;
+    }
+
+    .bottom-nav-icon {
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 전체 모바일 앱 컨테이너 -->
+  <div class="mobile-app-container">
+    
+    <!-- 1. 상단 앱 헤더바 -->
+    <header class="app-header">
+      <div class="app-top-row">
+        <div class="app-brand">
+          <span class="app-brand-badge">COACH PRO</span>
+          <span class="app-brand-title">여백과 결 파트너</span>
+        </div>
+
+        <!-- 로그인 코치 선택 (다중 코치 시뮬레이션 지원) -->
+        <div class="coach-profile-box">
+          <div class="coach-avatar" id="coachAvatarLetter">김</div>
+          <select id="activeCoachSelect" class="coach-select" onchange="changeActiveCoach(this.value)">
+            <option value="김민희 코치">김민희 코치 (뷰티/옷장)</option>
+            <option value="이선영 코치">이선영 코치 (자서전/서재)</option>
+            <option value="박서연 코치">박서연 코치 (유품/엔딩)</option>
+            <option value="정다운 코치">정다운 코치 (웰니스)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 상단 메인 탭 전환 -->
+      <nav class="app-nav-tabs">
+        <button type="button" class="app-tab-btn active" id="tabBtnMissions" onclick="switchAppTab('tabMissions')">
+          <span>📋 오늘의 미션</span>
+          <span id="badgeActiveCount" style="background:var(--accent-gold); color:#000; font-size:0.7rem; padding:1px 6px; border-radius:999px;">0</span>
+        </button>
+        <button type="button" class="app-tab-btn" id="tabBtnSettlement" onclick="switchAppTab('tabSettlement')">
+          <span>💰 정산 & 실적</span>
+        </button>
+        <button type="button" class="app-tab-btn" id="tabBtnManual" onclick="switchAppTab('tabManual')">
+          <span>📖 업무 매뉴얼</span>
+        </button>
+      </nav>
+    </header>
+
+    <!-- 2. 스크롤 메인 콘텐츠 영역 -->
+    <main class="app-content">
+
+      <!-- ================= 탭 1: 📋 오늘의 배정 미션 목록 ================= -->
+      <section id="panelMissions">
+        <!-- 일일 요약 브리핑 -->
+        <div class="coach-daily-brief">
+          <div class="brief-left">
+            <h2 id="briefGreeting">반갑습니다, 김민희 코치님!</h2>
+            <p id="briefDateText">2026.09.28 (월) 배정 현황</p>
+          </div>
+          <div class="brief-stat-pill">
+            <div class="brief-stat-num" id="briefCountNum">0</div>
+            <div class="brief-stat-lbl">수행 예정</div>
+          </div>
+        </div>
+
+        <div class="section-title-row">
+          <span class="section-title">
+            <span>📍</span> 배정된 현장 케어 일정
+          </span>
+          <button type="button" onclick="loadCoachMissions()" style="background:none; border:none; color:var(--primary); font-size:0.8rem; font-weight:800; cursor:pointer;">
+            🔄 새로고침
+          </button>
+        </div>
+
+        <!-- 미션 카드 렌더링 컨테이너 -->
+        <div id="missionListContainer">
+          <!-- JS 동적 렌더링 -->
+        </div>
+      </section>
+
+      <!-- ================= 탭 2: 💰 정산 및 활동 실적 ================= -->
+      <section id="panelSettlement" style="display: none;">
+        <!-- 정산 요약 카드 -->
+        <div class="settlement-total-box">
+          <div class="settle-label">이번 달 정산 예정액 (검수 완료)</div>
+          <div class="settle-amount" id="settleTotalAmount">450,000원</div>
+          <div style="display:flex; justify-content:space-between; margin-top:14px; font-size:0.82rem; border-top:1px solid rgba(255,255,255,0.15); padding-top:10px;">
+            <span>정기 입금일: 매월 10일</span>
+            <span style="color:#a7f3d0; font-weight:800;">✓ 자동 계좌 입금</span>
+          </div>
+        </div>
+
+        <div class="section-title-row">
+          <span class="section-title">
+            <span>🧾</span> 최근 완료 및 정산 내역
+          </span>
+        </div>
+
+        <div id="settlementHistoryList">
+          <!-- JS 렌더링 -->
+        </div>
+      </section>
+
+      <!-- ================= 탭 3: 📖 코칭 표준 매뉴얼 (SOP) ================= -->
+      <section id="panelManual" style="display: none;">
+        <div class="step-box-card">
+          <h3 style="font-size:1.05rem; font-weight:850; color:var(--text-main); margin-bottom:10px;">
+            💎 여백과 결 코칭스태프 5대 원칙
+          </h3>
+          <ol style="padding-left:18px; font-size:0.88rem; color:var(--text-sub); line-height:1.7;">
+            <li><strong>현장 도착 준수</strong>: 예약 시간 10분 전 도착 확인 버튼을 클릭합니다.</li>
+            <li><strong>Before 사진 필수</strong>: 조작 방지를 위해 손대기 전 모습을 정면 촬영합니다.</li>
+            <li><strong>경청과 공감</strong>: 어르신의 지난 세월을 경청하며 따뜻하게 눈을 맞춥니다.</li>
+            <li><strong>정갈한 마무리</strong>: 완료 후 감동 사진과 특이사항을 정직하게 기록합니다.</li>
+            <li><strong>신뢰 기반 정산</strong>: 사진 3장 이상 첨부 완료 시 본사 검수 후 즉시 수익이 확정됩니다.</li>
+          </ol>
+        </div>
+
+        <div class="step-box-card">
+          <h4 style="font-size:0.95rem; font-weight:800; color:var(--primary); margin-bottom:8px;">
+            📞 본사 관제 센터 직통 연결
+          </h4>
+          <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:12px;">
+            현장 돌발 상황 발생 시 즉시 본사 상황실로 연락하세요.
+          </p>
+          <a href="tel:010-9613-5913" class="btn-step-action" style="padding:11px; text-decoration:none;">
+            <span>📞 본사 운영상황실 1:1 통화</span>
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 3. 하단 고정 탭 바 -->
+    <nav class="app-bottom-bar">
+      <button type="button" class="bottom-nav-item active" onclick="switchAppTab('tabMissions')">
+        <span class="bottom-nav-icon">📋</span>
+        <span>현장미션</span>
+      </button>
+      <button type="button" class="bottom-nav-item" onclick="switchAppTab('tabSettlement')">
+        <span class="bottom-nav-icon">💰</span>
+        <span>정산관리</span>
+      </button>
+      <button type="button" class="bottom-nav-item" onclick="switchAppTab('tabManual')">
+        <span class="bottom-nav-icon">📖</span>
+        <span>매뉴얼</span>
+      </button>
+      <a href="admin.html" class="bottom-nav-item" title="본사 관리자 홈으로 이동">
+        <span class="bottom-nav-icon">⚙️</span>
+        <span>본사관리</span>
+      </a>
+    </nav>
+
+    <!-- ========================================================================= -->
+    <!-- 4. 현장 5단계 워크플로우 풀스크린 모달 (핵심 기능)                       -->
+    <!-- ========================================================================= -->
+    <div class="workflow-modal" id="workflowModal">
+      <!-- 모달 상단 헤더 -->
+      <div class="workflow-header">
+        <div>
+          <div style="font-size:0.75rem; color:#a7f3d0; font-weight:800;" id="wfModalCustomerType">화려한 외출 메이크업</div>
+          <div style="font-size:1.1rem; font-weight:850;" id="wfModalCustomerName">이순옥 어르신 현장 수행</div>
+        </div>
+        <button type="button" onclick="closeWorkflowModal()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; width:32px; height:32px; border-radius:50%; font-size:1.1rem; cursor:pointer;">✕</button>
+      </div>
+
+      <!-- 5단계 진행 트래커 바 -->
+      <div class="wf-step-tracker">
+        <div class="wf-step-node active" id="nodeStep1">
+          <div class="wf-step-circle">1</div>
+          <span>현장도착</span>
+        </div>
+        <div class="wf-step-node" id="nodeStep2">
+          <div class="wf-step-circle">2</div>
+          <span>시작 전</span>
+        </div>
+        <div class="wf-step-node" id="nodeStep3">
+          <div class="wf-step-circle">3</div>
+          <span>진행과정</span>
+        </div>
+        <div class="wf-step-node" id="nodeStep4">
+          <div class="wf-step-circle">4</div>
+          <span>완료결과</span>
+        </div>
+        <div class="wf-step-node" id="nodeStep5">
+          <div class="wf-step-circle">5</div>
+          <span>최종마감</span>
+        </div>
+      </div>
+
+      <!-- 단계별 인터랙티브 작업 바디 -->
+      <div class="workflow-body">
+        
+        <!-- [1단계] 📍 현장 도착 확인 -->
+        <div class="step-box-card" id="stepCard1">
+          <h3 class="step-box-title">
+            <span>📍 1단계:</span> 현장 도착 확인
+          </h3>
+          <p class="step-box-desc">
+            어르신 댁(또는 현장 장소)에 도착하셨습니까? 도착 확인 버튼을 누르면 도착 일시가 본사 시스템에 자동 타임스탬프 기록됩니다.
+          </p>
+          <div style="background:#f1f5f9; padding:14px; border-radius:10px; margin-bottom:18px; font-size:0.86rem; color:#334155;">
+            <div>🏠 <strong>방문 장소:</strong> <span id="wfStepAddress">서울 강남구 도곡동</span></div>
+            <div style="margin-top:4px;">⏰ <strong>예약 일시:</strong> <span id="wfStepTime">오전 10:00</span></div>
+            <div style="margin-top:4px; color:#059669; font-weight:800;" id="wfArrivalStamp"></div>
+          </div>
+          <button type="button" class="btn-step-action" id="btnArrivalCheck" onclick="executeArrivalCheck()">
+            <span>📍 현장 도착 확인 (시작)</span>
+          </button>
+        </div>
+
+        <!-- [2단계] 📸 시작 전 (Before) 사진 촬영 -->
+        <div class="step-box-card" id="stepCard2" style="opacity: 0.5; pointer-events: none;">
+          <h3 class="step-box-title">
+            <span>📸 2단계:</span> 작업 전 (Before) 상태 촬영
+          </h3>
+          <p class="step-box-desc" id="step2GuideDesc">
+            서비스 시작 전 어르신의 현재 모습(또는 정리 전 공간 상태)을 정면에서 명확하게 촬영해 주세요.
+          </p>
+
+          <div class="photo-capture-grid">
+            <div class="photo-box" id="boxBeforePhoto" onclick="triggerPhotoUpload('inputBeforePhoto')">
+              <span class="photo-badge-req">필수</span>
+              <span style="font-size:2rem; margin-bottom:4px;">📷</span>
+              <span class="photo-box-label">시작 전(Before) 촬영</span>
+              <input type="file" id="inputBeforePhoto" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoSelected(this, 'boxBeforePhoto', 'imgBefore')">
+            </div>
+            <div class="photo-box" id="boxBeforePhotoSub" onclick="triggerPhotoUpload('inputBeforePhotoSub')">
+              <span style="font-size:2rem; margin-bottom:4px;">📷</span>
+              <span class="photo-box-label">추가 각도 (선택)</span>
+              <input type="file" id="inputBeforePhotoSub" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoSelected(this, 'boxBeforePhotoSub', 'imgBeforeSub')">
+            </div>
+          </div>
+
+          <button type="button" class="btn-step-action" id="btnStep2Next" onclick="goToStep(3)" disabled>
+            <span>다음 단계: 케어 진행하기 ➔</span>
+          </button>
+        </div>
+
+        <!-- [3단계] 🛠️ 서비스 진행 과정 & 핵심 체크리스트 -->
+        <div class="step-box-card" id="stepCard3" style="opacity: 0.5; pointer-events: none;">
+          <h3 class="step-box-title">
+            <span>🛠️ 3단계:</span> 진행 과정 & 필수 체크
+          </h3>
+          <p class="step-box-desc">
+            표준 매뉴얼에 따라 정갈하게 서비스를 수행하고, 중간 진행 과정을 사진으로 남겨주세요.
+          </p>
+
+          <!-- 동적 체크리스트 (서비스별 자동 맞춤) -->
+          <div class="checklist-container" id="serviceChecklistContainer">
+            <!-- JS 동적 생성 -->
+          </div>
+
+          <div class="photo-capture-grid">
+            <div class="photo-box" id="boxProcessPhoto" onclick="triggerPhotoUpload('inputProcessPhoto')">
+              <span class="photo-badge-req">필수</span>
+              <span style="font-size:2rem; margin-bottom:4px;">📸</span>
+              <span class="photo-box-label">진행 과정 사진 1</span>
+              <input type="file" id="inputProcessPhoto" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoSelected(this, 'boxProcessPhoto', 'imgProcess')">
+            </div>
+            <div class="photo-box" id="boxProcessPhoto2" onclick="triggerPhotoUpload('inputProcessPhoto2')">
+              <span style="font-size:2rem; margin-bottom:4px;">📸</span>
+              <span class="photo-box-label">진행 과정 사진 2</span>
+              <input type="file" id="inputProcessPhoto2" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoSelected(this, 'boxProcessPhoto2', 'imgProcess2')">
+            </div>
+          </div>
+
+          <button type="button" class="btn-step-action" id="btnStep3Next" onclick="goToStep(4)" disabled>
+            <span>다음 단계: 완료 사진 촬영 ➔</span>
+          </button>
+        </div>
+
+        <!-- [4단계] ✨ 완성 후 (After) 눈부신 결과 촬영 -->
+        <div class="step-box-card" id="stepCard4" style="opacity: 0.5; pointer-events: none;">
+          <h3 class="step-box-title">
+            <span>✨ 4단계:</span> 완료 후 (After) 감동 촬영
+          </h3>
+          <p class="step-box-desc" id="step4GuideDesc">
+            모든 케어가 완료된 후, 가장 환하게 웃으시는 어르신의 모습(또는 호텔처럼 정돈된 공간)을 촬영하세요. 가족 공유 리포트에 수록됩니다.
+          </p>
+
+          <div class="photo-capture-grid">
+            <div class="photo-box" id="boxAfterPhoto" onclick="triggerPhotoUpload('inputAfterPhoto')">
+              <span class="photo-badge-req">필수</span>
+              <span style="font-size:2rem; margin-bottom:4px;">🌟</span>
+              <span class="photo-box-label">완료(After) 대표 사진</span>
+              <input type="file" id="inputAfterPhoto" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoSelected(this, 'boxAfterPhoto', 'imgAfter')">
+            </div>
+            <div class="photo-box" id="boxAfterPhotoSub" onclick="triggerPhotoUpload('inputAfterPhotoSub')">
+              <span style="font-size:2rem; margin-bottom:4px;">🌟</span>
+              <span class="photo-box-label">완료 세부 컷 (선택)</span>
+              <input type="file" id="inputAfterPhotoSub" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoSelected(this, 'boxAfterPhotoSub', 'imgAfterSub')">
+            </div>
+          </div>
+
+          <button type="button" class="btn-step-action" id="btnStep4Next" onclick="goToStep(5)" disabled>
+            <span>다음 단계: 최종 마감 및 서명 ➔</span>
+          </button>
+        </div>
+
+        <!-- [5단계] 📝 코칭 일지 & 최종 완료 제출 (정산 확정) -->
+        <div class="step-box-card" id="stepCard5" style="opacity: 0.5; pointer-events: none;">
+          <h3 class="step-box-title">
+            <span>🏁 5단계:</span> 특이사항 기록 & 최종 마감
+          </h3>
+          <p class="step-box-desc">
+            현장 수행을 최종 제출하면 본사 관리자 검수 대시보드로 즉시 전송되며 정산이 승인 대기됩니다.
+          </p>
+
+          <div style="margin-bottom:14px;">
+            <label style="font-size:0.84rem; font-weight:800; color:var(--text-main); display:block; margin-bottom:6px;">
+              어르신 만족도 및 반응
+            </label>
+            <div style="display:flex; gap:8px;">
+              <button type="button" class="app-tab-btn active satisfaction-btn" onclick="setSatisfaction('매우 감동')" style="border:1px solid #cbd5e1; color:#059669; font-weight:800;">🥰 매우 감동</button>
+              <button type="button" class="app-tab-btn satisfaction-btn" onclick="setSatisfaction('만족')" style="border:1px solid #cbd5e1; color:#334155;">😊 만족</button>
+              <button type="button" class="app-tab-btn satisfaction-btn" onclick="setSatisfaction('보통')" style="border:1px solid #cbd5e1; color:#334155;">😐 보통</button>
+            </div>
+          </div>
+
+          <div style="margin-bottom:18px;">
+            <label style="font-size:0.84rem; font-weight:800; color:var(--text-main); display:block; margin-bottom:6px;">
+              코치 현장 소감 및 특이사항 메모
+            </label>
+            <textarea id="wfCoachNote" rows="3" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid #cbd5e1; font-family:inherit; font-size:0.88rem; outline:none;" placeholder="예: 평소 안 쓰시던 세이지 톤 화장품을 연출해 드렸더니 거울을 보시며 눈시울을 붉히실 정도로 행복해하셨습니다."></textarea>
+          </div>
+
+          <button type="button" class="btn-step-action" id="btnFinalSubmit" onclick="submitFinalMission()" style="background:linear-gradient(135deg, #059669 0%, #047857 100%);">
+            <span>🚀 현장 수행 최종 완료 (정산 요청)</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // =========================================================================
+    // 여백과 결 코치 파트너 시스템 자바스크립트 엔진
+    // 본사 관리자(admin.html)의 DISPATCHES_STORAGE_KEY와 100% 실시간 공유!
+    // =========================================================================
+    const DISPATCHES_STORAGE_KEY = 'yebaek_dispatches_v1';
+    let activeCoachName = "김민희 코치";
+    let currentMission = null;
+    let missionPhotos = {
+      before: "",
+      beforeSub: "",
+      process: "",
+      process2: "",
+      after: "",
+      afterSub: ""
+    };
+    let currentSatisfaction = "매우 감동";
+
+    // 기본 시뮬레이션 배정 미션 데이터 (관리자에 없을 때 자동 생성)
+    const DEFAULT_MISSIONS = [
+      {
+        id: "disp_101",
+        customerName: "이순옥 어르신",
+        phone: "010-3849-5912",
+        serviceType: "💄 뷰티 케어 (화려한 외출)",
+        preferredDate: "2026.09.28 오전 10:00",
+        address: "서울 강남구 도곡동 타워팰리스 B동",
+        coach: "김민희 코치",
+        step: "배정완료",
+        fee: 150000,
+        notes: "따님(장미희 님)께서 팔순 기념으로 선물 신청. 피부가 건조하시니 보습 기초 케어 집중 요청",
+        arrivalStamp: "",
+        completionDate: "",
+        beforePhoto: "",
+        processPhoto: "",
+        afterPhoto: "",
+        coachReport: ""
+      },
+      {
+        id: "disp_102",
+        customerName: "박정희 님 모친",
+        phone: "010-8273-1920",
+        serviceType: "👗 옷장 비움 & 공간 코칭",
+        preferredDate: "2026.09.28 오후 02:00",
+        address: "서울 서초구 반포자이 104동",
+        coach: "김민희 코치",
+        step: "배정완료",
+        fee: 180000,
+        notes: "안방 장롱 3칸 40년 묵은 정장 및 이불 비움 선별 요청",
+        arrivalStamp: "",
+        completionDate: "",
+        beforePhoto: "",
+        processPhoto: "",
+        afterPhoto: "",
+        coachReport: ""
+      },
+      {
+        id: "disp_103",
+        customerName: "최영호 어르신",
+        phone: "010-5123-9944",
+        serviceType: "✍️ 디지털 자서전 구술 코칭",
+        preferredDate: "2026.09.29 오전 11:00",
+        address: "서울 송파구 잠실엘스 112동",
+        coach: "이선영 코치",
+        step: "배정완료",
+        fee: 150000,
+        notes: "3회차 구술 인터뷰: 월남전 참전 시절과 첫 사업 도전 스토리 녹음 예정",
+        arrivalStamp: "",
+        completionDate: "",
+        beforePhoto: "",
+        processPhoto: "",
+        afterPhoto: "",
+        coachReport: ""
+      }
+    ];
+
+    function getAllDispatches() {
+      const saved = localStorage.getItem(DISPATCHES_STORAGE_KEY);
+      if (saved) {
+        try {
+          const list = JSON.parse(saved);
+          if (Array.isArray(list) && list.length > 0) return list;
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      localStorage.setItem(DISPATCHES_STORAGE_KEY, JSON.stringify(DEFAULT_MISSIONS));
+      return DEFAULT_MISSIONS;
+    }
+
+    function saveAllDispatches(list) {
+      localStorage.setItem(DISPATCHES_STORAGE_KEY, JSON.stringify(list));
+    }
+
+    // 코치 변경 시
+    function changeActiveCoach(name) {
+      activeCoachName = name;
+      const avatar = document.getElementById('coachAvatarLetter');
+      if (avatar) avatar.textContent = name.charAt(0);
+      document.getElementById('briefGreeting').textContent = `반갑습니다, ${name}님!`;
+      loadCoachMissions();
+      renderSettlementTab();
+    }
+
+    // 코치 배정 미션 불러오기 & 렌더링
+    function loadCoachMissions() {
+      const all = getAllDispatches();
+      const myMissions = all.filter(m => m.coach && m.coach.includes(activeCoachName.split(' ')[0]));
+      
+      const badge = document.getElementById('badgeActiveCount');
+      const briefNum = document.getElementById('briefCountNum');
+      const container = document.getElementById('missionListContainer');
+
+      const activeCount = myMissions.filter(m => m.step !== '서비스완료' && m.step !== '정산완료').length;
+      if (badge) badge.textContent = activeCount;
+      if (briefNum) briefNum.textContent = activeCount;
+
+      if (!container) return;
+
+      if (myMissions.length === 0) {
+        container.innerHTML = `
+          <div style="text-align:center; padding: 48px 16px; background:#fff; border-radius:18px; border:1px solid #e2e8f0;">
+            <span style="font-size:2.8rem; display:block; margin-bottom:10px;">☕</span>
+            <div style="font-size:1.05rem; font-weight:850; color:#0f172a;">배정된 일정이 없습니다</div>
+            <p style="font-size:0.84rem; color:#64748b; margin-top:4px;">본사에서 새 서비스 배정 시 실시간으로 나타납니다.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = myMissions.map(m => {
+        const isDone = m.step === '서비스완료' || m.step === '정산완료';
+        const badgeClass = getBadgeClass(m.serviceType);
+        const statusPill = getStatusPill(m.step);
+
+        return `
+          <div class="mission-card ${isDone ? 'status-done' : ''}">
+            <div class="mission-badge-row">
+              <span class="service-badge ${badgeClass}">${escapeHtml(m.serviceType)}</span>
+              ${statusPill}
+            </div>
+
+            <div class="customer-name">
+              <span>${escapeHtml(m.customerName)}</span>
+              <span style="font-size:0.84rem; font-weight:750; color:var(--accent-gold); margin-left:auto;">
+                💰 ${(m.fee || 150000).toLocaleString()}원
+              </span>
+            </div>
+
+            <div class="customer-info-grid">
+              <div class="info-row">
+                <span class="info-icon">⏰</span>
+                <span><strong>일시:</strong> ${escapeHtml(m.preferredDate)}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-icon">📍</span>
+                <span><strong>장소:</strong> ${escapeHtml(m.address)}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-icon">📝</span>
+                <span style="color:#0f172a;">${escapeHtml(m.notes || '특이사항 없음')}</span>
+              </div>
+            </div>
+
+            ${isDone ? `
+              <button type="button" class="btn-view-report" onclick="viewCompletedReport('${m.id}')">
+                <span>📄 작성 완료된 현장 안심 리포트 보기</span>
+              </button>
+            ` : `
+              <div class="mission-action-row">
+                <a href="tel:${m.phone}" class="btn-call">
+                  <span>📞 전화</span>
+                </a>
+                <button type="button" class="btn-start-mission" onclick="openWorkflowModal('${m.id}')">
+                  <span>${m.step === '진행중' ? '⚡ 계속 진행하기' : '▶ 현장 업무 시작'}</span>
+                </button>
+              </div>
+            `}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function getBadgeClass(svc) {
+      if (!svc) return 'badge-beauty';
+      if (svc.includes('뷰티') || svc.includes('화려한')) return 'badge-beauty';
+      if (svc.includes('옷장')) return 'badge-wardrobe';
+      if (svc.includes('유품') || svc.includes('오래된')) return 'badge-legacy';
+      if (svc.includes('자서전')) return 'badge-memoir';
+      if (svc.includes('파티')) return 'badge-party';
+      return 'badge-archive';
+    }
+
+    function getStatusPill(step) {
+      if (step === '정산완료') return '<span class="mission-status-pill status-settled">💰 정산완료</span>';
+      if (step === '서비스완료') return '<span class="mission-status-pill status-completed">✓ 검수 대기</span>';
+      if (step === '진행중') return '<span class="mission-status-pill status-in-progress">⏳ 진행중</span>';
+      return '<span class="mission-status-pill status-assigned">대기중</span>';
+    }
+
+    // =========================================================================
+    // 5단계 현장 수행 워크플로우 제어
+    // =========================================================================
+    function openWorkflowModal(missionId) {
+      const all = getAllDispatches();
+      currentMission = all.find(m => m.id === missionId);
+      if (!currentMission) return;
+
+      document.getElementById('wfModalCustomerType').textContent = currentMission.serviceType;
+      document.getElementById('wfModalCustomerName').textContent = `${currentMission.customerName} 현장 수행`;
+      document.getElementById('wfStepAddress').textContent = currentMission.address;
+      document.getElementById('wfStepTime').textContent = currentMission.preferredDate;
+
+      // 서비스별 가이드 문구 & 체크리스트 자동 세팅
+      setupServiceSpecifics(currentMission.serviceType);
+
+      // 모달 초기화
+      resetWorkflowCards();
+      
+      const modal = document.getElementById('workflowModal');
+      if (modal) modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      // 만약 이미 도착 확인을 했다면 다음 단계로 이동
+      if (currentMission.arrivalStamp) {
+        document.getElementById('wfArrivalStamp').textContent = `✓ 도착 확인됨: ${currentMission.arrivalStamp}`;
+        document.getElementById('btnArrivalCheck').textContent = '✓ 도착 완료됨';
+        document.getElementById('btnArrivalCheck').disabled = true;
+        goToStep(2);
+      }
+    }
+
+    function closeWorkflowModal() {
+      const modal = document.getElementById('workflowModal');
+      if (modal) modal.classList.remove('open');
+      document.body.style.overflow = '';
+      loadCoachMissions();
+    }
+
+    function resetWorkflowCards() {
+      missionPhotos = { before: "", beforeSub: "", process: "", process2: "", after: "", afterSub: "" };
+      ['boxBeforePhoto', 'boxBeforePhotoSub', 'boxProcessPhoto', 'boxProcessPhoto2', 'boxAfterPhoto', 'boxAfterPhotoSub'].forEach(id => {
+        const box = document.getElementById(id);
+        if (box) {
+          box.classList.remove('has-img');
+          const existingImg = box.querySelector('img');
+          if (existingImg) existingImg.remove();
+          const existingBadge = box.querySelector('.photo-badge-done');
+          if (existingBadge) existingBadge.remove();
+        }
+      });
+      goToStep(1);
+    }
+
+    function setupServiceSpecifics(svc) {
+      const list = document.getElementById('serviceChecklistContainer');
+      const step2Desc = document.getElementById('step2GuideDesc');
+      const step4Desc = document.getElementById('step4GuideDesc');
+      if (!list) return;
+
+      if (svc.includes('뷰티') || svc.includes('화려한')) {
+        step2Desc.textContent = "메이크업 시작 전, 어르신의 평소 얼굴/헤어 상태를 정면에서 자연광으로 촬영해 주세요.";
+        step4Desc.textContent = "화려한 외출 메이크업 완성 후, 거울을 보며 가장 환하게 웃으시는 어르신의 모습을 정면과 측면에서 담아주세요.";
+        list.innerHTML = `
+          <label class="check-item"><input type="checkbox" onchange="validateStep3()"> <span class="check-item-text">어르신 피부 타입(건성/지성) 상담 및 피부결 정돈 완료</span></label>
+          <label class="check-item"><input type="checkbox" onchange="validateStep3()"> <span class="check-item-text">자연스러운 베이스 & 웜톤/쿨톤 맞춤 메이크업 시술</span></label>
+          <label class="check-item"><input type="checkbox" onchange="validateStep3()"> <span class="check-item-text">헤어 볼륨 드라이 및 스타일링 완료</span></label>
+          <label class="check-item"><input type="checkbox" onchange="validateStep3()"> <span class="check-item-text">외출용 의상 코디 및 액세서리 매칭 조언</span></label>
+        `;
+      } else if (svc.includes('옷장')) {
+        step2Desc.textContent = "정리 시작 전, 옷장 문을 활짝 열고 옷과 물건이 꽉 차 있는 원래 상태를 전체 샷으로 촬영해 주세요.";
+        step4Desc.textContent = "옷장 비움 정리 완료 후, 옷걸이 간격과 라벨링이 완벽하게 정돈된 호텔식 옷장 모습을 촬영해 주세요.";
+        list.innerHTML = `
+          <label class="check-item"><input type="checkbox" onchange="validateStep3()"> <span class="check-item-text">옷장 내부 100% 비우기 및 선반 소독 닦기</span></label>
+          <label class="check-item"><input type="checkbox" onchange="validateStep3()"> <span class="check-item-text">어르신과 함께 1:1 비움(기부/폐기/보관) 3분류 진행</span></label>
+          <label class="check-item"><input type="checkbox" onchange="validateStep3()"> <span class="check-item-text">계절별 / 색상별 수납 및 어르신 눈높이 자주 입는 옷 배치</span></label>
+          <label class="check-item"><input type="checkbox" onchange="validateStep3()"> <span class="check-item-text">비움 박스 묶음 포장 및 배출 장소 이동</span></label>
+        `;
+      } else {
+        step2Desc.textContent = "케어 시작 전 현장 상태를 정면에서 명확히 촬영해 주세요.";
+        step4Desc.textContent = "모든 케어가 정갈하게 완료된 최종 감동 모습을 촬영해 주세요.";
+        list.innerHTML = `
+          <label class="check-item"><input type="checkbox" onchange="validateStep3()"> <span class="check-item-text">1:1 친밀감 형성(라포) 및 오늘 진행 순서 안내</span></label>
+          <label class="check-item"><input type="checkbox" onchange="validateStep3()"> <span class="check-item-text">표준 프로토콜에 따른 세심한 케어 수행</span></label>
+          <label class="check-item"><input type="checkbox" onchange="validateStep3()"> <span class="check-item-text">주변 뒷정리 및 어르신 안부 확인</span></label>
+        `;
+      }
+    }
+
+    // [1단계] 도착 확인 실행
+    function executeArrivalCheck() {
+      const now = new Date();
+      const timeStr = `${now.getHours()}시 ${String(now.getMinutes()).padStart(2, '0')}분 도착`;
+      
+      currentMission.arrivalStamp = timeStr;
+      currentMission.step = '진행중';
+
+      // 전체 리스트 업데이트 및 저장
+      const all = getAllDispatches();
+      const idx = all.findIndex(m => m.id === currentMission.id);
+      if (idx !== -1) {
+        all[idx].arrivalStamp = timeStr;
+        all[idx].step = '진행중';
+        saveAllDispatches(all);
+      }
+
+      document.getElementById('wfArrivalStamp').textContent = `✓ 본사 도착 보고 완료: ${timeStr}`;
+      document.getElementById('btnArrivalCheck').textContent = '✓ 도착 확인 완료';
+      document.getElementById('btnArrivalCheck').disabled = true;
+
+      alert(`📍 현장 도착이 정상 보고되었습니다! (${timeStr})\n\n이제 [2단계: 시작 전(Before) 사진 촬영]으로 이동합니다.`);
+      goToStep(2);
+    }
+
+    // 단계 이동 제어
+    function goToStep(stepNum) {
+      for (let i = 1; i <= 5; i++) {
+        const card = document.getElementById(`stepCard${i}`);
+        const node = document.getElementById(`nodeStep${i}`);
+        if (!card || !node) continue;
+
+        if (i < stepNum) {
+          card.style.opacity = '1';
+          card.style.pointerEvents = 'auto';
+          node.className = 'wf-step-node done';
+        } else if (i === stepNum) {
+          card.style.opacity = '1';
+          card.style.pointerEvents = 'auto';
+          node.className = 'wf-step-node active';
+          card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          card.style.opacity = '0.45';
+          card.style.pointerEvents = 'none';
+          node.className = 'wf-step-node';
+        }
+      }
+    }
+
+    // 사진 촬영/업로드 트리거
+    function triggerPhotoUpload(inputId) {
+      const input = document.getElementById(inputId);
+      if (input) input.click();
+    }
+
+    // 사진 선택 시 처리
+    function handlePhotoSelected(input, boxId, photoKey) {
+      if (!input.files || !input.files[0]) return;
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const dataUrl = e.target.result;
+        missionPhotos[photoKey] = dataUrl;
+
+        const box = document.getElementById(boxId);
+        if (box) {
+          box.classList.add('has-img');
+          let img = box.querySelector('img');
+          if (!img) {
+            img = document.createElement('img');
+            box.appendChild(img);
+          }
+          img.src = dataUrl;
+
+          if (!box.querySelector('.photo-badge-done')) {
+            const badge = document.createElement('span');
+            badge.className = 'photo-badge-done';
+            badge.textContent = '✓ 촬영됨';
+            box.appendChild(badge);
+          }
+        }
+
+        // 각 단계별 다음 버튼 활성화 검사
+        if (photoKey === 'imgBefore') {
+          document.getElementById('btnStep2Next').disabled = false;
+        } else if (photoKey === 'imgAfter') {
+          document.getElementById('btnStep4Next').disabled = false;
+        } else if (photoKey === 'imgProcess') {
+          validateStep3();
+        }
+      };
+
+      reader.readAsDataURL(file);
+    }
+
+    function validateStep3() {
+      const checks = document.querySelectorAll('#serviceChecklistContainer input[type="checkbox"]');
+      const allChecked = Array.from(checks).every(c => c.checked);
+      const hasProcessImg = !!missionPhotos.imgProcess;
+      const btn = document.getElementById('btnStep3Next');
+      if (btn) btn.disabled = !(allChecked && hasProcessImg);
+    }
+
+    function setSatisfaction(val) {
+      currentSatisfaction = val;
+      const btns = document.querySelectorAll('.satisfaction-btn');
+      btns.forEach(b => {
+        if (b.textContent.includes(val)) {
+          b.classList.add('active');
+          b.style.color = '#059669';
+          b.style.fontWeight = '850';
+        } else {
+          b.classList.remove('active');
+          b.style.color = '#334155';
+          b.style.fontWeight = '700';
+        }
+      });
+    }
+
+    // [5단계] 현장 수행 최종 제출 (본사 검수 대기 & 정산 확정)
+    function submitFinalMission() {
+      if (!missionPhotos.imgBefore || !missionPhotos.imgAfter) {
+        alert('필수 사진(Before 및 After)이 누락되었습니다. 사진을 촬영해 주세요.');
+        return;
+      }
+
+      const note = document.getElementById('wfCoachNote').value.trim() || '특이사항 없이 어르신께서 매우 만족하며 케어가 완료되었습니다.';
+      const now = new Date();
+      const finishTime = `${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()} ${now.getHours()}시 ${String(now.getMinutes()).padStart(2, '0')}분 완료`;
+
+      // 미션 객체에 결과 저장
+      currentMission.step = '서비스완료';
+      currentMission.completionDate = finishTime;
+      currentMission.beforePhoto = missionPhotos.imgBefore;
+      currentMission.processPhoto = missionPhotos.imgProcess;
+      currentMission.afterPhoto = missionPhotos.imgAfter;
+      currentMission.coachReport = `[어르신 만족도: ${currentSatisfaction}]\n${note}`;
+
+      // 전체 리스트 갱신 & 저장
+      const all = getAllDispatches();
+      const idx = all.findIndex(m => m.id === currentMission.id);
+      if (idx !== -1) {
+        all[idx] = currentMission;
+        saveAllDispatches(all);
+      }
+
+      closeWorkflowModal();
+      renderSettlementTab();
+
+      alert(`🎉 [${currentMission.customerName}] 현장 케어가 완벽하게 마감되었습니다!\n\n• 본사 관리자 검수 대시보드로 Before/After 사진과 일지가 자동 전송되었습니다.\n• 본사 승인 즉시 코치 활동비(${(currentMission.fee || 150000).toLocaleString()}원)가 정산 확정됩니다.\n\n수고 많으셨습니다!`);
+    }
+
+    // 완료된 리포트 열람
+    function viewCompletedReport(missionId) {
+      const all = getAllDispatches();
+      const m = all.find(item => item.id === missionId);
+      if (!m) return;
+
+      alert(`📄 [${m.customerName} 안심 케어 리포트]\n\n• 완료일시: ${m.completionDate || '완료됨'}\n• 담당코치: ${m.coach}\n• 정산금액: ${(m.fee || 150000).toLocaleString()}원 (${m.step})\n\n[코칭 소감]\n${m.coachReport || '성공적으로 수행되었습니다.'}\n\n※ 본사 관리자 화면(admin.html)에서 Before/After 고화질 사진을 확인하실 수 있습니다.`);
+    }
+
+    // =========================================================================
+    // 정산 및 탭 전환
+    // =========================================================================
+    function renderSettlementTab() {
+      const all = getAllDispatches();
+      const myCompleted = all.filter(m => m.coach && m.coach.includes(activeCoachName.split(' ')[0]) && (m.step === '서비스완료' || m.step === '정산완료'));
+
+      let totalFee = 0;
+      myCompleted.forEach(m => totalFee += (m.fee || 150000));
+
+      const totalEl = document.getElementById('settleTotalAmount');
+      if (totalEl) totalEl.textContent = `${totalFee.toLocaleString()}원`;
+
+      const listContainer = document.getElementById('settlementHistoryList');
+      if (!listContainer) return;
+
+      if (myCompleted.length === 0) {
+        listContainer.innerHTML = '<div style="padding:24px; text-align:center; color:#94a3b8; font-size:0.86rem; background:#fff; border-radius:12px;">아직 완료된 정산 내역이 없습니다.</div>';
+        return;
+      }
+
+      listContainer.innerHTML = myCompleted.map(m => `
+        <div class="settlement-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span style="font-size:0.82rem; color:var(--text-muted);">${escapeHtml(m.completionDate || m.preferredDate)}</span>
+            <span class="mission-status-pill ${m.step === '정산완료' ? 'status-settled' : 'status-completed'}">${m.step === '정산완료' ? '💰 정산완료' : '⏳ 승인대기'}</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="font-size:1.05rem; color:var(--text-main);">${escapeHtml(m.customerName)}</strong>
+              <div style="font-size:0.8rem; color:var(--text-sub); margin-top:2px;">${escapeHtml(m.serviceType)}</div>
+            </div>
+            <div style="font-size:1.15rem; font-weight:900; color:var(--primary);">
+              +${(m.fee || 150000).toLocaleString()}원
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function switchAppTab(tabId) {
+      ['panelMissions', 'panelSettlement', 'panelManual'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+
+      ['tabBtnMissions', 'tabBtnSettlement', 'tabBtnManual'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.classList.remove('active');
+      });
+
+      const navBtns = document.querySelectorAll('.bottom-nav-item');
+      navBtns.forEach(b => b.classList.remove('active'));
+
+      if (tabId === 'tabMissions') {
+        document.getElementById('panelMissions').style.display = 'block';
+        document.getElementById('tabBtnMissions').classList.add('active');
+        navBtns[0].classList.add('active');
+        loadCoachMissions();
+      } else if (tabId === 'tabSettlement') {
+        document.getElementById('panelSettlement').style.display = 'block';
+        document.getElementById('tabBtnSettlement').classList.add('active');
+        navBtns[1].classList.add('active');
+        renderSettlementTab();
+      } else if (tabId === 'tabManual') {
+        document.getElementById('panelManual').style.display = 'block';
+        document.getElementById('tabBtnManual').classList.add('active');
+        navBtns[2].classList.add('active');
+      }
+    }
+
+    // 초기 실행
+    window.addEventListener('DOMContentLoaded', () => {
+      loadCoachMissions();
+      renderSettlementTab();
+    });
+  </script>
+</body>
+</html>
