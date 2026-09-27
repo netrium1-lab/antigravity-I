@@ -1544,6 +1544,37 @@
             </div>
             <textarea id="settingHeroDesc" class="setting-textarea" rows="3">치열하게 앞만 보며 달려온 전반전을 뒤로하고, 내 몸의 건강과 소중한 서사를 우아하게 정리하여 가장 눈부신 두 번째 황금기를 맞이하세요.</textarea>
           </div>
+
+          <!-- 검색엔진 최적화 (SEO) 및 포털 사이트 소유 확인 -->
+          <div class="setting-group-card" style="border: 1.5px solid #cbd5e1; background: #f8fafc;">
+            <div class="setting-label-row">
+              <span>🔍</span>
+              <span style="color: #1e293b;">검색엔진 최적화 (SEO) & 네이버/구글 서치콘솔 소유 확인</span>
+            </div>
+            <p class="setting-hint" style="color: #64748b;">
+              네이버 서치어드바이저와 구글 서치콘솔에서 사이트 소유 확인용으로 발급받은 HTML 태그 코드의 <strong>content="..."</strong> 속성값을 입력하시면 메인 페이지에 실시간 반영됩니다.
+            </p>
+            
+            <div style="margin-top: 10px;">
+              <label style="display: block; font-size: 0.84rem; font-weight: 750; color: #334155; margin-bottom: 4px;">
+                🟢 네이버 서치어드바이저 사이트 검증 코드 (naver-site-verification)
+              </label>
+              <input type="text" id="settingNaverVerification" class="setting-input" placeholder="예: 7a8b9c0d1e2f3a4b5c6d7e8f (content 속성값만 입력)">
+            </div>
+
+            <div style="margin-top: 12px;">
+              <label style="display: block; font-size: 0.84rem; font-weight: 750; color: #334155; margin-bottom: 4px;">
+                🔵 구글 서치콘솔 사이트 검증 코드 (google-site-verification)
+              </label>
+              <input type="text" id="settingGoogleVerification" class="setting-input" placeholder="예: AbCdEfGhIjKlMnOpQrStUvWxYz (content 속성값만 입력)">
+            </div>
+
+            <div style="margin-top: 12px; padding: 10px 14px; background: #ffffff; border-radius: 8px; border: 1px dashed #cbd5e1; font-size: 0.82rem; color: #475569; line-height: 1.5;">
+              📌 <strong>sitemap.xml 및 robots.txt 구축 완료:</strong><br>
+              • 로봇 배제 표준: <code>https://netrium1-lab.github.io/antigravity-I/robots.txt</code><br>
+              • 사이트맵 주소: <code>https://netrium1-lab.github.io/antigravity-I/sitemap.xml</code> (네이버/구글에 sitemap.xml 제출 시 등록)
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1616,7 +1647,7 @@
                   <th style="width: 120px;">카테고리</th>
                   <th style="width: 100px;">작성일</th>
                   <th style="width: 140px; text-align: center;">메인 전면 노출</th>
-                  <th style="width: 160px; text-align: center;">관리</th>
+                  <th style="width: 220px; text-align: center;">관리 및 외부 공유</th>
                 </tr>
               </thead>
               <tbody id="articleTableBody">
@@ -2792,6 +2823,8 @@
           if (s.phoneNum) document.getElementById('settingPhoneNum').value = s.phoneNum;
           if (s.kakaoLink) document.getElementById('settingKakaoLink').value = s.kakaoLink;
           if (s.heroDesc) document.getElementById('settingHeroDesc').value = s.heroDesc;
+          if (s.naverVerification) document.getElementById('settingNaverVerification').value = s.naverVerification;
+          if (s.googleVerification) document.getElementById('settingGoogleVerification').value = s.googleVerification;
         } catch (e) {
           console.error(e);
         }
@@ -2805,6 +2838,8 @@
         phoneNum: document.getElementById('settingPhoneNum').value.trim(),
         kakaoLink: document.getElementById('settingKakaoLink').value.trim(),
         heroDesc: document.getElementById('settingHeroDesc').value.trim(),
+        naverVerification: document.getElementById('settingNaverVerification').value.trim(),
+        googleVerification: document.getElementById('settingGoogleVerification').value.trim(),
       };
       localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
       alert('🌿 사이트 설정 변경사항이 안전하게 저장되었습니다!\n메인 화면에 즉시 적용됩니다.');
@@ -2994,7 +3029,10 @@
             </button>
           </td>
           <td style="text-align: center;">
-            <div style="display: inline-flex; gap: 6px; align-items: center;">
+            <div style="display: inline-flex; gap: 6px; align-items: center; justify-content: center;">
+              <button type="button" class="btn-action-sm" onclick="copyArticleShareLink('${a.id}')" style="background: #eef2ff; color: #4338ca; border: 1.5px solid #c7d2fe; font-weight: 750;" title="블로그, 카페, 카카오톡 홍보용 딥링크 복사">
+                🔗 공유
+              </button>
               <button type="button" class="btn-action-sm edit" onclick="openTistoryEditor('${a.id}')" title="글 내용 수정">
                 ✏️ 수정
               </button>
@@ -3008,6 +3046,32 @@
           </td>
         </tr>
       `).join('');
+    }
+
+    // 칼럼 홍보 및 외부 공유 링크 복사
+    function copyArticleShareLink(id) {
+      const articles = getArticles();
+      const target = articles.find(a => a.id === id);
+      const title = target ? target.title : '칼럼';
+
+      // admin.html 경로를 메인 경로(index.html)로 치환
+      let baseUrl = window.location.href.split('?')[0].split('#')[0];
+      if (baseUrl.endsWith('admin.html')) {
+        baseUrl = baseUrl.replace(/admin\.html$/, 'index.html');
+      } else if (baseUrl.endsWith('/')) {
+        baseUrl = baseUrl + 'index.html';
+      }
+      const shareUrl = `${baseUrl}?article=${encodeURIComponent(id)}`;
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          alert(`📋 [${title}]\n\n공유용 다이렉트 링크가 복사되었습니다!\n네이버 블로그, 카페, 카카오톡 등에 붙여넣어 홍보하세요.\n\n🔗 ${shareUrl}`);
+        }).catch(() => {
+          prompt('아래 링크를 복사하여 공유하세요 (Ctrl+C):', shareUrl);
+        });
+      } else {
+        prompt('아래 링크를 복사하여 공유하세요 (Ctrl+C):', shareUrl);
+      }
     }
 
     // 메인 전면 노출 토글
