@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>나만의 고유한 서재 | 여백과 결 리셋 아카이브</title>
   <meta name="description" content="지나온 삶의 궤적이 품격 있는 문학이 되는 곳. 김순옥 어르신의 프라이빗 온라인 서재 (디지털 자서전, 기억 복원 갤러리, 비움 일기, 엔딩 금고).">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
 
   <!-- Google tag (gtag.js) - Google Ads: AW-443015087 (여백과 결) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-443015087"></script>
@@ -104,80 +105,112 @@
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    /* 상단 헤더 */
+    /* 상단 헤더 & 여백과 결 브랜드 로고 통일 */
     .room-header {
       position: sticky;
       top: 0;
       z-index: 100;
-      background-color: rgba(252, 249, 242, 0.94);
+      background-color: rgba(252, 249, 242, 0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--paper-border);
       transition: background-color 0.3s ease;
     }
     [data-theme="dark"] .room-header {
-      background-color: rgba(24, 20, 18, 0.94);
+      background-color: rgba(24, 20, 18, 0.95);
     }
 
     .header-inner {
       max-width: 1240px;
       margin: 0 auto;
-      padding: 14px 20px;
+      padding: 10px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
     }
 
-    .header-left {
+    /* 브랜드 로고 (index.html과 100% 동일한 아이덴티티) */
+    .logo-area {
       display: flex;
       align-items: center;
-      gap: 12px;
-    }
-
-    .btn-back-home {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 7px 14px;
-      border-radius: 999px;
-      background: var(--paper-card);
-      border: 1px solid var(--paper-border);
-      color: var(--text-sub);
-      font-size: 0.9rem;
-      font-weight: 600;
+      gap: 10px;
       text-decoration: none;
-      transition: all 0.2s ease;
-      white-space: nowrap;
+      transition: transform 0.25s ease, opacity 0.25s ease;
       flex-shrink: 0;
+      white-space: nowrap;
     }
-    .btn-back-home:hover {
-      border-color: var(--accent-green);
-      color: var(--accent-green);
-      transform: translateX(-2px);
+    .logo-area:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
     }
-
-    .room-badge {
-      display: inline-flex;
+    .logo-symbol {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
-      border-radius: 6px;
-      background: var(--accent-gold-light);
-      border: 1px solid rgba(197, 155, 39, 0.3);
-      color: var(--accent-gold);
-      font-size: 0.82rem;
-      font-weight: 700;
+      justify-content: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(43, 106, 56, 0.14) 0%, rgba(197, 155, 39, 0.16) 100%);
+      border: 1.5px solid rgba(43, 106, 56, 0.3);
+      box-shadow: 0 2px 6px rgba(44, 34, 30, 0.08);
+      transition: transform 0.35s ease;
+    }
+    .logo-area:hover .logo-symbol {
+      transform: rotate(6deg) scale(1.05);
+    }
+    .logo-text-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
       white-space: nowrap;
-      flex-shrink: 0;
+    }
+    .logo-main-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    .logo-title {
+      font-family: 'Noto Serif KR', Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      white-space: nowrap;
+    }
+    .logo-badge {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: var(--accent-green);
+      background: var(--accent-green-light);
+      border: 1px solid rgba(43, 106, 56, 0.28);
+      padding: 2px 8px;
+      border-radius: 999px;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+    .logo-sub {
+      font-family: 'Pretendard', -apple-system, sans-serif;
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      letter-spacing: 0.10em;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.2;
+      padding-left: 1px;
+      white-space: nowrap;
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
-    .font-ctrl-btn, .theme-toggle-btn {
+    .theme-toggle-btn {
       background: var(--paper-card);
       border: 1px solid var(--paper-border);
       color: var(--text-sub);
@@ -194,7 +227,7 @@
       white-space: nowrap;
       flex-shrink: 0;
     }
-    .font-ctrl-btn:hover, .theme-toggle-btn:hover {
+    .theme-toggle-btn:hover {
       border-color: var(--accent-gold);
       color: var(--accent-gold);
     }
@@ -203,12 +236,12 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 16px;
+      padding: 7px 14px;
       border-radius: 8px;
       background: var(--accent-gold);
       color: #ffffff;
       border: none;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 3px 8px rgba(197, 155, 39, 0.25);
@@ -219,6 +252,49 @@
     .btn-share:hover {
       background: #ab851e;
       transform: translateY(-1px);
+    }
+
+    .btn-room-mode-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      background: var(--accent-green);
+      color: #ffffff;
+      border: none;
+      font-size: 0.86rem;
+      font-weight: 750;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(43, 106, 56, 0.25);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-room-mode-nav:hover {
+      background: #1f4e29;
+      transform: translateY(-1px);
+    }
+
+    .btn-back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: var(--paper-card);
+      border: 1px solid var(--paper-border);
+      color: var(--text-sub);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-back-home:hover {
+      border-color: var(--accent-green);
+      color: var(--accent-green);
     }
 
     /* 헤더 축약 텍스트 제어 (모바일 최적화) */
@@ -335,28 +411,34 @@
 
       .header-inner {
         padding: 8px 12px;
-        gap: 8px;
+        gap: 6px;
         flex-wrap: nowrap;
       }
 
-      .header-left {
-        gap: 6px;
-        flex-shrink: 0;
+      .logo-area {
+        gap: 8px;
       }
-
-      .btn-back-home {
-        padding: 6px 10px;
-        font-size: 0.80rem;
-        gap: 4px;
+      .logo-symbol {
+        width: 32px;
+        height: 32px;
       }
-
-      /* 모바일 헤더 가로 공간 확보 및 하단 타이틀 중복 방지를 위해 서재룸 뱃지 숨김 */
-      .room-badge {
+      .logo-symbol svg {
+        width: 18px;
+        height: 18px;
+      }
+      .logo-title {
+        font-size: 1.05rem;
+      }
+      .logo-badge {
+        font-size: 0.65rem;
+        padding: 1px 5px;
+      }
+      .logo-sub {
         display: none !important;
       }
 
       .header-actions {
-        gap: 5px;
+        gap: 4px;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
@@ -367,23 +449,28 @@
         display: none;
       }
 
-      .btn-quick-upload {
-        padding: 6px 10px;
-        font-size: 0.80rem;
-        gap: 4px;
-      }
-
-      .font-ctrl-btn, .theme-toggle-btn {
+      .theme-toggle-btn {
         width: 32px;
         height: 32px;
         min-width: 32px;
         font-size: 0.82rem;
       }
 
-      .btn-share {
-        padding: 6px 10px;
-        font-size: 0.80rem;
+      .btn-share, .btn-room-mode-nav, .btn-back-home {
+        padding: 6px 9px;
+        font-size: 0.78rem;
         gap: 4px;
+      }
+
+      /* 서재 모드 배너 모바일 */
+      .room-mode-banner {
+        padding: 8px 12px;
+        font-size: 0.80rem;
+        top: 48px;
+      }
+      .btn-mode-switch {
+        padding: 5px 12px;
+        font-size: 0.76rem;
       }
 
       /* 히어로 인트로 & 헤드라인 모바일 최적화 */
@@ -475,19 +562,22 @@
         padding: 6px 8px;
         gap: 4px;
       }
-      .btn-back-home {
-        padding: 5px 8px;
-        font-size: 0.76rem;
+      .logo-title {
+        font-size: 0.96rem;
       }
-      .btn-quick-upload, .btn-share {
-        padding: 5px 8px;
-        font-size: 0.76rem;
+      .logo-badge {
+        display: none !important;
       }
-      .font-ctrl-btn, .theme-toggle-btn {
+      .theme-toggle-btn {
         width: 28px;
         height: 28px;
         min-width: 28px;
         font-size: 0.76rem;
+      }
+      .btn-share, .btn-room-mode-nav, .btn-back-home {
+        padding: 5px 7px;
+        font-size: 0.74rem;
+        gap: 3px;
       }
       .owner-avatar {
         width: 52px;
@@ -2078,41 +2168,71 @@
 </head>
 <body>
 
-  <!-- 상단 고정 헤더 -->
+  <!-- 상단 고정 헤더 (여백과 결 브랜드 일체화 GNB) -->
   <header class="room-header">
     <div class="header-inner">
-      <div class="header-left">
-        <a href="index.html" class="btn-back-home" title="메인 포털로 이동">
-          ← <span class="btn-text-full">메인광장</span><span class="btn-text-short">메인</span>
-        </a>
-        <span class="room-badge">🏛️ 프라이빗 서재 룸</span>
-      </div>
+      <!-- 좌측: 메인과 통일된 품격 엠블럼 심볼 & 브랜드 로고 -->
+      <a href="index.html" class="logo-area" aria-label="여백과 결 메인으로 이동">
+        <div class="logo-symbol" title="여백과 결 엠블럼">
+          <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="14.5" stroke="url(#sealGrad1)" stroke-width="1.3" stroke-dasharray="3 1.5"/>
+            <circle cx="16" cy="16" r="12.5" fill="url(#sealBgGrad)" fill-opacity="0.2"/>
+            <path d="M16 5.5C11 10.2 8.5 15.5 8.5 20.2C8.5 24.2 11.8 26.5 16 26.5C20.2 26.5 23.5 24.2 23.5 20.2C23.5 15.5 21 10.2 16 5.5Z" fill="url(#leafMainGrad)" fill-opacity="0.28" stroke="url(#sealGrad1)" stroke-width="1.3"/>
+            <path d="M16 7.5V24.5M16 13C13.5 14.5 11 16.8 11 19.2M16 16.5C18.5 18 21 20.2 21 22" stroke="var(--accent-green)" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="16" cy="7.5" r="1.6" fill="#c59b27"/>
+            <defs>
+              <linearGradient id="sealGrad1" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#2b6a38"/>
+                <stop offset="1" stop-color="#c59b27"/>
+              </linearGradient>
+              <linearGradient id="sealBgGrad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#eaf3ec"/>
+                <stop offset="1" stop-color="#fdfbf7"/>
+              </linearGradient>
+              <linearGradient id="leafMainGrad" x1="8.5" y1="5.5" x2="23.5" y2="26.5" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#2b6a38"/>
+                <stop offset="0.7" stop-color="#4a8f58"/>
+                <stop offset="1" stop-color="#c59b27"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="logo-text-group">
+          <div class="logo-main-row">
+            <span class="logo-title">여백과 결</span>
+            <span class="logo-badge" id="headerRoomBadge">보물 서재</span>
+          </div>
+          <span class="logo-sub">YEBAEK &amp; GEOL · ARCHIVE ROOM</span>
+        </div>
+      </a>
 
+      <!-- 우측 액션 메뉴 (가-, 가+ 완전 제거 및 품격 액션) -->
       <div class="header-actions">
-        <!-- 📸+✍️ 원클릭 사진·글 올리기 핵심 버튼 -->
-        <button class="btn-quick-upload" onclick="openUploadModal()">
-          📸+✍️ <span class="btn-text-full">사진·글 올리기</span><span class="btn-text-short">올리기</span>
-        </button>
-
-        <!-- 글자 크기 조절 (시니어 편의) -->
-        <button class="font-ctrl-btn" onclick="adjustFontSize(-0.1)" title="글자 작게">가-</button>
-        <button class="font-ctrl-btn" onclick="adjustFontSize(0.1)" title="글자 크게">가+</button>
-        
         <!-- 다크모드 토글 -->
         <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="다크/라이트 모드">🌙</button>
 
         <!-- 가족 공유 버튼 -->
-        <button class="btn-share" onclick="shareMyRoom()">
+        <button class="btn-share" onclick="shareMyRoom()" title="서재 공유하기">
           💌 <span class="btn-text-full">가족 공유</span><span class="btn-text-short">공유</span>
         </button>
 
-        <!-- 서재 변경 / 로그인 -->
-        <button class="btn-back-home" onclick="openLoginModal()" style="font-weight: 700;">
-          👤 <span class="btn-text-full">다른 서재</span><span class="btn-text-short">서재</span>
+        <!-- 서재 전환 버튼 (내 서재 ↔ 김순옥 샘플 서재) -->
+        <button class="btn-room-mode-nav" id="btnHeaderRoomNav" onclick="handleHeaderNavClick()" title="서재 전환">
+          <span id="headerNavIcon">🏠</span>
+          <span class="btn-text-full" id="headerNavTextFull">내 서재로 가기</span>
+          <span class="btn-text-short" id="headerNavTextShort">내 서재</span>
         </button>
+
+        <!-- 메인 광장 복귀 -->
+        <a href="index.html" class="btn-back-home" title="여백과 결 메인으로 이동">
+          ← <span class="btn-text-full">메인광장</span><span class="btn-text-short">메인</span>
+        </a>
       </div>
     </div>
   </header>
+
+  <!-- 서재 모드 안내 배너 (김순옥 둘러보기 모드 vs 개인 서재 모드 실시간 안내) -->
+  <div id="roomModeBanner" class="room-mode-banner" style="display: none;"></div>
 
   <!-- 서재 인트로 히어로 -->
   <section class="room-hero">
@@ -4219,7 +4339,7 @@
     // ==========================================
     // 🏛️ 서재 모드 관리 시스템 (내 서재 vs 김순옥 샘플 둘러보기)
     // ==========================================
-    let isSampleModeActive = false; // 기본은 로그인 회원 본인 서재
+    let isSampleModeActive = false; // true: 김순옥 샘플 둘러보기 모드, false: 로그인 회원 본인 서재
 
     function getLoggedInUser() {
       const savedUserStr = localStorage.getItem('reset_logged_in_user');
@@ -4237,21 +4357,74 @@
       return { name, avatar, loginType };
     }
 
+    // URL 파라미터(?mode=sample 또는 ?mode=user) 감지 및 모드 초기화
+    function initRoomModeFromUrl() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const requestedMode = urlParams.get('mode');
+      const user = getLoggedInUser();
+      const hasUser = !!(user.name && user.name !== '김순옥');
+
+      if (requestedMode === 'sample') {
+        isSampleModeActive = true;
+      } else if (requestedMode === 'user') {
+        isSampleModeActive = false;
+      } else {
+        // mode 파라미터가 명시되지 않은 경우:
+        // 회원이 있으면 내 서재 우선, 미로그인이면 김순옥 샘플 서재 노출
+        isSampleModeActive = !hasUser;
+      }
+    }
+
     function toggleRoomMode() {
       isSampleModeActive = !isSampleModeActive;
-      updateRoomDisplayMode();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (isSampleModeActive) {
+        switchToSampleRoom();
+      } else {
+        switchToUserRoom();
+      }
+    }
+
+    function handleHeaderNavClick() {
+      const user = getLoggedInUser();
+      const hasUser = !!(user.name && user.name !== '김순옥');
+
+      if (isSampleModeActive) {
+        // 김순옥 둘러보기 중 -> 내 서재로 가기
+        if (hasUser) {
+          switchToUserRoom();
+        } else {
+          openLoginModal();
+        }
+      } else {
+        // 내 서재 보는 중 -> 김순옥 둘러보기
+        switchToSampleRoom();
+      }
     }
 
     function switchToSampleRoom() {
       isSampleModeActive = true;
+      try {
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.set('mode', 'sample');
+        window.history.replaceState({}, '', newUrl.toString());
+      } catch(e) {}
       updateRoomDisplayMode();
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      alert('💡 김순옥 어르신의 완성된 서재 [둘러보기 모드]로 전환되었습니다.\n상단의 [내 서재로 돌아가기] 버튼을 누르면 언제든 내 서재로 복귀합니다.');
     }
 
     function switchToUserRoom() {
+      const user = getLoggedInUser();
+      const hasUser = !!(user.name && user.name !== '김순옥');
+      if (!hasUser) {
+        openLoginModal();
+        return;
+      }
       isSampleModeActive = false;
+      try {
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.set('mode', 'user');
+        window.history.replaceState({}, '', newUrl.toString());
+      } catch(e) {}
       updateRoomDisplayMode();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -4271,6 +4444,13 @@
       const ownerAvatar = document.getElementById('ownerAvatar');
       const ownerDesc = document.getElementById('ownerDesc');
       const ownerQuote = document.querySelector('.owner-quote');
+
+      const headerRoomBadge = document.getElementById('headerRoomBadge');
+      const btnHeaderRoomNav = document.getElementById('btnHeaderRoomNav');
+      const headerNavIcon = document.getElementById('headerNavIcon');
+      const headerNavTextFull = document.getElementById('headerNavTextFull');
+      const headerNavTextShort = document.getElementById('headerNavTextShort');
+      const roomModeBanner = document.getElementById('roomModeBanner');
 
       const userMemoirArea = document.getElementById('userMemoirArea');
       const sampleMemoirArea = document.getElementById('sampleMemoirArea');
@@ -4303,6 +4483,53 @@
 
       if (!hasUser || isSampleModeActive) {
         // [1] 김순옥 어르신 완성 샘플 둘러보기 모드
+        if (headerRoomBadge) {
+          headerRoomBadge.textContent = '김순옥 어르신 서재';
+          headerRoomBadge.style.background = 'var(--accent-gold-light)';
+          headerRoomBadge.style.color = 'var(--accent-gold)';
+          headerRoomBadge.style.borderColor = 'rgba(197, 155, 39, 0.35)';
+        }
+
+        if (btnHeaderRoomNav) {
+          btnHeaderRoomNav.style.display = 'inline-flex';
+          if (hasUser) {
+            if (headerNavIcon) headerNavIcon.textContent = '🏠';
+            if (headerNavTextFull) headerNavTextFull.textContent = `${user.name}님 서재로 가기`;
+            if (headerNavTextShort) headerNavTextShort.textContent = '내 서재';
+            btnHeaderRoomNav.title = `${user.name} 어르신의 개인 서재로 이동`;
+          } else {
+            if (headerNavIcon) headerNavIcon.textContent = '👤';
+            if (headerNavTextFull) headerNavTextFull.textContent = '내 서재 만들기';
+            if (headerNavTextShort) headerNavTextShort.textContent = '내 서재';
+            btnHeaderRoomNav.title = '나만의 고유한 서재 만들기';
+          }
+        }
+
+        if (roomModeBanner) {
+          roomModeBanner.style.display = 'flex';
+          roomModeBanner.className = 'room-mode-banner sample-mode';
+          if (hasUser) {
+            roomModeBanner.innerHTML = `
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span style="background:var(--accent-gold); color:#ffffff; padding:2px 8px; border-radius:4px; font-weight:800; font-size:0.75rem;">샘플 둘러보기</span>
+                <span>💡 현재 <strong>김순옥 어르신의 완성된 보물 서재</strong>(자서전 184쪽, 사진 12장, 일기 28편)를 체험 중입니다.</span>
+              </div>
+              <button class="btn-mode-switch to-user" onclick="switchToUserRoom()">
+                🏠 ${escapeHtml(user.name)}님의 내 서재로 가기
+              </button>
+            `;
+          } else {
+            roomModeBanner.innerHTML = `
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span style="background:var(--accent-gold); color:#ffffff; padding:2px 8px; border-radius:4px; font-weight:800; font-size:0.75rem;">샘플 둘러보기</span>
+                <span>💡 현재 <strong>김순옥 어르신의 완성된 보물 서재</strong>(자서전 184쪽, 사진 12장, 일기 28편)를 체험 중입니다.</span>
+              </div>
+              <button class="btn-mode-switch to-user" onclick="openLoginModal()">
+                ✍️ 나만의 서재 무료로 만들기
+              </button>
+            `;
+          }
+        }
 
         if (ownerTitle) ownerTitle.innerHTML = `<strong class="point-bold">김순옥</strong> 어르신의 고유한 서재`;
         if (ownerAvatar) ownerAvatar.textContent = '👵';
@@ -4342,15 +4569,46 @@
           if (hasUser) {
             btnShelfToggle.innerHTML = '🏠 내 서재로 돌아가기';
             btnShelfToggle.className = 'btn-mode-switch to-user';
+            btnShelfToggle.onclick = switchToUserRoom;
           } else {
             btnShelfToggle.innerHTML = '👵 김순옥 어르신 완성 예시';
             btnShelfToggle.className = 'btn-mode-switch to-sample';
+            btnShelfToggle.onclick = switchToSampleRoom;
           }
         }
 
       } else {
         // [2] 로그인 회원 본인의 깨끗한 독립 서재 모드 (Empty State)
         const name = user.name;
+
+        if (headerRoomBadge) {
+          headerRoomBadge.textContent = `${name} 어르신 서재`;
+          headerRoomBadge.style.background = 'var(--accent-green-light)';
+          headerRoomBadge.style.color = 'var(--accent-green)';
+          headerRoomBadge.style.borderColor = 'rgba(43, 106, 56, 0.28)';
+        }
+
+        if (btnHeaderRoomNav) {
+          btnHeaderRoomNav.style.display = 'inline-flex';
+          if (headerNavIcon) headerNavIcon.textContent = '👵';
+          if (headerNavTextFull) headerNavTextFull.textContent = '김순옥 완성 서재 보기';
+          if (headerNavTextShort) headerNavTextShort.textContent = '예시 서재';
+          btnHeaderRoomNav.title = '완성된 김순옥 어르신 샘플 서재 둘러보기';
+        }
+
+        if (roomModeBanner) {
+          roomModeBanner.style.display = 'flex';
+          roomModeBanner.className = 'room-mode-banner user-mode';
+          roomModeBanner.innerHTML = `
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <span style="background:var(--accent-green); color:#ffffff; padding:2px 8px; border-radius:4px; font-weight:800; font-size:0.75rem;">나의 독립 서재</span>
+              <span>🌿 <strong>${escapeHtml(name)}</strong> 어르신의 고유한 프라이빗 서재입니다. 인생의 소중한 기록을 채워보세요.</span>
+            </div>
+            <button class="btn-mode-switch to-sample" onclick="switchToSampleRoom()">
+              👵 김순옥 어르신 완성 서재 둘러보기
+            </button>
+          `;
+        }
 
         if (ownerTitle) ownerTitle.innerHTML = `<strong class="point-bold">${escapeHtml(name)}</strong> 어르신의 고유한 서재`;
         if (ownerAvatar) ownerAvatar.textContent = user.avatar || '🌿';
@@ -4400,6 +4658,7 @@
         if (btnShelfToggle) {
           btnShelfToggle.innerHTML = '👵 김순옥 어르신 완성 예시';
           btnShelfToggle.className = 'btn-mode-switch to-sample';
+          btnShelfToggle.onclick = switchToSampleRoom;
         }
       }
     }
@@ -5019,7 +5278,8 @@
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
-        document.getElementById('themeToggleBtn').textContent = '☀️';
+        const themeBtn = document.getElementById('themeToggleBtn');
+        if (themeBtn) themeBtn.textContent = '☀️';
       }
       // 🌿 전담 코칭스태프 데이터(PDF, 오디오, 배송트래커, 목차, 케어리포트) 서재 실시간 적용
       applyCoachDataToRoom();
@@ -5031,7 +5291,8 @@
       // 카카오 SDK 초기화
       initKakaoSDK();
 
-      // 🌿 로그인 상태에 맞춰 내 서재(깨끗한 독립 서재) 또는 둘러보기 모드 자동 적용
+      // 🌿 URL 쿼리 파라미터(?mode=sample/user) 및 로그인 상태에 맞춰 서재 모드 자동 적용
+      initRoomModeFromUrl();
       updateRoomDisplayMode();
     });
   </script>
