@@ -147,6 +147,8 @@
       font-weight: 600;
       text-decoration: none;
       transition: all 0.2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .btn-back-home:hover {
       border-color: var(--accent-green);
@@ -165,6 +167,8 @@
       color: var(--accent-gold);
       font-size: 0.82rem;
       font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .header-actions {
@@ -187,6 +191,8 @@
       font-weight: 700;
       font-size: 0.95rem;
       transition: all 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .font-ctrl-btn:hover, .theme-toggle-btn:hover {
       border-color: var(--accent-gold);
@@ -207,10 +213,20 @@
       cursor: pointer;
       box-shadow: 0 3px 8px rgba(197, 155, 39, 0.25);
       transition: transform 0.2s, background-color 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .btn-share:hover {
       background: #ab851e;
       transform: translateY(-1px);
+    }
+
+    /* 헤더 축약 텍스트 제어 (모바일 최적화) */
+    .btn-text-short {
+      display: none;
+    }
+    .btn-text-full {
+      display: inline;
     }
 
     /* 서재 인트로 배너 */
@@ -257,10 +273,12 @@
       color: var(--text-main);
       margin-bottom: 6px;
       letter-spacing: -0.5px;
+      word-break: keep-all;
     }
     .owner-info p {
       color: var(--text-sub);
       font-size: 1rem;
+      word-break: keep-all;
     }
     .owner-quote {
       display: inline-block;
@@ -272,6 +290,7 @@
       color: var(--text-main);
       font-size: 0.92rem;
       font-style: italic;
+      word-break: keep-all;
     }
 
     .hero-stat-cards {
@@ -297,6 +316,193 @@
       color: var(--text-muted);
       font-weight: 600;
       margin-top: 2px;
+    }
+
+    /* -------------------- 📱 모바일 반응형 헤더 & 히어로 헤드라인 최적화 -------------------- */
+    @media (max-width: 768px) {
+      .btn-text-full {
+        display: none !important;
+      }
+      .btn-text-short {
+        display: inline !important;
+      }
+
+      .room-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-inner {
+        padding: 8px 12px;
+        gap: 8px;
+        flex-wrap: nowrap;
+      }
+
+      .header-left {
+        gap: 6px;
+        flex-shrink: 0;
+      }
+
+      .btn-back-home {
+        padding: 6px 10px;
+        font-size: 0.80rem;
+        gap: 4px;
+      }
+
+      /* 모바일 헤더 가로 공간 확보 및 하단 타이틀 중복 방지를 위해 서재룸 뱃지 숨김 */
+      .room-badge {
+        display: none !important;
+      }
+
+      .header-actions {
+        gap: 5px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding: 2px 0;
+      }
+      .header-actions::-webkit-scrollbar {
+        display: none;
+      }
+
+      .btn-quick-upload {
+        padding: 6px 10px;
+        font-size: 0.80rem;
+        gap: 4px;
+      }
+
+      .font-ctrl-btn, .theme-toggle-btn {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        font-size: 0.82rem;
+      }
+
+      .btn-share {
+        padding: 6px 10px;
+        font-size: 0.80rem;
+        gap: 4px;
+      }
+
+      /* 히어로 인트로 & 헤드라인 모바일 최적화 */
+      .room-hero {
+        padding: 22px 16px 20px;
+      }
+      .room-hero-inner {
+        gap: 16px;
+      }
+
+      .room-owner-profile {
+        gap: 12px;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      .owner-avatar {
+        width: 62px;
+        height: 62px;
+        font-size: 1.75rem;
+        border-width: 2px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .owner-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .owner-info h1 {
+        font-size: 1.30rem;
+        margin-bottom: 4px;
+        line-height: 1.35;
+        letter-spacing: -0.3px;
+        word-break: keep-all;
+      }
+
+      .owner-info p {
+        font-size: 0.84rem;
+        line-height: 1.45;
+        word-break: keep-all;
+      }
+
+      .owner-quote {
+        display: block;
+        margin-top: 8px;
+        padding: 6px 10px;
+        font-size: 0.80rem;
+        line-height: 1.45;
+        word-break: keep-all;
+        border-radius: 0 6px 6px 0;
+      }
+
+      /* 3대 통계 카드: 모바일 3분할 그리드로 100% 정돈 (가로 넘침 방지) */
+      .hero-stat-cards {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+
+      .hero-stat {
+        min-width: 0;
+        padding: 10px 4px;
+        border-radius: 10px;
+      }
+
+      .hero-stat .num {
+        font-size: 1.25rem;
+      }
+
+      .hero-stat .label {
+        font-size: 0.70rem;
+        white-space: nowrap;
+      }
+
+      /* 탭 바 상단 고정 위치를 모바일 헤더 높이에 맞춤 */
+      .room-tabs-bar {
+        top: 50px;
+      }
+      .room-tab-btn {
+        padding: 12px 14px;
+        font-size: 0.92rem;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .header-inner {
+        padding: 6px 8px;
+        gap: 4px;
+      }
+      .btn-back-home {
+        padding: 5px 8px;
+        font-size: 0.76rem;
+      }
+      .btn-quick-upload, .btn-share {
+        padding: 5px 8px;
+        font-size: 0.76rem;
+      }
+      .font-ctrl-btn, .theme-toggle-btn {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        font-size: 0.76rem;
+      }
+      .owner-avatar {
+        width: 52px;
+        height: 52px;
+        font-size: 1.45rem;
+      }
+      .owner-info h1 {
+        font-size: 1.18rem;
+      }
+      .hero-stat .num {
+        font-size: 1.10rem;
+      }
+      .hero-stat .label {
+        font-size: 0.65rem;
+      }
     }
 
     /* 서재 탭 네비게이션 */
@@ -1483,9 +1689,11 @@
     @media (max-width: 768px) {
       .kakao-float-btn {
         bottom: 20px;
-        left: 16px;
-        padding: 10px 15px;
-        font-size: 0.86rem;
+        right: 14px;
+        left: auto;
+        padding: 9px 13px;
+        font-size: 0.82rem;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
       }
     }
 
@@ -1875,7 +2083,7 @@
     <div class="header-inner">
       <div class="header-left">
         <a href="index.html" class="btn-back-home" title="메인 포털로 이동">
-          ← 메인광장
+          ← <span class="btn-text-full">메인광장</span><span class="btn-text-short">메인</span>
         </a>
         <span class="room-badge">🏛️ 프라이빗 서재 룸</span>
       </div>
@@ -1883,7 +2091,7 @@
       <div class="header-actions">
         <!-- 📸+✍️ 원클릭 사진·글 올리기 핵심 버튼 -->
         <button class="btn-quick-upload" onclick="openUploadModal()">
-          📸+✍️ 사진·글 올리기
+          📸+✍️ <span class="btn-text-full">사진·글 올리기</span><span class="btn-text-short">올리기</span>
         </button>
 
         <!-- 글자 크기 조절 (시니어 편의) -->
@@ -1895,12 +2103,12 @@
 
         <!-- 가족 공유 버튼 -->
         <button class="btn-share" onclick="shareMyRoom()">
-          💌 가족 공유
+          💌 <span class="btn-text-full">가족 공유</span><span class="btn-text-short">공유</span>
         </button>
 
         <!-- 서재 변경 / 로그인 -->
         <button class="btn-back-home" onclick="openLoginModal()" style="font-weight: 700;">
-          👤 다른 서재
+          👤 <span class="btn-text-full">다른 서재</span><span class="btn-text-short">서재</span>
         </button>
       </div>
     </div>
