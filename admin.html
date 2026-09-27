@@ -6,7 +6,8 @@
   <title>여백과 결 | 통합 관리자 홈 (Admin Console)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Noto+Serif+KR:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <style>
     :root {
       --bg-body: #f1f5f9;
@@ -36,10 +37,11 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     body {
-      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg-body);
       color: var(--text-main);
       line-height: 1.6;
@@ -91,9 +93,8 @@
     }
 
     .auth-title {
-      font-family: 'Noto Serif KR', serif;
       font-size: 1.6rem;
-      font-weight: 800;
+      font-weight: 900;
       color: var(--text-main);
       margin-bottom: 8px;
     }
@@ -2111,29 +2112,30 @@
             </div>
           </div>
 
-          <!-- 서비스 카테고리 필터 바 -->
+          <!-- 서비스 카테고리 필터 바 (5대 핵심 오프라인 서비스) -->
           <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;">
             <button class="btn-action-sm active" id="filterDispatch_all" onclick="filterDispatches('all', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">전체 (<span id="countDispAll">0</span>)</button>
-            <button class="btn-action-sm" id="filterDispatch_beauty" onclick="filterDispatches('뷰티', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">💄 뷰티 케어</button>
-            <button class="btn-action-sm" id="filterDispatch_wardrobe" onclick="filterDispatches('옷장', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">👗 옷장 비움</button>
-            <button class="btn-action-sm" id="filterDispatch_legacy" onclick="filterDispatches('유품', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">📦 유품/짐정리</button>
-            <button class="btn-action-sm" id="filterDispatch_memoir" onclick="filterDispatches('자서전', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">✍️ 자서전 구술</button>
-            <button class="btn-action-sm" id="filterDispatch_archive" onclick="filterDispatches('서재', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">🏛️ 나의 서재</button>
+            <button class="btn-action-sm" id="filterDispatch_beauty" onclick="filterDispatches('화려한 외출', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">💄 화려한 외출</button>
+            <button class="btn-action-sm" id="filterDispatch_wardrobe" onclick="filterDispatches('옷장', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">👗 옷장 정리&amp;비움</button>
+            <button class="btn-action-sm" id="filterDispatch_legacy" onclick="filterDispatches('유품', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">📦 짐·유품 정리</button>
+            <button class="btn-action-sm" id="filterDispatch_memoir" onclick="filterDispatches('자서전', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">✍️ 구술 자서전</button>
+            <button class="btn-action-sm" id="filterDispatch_party" onclick="filterDispatches('엔딩 파티', this)" style="padding: 6px 14px; font-weight: 800; border-radius: 20px;">💌 생전 엔딩 파티</button>
           </div>
 
           <div class="admin-table-wrap">
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th style="width: 100px;">고객 성함</th>
-                  <th style="width: 120px;">연락처</th>
+                  <th style="width: 95px;">고객 성함</th>
+                  <th style="width: 110px;">연락처</th>
                   <th style="width: 140px;">신청 서비스</th>
-                  <th style="width: 120px;">방문/희망일시</th>
-                  <th style="width: 140px;">지역 / 주소</th>
-                  <th style="width: 190px;">담당 배정 코치 (선택 툴)</th>
-                  <th style="width: 110px; text-align: center;">진행 단계</th>
-                  <th>코칭 메모 / 특이사항</th>
-                  <th style="width: 70px; text-align: center;">관리</th>
+                  <th style="width: 130px;">방문일시 / 주소</th>
+                  <th style="width: 160px;">담당 배정 코치</th>
+                  <th style="width: 90px; text-align: center;">진행 상태</th>
+                  <th style="width: 130px; text-align: center;">도착 / 완료 스탬프</th>
+                  <th style="width: 140px; text-align: center;">현장 사진 3종 &amp; 검수</th>
+                  <th>코칭 메모 / 현장 소감</th>
+                  <th style="width: 90px; text-align: center;">관리</th>
                 </tr>
               </thead>
               <tbody id="dispatchTableBody">
@@ -2778,9 +2780,9 @@
 
   <!-- ================= 모달 5) 각종 서비스 코치 배정 등록/수정 모달 ================= -->
   <div class="cms-modal-overlay" id="dispatchFormModal" onclick="closeDispatchModalOnOverlay(event)">
-    <div class="coach-modal-card">
+    <div class="coach-modal-card" style="max-width: 600px;">
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; border-bottom: 1.5px solid var(--border-color); padding-bottom: 14px;">
-        <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin: 0;" id="dispatchModalTitle">
+        <h3 style="font-size: 1.25rem; font-weight: 850; color: var(--text-main); margin: 0;" id="dispatchModalTitle">
           🤝 서비스 신청 고객 전담 코치 배정
         </h3>
         <button type="button" onclick="closeDispatchModal()" aria-label="닫기" style="border: 1px solid var(--border-color); background: var(--bg-body); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;">✕</button>
@@ -2792,7 +2794,7 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
           <div>
             <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">고객 성함 *</label>
-            <input type="text" id="inputDispClientName" class="setting-input" placeholder="예: 정옥희 어르신" required>
+            <input type="text" id="inputDispClientName" class="setting-input" placeholder="예: 이순옥 어르신" required>
           </div>
           <div>
             <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">고객 연락처 *</label>
@@ -2803,48 +2805,60 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
           <div>
             <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">신청 서비스 분야 *</label>
-            <select id="selectDispServiceType" class="setting-input" style="background:#fff;">
-              <option value="💄 웰니스 & 시니어 뷰티">💄 웰니스 & 시니어 뷰티</option>
-              <option value="👗 옷장 비움 & 공간 코칭">👗 옷장 비움 & 공간 코칭</option>
-              <option value="📦 오래된 짐 & 유품 정리">📦 오래된 짐 & 유품 정리</option>
-              <option value="✍️ 디지털 자서전 구술 코칭">✍️ 디지털 자서전 구술 코칭</option>
-              <option value="🏛️ 나의 서재 아카이빙">🏛️ 나의 서재 아카이빙</option>
-              <option value="💌 웰다잉 엔딩 파티 기획">💌 웰다잉 엔딩 파티 기획</option>
+            <select id="selectDispServiceType" class="setting-input" style="background:#fff; font-weight: 700;">
+              <option value="💄 화려한 외출 (시니어 메이크업)">💄 화려한 외출 (시니어 메이크업)</option>
+              <option value="👗 옷장 정리 &amp; 비움 (공간 수납)">👗 옷장 정리 &amp; 비움 (공간 수납)</option>
+              <option value="📦 오래된 짐 &amp; 유품 정리">📦 오래된 짐 &amp; 유품 정리</option>
+              <option value="✍️ 디지털 자서전 (인생 구술)">✍️ 디지털 자서전 (인생 구술)</option>
+              <option value="💌 아름다운 생전 엔딩 파티">💌 아름다운 생전 엔딩 파티</option>
             </select>
           </div>
           <div>
-            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">방문 / 상담 희망일시</label>
-            <input type="text" id="inputDispSchedule" class="setting-input" placeholder="예: 2026.09.30 14:00">
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">방문 희망일시 *</label>
+            <input type="text" id="inputDispSchedule" class="setting-input" placeholder="예: 2026.09.28 오전 10:00" required>
           </div>
         </div>
 
         <div>
-          <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">방문 장소 / 고객 주소</label>
-          <input type="text" id="inputDispLocation" class="setting-input" placeholder="예: 서울 서초구 반포동 자택">
+          <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">방문 장소 / 고객 주소 *</label>
+          <input type="text" id="inputDispLocation" class="setting-input" placeholder="예: 서울 강남구 도곡동 타워팰리스 B동 1204호" required>
         </div>
 
         <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px;">
           <div>
-            <label style="font-size: 0.84rem; font-weight: 800; color: var(--accent); display: block; margin-bottom: 5px;">⭐ 담당 배정 코치 (선택 툴)</label>
-            <select id="selectDispCoach" class="coach-select-sm" style="width: 100%; padding: 10px;">
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--accent); display: block; margin-bottom: 5px;">⭐ 담당 배정 코치</label>
+            <select id="selectDispCoach" class="coach-select-sm" style="width: 100%; padding: 10px; font-size: 0.9rem;">
               <option value="">⚠️ 미배정 (코치를 선택하세요)</option>
               <!-- JS로 공인 코치 옵션 동적 렌더링 -->
             </select>
           </div>
           <div>
+            <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">코치 활동비 (수수료) *</label>
+            <input type="number" id="inputDispFee" class="setting-input" placeholder="150000" value="150000" step="10000" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
             <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">진행 상태</label>
-            <select id="selectDispStatus" class="setting-input" style="background:#fff;">
+            <select id="selectDispStatus" class="setting-input" style="background:#fff; font-weight: 700;">
               <option value="배정대기">⏳ 배정대기</option>
               <option value="배정완료">🤝 배정완료</option>
-              <option value="코칭중">🏃 방문/코칭중</option>
-              <option value="완료">✅ 코칭완료</option>
+              <option value="진행중">🏃 현장 진행중 (도착)</option>
+              <option value="서비스완료">✓ 서비스완료 (검수대기)</option>
+              <option value="정산완료">💰 송금 및 정산완료</option>
             </select>
+          </div>
+          <div style="display: flex; align-items: flex-end;">
+            <button type="button" class="btn-save-setting" onclick="copyCoachKakaoMsgFromForm()" style="width:100%; background: #fef01b; color: #181600; border: 1px solid #e5d800; padding: 10px 14px; font-weight: 850; justify-content: center;">
+              <span>💬</span> 코치 카톡 알림문 복사
+            </button>
           </div>
         </div>
 
         <div>
-          <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">코칭 메모 및 사전 요청사항</label>
-          <textarea id="inputDispMemo" class="setting-textarea" rows="2" placeholder="고객의 사전 특이사항, 준비물, 코칭 방문 시 유의점을 기록하세요."></textarea>
+          <label style="font-size: 0.84rem; font-weight: 800; color: var(--text-main); display: block; margin-bottom: 5px;">고객 사전 요청 메모 &amp; 코칭 특이사항</label>
+          <textarea id="inputDispMemo" class="setting-textarea" rows="2" placeholder="자녀분의 선물, 어르신 선호 스타일, 사전 준비물 등을 입력하세요."></textarea>
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
@@ -2856,6 +2870,118 @@
           </button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- ================= 모달 5-2) 📸 현장 코치 보고서 & 3종 사진 검수 및 송금 승인 모달 ================= -->
+  <div class="cms-modal-overlay" id="dispatchReportModal" onclick="closeDispatchReportModalOnOverlay(event)">
+    <div class="coach-modal-card" style="max-width: 760px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; border-bottom: 1.5px solid var(--border-color); padding-bottom: 14px;">
+        <div>
+          <span style="display:inline-block; padding:3px 8px; border-radius:6px; background:#eff6ff; color:#1e40af; font-size:0.78rem; font-weight:850; margin-bottom:4px;">
+            현장 완료 검수 및 활동비 정산 센터
+          </span>
+          <h3 style="font-size: 1.3rem; font-weight: 900; color: var(--text-main); margin: 0;" id="reportModalTitle">
+            📸 [고객 성함] 현장 코칭 검수
+          </h3>
+        </div>
+        <button type="button" onclick="closeDispatchReportModal()" aria-label="닫기" style="border: 1px solid var(--border-color); background: var(--bg-body); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;">✕</button>
+      </div>
+
+      <!-- 상단 핵심 메타 바 -->
+      <div style="background: #f8fafc; border-radius: 12px; padding: 14px 18px; border: 1px solid var(--border-color); margin-bottom: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+        <div>
+          <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">담당 배정 코치</div>
+          <div style="font-size:0.95rem; font-weight:850; color:var(--text-main);" id="reportCoachName">-</div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">서비스 종류</div>
+          <div style="font-size:0.95rem; font-weight:850; color:var(--accent);" id="reportServiceType">-</div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">📍 현장 도착 스탬프</div>
+          <div style="font-size:0.95rem; font-weight:850; color:#0284c7;" id="reportArrivalStamp">미도착</div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">🏁 임무 완료 시간</div>
+          <div style="font-size:0.95rem; font-weight:850; color:#059669;" id="reportCompletionDate">미완료</div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">💰 코치 활동비</div>
+          <div style="font-size:1.05rem; font-weight:900; color:#d97706;" id="reportCoachFee">150,000원</div>
+        </div>
+      </div>
+
+      <!-- 현장 사진 3종 검수 그리드 (Before / Process / After) -->
+      <div style="margin-bottom: 20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <h4 style="font-size: 0.95rem; font-weight: 850; color: var(--text-main); margin: 0;">
+            📸 현장 등록 사진 3종 검수 (작업 전 ➔ 진행 과정 ➔ 최종 완료)
+          </h4>
+          <span style="font-size:0.78rem; color:var(--text-muted);">사진을 클릭하면 새 창에서 원본 크기로 확인됩니다.</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+          <!-- 1. 작업 전 (Before) -->
+          <div style="background:#ffffff; border:1.5px solid var(--border-color); border-radius:12px; overflow:hidden; display:flex; flex-direction:column;">
+            <div style="background:#f1f5f9; padding:8px 12px; font-size:0.8rem; font-weight:850; color:var(--text-main); display:flex; justify-content:space-between;">
+              <span>1️⃣ 작업 전 (Before)</span>
+              <span id="badgeBeforePhoto" style="font-size:0.72rem; color:#64748b;">대기</span>
+            </div>
+            <div style="height:180px; background:#f8fafc; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative;" id="containerBeforePhoto">
+              <span style="color:#94a3b8; font-size:0.85rem;">사진 미등록</span>
+            </div>
+          </div>
+
+          <!-- 2. 진행 과정 (Process) -->
+          <div style="background:#ffffff; border:1.5px solid var(--border-color); border-radius:12px; overflow:hidden; display:flex; flex-direction:column;">
+            <div style="background:#f1f5f9; padding:8px 12px; font-size:0.8rem; font-weight:850; color:var(--text-main); display:flex; justify-content:space-between;">
+              <span>2️⃣ 진행 과정 (Process)</span>
+              <span id="badgeProcessPhoto" style="font-size:0.72rem; color:#64748b;">대기</span>
+            </div>
+            <div style="height:180px; background:#f8fafc; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative;" id="containerProcessPhoto">
+              <span style="color:#94a3b8; font-size:0.85rem;">사진 미등록</span>
+            </div>
+          </div>
+
+          <!-- 3. 최종 완료 (After) -->
+          <div style="background:#ffffff; border:1.5px solid var(--border-color); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; border-color:#86efac;">
+            <div style="background:#dcfce7; padding:8px 12px; font-size:0.8rem; font-weight:850; color:#15803d; display:flex; justify-content:space-between;">
+              <span>3️⃣ 최종 완료 (After)</span>
+              <span id="badgeAfterPhoto" style="font-size:0.72rem; color:#15803d; font-weight:800;">완료</span>
+            </div>
+            <div style="height:180px; background:#f8fafc; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative;" id="containerAfterPhoto">
+              <span style="color:#94a3b8; font-size:0.85rem;">사진 미등록</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 코치 소감 및 어르신 반응 -->
+      <div style="background: #fdf8eb; border: 1.5px solid #fde68a; border-radius: 12px; padding: 14px 16px; margin-bottom: 20px;">
+        <div style="font-size:0.82rem; font-weight:850; color:#92400e; margin-bottom:4px; display:flex; align-items:center; gap:6px;">
+          <span>📝 코치 현장 소감 및 어르신 반응 보고</span>
+        </div>
+        <p style="font-size:0.9rem; color:#451a03; line-height:1.5; margin:0;" id="reportCoachMemo">
+          (코치가 작성한 메모가 여기에 표시됩니다)
+        </p>
+      </div>
+
+      <!-- 하단 액션 버튼 바 -->
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; border-top: 1px solid var(--border-color); padding-top: 16px;">
+        <button type="button" class="btn-save-setting" onclick="copyCoachKakaoMsgCurrentMission()" style="background: #fef01b; color: #181600; border: 1px solid #e5d800; font-weight: 850;">
+          <span>💬</span> 코치 카톡 링크 전송
+        </button>
+
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn-save-setting" onclick="closeDispatchReportModal()" style="background: #ffffff; color: var(--text-main); border: 1.5px solid var(--border-color);">
+            닫기
+          </button>
+          <button type="button" class="btn-save-setting" id="btnApproveSettlement" onclick="approveCoachSettlement()" style="background: linear-gradient(135deg, #059669 0%, #047857 100%); color: #ffffff; box-shadow: 0 4px 14px rgba(5,150,105,0.3); font-weight: 850;">
+            <span>💰</span> 송금 확인 및 정산 완료 승인
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -5620,78 +5746,138 @@
     // =========================================================================
     // 12. 🤝 각종 서비스별 전담 코치 배정 및 파견 관리 툴 엔진 (Dispatch Center)
     // =========================================================================
-    const DISPATCH_STORAGE_KEY = 'yebaek_service_dispatches_v1';
+    // coach.html과 100% 동일한 실시간 스토리지 키 사용
+    const DISPATCH_STORAGE_KEY = 'yebaek_dispatches_v1';
     let currentDispatchFilter = 'all';
+    let activeReportMissionId = null;
 
     const DEFAULT_DISPATCHES = [
       {
-        id: 'disp_1',
-        clientName: '정옥희 어르신',
-        clientPhone: '010-9943-1288',
-        serviceType: '💄 웰니스 & 시니어 뷰티',
-        schedule: '2026.09.28 14:00',
-        location: '서울 서초구 반포동 자택',
-        coachId: 'coach_1',
-        coachName: '김민희',
-        status: '코칭중',
-        memo: '가족 모임 전 방문 헤어/메이크업 코디 상담 진행 중'
+        id: "disp_201",
+        customerName: "이순옥 어르신",
+        phone: "010-3849-5912",
+        serviceType: "💄 화려한 외출 (시니어 메이크업)",
+        preferredDate: "2026.09.28 오전 10:00",
+        address: "서울 강남구 도곡동 타워팰리스 B동 1204호",
+        coach: "김민희 코치",
+        coachPhone: "010-1111-2222",
+        step: "배정완료",
+        fee: 150000,
+        notes: "따님(장미희 님)께서 팔순 잔치 기념 선물로 신청. 자연스럽고 화사한 웜톤 메이크업 요청",
+        arrivalStamp: "",
+        completionDate: "",
+        beforePhoto: "",
+        processPhoto: "",
+        afterPhoto: "",
+        coachReport: ""
       },
       {
-        id: 'disp_2',
-        clientName: '강명숙 님 (모친 대리)',
-        clientPhone: '010-5512-8871',
-        serviceType: '👗 옷장 비움 & 공간 코칭',
-        schedule: '2026.09.29 10:30',
-        location: '경기 성남시 분당구 수내동',
-        coachId: 'coach_2',
-        coachName: '정우성',
-        status: '배정완료',
-        memo: '어머니 댁 옷장 비움 코칭 및 동선 안전 점검 파견 예정'
+        id: "disp_202",
+        customerName: "박정희 님 모친",
+        phone: "010-8273-1920",
+        serviceType: "👗 옷장 정리 & 비움 (공간 수납)",
+        preferredDate: "2026.09.28 오후 02:00",
+        address: "서울 서초구 반포자이 104동 801호",
+        coach: "김민희 코치",
+        coachPhone: "010-1111-2222",
+        step: "진행중",
+        fee: 180000,
+        notes: "안방 장롱 3칸 30년 묵은 코트 및 이불 선별 비움",
+        arrivalStamp: "14시 05분 도착",
+        completionDate: "",
+        beforePhoto: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&auto=format&fit=crop&q=80",
+        processPhoto: "",
+        afterPhoto: "",
+        coachReport: ""
       },
       {
-        id: 'disp_3',
-        clientName: '김순옥 어르신',
-        clientPhone: '010-3841-9210',
-        serviceType: '✍️ 디지털 자서전 구술 코칭',
-        schedule: '2026.09.30 15:00',
-        location: '서울 강남구 압구정동',
-        coachId: 'coach_3',
-        coachName: '이선영',
-        status: '배정완료',
-        memo: '30일 인생 서사 워크북 1차 방문 인터뷰 배정'
+        id: "disp_203",
+        customerName: "최영호 어르신",
+        phone: "010-5123-9944",
+        serviceType: "✍️ 디지털 자서전 (인생 구술)",
+        preferredDate: "2026.09.27 오전 11:00",
+        address: "서울 송파구 잠실엘스 112동 502호",
+        coach: "이선영 코치",
+        coachPhone: "010-3333-4444",
+        step: "서비스완료",
+        fee: 150000,
+        notes: "월남전 참전 시절 옛날 흑백사진 수집 및 첫 사업 도전 스토리 녹음",
+        arrivalStamp: "10시 55분 도착",
+        completionDate: "9/27 13:20 완료",
+        beforePhoto: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&auto=format&fit=crop&q=80",
+        processPhoto: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=600&auto=format&fit=crop&q=80",
+        afterPhoto: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&auto=format&fit=crop&q=80",
+        coachReport: "월남전 참전 흑백사진 15장 디지털 복원 완료 및 1차 구술 녹음 완료. 어르신께서 너무나 만족해하시며 따뜻한 차를 대접해 주셨습니다."
       },
       {
-        id: 'disp_4',
-        clientName: '이만수 어르신',
-        clientPhone: '010-7712-4459',
-        serviceType: '🏛️ 나의 서재 아카이빙',
-        schedule: '2026.10.02 11:00',
-        location: '서울 마포구 공덕동 자택',
-        coachId: 'coach_5',
-        coachName: '한지은',
-        status: '배정완료',
-        memo: '흑백 사진 앨범 2권 원본 인수 및 디지털 복원 코디'
+        id: "disp_204",
+        customerName: "정옥희 어르신",
+        phone: "010-9943-1288",
+        serviceType: "💌 아름다운 생전 엔딩 파티",
+        preferredDate: "2026.09.30 오후 03:00",
+        address: "서울 서초구 양재동 카페 채원",
+        coach: "정우성 코치",
+        coachPhone: "010-7777-8888",
+        step: "배정완료",
+        fee: 200000,
+        notes: "가까운 지인 10분 모시고 진행하는 따뜻한 생전 감사 파티 기획",
+        arrivalStamp: "",
+        completionDate: "",
+        beforePhoto: "",
+        processPhoto: "",
+        afterPhoto: "",
+        coachReport: ""
       },
       {
-        id: 'disp_5',
-        clientName: '박성민 님',
-        clientPhone: '010-5192-3301',
-        serviceType: '📦 오래된 짐 & 유품 정리',
-        schedule: '2026.10.04 14:00',
-        location: '인천 연수구 송도동',
-        coachId: '',
-        coachName: '',
-        status: '배정대기',
-        memo: '서재 오래된 책과 유품 비우기 견적 상담 (전담 코치 배정 필요)'
+        id: "disp_205",
+        customerName: "박성민 님",
+        phone: "010-5192-3301",
+        serviceType: "📦 오래된 짐 & 유품 정리",
+        preferredDate: "2026.10.04 오후 02:00",
+        address: "인천 연수구 송도동 센트럴파크 자택",
+        coach: "",
+        coachPhone: "",
+        step: "배정대기",
+        fee: 220000,
+        notes: "서재 오래된 책과 유품 비우기 견적 상담 (전담 코치 배정 필요)",
+        arrivalStamp: "",
+        completionDate: "",
+        beforePhoto: "",
+        processPhoto: "",
+        afterPhoto: "",
+        coachReport: ""
       }
     ];
 
+    // 데이터 가져오기 및 구버전 호환 정규화
     function getDispatches() {
-      const saved = localStorage.getItem(DISPATCH_STORAGE_KEY);
+      const saved = localStorage.getItem(DISPATCH_STORAGE_KEY) || localStorage.getItem('yebaek_service_dispatches_v1');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            // 필드 호환 정규화
+            return parsed.map(d => ({
+              id: d.id || 'disp_' + Date.now(),
+              customerName: d.customerName || d.clientName || '고객',
+              phone: d.phone || d.clientPhone || '',
+              serviceType: d.serviceType || '💄 화려한 외출 (시니어 메이크업)',
+              preferredDate: d.preferredDate || d.schedule || '',
+              address: d.address || d.location || '',
+              coach: d.coach || (d.coachName ? d.coachName + (d.coachName.endsWith('코치') ? '' : ' 코치') : ''),
+              coachPhone: d.coachPhone || '',
+              coachId: d.coachId || '',
+              step: d.step || d.status || '배정대기',
+              fee: Number(d.fee) || 150000,
+              notes: d.notes || d.memo || '',
+              arrivalStamp: d.arrivalStamp || '',
+              completionDate: d.completionDate || '',
+              beforePhoto: d.beforePhoto || '',
+              processPhoto: d.processPhoto || '',
+              afterPhoto: d.afterPhoto || '',
+              coachReport: d.coachReport || ''
+            }));
+          }
         } catch (e) {
           console.error('배정 데이터 파싱 오류:', e);
         }
@@ -5731,89 +5917,144 @@
       }
 
       if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 24px; color:#94a3b8;">해당 서비스의 배정 내역이 없습니다. [신규 서비스 배정 등록]으로 코치를 배정해보세요.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding: 32px; color:#94a3b8;">해당 서비스의 배정 내역이 없습니다. [신규 서비스 배정 등록]으로 코치를 배정해보세요.</td></tr>';
         return;
       }
 
       tbody.innerHTML = filtered.map(d => {
-        const isAssigned = !!d.coachId;
-        const coachOptions = coaches.map(c => `
-          <option value="${c.id}" ${d.coachId === c.id ? 'selected' : ''}>
+        // 코치 이름 매칭
+        const coachOptions = coaches.map(c => {
+          const isSelected = (d.coach && d.coach.includes(c.name)) || d.coachId === c.id;
+          return `<option value="${c.name} 코치" ${isSelected ? 'selected' : ''}>
             ${escapeHtml(c.name)} 코치 (${c.specialty.replace(/^[^\s]+ /, '')}) [${c.status}]
-          </option>
-        `).join('');
+          </option>`;
+        }).join('');
+
+        // 사진 존재 여부 및 썸네일
+        const hasPhotos = !!(d.beforePhoto || d.processPhoto || d.afterPhoto);
+        let photoThumbHtml = '';
+        if (hasPhotos) {
+          const thumbSrc = d.afterPhoto || d.processPhoto || d.beforePhoto;
+          photoThumbHtml = `
+            <div style="display:flex; align-items:center; justify-content:center; gap:6px;">
+              <img src="${thumbSrc}" style="width:36px; height:36px; object-fit:cover; border-radius:6px; border:1px solid #cbd5e1; cursor:pointer;" onclick="openDispatchReportModal('${d.id}')" title="클릭하여 현장 사진 크게 검수">
+              <button class="btn-action-sm" onclick="openDispatchReportModal('${d.id}')" style="background:var(--accent); color:#fff; border:none; padding:4px 8px; font-weight:800; font-size:0.75rem;">
+                검수
+              </button>
+            </div>
+          `;
+        } else {
+          photoThumbHtml = `
+            <button class="btn-action-sm" onclick="openDispatchReportModal('${d.id}')" style="background:#f1f5f9; color:#64748b; padding:4px 8px; font-size:0.75rem;">
+              대기중
+            </button>
+          `;
+        }
+
+        // 스탬프 표시
+        let stampHtml = '';
+        if (d.arrivalStamp || d.completionDate) {
+          stampHtml = `
+            <div style="font-size:0.78rem; line-height:1.35; text-align:center;">
+              ${d.arrivalStamp ? `<div style="color:#0284c7; font-weight:800;">📍 ${escapeHtml(d.arrivalStamp)}</div>` : ''}
+              ${d.completionDate ? `<div style="color:#059669; font-weight:800;">🏁 ${escapeHtml(d.completionDate)}</div>` : ''}
+            </div>
+          `;
+        } else {
+          stampHtml = `<div style="text-align:center; color:#94a3b8; font-size:0.78rem;">- 미도착 -</div>`;
+        }
 
         return `
           <tr>
-            <td style="font-weight: 850; color: var(--text-main); font-size: 0.95rem;">${escapeHtml(d.clientName)}</td>
-            <td><a href="tel:${escapeHtml(d.clientPhone)}" style="color:var(--accent); font-weight:700;">${escapeHtml(d.clientPhone)}</a></td>
+            <td style="font-weight: 850; color: var(--text-main); font-size: 0.95rem;">
+              ${escapeHtml(d.customerName)}
+            </td>
             <td>
-              <span style="display:inline-block; padding:3px 8px; border-radius:6px; background:rgba(43,90,66,0.08); color:var(--accent); font-size:0.8rem; font-weight:800;">
+              <a href="tel:${escapeHtml(d.phone)}" style="color:var(--accent); font-weight:700; font-size:0.88rem;">${escapeHtml(d.phone)}</a>
+            </td>
+            <td>
+              <span style="display:inline-block; padding:4px 8px; border-radius:6px; background:rgba(43,90,66,0.08); color:var(--accent); font-size:0.8rem; font-weight:800;">
                 ${escapeHtml(d.serviceType || '일반 서비스')}
               </span>
             </td>
-            <td style="color:var(--text-muted); font-size:0.85rem;">${escapeHtml(d.schedule || '-')}</td>
-            <td style="max-width:140px; font-size:0.85rem; color:var(--text-main); line-height:1.3;">${escapeHtml(d.location || '-')}</td>
+            <td style="font-size:0.84rem; line-height:1.35; color:var(--text-main);">
+              <div style="font-weight:750; color:#1e293b;">${escapeHtml(d.preferredDate || '-')}</div>
+              <div style="color:var(--text-muted); font-size:0.8rem; margin-top:2px;">${escapeHtml(d.address || '-')}</div>
+            </td>
             <td>
-              <select class="coach-select-sm" onchange="assignCoachToDispatch('${d.id}', this.value)" style="width: 100%;">
+              <select class="coach-select-sm" onchange="assignCoachToDispatchName('${d.id}', this.value)" style="width: 100%; margin-bottom:4px;">
                 <option value="">⚠️ 미배정 (코치 선택)</option>
                 ${coachOptions}
               </select>
-            </td>
-            <td style="text-align:center;">
-              <select class="status-select-sm" onchange="updateDispatchStatus('${d.id}', this.value)" style="background:#fff;">
-                <option value="배정대기" ${d.status === '배정대기' ? 'selected' : ''}>⏳ 배정대기</option>
-                <option value="배정완료" ${d.status === '배정완료' ? 'selected' : ''}>🤝 배정완료</option>
-                <option value="코칭중" ${d.status === '코칭중' ? 'selected' : ''}>🏃 코칭중</option>
-                <option value="완료" ${d.status === '완료' ? 'selected' : ''}>✅ 코칭완료</option>
-              </select>
-            </td>
-            <td style="max-width:220px; font-size:0.85rem; line-height:1.4; color:var(--text-main);">
-              <div style="cursor:pointer;" onclick="editDispatchMemo('${d.id}')" title="클릭하여 메모 수정">
-                ${escapeHtml(d.memo || '(메모 없음 - 클릭하여 입력)')}
-                <span style="font-size:0.75rem; color:var(--accent); margin-left:4px;">✏️</span>
+              <div style="font-size:0.78rem; font-weight:850; color:#d97706; text-align:right;">
+                수수료: ${(d.fee || 150000).toLocaleString()}원
               </div>
             </td>
             <td style="text-align:center;">
-              <button class="btn-action-sm del" onclick="deleteDispatch('${d.id}')">삭제</button>
+              <select class="status-select-sm" onchange="updateDispatchStep('${d.id}', this.value)" style="background:#fff; font-weight:800;">
+                <option value="배정대기" ${d.step === '배정대기' ? 'selected' : ''}>⏳ 배정대기</option>
+                <option value="배정완료" ${d.step === '배정완료' ? 'selected' : ''}>🤝 배정완료</option>
+                <option value="진행중" ${d.step === '진행중' ? 'selected' : ''}>🏃 진행중</option>
+                <option value="서비스완료" ${d.step === '서비스완료' ? 'selected' : ''}>✓ 서비스완료</option>
+                <option value="정산완료" ${d.step === '정산완료' ? 'selected' : ''}>💰 정산완료</option>
+              </select>
+            </td>
+            <td>
+              ${stampHtml}
+            </td>
+            <td style="text-align:center;">
+              ${photoThumbHtml}
+            </td>
+            <td style="max-width:200px; font-size:0.84rem; line-height:1.4; color:var(--text-main);">
+              <div style="cursor:pointer;" onclick="editDispatchMemo('${d.id}')" title="클릭하여 메모 수정">
+                <div>${escapeHtml(d.notes || '(사전 메모 없음)')}</div>
+                ${d.coachReport ? `<div style="color:#059669; font-size:0.78rem; margin-top:3px; font-weight:750;">📝 코치: ${escapeHtml(d.coachReport)}</div>` : ''}
+                <span style="font-size:0.75rem; color:var(--accent);">✏️ 메모수정</span>
+              </div>
+            </td>
+            <td style="text-align:center;">
+              <div style="display:flex; flex-direction:column; gap:4px; align-items:center;">
+                <button class="btn-action-sm" onclick="copyCoachKakaoMsg('${d.id}')" style="background:#fef01b; color:#181600; border-color:#e5d800; font-size:0.75rem; padding:3px 6px;" title="코치에게 보낼 카톡 배정 안내문 복사">
+                  💬 카톡복사
+                </button>
+                <div style="display:flex; gap:4px;">
+                  <button class="btn-action-sm edit" onclick="openDispatchModal('${d.id}')" title="수정">수정</button>
+                  <button class="btn-action-sm del" onclick="deleteDispatch('${d.id}')" title="삭제">삭제</button>
+                </div>
+              </div>
             </td>
           </tr>
         `;
       }).join('');
     }
 
-    // 담당 코치 즉시 배정/변경 핸들러 (핵심 툴)
-    function assignCoachToDispatch(dispId, coachId) {
+    // 담당 코치 즉시 배정/변경 핸들러
+    function assignCoachToDispatchName(dispId, coachFullName) {
       const dispatches = getDispatches();
-      const coaches = getCoaches();
       const target = dispatches.find(d => d.id === dispId);
       if (!target) return;
 
-      if (!coachId) {
+      if (!coachFullName) {
+        target.coach = '';
         target.coachId = '';
-        target.coachName = '';
-        target.status = '배정대기';
+        target.step = '배정대기';
         saveDispatches(dispatches);
         return;
       }
 
-      const coach = coaches.find(c => c.id === coachId);
-      if (coach) {
-        target.coachId = coach.id;
-        target.coachName = coach.name;
-        if (target.status === '배정대기') {
-          target.status = '배정완료';
-        }
-        saveDispatches(dispatches);
-        alert(`[${target.clientName}] 고객 건에 [${coach.name} 코치]가 성공적으로 배정되었습니다.`);
+      target.coach = coachFullName;
+      if (target.step === '배정대기') {
+        target.step = '배정완료';
       }
+      saveDispatches(dispatches);
+      alert(`[${target.customerName}] 고객 건에 [${coachFullName}]가 성공적으로 배정되었습니다.\n\n우측 [💬 카톡복사]를 눌러 코치님께 카카오톡 배정 메시지를 전달해 주세요.`);
     }
 
-    function updateDispatchStatus(dispId, status) {
+    function updateDispatchStep(dispId, step) {
       const dispatches = getDispatches();
       const target = dispatches.find(d => d.id === dispId);
       if (target) {
-        target.status = status;
+        target.step = step;
         saveDispatches(dispatches);
       }
     }
@@ -5823,13 +6064,187 @@
       const target = dispatches.find(d => d.id === dispId);
       if (!target) return;
 
-      const newMemo = prompt(`[${target.clientName}] 코칭 메모 및 사전 특이사항 수정:`, target.memo || '');
+      const newMemo = prompt(`[${target.customerName}] 고객 사전 요청 메모 및 특이사항 수정:`, target.notes || '');
       if (newMemo !== null) {
-        target.memo = newMemo.trim();
+        target.notes = newMemo.trim();
         saveDispatches(dispatches);
       }
     }
 
+    // =========================================================================
+    // 현장 사진 3종 검수 & 송금 승인 모달 컨트롤러 (핵심)
+    // =========================================================================
+    function openDispatchReportModal(dispId) {
+      const dispatches = getDispatches();
+      const target = dispatches.find(d => d.id === dispId);
+      if (!target) return;
+
+      activeReportMissionId = dispId;
+
+      document.getElementById('reportModalTitle').textContent = `📸 [${target.customerName}] 현장 코칭 검수 보고`;
+      document.getElementById('reportCoachName').textContent = target.coach || '미배정';
+      document.getElementById('reportServiceType').textContent = target.serviceType || '일반 서비스';
+      document.getElementById('reportArrivalStamp').textContent = target.arrivalStamp || '미도착 (현장 대기)';
+      document.getElementById('reportCompletionDate').textContent = target.completionDate || '미완료';
+      document.getElementById('reportCoachFee').textContent = `${(target.fee || 150000).toLocaleString()}원`;
+
+      // 1. 작업 전 사진
+      renderPhotoBox('containerBeforePhoto', 'badgeBeforePhoto', target.beforePhoto, '작업 전 (Before)');
+      // 2. 진행 과정 사진
+      renderPhotoBox('containerProcessPhoto', 'badgeProcessPhoto', target.processPhoto, '진행 과정 (Process)');
+      // 3. 최종 완료 사진
+      renderPhotoBox('containerAfterPhoto', 'badgeAfterPhoto', target.afterPhoto, '최종 완료 (After)');
+
+      // 코치 메모
+      const memoEl = document.getElementById('reportCoachMemo');
+      if (memoEl) {
+        memoEl.textContent = target.coachReport || target.notes || '(코치 현장 소감 및 특이사항 기록이 아직 없습니다)';
+      }
+
+      // 송금 버튼 상태
+      const approveBtn = document.getElementById('btnApproveSettlement');
+      if (approveBtn) {
+        if (target.step === '정산완료') {
+          approveBtn.textContent = '✓ 이미 송금 및 정산 승인 완료됨';
+          approveBtn.style.background = '#64748b';
+          approveBtn.disabled = true;
+        } else {
+          approveBtn.innerHTML = '<span>💰</span> 활동비 송금 확인 및 정산 완료 승인';
+          approveBtn.style.background = 'linear-gradient(135deg, #059669 0%, #047857 100%)';
+          approveBtn.disabled = false;
+        }
+      }
+
+      const modal = document.getElementById('dispatchReportModal');
+      if (modal) modal.classList.add('open');
+    }
+
+    function renderPhotoBox(containerId, badgeId, photoUrl, label) {
+      const container = document.getElementById(containerId);
+      const badge = document.getElementById(badgeId);
+      if (!container) return;
+
+      if (photoUrl) {
+        if (badge) {
+          badge.textContent = '등록 완료';
+          badge.style.color = '#059669';
+          badge.style.fontWeight = '800';
+        }
+        container.innerHTML = `
+          <a href="${photoUrl}" target="_blank" title="새 창에서 원본 확대 보기" style="display:block; width:100%; height:100%;">
+            <img src="${photoUrl}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.src='https://placehold.co/400x300?text=Image+Load+Error';">
+          </a>
+        `;
+      } else {
+        if (badge) {
+          badge.textContent = '미등록';
+          badge.style.color = '#94a3b8';
+          badge.style.fontWeight = '500';
+        }
+        container.innerHTML = `<span style="color:#94a3b8; font-size:0.85rem;">${label} 사진 미등록</span>`;
+      }
+    }
+
+    function closeDispatchReportModal() {
+      const modal = document.getElementById('dispatchReportModal');
+      if (modal) modal.classList.remove('open');
+      activeReportMissionId = null;
+    }
+
+    function closeDispatchReportModalOnOverlay(e) {
+      if (e.target.id === 'dispatchReportModal') closeDispatchReportModal();
+    }
+
+    // 본사 관리자가 활동비 송금 후 정산 승인
+    function approveCoachSettlement() {
+      if (!activeReportMissionId) return;
+      const dispatches = getDispatches();
+      const target = dispatches.find(d => d.id === activeReportMissionId);
+      if (!target) return;
+
+      const feeStr = (target.fee || 150000).toLocaleString();
+      if (confirm(`[${target.coach || '담당 코치'}] 님께 활동비 (${feeStr}원)를 송금하셨습니까?\n\n[확인]을 누르면 상태가 '정산완료'로 변경되며, 코치 앱에도 실시간 '송금완료' 뱃지가 표기됩니다.`)) {
+        target.step = '정산완료';
+        saveDispatches(dispatches);
+        closeDispatchReportModal();
+        alert(`🎉 [${target.customerName}] 건의 코치 활동비 정산이 최종 승인되었습니다!`);
+      }
+    }
+
+    // 카카오톡 코치 알림 메시지 복사 유틸
+    function generateKakaoMsgText(d) {
+      const coachAppUrl = window.location.origin ? `${window.location.origin}/coach.html` : 'https://netrium1-lab.github.io/coach.html';
+      const cleanCoachName = (d.coach || '코치').replace(/ 코치$/, '');
+
+      return `[여백과 결] 현장 코칭 배정 안내
+
+안녕하세요, ${cleanCoachName} 코치님!
+새로운 현장 케어 임무가 배정되었습니다.
+
+■ 고객명: ${d.customerName}
+■ 서비스: ${d.serviceType}
+■ 방문일시: ${d.preferredDate}
+■ 방문주소: ${d.address}
+■ 코치 활동비: ${(d.fee || 150000).toLocaleString()}원
+■ 특이사항: ${d.notes || '특이사항 없음'}
+
+아래 코치 전용 현장 파트너 앱 링크를 열어 본인확인 후 도착 확인 및 임무를 수행해 주세요.
+▶ 코치 앱 바로가기:
+${coachAppUrl}
+
+※ 현장 도착 시 앱의 [📍 현장 도착 확인] 버튼을 누르고, 작업 전/과정/완료 사진을 등록해 주시면 본사 검수 후 지정일에 활동비가 송금됩니다.`;
+    }
+
+    function copyCoachKakaoMsg(dispId) {
+      const dispatches = getDispatches();
+      const target = dispatches.find(d => d.id === dispId);
+      if (!target) return;
+
+      const text = generateKakaoMsgText(target);
+      navigator.clipboard.writeText(text).then(() => {
+        alert(`📋 [${target.coach || '코치'}] 님께 전달할 카카오톡 배정 안내 메시지가 클립보드에 복사되었습니다!\n\n카카오톡 대화창에서 [붙여넣기(Ctrl+V)] 하시면 됩니다.`);
+      }).catch(() => {
+        prompt('아래 카카오톡 배정 안내문을 복사하여 코치님께 전송하세요:', text);
+      });
+    }
+
+    function copyCoachKakaoMsgCurrentMission() {
+      if (activeReportMissionId) {
+        copyCoachKakaoMsg(activeReportMissionId);
+      }
+    }
+
+    function copyCoachKakaoMsgFromForm() {
+      const name = document.getElementById('inputDispClientName').value || '고객';
+      const phone = document.getElementById('inputDispClientPhone').value || '';
+      const svc = document.getElementById('selectDispServiceType').value || '';
+      const schedule = document.getElementById('inputDispSchedule').value || '';
+      const loc = document.getElementById('inputDispLocation').value || '';
+      const coachSelect = document.getElementById('selectDispCoach');
+      const coach = coachSelect ? coachSelect.value : '';
+      const fee = Number(document.getElementById('inputDispFee').value) || 150000;
+      const memo = document.getElementById('inputDispMemo').value || '';
+
+      const tempD = {
+        customerName: name,
+        phone: phone,
+        serviceType: svc,
+        preferredDate: schedule,
+        address: loc,
+        coach: coach,
+        fee: fee,
+        notes: memo
+      };
+
+      const text = generateKakaoMsgText(tempD);
+      navigator.clipboard.writeText(text).then(() => {
+        alert('📋 작성 중인 배정 안내문이 클립보드에 복사되었습니다!\n카카오톡으로 코치님께 바로 전송하실 수 있습니다.');
+      }).catch(() => {
+        prompt('복사하여 전송하세요:', text);
+      });
+    }
+
+    // 신규 배정 모달 열기
     function openDispatchModal(dispId) {
       const modal = document.getElementById('dispatchFormModal');
       const form = document.querySelector('#dispatchFormModal form');
@@ -5839,7 +6254,7 @@
       if (coachSelect) {
         const coaches = getCoaches();
         coachSelect.innerHTML = '<option value="">⚠️ 미배정 (코치를 선택하세요)</option>' + coaches.map(c => `
-          <option value="${c.id}">${escapeHtml(c.name)} 코치 (${c.specialty.replace(/^[^\s]+ /, '')}) [${c.status}]</option>
+          <option value="${c.name} 코치">${escapeHtml(c.name)} 코치 (${c.specialty.replace(/^[^\s]+ /, '')}) [${c.status}]</option>
         `).join('');
       }
 
@@ -5850,6 +6265,7 @@
       const serviceSelect = document.getElementById('selectDispServiceType');
       const scheduleInput = document.getElementById('inputDispSchedule');
       const locationInput = document.getElementById('inputDispLocation');
+      const feeInput = document.getElementById('inputDispFee');
       const statusSelect = document.getElementById('selectDispStatus');
       const memoInput = document.getElementById('inputDispMemo');
 
@@ -5857,16 +6273,17 @@
         const dispatches = getDispatches();
         const target = dispatches.find(d => d.id === dispId);
         if (target) {
-          if (titleEl) titleEl.textContent = `🤝 [${target.clientName}] 서비스 배정 수정`;
+          if (titleEl) titleEl.textContent = `🤝 [${target.customerName}] 서비스 배정 수정`;
           if (idInput) idInput.value = target.id;
-          if (nameInput) nameInput.value = target.clientName || '';
-          if (phoneInput) phoneInput.value = target.clientPhone || '';
-          if (serviceSelect) serviceSelect.value = target.serviceType || '💄 웰니스 & 시니어 뷰티';
-          if (scheduleInput) scheduleInput.value = target.schedule || '';
-          if (locationInput) locationInput.value = target.location || '';
-          if (coachSelect) coachSelect.value = target.coachId || '';
-          if (statusSelect) statusSelect.value = target.status || '배정대기';
-          if (memoInput) memoInput.value = target.memo || '';
+          if (nameInput) nameInput.value = target.customerName || '';
+          if (phoneInput) phoneInput.value = target.phone || '';
+          if (serviceSelect) serviceSelect.value = target.serviceType || '💄 화려한 외출 (시니어 메이크업)';
+          if (scheduleInput) scheduleInput.value = target.preferredDate || '';
+          if (locationInput) locationInput.value = target.address || '';
+          if (coachSelect) coachSelect.value = target.coach || '';
+          if (feeInput) feeInput.value = target.fee || 150000;
+          if (statusSelect) statusSelect.value = target.step || '배정대기';
+          if (memoInput) memoInput.value = target.notes || '';
         }
       } else {
         if (titleEl) titleEl.textContent = '🤝 신규 서비스 고객 코치 배정 등록';
@@ -5874,8 +6291,9 @@
         if (idInput) idInput.value = '';
         if (scheduleInput) {
           const tom = new Date(Date.now() + 86400000);
-          scheduleInput.value = `${tom.getFullYear()}.${String(tom.getMonth()+1).padStart(2,'0')}.${String(tom.getDate()).padStart(2,'0')} 14:00`;
+          scheduleInput.value = `${tom.getFullYear()}.${String(tom.getMonth()+1).padStart(2,'0')}.${String(tom.getDate()).padStart(2,'0')} 오전 10:00`;
         }
+        if (feeInput) feeInput.value = 150000;
         if (statusSelect) statusSelect.value = '배정대기';
       }
 
@@ -5900,55 +6318,56 @@
       const scheduleInput = document.getElementById('inputDispSchedule');
       const locationInput = document.getElementById('inputDispLocation');
       const coachSelect = document.getElementById('selectDispCoach');
+      const feeInput = document.getElementById('inputDispFee');
       const statusSelect = document.getElementById('selectDispStatus');
       const memoInput = document.getElementById('inputDispMemo');
 
-      const clientName = nameInput ? nameInput.value.trim() : '';
-      if (!clientName) { alert('고객 성함을 입력해주세요.'); return; }
+      const customerName = nameInput ? nameInput.value.trim() : '';
+      if (!customerName) { alert('고객 성함을 입력해주세요.'); return; }
 
-      const coachId = coachSelect ? coachSelect.value : '';
-      let coachName = '';
-      if (coachId) {
-        const coaches = getCoaches();
-        const found = coaches.find(c => c.id === coachId);
-        if (found) coachName = found.name;
-      }
-
+      const coachName = coachSelect ? coachSelect.value : '';
       const list = getDispatches();
       const existingId = idInput ? idInput.value : '';
 
       if (existingId) {
         const target = list.find(d => d.id === existingId);
         if (target) {
-          target.clientName = clientName;
-          target.clientPhone = phoneInput ? phoneInput.value.trim() : '';
+          target.customerName = customerName;
+          target.phone = phoneInput ? phoneInput.value.trim() : '';
           target.serviceType = serviceSelect ? serviceSelect.value : '';
-          target.schedule = scheduleInput ? scheduleInput.value.trim() : '';
-          target.location = locationInput ? locationInput.value.trim() : '';
-          target.coachId = coachId;
-          target.coachName = coachName;
-          target.status = statusSelect ? statusSelect.value : (coachId ? '배정완료' : '배정대기');
-          target.memo = memoInput ? memoInput.value.trim() : '';
+          target.preferredDate = scheduleInput ? scheduleInput.value.trim() : '';
+          target.address = locationInput ? locationInput.value.trim() : '';
+          target.coach = coachName;
+          target.fee = feeInput ? Number(feeInput.value) || 150000 : 150000;
+          target.step = statusSelect ? statusSelect.value : (coachName ? '배정완료' : '배정대기');
+          target.notes = memoInput ? memoInput.value.trim() : '';
         }
       } else {
         const newDisp = {
           id: 'disp_' + Date.now(),
-          clientName: clientName,
-          clientPhone: phoneInput ? phoneInput.value.trim() : '',
-          serviceType: serviceSelect ? serviceSelect.value : '💄 웰니스 & 시니어 뷰티',
-          schedule: scheduleInput ? scheduleInput.value.trim() : '',
-          location: locationInput ? locationInput.value.trim() : '',
-          coachId: coachId,
-          coachName: coachName,
-          status: statusSelect ? statusSelect.value : (coachId ? '배정완료' : '배정대기'),
-          memo: memoInput ? memoInput.value.trim() : ''
+          customerName: customerName,
+          phone: phoneInput ? phoneInput.value.trim() : '',
+          serviceType: serviceSelect ? serviceSelect.value : '💄 화려한 외출 (시니어 메이크업)',
+          preferredDate: scheduleInput ? scheduleInput.value.trim() : '',
+          address: locationInput ? locationInput.value.trim() : '',
+          coach: coachName,
+          coachPhone: '',
+          fee: feeInput ? Number(feeInput.value) || 150000 : 150000,
+          step: statusSelect ? statusSelect.value : (coachName ? '배정완료' : '배정대기'),
+          notes: memoInput ? memoInput.value.trim() : '',
+          arrivalStamp: '',
+          completionDate: '',
+          beforePhoto: '',
+          processPhoto: '',
+          afterPhoto: '',
+          coachReport: ''
         };
         list.unshift(newDisp);
       }
 
       saveDispatches(list);
       closeDispatchModal();
-      alert('서비스 코치 배정 정보가 성공적으로 저장되었습니다.');
+      alert(`서비스 코치 배정 정보가 성공적으로 저장되었습니다.\n배정 테이블에서 [💬 카톡복사]를 눌러 코치님께 안내문을 바로 전송하실 수 있습니다.`);
     }
 
     function deleteDispatch(dispId) {
@@ -5961,9 +6380,9 @@
 
     function exportDispatchesCSV() {
       const list = getDispatches();
-      let csv = "고객성함,연락처,신청서비스,방문희망일시,방문장소,담당코치,진행상태,코칭메모\n";
+      let csv = "고객성함,연락처,신청서비스,방문희망일시,방문장소,담당코치,활동비,진행상태,도착스탬프,완료스탬프,코칭메모,현장소감\n";
       list.forEach(d => {
-        csv += `"${d.clientName}","${d.clientPhone}","${d.serviceType || ''}","${d.schedule || ''}","${(d.location || '').replace(/"/g, '""')}","${d.coachName ? d.coachName + ' 코치' : '미배정'}","${d.status || '배정대기'}","${(d.memo || '').replace(/"/g, '""')}"\n`;
+        csv += `"${d.customerName}","${d.phone}","${d.serviceType || ''}","${d.preferredDate || ''}","${(d.address || '').replace(/"/g, '""')}","${d.coach || '미배정'}","${d.fee || 150000}","${d.step || '배정대기'}","${d.arrivalStamp || ''}","${d.completionDate || ''}","${(d.notes || '').replace(/"/g, '""')}","${(d.coachReport || '').replace(/"/g, '""')}"\n`;
       });
       const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
       downloadCSV(`여백과결_서비스별_코치배정현황_${stamp}.csv`, csv);
@@ -5986,7 +6405,7 @@
       }
       if (statDispatch) statDispatch.textContent = `${dispatches.length}건`;
       if (statPending) {
-        const pendingCount = dispatches.filter(d => !d.coachId || d.status === '배정대기').length;
+        const pendingCount = dispatches.filter(d => (!d.coach && !d.coachId) || d.step === '배정대기' || d.status === '배정대기').length;
         statPending.textContent = `${pendingCount}건`;
       }
     }
