@@ -686,20 +686,23 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 24px;
+      padding: 12px 20px;
       border-bottom: 1px solid #202531;
       background: #141720;
       flex-shrink: 0;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .editor-top-title {
       font-family: 'Noto Serif KR', serif;
-      font-size: 1.18rem;
+      font-size: 1.15rem;
       font-weight: 800;
       color: #ffffff;
       display: flex;
       align-items: center;
       gap: 10px;
+      white-space: nowrap;
     }
 
     .editor-top-badge {
@@ -716,6 +719,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     .btn-editor-action {
@@ -1160,6 +1164,21 @@
       box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
     }
 
+    /* 에디터(다크) 및 본문 뷰어 내 하이라이트/인포 박스 글자색 보정 */
+    .editor-content-area div[style*="background"],
+    .reader-body div[style*="background"] {
+      color: #1e293b !important;
+    }
+    .editor-content-area div[style*="background"] h4,
+    .reader-body div[style*="background"] h4 {
+      color: #0f172a !important;
+      font-weight: 800 !important;
+    }
+    .editor-content-area div[style*="background"] p,
+    .reader-body div[style*="background"] p {
+      color: #334155 !important;
+    }
+
     @media (max-width: 768px) {
       .editor-body-layout {
         flex-direction: column;
@@ -1428,9 +1447,14 @@
     <div style="display: flex; align-items: center; gap: 8px;">
       <span style="color: var(--accent-gold); font-weight: 900; font-size: 1.15rem;">| 여백과 결 관리</span>
     </div>
-    <button type="button" class="mobile-sidebar-toggle" onclick="toggleSidebar()">
-      ☰ 메뉴
-    </button>
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <button type="button" class="btn-action-sm" onclick="switchTab('tabSettings')" style="background: var(--accent); color: #fff; padding: 6px 12px; font-weight: 800; font-size: 0.8rem; border-radius: 6px;">
+        ⚙️ 환경설정
+      </button>
+      <button type="button" class="mobile-sidebar-toggle" onclick="toggleSidebar()">
+        ☰ 메뉴
+      </button>
+    </div>
   </div>
 
   <!-- ================= 3. 전체 관리자 대시보드 레이아웃 ================= -->
@@ -1448,7 +1472,7 @@
       <nav class="sidebar-nav">
         <button class="nav-tab-btn active" onclick="switchTab('tabSettings', this)">
           <span class="nav-tab-icon">⚙️</span>
-          <span>사이트 설정</span>
+          <span>환경설정 & 채널연동</span>
         </button>
         <button class="nav-tab-btn" onclick="switchTab('tabMagazine', this)">
           <span class="nav-tab-icon">📝</span>
@@ -1499,7 +1523,10 @@
           <span class="top-admin-badge">🌿 시스템 관리자 로그인 중</span>
           <span style="font-size: 0.86rem; color: var(--text-muted);" id="currentDateDisplay"></span>
         </div>
-        <div>
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <button type="button" onclick="switchTab('tabSettings')" class="btn-save-setting" style="background: #059669; color: #ffffff; border: none; font-size: 0.88rem; padding: 8px 16px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; box-shadow: 0 2px 8px rgba(5,150,105,0.25);">
+            <span>⚙️ 환경설정 (블로그 연동/SEO)</span>
+          </button>
           <a href="index.html" class="btn-save-setting" style="text-decoration: none; font-size: 0.88rem; padding: 8px 16px; background: #ffffff; color: var(--text-main); border: 1.5px solid var(--border-color);">
             <span>새 창에서 메인 보기 ➔</span>
           </a>
@@ -1512,7 +1539,7 @@
           <div class="panel-header">
             <div class="panel-title-wrap">
               <span class="panel-icon">⚙️</span>
-              <h2 class="panel-title">사이트 정보 및 배너</h2>
+              <h2 class="panel-title">환경설정 (사이트 정보 & 블로그 채널 연동)</h2>
             </div>
             <button class="btn-save-setting" onclick="saveSiteSettings()">
               <span>💾</span> 변경사항 저장하기
@@ -1595,6 +1622,38 @@
               • 사이트맵 주소: <code>https://netrium1-lab.github.io/sitemap.xml</code> (네이버/구글에 sitemap.xml 제출 시 등록)
             </div>
           </div>
+
+          <!-- 🌐 외부 채널 연동 (네이버 블로그 / 티스토리 동시 발행 주소 설정) -->
+          <div class="setting-group-card" style="border: 1.5px solid #a7f3d0; background: #f0fdf4; margin-top: 18px;">
+            <div class="setting-label-row">
+              <span>🌐</span>
+              <span style="color: #065f46; font-weight: 800;">외부 블로그 & SNS 동시 발행 채널 설정</span>
+            </div>
+            <p class="setting-hint" style="color: #047857;">
+              대표님의 네이버 블로그 아이디와 티스토리 주소를 등록해 두시면, 에디터에서 글을 쓸 때 <strong>[🌐 동시 발행 도우미]</strong> 버튼 한 번으로 사진과 서식까지 클립보드에 자동 복사되고 해당 블로그 글쓰기 창이 즉시 열립니다.
+            </p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px;">
+              <div>
+                <label style="display: block; font-size: 0.84rem; font-weight: 750; color: #065f46; margin-bottom: 4px;">
+                  🟢 네이버 블로그 ID 또는 주소
+                </label>
+                <input type="text" id="settingNaverBlogId" class="setting-input" placeholder="예: netrium1 (또는 blog.naver.com/아이디)">
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.84rem; font-weight: 750; color: #065f46; margin-bottom: 4px;">
+                  🟠 티스토리 블로그 주소
+                </label>
+                <input type="text" id="settingTstoryBlogUrl" class="setting-input" placeholder="예: https://myblog.tistory.com">
+              </div>
+            </div>
+
+            <div style="margin-top: 12px; display: flex; justify-content: flex-end;">
+              <button type="button" class="btn-save-setting" onclick="saveExternalChannelSettings(true)" style="background: #059669; color: #ffffff; padding: 8px 18px; font-size: 0.84rem;">
+                💾 외부 채널 주소 저장
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1639,9 +1698,14 @@
                 </p>
               </div>
             </div>
-            <button type="button" class="btn-save-setting" onclick="openTistoryEditor()" style="padding: 9px 18px; font-size: 0.88rem;">
-              <span>+</span> 새 글 작성
-            </button>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button type="button" class="btn-save-setting" onclick="switchTab('tabSettings')" style="background: #f0fdf4; color: #047857; border: 1.5px solid #a7f3d0; padding: 9px 16px; font-size: 0.88rem; font-weight: 800;">
+                <span>⚙️ 블로그 연동 설정</span>
+              </button>
+              <button type="button" class="btn-save-setting" onclick="openTistoryEditor()" style="padding: 9px 18px; font-size: 0.88rem;">
+                <span>+</span> 새 글 작성
+              </button>
+            </div>
           </div>
 
           <!-- 카테고리 필터 탭 & 검색창 -->
@@ -2285,6 +2349,12 @@
           <button type="button" class="btn-editor-action" onclick="openEditorDraftsModal()" title="임시 저장된 글 목록을 불러옵니다">
             <span>📂</span> 불러오기
           </button>
+          <button type="button" class="btn-editor-action" onclick="openMultiChannelModal()" style="background: linear-gradient(135deg, #059669, #10b981); color: #ffffff; border: none; font-weight: 800; box-shadow: 0 2px 10px rgba(16,185,129,0.35); display: inline-flex; align-items: center; gap: 5px;" title="네이버 블로그 및 티스토리에 서식과 사진까지 원클릭으로 동시 발행합니다">
+            <span>🌐 동시 발행 도우미</span>
+          </button>
+          <button type="button" class="btn-editor-action" onclick="openChannelQuickSettings()" title="네이버/티스토리 블로그 연동 주소를 즉시 확인하고 설정합니다" style="border-color: #38bdf8; color: #7dd3fc; display: inline-flex; align-items: center; gap: 5px;">
+            <span>⚙️ 블로그 연동설정</span>
+          </button>
           <button type="button" class="btn-editor-action" onclick="closeTistoryEditor()">취소</button>
           <button type="button" class="btn-editor-publish" onclick="publishArticle()">
             <span>🚀</span> 발행하기
@@ -2425,6 +2495,17 @@
 
           <!-- 본문 작성 스크롤 영역 -->
           <div class="editor-scroll-body">
+            <!-- 🌟 에디터 내부 상단 퀵 연동 설정 바 -->
+            <div style="background: #111622; border: 1.5px solid #2b3954; border-radius: 10px; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 8px;">
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 0.84rem; color: #cbd5e1;">
+                <span style="font-size: 1.1rem;">🌐</span>
+                <span><strong>네이버/티스토리 동시 발행:</strong> 글 작성 후 [🌐 동시 발행 도우미]를 누르면 사진 5장과 함께 원클릭 복사됩니다.</span>
+              </div>
+              <button type="button" onclick="openChannelQuickSettings()" style="background: #0284c7; color: #ffffff; border: none; padding: 6px 14px; border-radius: 6px; font-size: 0.82rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 2px 6px rgba(2,132,199,0.35);">
+                <span>⚙️ 블로그 연동 주소 설정</span>
+              </button>
+            </div>
+
             <input type="text" id="editorTitle" class="editor-title-input" placeholder="제목을 입력하세요 (예: 품격 있는 생전 정리의 첫걸음)" maxlength="120">
             <textarea id="editorExcerpt" class="editor-excerpt-input" placeholder="글 요약 한 줄을 적어주세요 (메인 카드 미리보기에 노출됩니다)" rows="2"></textarea>
             <div id="editorContent" class="editor-content-area" contenteditable="true" onkeyup="saveEditorSelection()" onmouseup="saveEditorSelection()" onclick="saveEditorSelection()" oninput="saveEditorSelection()" onfocus="saveEditorSelection()" data-placeholder="이곳에 따뜻하고 깊이 있는 글을 자유롭게 작성해보세요. 좌측 사진 보관함에서 사진을 본문에 삽입하거나 대표사진을 지정할 수 있습니다..."></div>
@@ -2491,6 +2572,82 @@
         <button type="button" class="btn-save-setting" onclick="closeAiArticleGeneratorModal()" style="background: #64748b; color: #fff;">
           닫기
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 모달 2-2) 🌐 외부 블로그(네이버/티스토리) 원클릭 동시 발행 모달 ================= -->
+  <div class="cms-modal-overlay" id="multiChannelPublishModal" onclick="closeMultiChannelModalOnOverlay(event)" style="z-index: 10070;">
+    <div class="auth-card" style="max-width: 620px; text-align: left; padding: 28px; max-height: 90vh; overflow-y: auto;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1.5px solid var(--border-color); padding-bottom: 12px;">
+        <div>
+          <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin: 0; display: flex; align-items: center; gap: 8px;">
+            <span>🌐</span> 네이버 블로그 & 티스토리 원클릭 동시 발행
+          </h3>
+          <p style="font-size: 0.84rem; color: var(--text-muted); margin: 4px 0 0;">
+            본문 글과 사진 5장이 클립보드에 자동 복사되어, 열린 블로그 창에서 <strong>Ctrl + V</strong>만 누르면 끝납니다.
+          </p>
+        </div>
+        <button type="button" onclick="closeMultiChannelModal()" aria-label="닫기" style="border: 1px solid var(--border-color); background: var(--bg-body); border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem;">✕</button>
+      </div>
+
+      <!-- 내 채널 빠른 설정 및 주소 확인 -->
+      <div style="background: #f8fafc; border-radius: 12px; padding: 14px 16px; border: 1.5px solid #e2e8f0; margin-bottom: 18px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <strong style="font-size: 0.88rem; color: var(--text-main); display: flex; align-items: center; gap: 6px;">
+            <span>🔗</span> 내 발행 채널 주소 (선택 및 즉시 수정 가능)
+          </strong>
+          <button type="button" onclick="goToSettingsTabFromEditor()" style="background: none; border: none; font-size: 0.78rem; color: var(--accent); font-weight: 800; cursor: pointer; text-decoration: underline;">
+            ⚙️ 전체 환경설정 탭으로 이동 ➔
+          </button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <!-- 네이버 블로그 -->
+          <div style="display: flex; align-items: center; gap: 10px; background: #ffffff; padding: 10px 14px; border-radius: 8px; border: 1.5px solid #86efac;">
+            <input type="checkbox" id="mcCheckNaver" checked style="width: 18px; height: 18px; accent-color: #16a34a; cursor: pointer;">
+            <span style="font-size: 0.86rem; font-weight: 800; color: #15803d; width: 95px;">🟢 네이버 블로그</span>
+            <input type="text" id="mcNaverId" placeholder="네이버 아이디 (예: netrium1)" style="flex: 1; padding: 6px 10px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 0.84rem;">
+          </div>
+          <!-- 티스토리 -->
+          <div style="display: flex; align-items: center; gap: 10px; background: #ffffff; padding: 10px 14px; border-radius: 8px; border: 1.5px solid #fdba74;">
+            <input type="checkbox" id="mcCheckTstory" checked style="width: 18px; height: 18px; accent-color: #ea580c; cursor: pointer;">
+            <span style="font-size: 0.86rem; font-weight: 800; color: #c2410c; width: 95px;">🟠 티스토리</span>
+            <input type="text" id="mcTstoryUrl" placeholder="티스토리 주소 (예: https://myblog.tistory.com)" style="flex: 1; padding: 6px 10px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 0.84rem;">
+          </div>
+        </div>
+      </div>
+
+      <!-- 원클릭 동시 발행 메인 액션 버튼 -->
+      <div style="margin-bottom: 20px;">
+        <button type="button" onclick="executeMultiChannelPublish()" style="width: 100%; padding: 14px 20px; border-radius: 12px; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border: none; color: #ffffff; font-weight: 850; font-size: 1.05rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(5, 150, 105, 0.35);">
+          <span>🚀 선택한 블로그로 원클릭 동시 발행 시작</span>
+        </button>
+        <p style="font-size: 0.78rem; color: #64748b; text-align: center; margin-top: 8px;">
+          (버튼 클릭 시: <strong>사진+서식 자동 복사</strong> ➔ <strong>네이버/티스토리 글쓰기 창이 새 탭으로 자동 오픈</strong>됩니다)
+        </p>
+      </div>
+
+      <!-- 보조 도우미: 단계별 원클릭 복사 버튼들 -->
+      <div style="border-top: 1px dashed var(--border-color); padding-top: 16px;">
+        <div style="font-size: 0.82rem; font-weight: 750; color: var(--text-muted); margin-bottom: 8px;">
+          🛠️ 세부 수동 복사 도우미 (필요 시 개별 클릭)
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <button type="button" class="btn-action-sm" onclick="copyArticleTitle()" style="justify-content: center; padding: 9px; font-size: 0.84rem; background: #ffffff; border: 1.5px solid var(--border-color); color: var(--text-main);">
+            📋 제목만 복사하기
+          </button>
+          <button type="button" class="btn-action-sm" onclick="copyArticleBodyHtml()" style="justify-content: center; padding: 9px; font-size: 0.84rem; background: #ffffff; border: 1.5px solid var(--border-color); color: var(--text-main);">
+            🖼️ 본문(사진포함) 복사하기
+          </button>
+        </div>
+      </div>
+
+      <!-- 친절한 3단계 붙여넣기 팁 안내 -->
+      <div style="margin-top: 18px; padding: 14px 16px; background: #fffbeb; border-radius: 10px; border-left: 4px solid #f59e0b; font-size: 0.82rem; color: #92400e; line-height: 1.6;">
+        📌 <strong>블로그 글쓰기 창에서 붙여넣는 방법 (10초 완료):</strong><br>
+        1. 새 창으로 열린 네이버/티스토리 글쓰기 제목 란에 제목을 붙여넣습니다.<br>
+        2. 본문 내용 란을 클릭하고 <strong>Ctrl + V</strong>를 누르면 <strong>글과 5장의 감동 사진이 서식 그대로 쏙</strong> 들어갑니다.<br>
+        3. 블로그의 [발행] 버튼을 누르면 검색 노출(SEO) 점수 만점의 정식 포스팅이 완료됩니다!
       </div>
     </div>
   </div>
@@ -2902,6 +3059,7 @@
           console.error(e);
         }
       }
+      loadExternalChannelSettings();
     }
 
     function saveSiteSettings() {
@@ -2915,6 +3073,7 @@
         googleVerification: document.getElementById('settingGoogleVerification').value.trim(),
       };
       localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+      saveExternalChannelSettings(false);
       alert('🌿 사이트 설정 변경사항이 안전하게 저장되었습니다!\n메인 화면에 즉시 적용됩니다.');
     }
 
@@ -2951,9 +3110,9 @@
           <p>칠순 당일, 양장본으로 제작된 184쪽의 자서전을 보자기에 싸서 건네드렸습니다. 책 표지에 박힌 본인의 존함과 사진을 어루만지시던 아버지의 손이 파르르 떨렸습니다. 손주들이 할아버지의 어린 시절 이야기를 소리 내어 읽자, 온 가족의 눈가에 눈물이 맺혔습니다.</p>
           <p>그날 아버지는 제 손을 꼭 잡고 말씀하셨습니다. <strong>"내가 살아온 70년 세월이 결코 헛되지 않았구나. 내 평생 받은 선물 중 가장 눈부시고 자랑스럽다."</strong></p>
 
-          <div style="margin: 28px 0; padding: 20px; background: #faf8f5; border-left: 4px solid var(--accent); border-radius: 8px;">
-            <h4 style="margin: 0 0 8px; color: var(--text-primary); font-size: 1.05rem;">🌿 부모님의 세월이 사라지기 전에, 이야기를 기록해 주세요</h4>
-            <p style="margin: 0; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
+          <div style="margin: 28px 0; padding: 22px; background: #faf8f5; border-left: 4px solid var(--accent, #2b5a42); border-radius: 8px; color: #1e293b;">
+            <h4 style="margin: 0 0 8px; color: #0f172a; font-size: 1.05rem; font-weight: 800;">🌿 부모님의 세월이 사라지기 전에, 이야기를 기록해 주세요</h4>
+            <p style="margin: 0; font-size: 0.94rem; color: #334155; line-height: 1.65;">
               시간은 부모님을 기다려주지 않습니다. 부모님의 목소리와 온기가 남아있는 지금, 부모님의 찬란했던 인생의 결을 여백과 결 디지털 자서전으로 남겨보세요.
             </p>
           </div>
@@ -3027,6 +3186,12 @@
             defaultArticles.forEach(defArt => {
               if (!list.some(item => item.id === defArt.id)) {
                 list.unshift(defArt);
+                migrated = true;
+              }
+            });
+            list.forEach(item => {
+              if (item.content && (item.content.includes('var(--text-primary)') || item.content.includes('var(--text-secondary)'))) {
+                item.content = item.content.replace(/var\(--text-primary\)/g, '#0f172a').replace(/var\(--text-secondary\)/g, '#334155');
                 migrated = true;
               }
             });
@@ -3762,9 +3927,9 @@
           <h3>3. 온 가족이 함께 눈물 흘린 칠순 헌정식</h3>
           <p>칠순 당일, 양장본으로 제작된 184쪽의 자서전을 보자기에 싸서 건네드렸습니다. 책 표지에 박힌 본인의 존함과 사진을 어루만지시던 아버지의 손이 파르르 떨렸습니다. 손주들이 할아버지의 어린 시절 이야기를 소리 내어 읽자, 온 가족의 눈가에 눈물이 맺혔습니다.</p>
           <p>그날 아버지는 제 손을 꼭 잡고 말씀하셨습니다. <strong>"내가 살아온 70년 세월이 결코 헛되지 않았구나. 내 평생 받은 선물 중 가장 눈부시고 자랑스럽다."</strong></p>
-          <div style="margin: 28px 0; padding: 20px; background: #faf8f5; border-left: 4px solid var(--accent); border-radius: 8px;">
-            <h4 style="margin: 0 0 8px; color: var(--text-primary); font-size: 1.05rem;">🌿 부모님의 세월이 사라지기 전에, 이야기를 기록해 주세요</h4>
-            <p style="margin: 0; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
+          <div style="margin: 28px 0; padding: 22px; background: #faf8f5; border-left: 4px solid var(--accent, #2b5a42); border-radius: 8px; color: #1e293b;">
+            <h4 style="margin: 0 0 8px; color: #0f172a; font-size: 1.05rem; font-weight: 800;">🌿 부모님의 세월이 사라지기 전에, 이야기를 기록해 주세요</h4>
+            <p style="margin: 0; font-size: 0.94rem; color: #334155; line-height: 1.65;">
               시간은 부모님을 기다려주지 않습니다. 부모님의 목소리와 온기가 남아있는 지금, 부모님의 찬란했던 인생의 결을 여백과 결 디지털 자서전으로 남겨보세요.
             </p>
           </div>
@@ -3987,9 +4152,9 @@
         <p>녹음된 구술 음성은 AI 음성 변환과 전문 에디터의 세심한 윤문을 거쳐 한 권의 품격 있는 양장본 책으로 빚어집니다. 낡은 앨범 속 빛바랜 사진들은 디지털로 복원되어 고화질로 실렸고, 자식들과 손주들에게 남기고 싶은 따뜻한 인생 교훈이 '인생 후반전 선언문'으로 갈무리됩니다.</p>
         <h3>3. 온 가족이 함께 눈물 흘린 헌정의 순간</h3>
         <p>양장본으로 제작된 184쪽의 자서전을 보자기에 싸서 건네드리는 날, 책 표지에 박힌 본인의 존함과 사진을 어루만지시던 부모님의 손이 파르르 떨립니다. "내가 살아온 세월이 결코 헛되지 않았구나. 내 평생 받은 선물 중 가장 눈부시고 자랑스럽다."</p>
-        <div style="margin: 28px 0; padding: 20px; background: #faf8f5; border-left: 4px solid var(--accent); border-radius: 8px;">
-          <h4 style="margin: 0 0 8px; color: var(--text-primary); font-size: 1.05rem;">🌿 부모님의 세월이 사라지기 전에, 이야기를 기록해 주세요</h4>
-          <p style="margin: 0; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
+        <div style="margin: 28px 0; padding: 22px; background: #faf8f5; border-left: 4px solid var(--accent, #2b5a42); border-radius: 8px; color: #1e293b;">
+          <h4 style="margin: 0 0 8px; color: #0f172a; font-size: 1.05rem; font-weight: 800;">🌿 부모님의 세월이 사라지기 전에, 이야기를 기록해 주세요</h4>
+          <p style="margin: 0; font-size: 0.94rem; color: #334155; line-height: 1.65;">
             시간은 부모님을 기다려주지 않습니다. 부모님의 목소리와 온기가 남아있는 지금, 부모님의 찬란했던 인생의 결을 여백과 결 디지털 자서전으로 남겨보세요.
           </p>
         </div>
@@ -4128,7 +4293,13 @@
 
         articles.unshift(newArticle); // 새 글을 맨 위에 추가
         saveArticles(articles);
-        alert(`'${title}' 칼럼이 성공적으로 발행되었습니다!\n` + (isFeatured ? '⭐ 메인 화면 전면 대표글로 즉시 반영되었습니다.' : '전체 게시판에 등록되었습니다.'));
+        
+        if (confirm(`🎉 '${title}' 칼럼이 사이트에 성공적으로 발행되었습니다!\n\n이 글을 대표님의 네이버 블로그나 티스토리에도 지금 바로 동시 발행하시겠습니까?`)) {
+          openMultiChannelModal();
+          return;
+        } else {
+          alert(`'${title}' 칼럼이 성공적으로 발행되었습니다!\n` + (isFeatured ? '⭐ 메인 화면 전면 대표글로 즉시 반영되었습니다.' : '전체 게시판에 등록되었습니다.'));
+        }
       }
 
       // 에디터 상태 초기화 및 닫기
@@ -4139,6 +4310,238 @@
         modal.classList.remove('open');
         document.body.style.overflow = '';
       }
+    }
+
+    // =========================================================================
+    // 🌐 외부 블로그 (네이버/티스토리) 스마트 동시 발행 브릿지 엔진
+    // =========================================================================
+    const EXTERNAL_CHANNELS_KEY = 'yebaek_external_channels';
+
+    function getExternalChannelSettings() {
+      try {
+        const saved = localStorage.getItem(EXTERNAL_CHANNELS_KEY);
+        if (saved) return JSON.parse(saved);
+      } catch (e) {}
+      return {
+        naverId: 'netrium1',
+        tstoryUrl: 'https://myblog.tistory.com',
+        naverChecked: true,
+        tstoryChecked: true
+      };
+    }
+
+    function saveExternalChannelSettings(showAlert = false) {
+      const naverInput = document.getElementById('settingNaverBlogId');
+      const tstoryInput = document.getElementById('settingTstoryBlogUrl');
+      const mcNaverInput = document.getElementById('mcNaverId');
+      const mcTstoryInput = document.getElementById('mcTstoryUrl');
+      const mcCheckNaver = document.getElementById('mcCheckNaver');
+      const mcCheckTstory = document.getElementById('mcCheckTstory');
+
+      const current = getExternalChannelSettings();
+
+      const naverVal = (mcNaverInput && mcNaverInput.value.trim()) || (naverInput && naverInput.value.trim()) || current.naverId || '';
+      const tstoryVal = (mcTstoryInput && mcTstoryInput.value.trim()) || (tstoryInput && tstoryInput.value.trim()) || current.tstoryUrl || '';
+
+      const updated = {
+        naverId: naverVal,
+        tstoryUrl: tstoryVal,
+        naverChecked: mcCheckNaver ? mcCheckNaver.checked : current.naverChecked,
+        tstoryChecked: mcCheckTstory ? mcCheckTstory.checked : current.tstoryChecked
+      };
+
+      localStorage.setItem(EXTERNAL_CHANNELS_KEY, JSON.stringify(updated));
+
+      // 양방향 폼 값 동기화
+      if (naverInput) naverInput.value = updated.naverId;
+      if (tstoryInput) tstoryInput.value = updated.tstoryUrl;
+      if (mcNaverInput) mcNaverInput.value = updated.naverId;
+      if (mcTstoryInput) mcTstoryInput.value = updated.tstoryUrl;
+
+      if (showAlert) {
+        alert('네이버 블로그 및 티스토리 주소 설정이 안전하게 저장되었습니다.');
+      }
+    }
+
+    function loadExternalChannelSettings() {
+      const cfg = getExternalChannelSettings();
+      const naverInput = document.getElementById('settingNaverBlogId');
+      const tstoryInput = document.getElementById('settingTstoryBlogUrl');
+      const mcNaverInput = document.getElementById('mcNaverId');
+      const mcTstoryInput = document.getElementById('mcTstoryUrl');
+      const mcCheckNaver = document.getElementById('mcCheckNaver');
+      const mcCheckTstory = document.getElementById('mcCheckTstory');
+
+      if (naverInput) naverInput.value = cfg.naverId || '';
+      if (tstoryInput) tstoryInput.value = cfg.tstoryUrl || '';
+      if (mcNaverInput) mcNaverInput.value = cfg.naverId || '';
+      if (mcTstoryInput) mcTstoryInput.value = cfg.tstoryUrl || '';
+      if (mcCheckNaver && typeof cfg.naverChecked === 'boolean') mcCheckNaver.checked = cfg.naverChecked;
+      if (mcCheckTstory && typeof cfg.tstoryChecked === 'boolean') mcCheckTstory.checked = cfg.tstoryChecked;
+    }
+
+    function openMultiChannelModal() {
+      const title = document.getElementById('editorTitle').value.trim();
+      const content = document.getElementById('editorContent').innerText.trim();
+      if (!title && !content) {
+        alert('발행할 칼럼의 제목 또는 본문 내용을 먼저 작성해 주세요.');
+        return;
+      }
+      loadExternalChannelSettings();
+      const modal = document.getElementById('multiChannelPublishModal');
+      if (modal) modal.classList.add('open');
+    }
+
+    // 에디터에서 즉시 블로그 연동 설정을 열고 확인/수정하는 편의 함수
+    function openChannelQuickSettings() {
+      loadExternalChannelSettings();
+      const modal = document.getElementById('multiChannelPublishModal');
+      if (modal) {
+        modal.classList.add('open');
+        setTimeout(() => {
+          const nInp = document.getElementById('mcNaverId');
+          if (nInp) {
+            nInp.focus();
+            nInp.select();
+          }
+        }, 150);
+      }
+    }
+
+    // 에디터에서 전체 환경설정 탭으로 원클릭 이동하는 함수
+    function goToSettingsTabFromEditor() {
+      if (confirm('현재 작성 중인 글을 안전하게 [임시저장]하고\n좌측의 [⚙️ 환경설정 & 채널연동] 화면으로 이동하시겠습니까?')) {
+        saveEditorDraft();
+        closeMultiChannelModal();
+        closeTistoryEditor();
+        switchTab('tabSettings');
+        // 환경설정의 외부 채널 영역으로 스크롤
+        setTimeout(() => {
+          const el = document.getElementById('settingNaverBlogId');
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            el.focus();
+          }
+        }, 300);
+      }
+    }
+
+    function closeMultiChannelModal() {
+      const modal = document.getElementById('multiChannelPublishModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function closeMultiChannelModalOnOverlay(e) {
+      if (e.target.id === 'multiChannelPublishModal') closeMultiChannelModal();
+    }
+
+    // 제목 복사
+    async function copyArticleTitle() {
+      const title = document.getElementById('editorTitle').value.trim() || '칼럼 제목';
+      try {
+        await navigator.clipboard.writeText(title);
+        alert(`📋 제목이 복사되었습니다!\n\n"${title}"`);
+      } catch (err) {
+        prompt('아래 제목을 복사(Ctrl+C)하세요:', title);
+      }
+    }
+
+    // 본문 전체 (서식 + 이미지 5장) 클립보드 스마트 복사
+    async function copyArticleBodyHtml(showAlert = true) {
+      const editor = document.getElementById('editorContent');
+      if (!editor) return false;
+
+      const htmlContent = editor.innerHTML;
+      const textContent = editor.innerText;
+
+      let success = false;
+      try {
+        if (navigator.clipboard && window.ClipboardItem) {
+          const htmlBlob = new Blob([htmlContent], { type: 'text/html' });
+          const textBlob = new Blob([textContent], { type: 'text/plain' });
+          const item = new ClipboardItem({ 'text/html': htmlBlob, 'text/plain': textBlob });
+          await navigator.clipboard.write([item]);
+          success = true;
+        }
+      } catch (e) {
+        console.warn('ClipboardItem API fallback:', e);
+      }
+
+      if (!success) {
+        // Fallback: 임시 엘리먼트 선택 복사
+        const temp = document.createElement('div');
+        temp.innerHTML = htmlContent;
+        temp.style.position = 'fixed';
+        temp.style.left = '-9999px';
+        temp.style.opacity = '0';
+        document.body.appendChild(temp);
+
+        const range = document.createRange();
+        range.selectNodeContents(temp);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        success = document.execCommand('copy');
+        sel.removeAllRanges();
+        document.body.removeChild(temp);
+      }
+
+      if (showAlert) {
+        if (success) {
+          alert('🎉 본문 글과 5장의 감동 사진이 서식 그대로 클립보드에 완벽 복사되었습니다!\n\n원하시는 블로그 글쓰기 본문 창에서 [Ctrl + V]만 누르시면 사진과 글이 쏙 들어갑니다.');
+        } else {
+          alert('클립보드 복사에 실패했습니다. 브라우저 복사 권한을 확인해주세요.');
+        }
+      }
+      return success;
+    }
+
+    // 선택한 블로그로 원클릭 동시 발행 실행
+    async function executeMultiChannelPublish() {
+      saveExternalChannelSettings(false);
+      const cfg = getExternalChannelSettings();
+
+      const naverChecked = document.getElementById('mcCheckNaver').checked;
+      const tstoryChecked = document.getElementById('mcCheckTstory').checked;
+
+      if (!naverChecked && !tstoryChecked) {
+        alert('발행할 블로그 채널을 최소 1개 이상 선택해 주세요.');
+        return;
+      }
+
+      // 1. 본문 + 사진 전체 스마트 클립보드 복사
+      await copyArticleBodyHtml(false);
+
+      // 2. 선택된 블로그 글쓰기 창 열기
+      let openedCount = 0;
+
+      if (naverChecked) {
+        let nId = (cfg.naverId || '').trim();
+        // ID 정규화 (URL 형태면 아이디 추출)
+        const match = nId.match(/blog\.naver\.com\/([a-zA-Z0-9_\-]+)/);
+        if (match && match[1]) nId = match[1];
+        nId = nId.replace(/https?:\/\//g, '').replace(/blog\.naver\.com\/?/g, '').replace(/\/postwrite.*/g, '');
+
+        let naverWriteUrl = 'https://blog.naver.com/GoBlogWrite.naver';
+        if (nId && !nId.includes('http')) {
+          naverWriteUrl = `https://blog.naver.com/${nId}/postwrite`;
+        }
+        window.open(naverWriteUrl, '_blank');
+        openedCount++;
+      }
+
+      if (tstoryChecked) {
+        let tUrl = (cfg.tstoryUrl || '').trim();
+        if (!tUrl.startsWith('http')) tUrl = 'https://' + tUrl;
+        tUrl = tUrl.replace(/\/manage\/newpost\/?/g, '').replace(/\/$/, '');
+        const tstoryWriteUrl = `${tUrl}/manage/newpost/`;
+        window.open(tstoryWriteUrl, '_blank');
+        openedCount++;
+      }
+
+      // 3. 안내 알림
+      closeMultiChannelModal();
+      alert(`🚀 선택하신 블로그 글쓰기 창이 열렸습니다!\n\n• 본문 글과 5장의 사진이 클립보드에 복사된 상태입니다.\n• 열린 블로그 글쓰기 창 본문에서 [Ctrl + V]를 누르시면 사진과 글이 서식 그대로 쏙 들어갑니다!\n• (제목은 에디터 상단의 '제목 복사'를 누르시면 편리합니다)`);
     }
 
     // ================= 칼럼 상세 뷰어 모달 =================
