@@ -4790,8 +4790,12 @@
           </li>
         </ul>
 
-        <!-- 나의 아카이브 바로 옆의 독립 로그인 버튼 및 테마 토글 -->
+        <!-- 나의 아카이브 바로 옆의 독립 로그인 버튼 및 테마 토글, 관리자 홈 버튼 -->
         <div class="nav-actions">
+          <a href="admin.html" class="nav-admin-btn" title="전체 사이트 운영 관리자 홈 (비밀번호: 1223)" style="display: inline-flex; align-items: center; gap: 5px; padding: 7px 13px; border-radius: 999px; background: rgba(197, 155, 39, 0.12); color: var(--accent-gold); font-size: 0.85rem; font-weight: 850; border: 1.5px solid rgba(197, 155, 39, 0.4); text-decoration: none; transition: all 0.2s ease;">
+            <span>⚙️</span>
+            <span>관리자홈</span>
+          </a>
           <button class="nav-login-btn" onclick="openLoginModal(event)" aria-label="로그인">
             <span style="font-size: 1.15rem; line-height: 1;">👤</span>
             <span>로그인</span>
@@ -4813,6 +4817,7 @@
       <a href="academy.html" class="mobile-cat-item" data-target="programs" title="코치 아카데미"><span>🎓</span> <span>아카데미</span></a>
       <a href="my-room.html?mode=sample" class="mobile-cat-item" style="color: var(--accent-gold); font-weight: 800;" title="김순옥 어르신 완성 서재 체험"><span>👵</span> <span>샘플서재</span></a>
       <a href="javascript:void(0)" onclick="openLoginModal(event)" class="mobile-cat-item" data-target="archive"><span>🏛️</span> <span>나의서재</span></a>
+      <a href="admin.html" class="mobile-cat-item" style="color: var(--accent-gold); font-weight: 850;" title="전체 사이트 운영 관리자 홈 (비밀번호: 1223)"><span>⚙️</span> <span>관리자</span></a>
     </nav>
   </header>
 
@@ -4883,6 +4888,13 @@
             <span>나의 고유한 서재</span>
           </div>
           <span class="drawer-badge badge-room">온라인룸</span>
+        </a>
+        <a href="admin.html" class="drawer-nav-item" style="background: rgba(197, 155, 39, 0.12); border: 1.5px solid rgba(197, 155, 39, 0.35); margin-top: 6px;">
+          <div class="drawer-item-left">
+            <span class="drawer-icon">⚙️</span>
+            <span style="color: var(--accent-gold); font-weight: 850;">통합 관리자 홈 (ADMIN)</span>
+          </div>
+          <span class="drawer-badge" style="background: var(--accent-gold); color: #fff;">1223</span>
         </a>
         <a href="#login" class="drawer-nav-item drawer-login-btn" onclick="closeMobileDrawer(); openLoginModal(event)">
           <div class="drawer-item-left" style="justify-content: center; width: 100%;">
@@ -5115,8 +5127,8 @@
             <div id="adminControlsOnMagazine" style="display: inline-flex; gap: 8px;">
               <!-- JS에서 관리자 로그인 상태에 따라 렌더링 -->
             </div>
-            <button class="btn-mag-action" onclick="openAdminAuthModal()" title="관리자 비밀번호(1223)를 입력하여 관리자 홈으로 이동합니다" style="background: var(--bg-card); color: var(--accent); border-color: var(--accent);">
-              <span>⚙️</span> 관리자 홈
+            <button class="btn-mag-action" onclick="location.href='admin.html'" title="관리자 비밀번호(1223)를 입력하여 통합 관리자 홈으로 이동합니다" style="background: var(--bg-card); color: var(--accent-gold); border-color: var(--accent-gold); font-weight: 800;">
+              <span>⚙️</span> 통합 관리자 홈
             </button>
           </div>
         </div>
@@ -5674,9 +5686,9 @@
       </div>
       <div class="footer-bottom" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
         <p>© 2026 메타큐 라이프 · 여백과 결, 리셋 아카이브 (MetaQ Life). 모든 권리 보유.</p>
-        <button onclick="openAdminAuthModal()" style="background: none; border: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.78rem; padding: 4px 10px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-family: inherit; transition: var(--transition);">
-          <span>⚙️ 관리자 홈</span>
-        </button>
+        <a href="admin.html" style="background: none; border: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.78rem; padding: 4px 10px; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; font-family: inherit; transition: var(--transition);" title="전체 사이트 운영 관리자 홈 (비밀번호: 1223)">
+          <span>⚙️ 통합 관리자 홈</span>
+        </a>
       </div>
     </div>
   </footer>
@@ -10106,6 +10118,30 @@
       if (badge) badge.textContent = list.length;
     }
 
+    // 관리자 사이트 설정(전화번호, 카톡 링크 등) 메인 자동 반영
+    function applySiteSettingsToMain() {
+      const saved = localStorage.getItem('yebaek_site_settings_v1');
+      if (!saved) return;
+      try {
+        const s = JSON.parse(saved);
+        if (s.phoneNum) {
+          const links = document.querySelectorAll('a[href^="tel:"]');
+          const cleanNum = s.phoneNum.replace(/[^0-9]/g, '');
+          links.forEach(l => {
+            l.href = `tel:${cleanNum}`;
+          });
+        }
+        if (s.kakaoLink) {
+          const kakaoLinks = document.querySelectorAll('a[href*="open.kakao.com"]');
+          kakaoLinks.forEach(l => {
+            l.href = s.kakaoLink;
+          });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
     // 에디터 본문 커서 위치 리스너 등록
     document.addEventListener('DOMContentLoaded', () => {
       const editorArea = document.getElementById('editorContent');
@@ -10122,6 +10158,7 @@
       renderUnburdenFeed();
       updateUnburdenAdminBadge();
       updateConsultPhoneUI();
+      applySiteSettingsToMain();
     });
 
     // 외부 클릭 시 서식 팝업 닫기
@@ -10146,6 +10183,7 @@
     renderUnburdenFeed();
     updateUnburdenAdminBadge();
     updateConsultPhoneUI();
+    applySiteSettingsToMain();
   </script>
 </body>
 </html>

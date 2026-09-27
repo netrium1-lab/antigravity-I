@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>여백과 결 | 통합 관리자 홈 (Admin Console)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Noto+Serif+KR:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-body: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-sidebar: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-sub: #475569;
+      --border-color: #e2e8f0;
+      --accent: #2b5a42;
+      --accent-light: rgba(43, 90, 66, 0.08);
+      --accent-gold: #c59b27;
+      --accent-gold-light: rgba(197, 155, 39, 0.12);
+      --danger: #ef4444;
+      --danger-light: #fee2e2;
+      --success: #10b981;
+      --success-light: #d1fae5;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 14px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 30px rgba(0,0,0,0.08);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ================= 관리자 비밀번호 인증 오버레이 ================= */
+    #authOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 440px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      border: 1.5px solid var(--border-color);
+      animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes popIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .auth-logo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .auth-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .auth-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      word-break: keep-all;
+    }
+
+    .auth-input {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--border-color);
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 4px;
+      margin-bottom: 16px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .auth-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-light);
+    }
+
+    .auth-submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .auth-submit-btn:hover {
+      background: #204533;
+    }
+
+    .auth-home-link {
+      display: inline-block;
+      margin-top: 18px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    /* ================= 대시보드 레이아웃 (좌측 사이드바 + 우측 메인) ================= */
+    .admin-wrapper {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    /* 좌측 사이드바 */
+    .admin-sidebar {
+      width: 270px;
+      background: var(--bg-sidebar);
+      border-right: 1.5px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .sidebar-header {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .sidebar-brand-bar {
+      width: 5px;
+      height: 24px;
+      background: var(--accent-gold);
+      border-radius: 999px;
+    }
+
+    .sidebar-brand-text {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--accent-gold);
+      letter-spacing: -0.5px;
+    }
+
+    .sidebar-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      padding-left: 15px;
+      font-weight: 600;
+    }
+
+    .sidebar-nav {
+      padding: 20px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .nav-tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: none;
+      background: transparent;
+      color: var(--text-sub);
+      font-size: 0.94rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .nav-tab-btn:hover {
+      background: var(--bg-body);
+      color: var(--text-main);
+    }
+    .nav-tab-btn.active {
+      background: var(--accent-gold-light);
+      color: #927014;
+      font-weight: 850;
+    }
+
+    .nav-tab-icon {
+      font-size: 1.25rem;
+      line-height: 1;
+      width: 24px;
+      text-align: center;
+    }
+
+    .sidebar-footer {
+      padding: 18px 16px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: #fafafa;
+    }
+
+    .sidebar-link-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      transition: all 0.2s ease;
+      border: 1px solid var(--border-color);
+      background: #ffffff;
+      cursor: pointer;
+    }
+    .sidebar-link-btn:hover {
+      background: var(--bg-body);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .sidebar-link-btn.logout {
+      color: var(--danger);
+      border-color: #fecaca;
+    }
+    .sidebar-link-btn.logout:hover {
+      background: var(--danger-light);
+    }
+
+    /* 우측 메인 컨텐츠 영역 */
+    .admin-main {
+      flex: 1;
+      padding: 36px 40px;
+      overflow-y: auto;
+      max-width: 1300px;
+    }
+
+    .top-action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .top-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .top-admin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: var(--accent-gold-light);
+      color: var(--accent-gold);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 850;
+      border: 1px solid rgba(197, 155, 39, 0.3);
+    }
+
+    /* 탭별 메인 카드 컨테이너 */
+    .tab-panel {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+    .tab-panel.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 36px 40px;
+      box-shadow: var(--shadow-sm);
+      border: 1.5px solid var(--border-color);
+      margin-bottom: 30px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      padding-bottom: 18px;
+      border-bottom: 1.5px solid var(--border-color);
+    }
+
+    .panel-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .panel-icon {
+      font-size: 1.85rem;
+      line-height: 1;
+    }
+
+    .panel-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+    }
+
+    /* 스크린샷과 동일한 입력 블록 카드 */
+    .setting-group-card {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
+      margin-bottom: 22px;
+      transition: border-color 0.2s ease;
+    }
+    .setting-group-card:hover {
+      border-color: #cbd5e1;
+    }
+
+    .setting-label-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+
+    .setting-hint {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .setting-input {
+      width: 100%;
+      padding: 13px 18px;
+      border-radius: 12px;
+      border: 1.5px solid #cbd5e1;
+      background: #ffffff;
+      font-size: 0.96rem;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .setting-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
+    }
+
+    .setting-textarea {
+      width: 100%;
+      min-height: 110px;
+      padding: 13px 18px;
+      border-radius: 12px;
+      border: 1.5px solid #cbd5e1;
+      background: #ffffff;
+      font-size: 0.94rem;
+      color: var(--text-main);
+      outline: none;
+      resize: vertical;
+      font-family: inherit;
+      line-height: 1.6;
+    }
+    .setting-textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
+    }
+
+    .setting-img-preview-box {
+      margin-top: 14px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1.5px solid var(--border-color);
+      max-height: 240px;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .setting-img-preview {
+      width: 100%;
+      height: 100%;
+      max-height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .btn-save-setting {
+      padding: 12px 24px;
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s ease;
+    }
+    .btn-save-setting:hover {
+      background: #204533;
+    }
+
+    /* 테이블 스타일 */
+    .admin-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1.5px solid var(--border-color);
+      background: #ffffff;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.90rem;
+    }
+    .admin-table th {
+      background: #f8fafc;
+      padding: 14px 16px;
+      font-weight: 800;
+      color: var(--text-sub);
+      border-bottom: 1.5px solid var(--border-color);
+      white-space: nowrap;
+    }
+    .admin-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: middle;
+      color: var(--text-main);
+    }
+    .admin-table tr:last-child td {
+      border-bottom: none;
+    }
+    .admin-table tr:hover td {
+      background: #fafbfd;
+    }
+
+    .badge-pin {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 850;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .badge-pin.pinned {
+      background: rgba(197, 155, 39, 0.16);
+      color: #927014;
+      border: 1px solid rgba(197, 155, 39, 0.4);
+    }
+    .badge-pin.unpinned {
+      background: #f1f5f9;
+      color: #64748b;
+      border: 1px solid #cbd5e1;
+    }
+
+    .btn-action-sm {
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      border: 1px solid var(--border-color);
+      background: #ffffff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+    .btn-action-sm.edit:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .btn-action-sm.del {
+      color: var(--danger);
+      border-color: #fecaca;
+    }
+    .btn-action-sm.del:hover {
+      background: var(--danger-light);
+    }
+
+    /* 통계 카드 그리드 */
+    .stat-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .stat-icon {
+      font-size: 2.2rem;
+      line-height: 1;
+    }
+    .stat-num {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    /* 모바일 반응형 토글 */
+    .mobile-admin-bar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: #ffffff;
+      border-bottom: 1.5px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 101;
+    }
+    .mobile-sidebar-toggle {
+      background: var(--bg-body);
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .admin-wrapper {
+        flex-direction: column;
+      }
+      .mobile-admin-bar {
+        display: flex;
+      }
+      .admin-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        transition: left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 20px 0 40px rgba(0,0,0,0.15);
+      }
+      .admin-sidebar.open {
+        left: 0;
+      }
+      .admin-main {
+        padding: 24px 16px;
+      }
+      .panel-card {
+        padding: 24px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= 1. 관리자 비밀번호 인증 오버레이 ================= -->
+  <div id="authOverlay">
+    <div class="auth-card">
+      <div class="auth-logo-badge">🔐 여백과 결 통합 관리자 콘솔</div>
+      <h2 class="auth-title">관리자 홈 인증</h2>
+      <p class="auth-desc">
+        사이트 전체 운영, 6대 카테고리 컨텐츠 수정, 글쓰기 및 노출 관리를 위한 관리자 전용 대시보드입니다.<br>
+        관리자 비밀번호를 입력해주세요.
+      </p>
+      <form onsubmit="handleAuthSubmit(event)">
+        <input type="password" id="authInput" class="auth-input" placeholder="비밀번호 4자리" maxlength="8" autofocus required>
+        <button type="submit" class="auth-submit-btn">관리자 대시보드 입장하기</button>
+      </form>
+      <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 14px;">(관리자 ADMIN 기본 비밀번호: 1223)</div>
+      <a href="index.html" class="auth-home-link">← 사용자 메인 사이트로 돌아가기</a>
+    </div>
+  </div>
+
+  <!-- ================= 2. 모바일 상단 바 ================= -->
+  <div class="mobile-admin-bar">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span style="color: var(--accent-gold); font-weight: 900; font-size: 1.15rem;">| 여백과 결 관리</span>
+    </div>
+    <button type="button" class="mobile-sidebar-toggle" onclick="toggleSidebar()">
+      ☰ 메뉴
+    </button>
+  </div>
+
+  <!-- ================= 3. 전체 관리자 대시보드 레이아웃 ================= -->
+  <div class="admin-wrapper" id="adminWrapper" style="display: none;">
+    <!-- 좌측 사이드바 (FIT-FLUENCE 관리 스타일 재현) -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-header">
+        <a href="admin.html" class="sidebar-brand">
+          <div class="sidebar-brand-bar"></div>
+          <div class="sidebar-brand-text">여백과 결 관리</div>
+        </a>
+        <div class="sidebar-sub">YEBAEK & GEOL ADMIN CONSOLE</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-tab-btn active" onclick="switchTab('tabSettings', this)">
+          <span class="nav-tab-icon">⚙️</span>
+          <span>사이트 설정</span>
+        </button>
+        <button class="nav-tab-btn" onclick="switchTab('tabMagazine', this)">
+          <span class="nav-tab-icon">📝</span>
+          <span>01. 여백서재 관리</span>
+        </button>
+        <button class="nav-tab-btn" onclick="switchTab('tabLounge', this)">
+          <span class="nav-tab-icon">💬</span>
+          <span>02. 비움한줄 관리</span>
+        </button>
+        <button class="nav-tab-btn" onclick="switchTab('tabTest', this)">
+          <span class="nav-tab-icon">🎯</span>
+          <span>03. 자가진단 관리</span>
+        </button>
+        <button class="nav-tab-btn" onclick="switchTab('tabMemoir', this)">
+          <span class="nav-tab-icon">✍️</span>
+          <span>04. 디지털자서전</span>
+        </button>
+        <button class="nav-tab-btn" onclick="switchTab('tabAcademy', this)">
+          <span class="nav-tab-icon">🎓</span>
+          <span>05. 아카데미 관리</span>
+        </button>
+        <button class="nav-tab-btn" onclick="switchTab('tabArchive', this)">
+          <span class="nav-tab-icon">🏛️</span>
+          <span>06. 보물서재 관리</span>
+        </button>
+        <button class="nav-tab-btn" onclick="switchTab('tabConsult', this)">
+          <span class="nav-tab-icon">📞</span>
+          <span>상담 신청 명단</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="index.html" class="sidebar-link-btn" title="사용자 메인 웹사이트로 이동">
+          <span>🏠</span>
+          <span>메인 사이트 가기</span>
+        </a>
+        <button type="button" class="sidebar-link-btn logout" onclick="adminLogout()" title="관리자 로그아웃">
+          <span>🔒</span>
+          <span>관리자 로그아웃</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- 우측 메인 작업 패널 -->
+    <main class="admin-main">
+      <div class="top-action-bar">
+        <div class="top-badge-row">
+          <span class="top-admin-badge">🌿 시스템 관리자 로그인 중</span>
+          <span style="font-size: 0.86rem; color: var(--text-muted);" id="currentDateDisplay"></span>
+        </div>
+        <div>
+          <a href="index.html" class="btn-save-setting" style="text-decoration: none; font-size: 0.88rem; padding: 8px 16px; background: #ffffff; color: var(--text-main); border: 1.5px solid var(--border-color);">
+            <span>새 창에서 메인 보기 ➔</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- ================= 탭 1: ⚙️ 사이트 정보 및 배너 ================= -->
+      <section class="tab-panel active" id="tabSettings">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <span class="panel-icon">⚙️</span>
+              <h2 class="panel-title">사이트 정보 및 배너</h2>
+            </div>
+            <button class="btn-save-setting" onclick="saveSiteSettings()">
+              <span>💾</span> 변경사항 저장하기
+            </button>
+          </div>
+
+          <!-- 유튜브 배너 링크 -->
+          <div class="setting-group-card">
+            <div class="setting-label-row">
+              <span>🔗</span>
+              <span>유튜브 배너 링크 (소개 영상)</span>
+            </div>
+            <p class="setting-hint">유튜브 영상 또는 쇼츠 링크를 입력하시면 메인 소개 영상으로 연동됩니다.</p>
+            <input type="text" id="settingYoutubeLink" class="setting-input" placeholder="https://youtube.com/shorts/... 또는 https://youtu.be/...">
+          </div>
+
+          <!-- 로고 및 사이트 텍스트 -->
+          <div class="setting-group-card">
+            <div class="setting-label-row">
+              <span>🏷️</span>
+              <span>로고 텍스트 & 플랫폼 명칭</span>
+            </div>
+            <input type="text" id="settingLogoText" class="setting-input" value="여백과 결 · 리셋 아카이브">
+          </div>
+
+          <!-- 대표 상담 전화번호 & 카톡 상담 링크 -->
+          <div class="setting-group-card">
+            <div class="setting-label-row">
+              <span>📞</span>
+              <span>1:1 원터치 상담 직통 전화번호</span>
+            </div>
+            <p class="setting-hint">모바일에서 원터치 전화 걸기 버튼(seniorCallLink)에 적용되는 대표 번호입니다.</p>
+            <input type="tel" id="settingPhoneNum" class="setting-input" value="010-9613-5913">
+          </div>
+
+          <div class="setting-group-card">
+            <div class="setting-label-row">
+              <span>💬</span>
+              <span>카카오톡 실시간 상담 오픈채팅 링크</span>
+            </div>
+            <input type="url" id="settingKakaoLink" class="setting-input" value="https://open.kakao.com/o/p79YYjPi">
+          </div>
+
+          <!-- 메인 대문 슬로건 문구 -->
+          <div class="setting-group-card">
+            <div class="setting-label-row">
+              <span>🌿</span>
+              <span>메인 히어로 대문 슬로건 문구</span>
+            </div>
+            <textarea id="settingHeroDesc" class="setting-textarea" rows="3">치열하게 앞만 보며 달려온 전반전을 뒤로하고, 내 몸의 건강과 소중한 서사를 우아하게 정리하여 가장 눈부신 두 번째 황금기를 맞이하세요.</textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 탭 2: 📝 01. 여백서재 관리 (게시글 & 글쓰기) ================= -->
+      <section class="tab-panel" id="tabMagazine">
+        <!-- 상단 통계 -->
+        <div class="stat-cards-grid">
+          <div class="stat-card">
+            <span class="stat-icon">📚</span>
+            <div>
+              <div class="stat-num" id="statArticleTotal">0편</div>
+              <div class="stat-label">전체 등록 칼럼</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">⭐</span>
+            <div>
+              <div class="stat-num" id="statArticleFeatured">0편</div>
+              <div class="stat-label">메인 전면 노출 중</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">✍️</span>
+            <div>
+              <button class="btn-save-setting" onclick="toggleArticleForm()" style="padding: 8px 16px; font-size: 0.88rem;">
+                + 새 글 작성하기
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 새 글 작성 / 수정 폼 (기본 숨김, 작성 버튼 클릭 시 노출) -->
+        <div class="panel-card" id="articleFormCard" style="display: none; border-color: var(--accent);">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <span class="panel-icon">✍️</span>
+              <h3 class="panel-title" id="articleFormTitle">새 칼럼 작성하기</h3>
+            </div>
+            <button type="button" onclick="cancelArticleEdit()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted);">✕</button>
+          </div>
+
+          <form onsubmit="handleSaveArticle(event)">
+            <input type="hidden" id="editArticleId">
+            
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px;">
+              <div>
+                <label style="font-weight: 800; font-size: 0.9rem; display: block; margin-bottom: 6px;">칼럼 제목 *</label>
+                <input type="text" id="articleTitleInput" class="setting-input" placeholder="칼럼 제목을 입력하세요" required>
+              </div>
+              <div>
+                <label style="font-weight: 800; font-size: 0.9rem; display: block; margin-bottom: 6px;">카테고리 *</label>
+                <select id="articleCategoryInput" class="setting-input" required>
+                  <option value="비움과 갈무리">비움과 갈무리</option>
+                  <option value="웰다잉">웰다잉</option>
+                  <option value="웰라이프">웰라이프</option>
+                  <option value="종활 문화">종활 문화</option>
+                  <option value="서사 기록">서사 기록</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+              <label style="font-weight: 800; font-size: 0.9rem; display: block; margin-bottom: 6px;">대표 썸네일 이미지 URL (선택)</label>
+              <input type="url" id="articleImageInput" class="setting-input" placeholder="https://images.unsplash.com/... 또는 로컬 이미지 경로" oninput="previewArticleImage(this.value)">
+              <div id="articleImagePreviewBox" style="margin-top: 10px; max-height: 180px; display: none; overflow: hidden; border-radius: 12px;">
+                <img id="articleImagePreview" src="" alt="썸네일 미리보기" style="width: 100%; height: 160px; object-fit: cover;">
+              </div>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+              <label style="font-weight: 800; font-size: 0.9rem; display: block; margin-bottom: 6px;">한 줄 요약 (목록에 노출)</label>
+              <input type="text" id="articleExcerptInput" class="setting-input" placeholder="독자의 시선을 사로잡는 1~2줄 요약">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <label style="font-weight: 800; font-size: 0.9rem; display: block; margin-bottom: 6px;">본문 내용 (HTML 지원) *</label>
+              <textarea id="articleContentInput" class="setting-textarea" style="min-height: 220px;" placeholder="칼럼 본문 내용을 정성껏 작성해주세요. <p>, <h3>, <blockquote> 태그를 사용하실 수 있습니다." required></textarea>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border-color);">
+              <label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800; cursor: pointer;">
+                <input type="checkbox" id="articleFeaturedCheck" style="width: 18px; height: 18px;">
+                <span>⭐ 이 글을 메인 화면 전면에 대표글로 노출</span>
+              </label>
+
+              <div style="display: flex; gap: 10px;">
+                <button type="button" onclick="cancelArticleEdit()" style="padding: 10px 18px; border: 1.5px solid var(--border-color); border-radius: 10px; background: #fff; cursor: pointer; font-weight: 700;">취소</button>
+                <button type="submit" class="btn-save-setting">저장 완료</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- 칼럼 목록 테이블 -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <span class="panel-icon">📋</span>
+              <h3 class="panel-title">전체 칼럼 목록 및 노출 관리</h3>
+            </div>
+            <div style="font-size: 0.88rem; color: var(--text-muted);">
+              ⭐ 버튼을 클릭하면 메인 화면 전면 노출 여부를 즉시 켜고 끌 수 있습니다.
+            </div>
+          </div>
+
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 70px;">사진</th>
+                  <th>제목 & 요약</th>
+                  <th style="width: 110px;">카테고리</th>
+                  <th style="width: 95px;">작성일</th>
+                  <th style="width: 130px; text-align: center;">메인 전면 노출</th>
+                  <th style="width: 120px; text-align: center;">관리</th>
+                </tr>
+              </thead>
+              <tbody id="articleTableBody">
+                <!-- JS 동적 렌더링 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 탭 3: 💬 02. 비움한줄 관리 ================= -->
+      <section class="tab-panel" id="tabLounge">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <span class="panel-icon">💬</span>
+              <h2 class="panel-title">02. 오늘의 비움 한 줄 라운지 관리</h2>
+            </div>
+            <button class="btn-save-setting" onclick="promptAddUnburden()">
+              <span>+</span> 관리자 추천 비움글 추가
+            </button>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px;">
+            어르신들이 일상에서 가볍게 비워낸 한 줄 글 목록입니다. 부적절한 글은 삭제하거나, 감동적인 글을 메인 상단에 고정할 수 있습니다.
+          </p>
+
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 80px;">상태</th>
+                  <th>비움 한 줄 내용</th>
+                  <th style="width: 110px;">작성일시</th>
+                  <th style="width: 120px; text-align: center;">공감 수</th>
+                  <th style="width: 100px; text-align: center;">삭제</th>
+                </tr>
+              </thead>
+              <tbody id="unburdenTableBody">
+                <!-- JS 동적 렌더링 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 탭 4: 🎯 03. 자가진단 관리 ================= -->
+      <section class="tab-panel" id="tabTest">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <span class="panel-icon">🎯</span>
+              <h2 class="panel-title">03. 1분 여백 자가진단 관리</h2>
+            </div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 24px;">
+            고객이 자가진단 위젯에서 5대 테마(뷰티, 옷장, 유품, 엔딩파티, 자서전)를 선택했을 때 즉시 처방되는 1:1 맞춤 케어 솔루션 항목입니다.
+          </p>
+
+          <div class="setting-group-card">
+            <div class="setting-label-row">
+              <span>💄</span>
+              <span>#01 웰니스 & 뷰티 케어 솔루션</span>
+            </div>
+            <input type="text" class="setting-input" value="헤어·메이크업 맞춤 스타일링 / 빛나는 인생 프로필 촬영 / 방문 웰니스 힐링" readonly>
+          </div>
+
+          <div class="setting-group-card">
+            <div class="setting-label-row">
+              <span>👗</span>
+              <span>#02 일상과 비움의 미학 — 옷장 정리</span>
+            </div>
+            <input type="text" class="setting-input" value="오래된 옷 선별 및 공간 여백 확보 / 기부 및 친환경 나눔 연결 / 쾌적한 데일리 동선" readonly>
+          </div>
+
+          <div class="setting-group-card">
+            <div class="setting-label-row">
+              <span>📦</span>
+              <span>#03 기억의 계승 — 오래된 짐 & 유품 정리</span>
+            </div>
+            <input type="text" class="setting-input" value="소중한 유품 선별 및 아카이빙 / 후손을 위한 유산 메모 작성 / 깔끔하고 안전한 처분" readonly>
+          </div>
+
+          <div class="setting-group-card">
+            <div class="setting-label-row">
+              <span>💌</span>
+              <span>#04 아름다운 마침표 — 생전 엔딩 파티</span>
+            </div>
+            <input type="text" class="setting-input" value="감사할 인연 명단 정리 / 진심 어린 감사 편지 채록 / 온기 가득한 생전 감사 모임 기획" readonly>
+          </div>
+
+          <div class="setting-group-card">
+            <div class="setting-label-row">
+              <span>✍️</span>
+              <span>#05 디지털 자서전 — 생애사 기록</span>
+            </div>
+            <input type="text" class="setting-input" value="찾아가는 1:1 구술 채록 인터뷰 / 옛 흑백사진 AI 고화질 복원 / 최고급 하드커버 양장본 제작" readonly>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 탭 5: ✍️ 04. 디지털 자서전 신청 관리 ================= -->
+      <section class="tab-panel" id="tabMemoir">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <span class="panel-icon">✍️</span>
+              <h2 class="panel-title">04. 디지털 자서전 제작 상담 신청자 명단</h2>
+            </div>
+            <button class="btn-save-setting" onclick="exportMemoirCSV()">
+              <span>📥</span> 엑셀(CSV) 다운로드
+            </button>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px;">
+            디지털 자서전 제작 및 30일 인생 서사 워크북 무료 배송을 신청한 고객 목록입니다.
+          </p>
+
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 90px;">신청자 성함</th>
+                  <th style="width: 120px;">연락처</th>
+                  <th>배송 주소 / 상담 메모</th>
+                  <th style="width: 110px;">신청 일시</th>
+                  <th style="width: 100px; text-align: center;">처리 상태</th>
+                  <th style="width: 80px; text-align: center;">관리</th>
+                </tr>
+              </thead>
+              <tbody id="memoirTableBody">
+                <!-- JS 동적 렌더링 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 탭 6: 🎓 05. 코치 아카데미 관리 ================= -->
+      <section class="tab-panel" id="tabAcademy">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <span class="panel-icon">🎓</span>
+              <h2 class="panel-title">05. 코칭스태프 양성 아카데미 지원자 명단</h2>
+            </div>
+            <button class="btn-save-setting" onclick="exportAcademyCSV()">
+              <span>📥</span> 엑셀(CSV) 다운로드
+            </button>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px;">
+            2026년 [여백과 결] 공식 코칭스태프 1기 입학 상담 및 지원 신청자 명단입니다.
+          </p>
+
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 90px;">지원자 성함</th>
+                  <th style="width: 120px;">연락처</th>
+                  <th style="width: 130px;">관심 코칭 트랙</th>
+                  <th>지원 동기 / 문의 내용</th>
+                  <th style="width: 100px; text-align: center;">상태</th>
+                  <th style="width: 80px; text-align: center;">관리</th>
+                </tr>
+              </thead>
+              <tbody id="academyTableBody">
+                <!-- JS 동적 렌더링 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 탭 7: 🏛️ 06. 보물서재 관리 ================= -->
+      <section class="tab-panel" id="tabArchive">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <span class="panel-icon">🏛️</span>
+              <h2 class="panel-title">06. 나의 고유한 보물 서재 (프라이빗 룸) 설정</h2>
+            </div>
+          </div>
+          <div class="setting-group-card">
+            <div class="setting-label-row">
+              <span>👵</span>
+              <span>김순옥 어르신 완성 서재 공개 체험 링크</span>
+            </div>
+            <input type="text" class="setting-input" value="my-room.html?mode=sample" readonly>
+            <div style="margin-top: 10px;">
+              <a href="my-room.html?mode=sample" target="_blank" class="btn-save-setting" style="text-decoration: none; font-size: 0.88rem; padding: 6px 14px;">
+                서재 직접 열람해보기 ➔
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 탭 8: 📞 1:1 방문 맞춤 상담 명단 ================= -->
+      <section class="tab-panel" id="tabConsult">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title-wrap">
+              <span class="panel-icon">📞</span>
+              <h2 class="panel-title">통합 1:1 방문 맞춤 상담 신청 내역</h2>
+            </div>
+            <button class="btn-save-setting" onclick="exportConsultCSV()">
+              <span>📥</span> 엑셀(CSV) 다운로드
+            </button>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px;">
+            메인 사이트 원터치 안심 상담 모달에서 접수된 고객 명단입니다.
+          </p>
+
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 100px;">신청 분야</th>
+                  <th style="width: 100px;">고객 성함</th>
+                  <th style="width: 120px;">연락처</th>
+                  <th style="width: 110px;">희망 일시</th>
+                  <th>상담 요청 사항</th>
+                  <th style="width: 95px; text-align: center;">처리 상태</th>
+                  <th style="width: 80px; text-align: center;">관리</th>
+                </tr>
+              </thead>
+              <tbody id="consultTableBody">
+                <!-- JS 동적 렌더링 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 여백과 결 통합 관리자 콘솔 엔진
+    // =========================================================================
+
+    // 날짜 표시
+    const now = new Date();
+    const dateStr = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
+    const dateEl = document.getElementById('currentDateDisplay');
+    if (dateEl) dateEl.textContent = dateStr;
+
+    // 인증 확인
+    function checkAuth() {
+      const isAuth = sessionStorage.getItem('yebaek_is_admin') === 'true';
+      const overlay = document.getElementById('authOverlay');
+      const wrapper = document.getElementById('adminWrapper');
+
+      if (isAuth) {
+        if (overlay) overlay.style.display = 'none';
+        if (wrapper) wrapper.style.display = 'flex';
+        loadAllData();
+      } else {
+        if (overlay) overlay.style.display = 'flex';
+        if (wrapper) wrapper.style.display = 'none';
+        const input = document.getElementById('authInput');
+        if (input) setTimeout(() => input.focus(), 150);
+      }
+    }
+
+    // 비밀번호 제출 처리 (비밀번호: 1223)
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('authInput');
+      const pwd = input ? input.value.trim() : '';
+
+      if (pwd === '1223') {
+        sessionStorage.setItem('yebaek_is_admin', 'true');
+        checkAuth();
+      } else {
+        alert('비밀번호가 올바르지 않습니다. 다시 입력해주세요.\n(관리자 비밀번호: 1223)');
+        if (input) {
+          input.value = '';
+          input.focus();
+        }
+      }
+    }
+
+    // 관리자 로그아웃
+    function adminLogout() {
+      if (confirm('관리자 모드에서 로그아웃하시겠습니까?')) {
+        sessionStorage.removeItem('yebaek_is_admin');
+        window.location.href = 'index.html';
+      }
+    }
+
+    // 모바일 사이드바 토글
+    function toggleSidebar() {
+      const sidebar = document.getElementById('adminSidebar');
+      if (sidebar) sidebar.classList.toggle('open');
+    }
+
+    // 탭 전환
+    function switchTab(tabId, btn) {
+      const panels = document.querySelectorAll('.tab-panel');
+      panels.forEach(p => p.classList.remove('active'));
+
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add('active');
+
+      const btns = document.querySelectorAll('.nav-tab-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      // 모바일인 경우 사이드바 닫기
+      const sidebar = document.getElementById('adminSidebar');
+      if (sidebar && window.innerWidth <= 900) {
+        sidebar.classList.remove('open');
+      }
+    }
+
+    // ================= 1. 사이트 설정 로드 및 저장 =================
+    const SETTINGS_KEY = 'yebaek_site_settings_v1';
+
+    function loadSiteSettings() {
+      const saved = localStorage.getItem(SETTINGS_KEY);
+      if (saved) {
+        try {
+          const s = JSON.parse(saved);
+          if (s.youtubeLink) document.getElementById('settingYoutubeLink').value = s.youtubeLink;
+          if (s.logoText) document.getElementById('settingLogoText').value = s.logoText;
+          if (s.phoneNum) document.getElementById('settingPhoneNum').value = s.phoneNum;
+          if (s.kakaoLink) document.getElementById('settingKakaoLink').value = s.kakaoLink;
+          if (s.heroDesc) document.getElementById('settingHeroDesc').value = s.heroDesc;
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    }
+
+    function saveSiteSettings() {
+      const settings = {
+        youtubeLink: document.getElementById('settingYoutubeLink').value.trim(),
+        logoText: document.getElementById('settingLogoText').value.trim(),
+        phoneNum: document.getElementById('settingPhoneNum').value.trim(),
+        kakaoLink: document.getElementById('settingKakaoLink').value.trim(),
+        heroDesc: document.getElementById('settingHeroDesc').value.trim(),
+      };
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+      alert('🌿 사이트 설정 변경사항이 안전하게 저장되었습니다!\n메인 화면에 즉시 적용됩니다.');
+    }
+
+    // ================= 2. 여백서재 칼럼 관리 =================
+    const ARTICLES_KEY = 'yebaek_custom_articles_v2';
+
+    // 기본 칼럼 데이터셋 (fallback)
+    const defaultArticles = [
+      {
+        id: 'mag_1',
+        title: '스마트폰 속 3만 장의 사진, 사후에는 어떻게 될까?',
+        category: '비움과 갈무리',
+        image: 'images/showcase-books-organizing.jpg',
+        excerpt: "가족들에게 남겨질 내 디지털 흔적을 미리 깔끔하고 안전하게 정돈하는 '디지털 유세거니'의 시작법을 소개합니다.",
+        content: '<p>현대인의 삶은 스마트폰 속에 고스란히 담겨 있습니다. 지난 10여 년간 찍어온 사진, 메신저 대화록... 소중한 100장의 기억을 선별해보세요.</p>',
+        date: '2026.09.25',
+        isFeatured: true
+      },
+      {
+        id: 'mag_2',
+        title: "눈물 대신 웃음으로 건네는 인사, 일본의 '생전 장례식'",
+        category: '웰다잉',
+        image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=75',
+        excerpt: "내가 살아있을 때 소중한 사람들을 초대해 맛있는 음식을 대접하고 고마움을 전하는 인생 감사 파티의 품격 있는 미학.",
+        content: '<p>떠난 후에 바쳐지는 국화꽃보다, 살아있을 때 마주 잡는 따뜻한 손과 감사의 한마디가 훨씬 눈부십니다.</p>',
+        date: '2026.09.24',
+        isFeatured: true
+      },
+      {
+        id: 'mag_3',
+        title: "미래의 병원비를 줄이는 세포 건강과 '소버 큐리어스'",
+        category: '웰라이프',
+        image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=75',
+        excerpt: "무리한 통제가 아닌 미네랄 밸런스와 일상 대사 루틴을 통해 남은 인생을 활기차게 걸어갈 수 있는 체력을 만듭니다.",
+        content: '<p>노년의 건강은 어느 날 갑자기 무너지는 것이 아닌 매일 축적된 미세한 생활 루틴의 결과입니다.</p>',
+        date: '2026.09.23',
+        isFeatured: true
+      }
+    ];
+
+    function getArticles() {
+      const saved = localStorage.getItem(ARTICLES_KEY);
+      if (saved) {
+        try { return JSON.parse(saved); } catch (e) { return defaultArticles; }
+      }
+      return defaultArticles;
+    }
+
+    function saveArticles(list) {
+      localStorage.setItem(ARTICLES_KEY, JSON.stringify(list));
+      renderArticlesTable();
+    }
+
+    function renderArticlesTable() {
+      const articles = getArticles();
+      const tbody = document.getElementById('articleTableBody');
+      const statTotal = document.getElementById('statArticleTotal');
+      const statFeatured = document.getElementById('statArticleFeatured');
+
+      const featuredCount = articles.filter(a => a.isFeatured).length;
+      if (statTotal) statTotal.textContent = `${articles.length}편`;
+      if (statFeatured) statFeatured.textContent = `${featuredCount}편`;
+
+      if (!tbody) return;
+
+      if (articles.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 30px; color: #94a3b8;">등록된 칼럼이 없습니다.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = articles.map(a => `
+        <tr>
+          <td>
+            ${a.image ? `<img src="${a.image}" alt="사진" style="width: 52px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color);">` : '<div style="width:52px; height:40px; background:#f1f5f9; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:#94a3b8;">무사진</div>'}
+          </td>
+          <td>
+            <div style="font-weight: 800; font-size: 0.95rem; margin-bottom: 2px;">${escapeHtml(a.title)}</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 480px;">${escapeHtml(a.excerpt || '')}</div>
+          </td>
+          <td>
+            <span style="display:inline-block; padding: 3px 8px; border-radius: 6px; background: var(--bg-body); font-size: 0.78rem; font-weight: 750;">[${escapeHtml(a.category)}]</span>
+          </td>
+          <td style="color: var(--text-muted); font-size: 0.85rem;">${a.date || '2026.09.25'}</td>
+          <td style="text-align: center;">
+            <button class="badge-pin ${a.isFeatured ? 'pinned' : 'unpinned'}" onclick="toggleArticlePin('${a.id}')">
+              ${a.isFeatured ? '⭐ 전면 노출 중' : '☆ 미노출'}
+            </button>
+          </td>
+          <td style="text-align: center;">
+            <div style="display: inline-flex; gap: 6px;">
+              <button class="btn-action-sm edit" onclick="editArticle('${a.id}')">✏️ 수정</button>
+              <button class="btn-action-sm del" onclick="deleteArticle('${a.id}')">🗑️ 삭제</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function toggleArticlePin(id) {
+      const articles = getArticles();
+      const target = articles.find(a => a.id === id);
+      if (target) {
+        target.isFeatured = !target.isFeatured;
+        saveArticles(articles);
+      }
+    }
+
+    function toggleArticleForm() {
+      const card = document.getElementById('articleFormCard');
+      if (card) {
+        card.style.display = card.style.display === 'none' ? 'block' : 'none';
+        if (card.style.display === 'block') {
+          clearArticleForm();
+          card.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
+
+    function clearArticleForm() {
+      document.getElementById('editArticleId').value = '';
+      document.getElementById('articleTitleInput').value = '';
+      document.getElementById('articleCategoryInput').value = '비움과 갈무리';
+      document.getElementById('articleImageInput').value = '';
+      document.getElementById('articleExcerptInput').value = '';
+      document.getElementById('articleContentInput').value = '';
+      document.getElementById('articleFeaturedCheck').checked = true;
+      document.getElementById('articleImagePreviewBox').style.display = 'none';
+      document.getElementById('articleFormTitle').textContent = '새 칼럼 작성하기';
+    }
+
+    function cancelArticleEdit() {
+      clearArticleForm();
+      document.getElementById('articleFormCard').style.display = 'none';
+    }
+
+    function previewArticleImage(url) {
+      const box = document.getElementById('articleImagePreviewBox');
+      const img = document.getElementById('articleImagePreview');
+      if (url && url.trim()) {
+        img.src = url.trim();
+        box.style.display = 'block';
+      } else {
+        box.style.display = 'none';
+      }
+    }
+
+    function editArticle(id) {
+      const articles = getArticles();
+      const a = articles.find(item => item.id === id);
+      if (!a) return;
+
+      document.getElementById('editArticleId').value = a.id;
+      document.getElementById('articleTitleInput').value = a.title;
+      document.getElementById('articleCategoryInput').value = a.category;
+      document.getElementById('articleImageInput').value = a.image || '';
+      document.getElementById('articleExcerptInput').value = a.excerpt || '';
+      document.getElementById('articleContentInput').value = a.content || '';
+      document.getElementById('articleFeaturedCheck').checked = !!a.isFeatured;
+      previewArticleImage(a.image || '');
+
+      document.getElementById('articleFormTitle').textContent = '칼럼 수정하기';
+      const card = document.getElementById('articleFormCard');
+      card.style.display = 'block';
+      card.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function handleSaveArticle(e) {
+      e.preventDefault();
+      const id = document.getElementById('editArticleId').value;
+      const title = document.getElementById('articleTitleInput').value.trim();
+      const category = document.getElementById('articleCategoryInput').value;
+      const image = document.getElementById('articleImageInput').value.trim();
+      const excerpt = document.getElementById('articleExcerptInput').value.trim();
+      const content = document.getElementById('articleContentInput').value.trim();
+      const isFeatured = document.getElementById('articleFeaturedCheck').checked;
+
+      const articles = getArticles();
+
+      if (id) {
+        // 수정
+        const target = articles.find(a => a.id === id);
+        if (target) {
+          target.title = title;
+          target.category = category;
+          target.image = image;
+          target.excerpt = excerpt;
+          target.content = content;
+          target.isFeatured = isFeatured;
+        }
+      } else {
+        // 신규
+        const newArt = {
+          id: 'mag_' + Date.now(),
+          title,
+          category,
+          image,
+          excerpt,
+          content,
+          date: dateStr,
+          isFeatured
+        };
+        articles.unshift(newArt);
+      }
+
+      saveArticles(articles);
+      cancelArticleEdit();
+      alert('칼럼이 성공적으로 저장되었습니다!');
+    }
+
+    function deleteArticle(id) {
+      if (confirm('이 칼럼을 영구 삭제하시겠습니까?')) {
+        let articles = getArticles();
+        articles = articles.filter(a => a.id !== id);
+        saveArticles(articles);
+        alert('칼럼이 삭제되었습니다.');
+      }
+    }
+
+    // ================= 3. 비움 한 줄 라운지 관리 =================
+    const UNBURDEN_KEY = 'yebaek_unburden_posts_v1';
+
+    const defaultUnburdens = [
+      { id: 'u1', text: "30년 넘게 찬장에 모셔두었던 쓰지 않던 찻잔 세트를 오늘 비우고, 가벼워진 수납장을 보며 깊은 숨을 내쉬었습니다.", date: "2026.09.25", likes: 28, isPinned: true },
+      { id: 'u2', text: "자식들에게 짐이 되지 않을까 늘 전전긍긍하던 불안을 내려놓습니다. 내 인생의 결을 스스로 잘 갈무리해 보려 합니다.", date: "2026.09.24", likes: 35, isPinned: true },
+      { id: 'u3', text: "옷장 속 입지 않던 오래된 코트들을 정리하여 복지관에 기부했습니다. 마음속에 따뜻한 여백이 생겼네요.", date: "2026.09.23", likes: 19, isPinned: false },
+      { id: 'u4', text: "평생 쥐고 있던 남들의 시선과 비교하는 마음을 비워냅니다. 지금 나이의 내가 가장 아름답습니다.", date: "2026.09.22", likes: 42, isPinned: true }
+    ];
+
+    function getUnburdens() {
+      const saved = localStorage.getItem(UNBURDEN_KEY);
+      if (saved) {
+        try { return JSON.parse(saved); } catch (e) { return defaultUnburdens; }
+      }
+      return defaultUnburdens;
+    }
+
+    function saveUnburdens(list) {
+      localStorage.setItem(UNBURDEN_KEY, JSON.stringify(list));
+      renderUnburdenTable();
+    }
+
+    function renderUnburdenTable() {
+      const list = getUnburdens();
+      const tbody = document.getElementById('unburdenTableBody');
+      if (!tbody) return;
+
+      if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 24px; color:#94a3b8;">등록된 비움 글이 없습니다.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map(u => `
+        <tr>
+          <td>
+            <button class="badge-pin ${u.isPinned ? 'pinned' : 'unpinned'}" onclick="toggleUnburdenPin('${u.id}')">
+              ${u.isPinned ? '⭐ 추천' : '일반'}
+            </button>
+          </td>
+          <td style="font-weight: 600; line-height: 1.5;">${escapeHtml(u.text)}</td>
+          <td style="color: var(--text-muted); font-size: 0.85rem;">${u.date}</td>
+          <td style="text-align: center; font-weight: 700; color: var(--accent);">❤️ ${u.likes || 0}</td>
+          <td style="text-align: center;">
+            <button class="btn-action-sm del" onclick="deleteUnburden('${u.id}')">🗑️ 삭제</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function toggleUnburdenPin(id) {
+      const list = getUnburdens();
+      const target = list.find(u => u.id === id);
+      if (target) {
+        target.isPinned = !target.isPinned;
+        saveUnburdens(list);
+      }
+    }
+
+    function deleteUnburden(id) {
+      if (confirm('이 비움 글을 삭제하시겠습니까?')) {
+        let list = getUnburdens();
+        list = list.filter(u => u.id !== id);
+        saveUnburdens(list);
+      }
+    }
+
+    function promptAddUnburden() {
+      const text = prompt('관리자 추천 비움 한 줄 내용을 입력하세요:');
+      if (text && text.trim()) {
+        const list = getUnburdens();
+        list.unshift({
+          id: 'u_' + Date.now(),
+          text: text.trim(),
+          date: dateStr,
+          likes: 1,
+          isPinned: true
+        });
+        saveUnburdens(list);
+        alert('추천 비움글이 등록되었습니다!');
+      }
+    }
+
+    // ================= 4. 디지털 자서전 신청 명단 관리 =================
+    const MEMOIR_KEY = 'yebaek_memoir_consult_v1';
+
+    function getMemoirRequests() {
+      const saved = localStorage.getItem(MEMOIR_KEY);
+      if (saved) {
+        try { return JSON.parse(saved); } catch (e) { return []; }
+      }
+      return [
+        { id: 'm1', name: '김순옥 어르신', phone: '010-8821-3921', memo: '30일 자서전 워크북 신청 및 자택 방문 구술 인터뷰 상담 희망', date: '2026.09.26', status: '완료' },
+        { id: 'm2', name: '이정호 님', phone: '010-3342-9901', memo: '부모님 칠순 기념 양장본 도서 5부 제작 및 옛 사진 복원 문의', date: '2026.09.25', status: '대기' }
+      ];
+    }
+
+    function saveMemoirRequests(list) {
+      localStorage.setItem(MEMOIR_KEY, JSON.stringify(list));
+      renderMemoirTable();
+    }
+
+    function renderMemoirTable() {
+      const list = getMemoirRequests();
+      const tbody = document.getElementById('memoirTableBody');
+      if (!tbody) return;
+
+      if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 24px; color:#94a3b8;">신청 내역이 없습니다.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map(m => `
+        <tr>
+          <td style="font-weight: 800;">${escapeHtml(m.name)}</td>
+          <td><a href="tel:${m.phone}" style="color:var(--accent); font-weight:700;">${escapeHtml(m.phone)}</a></td>
+          <td>${escapeHtml(m.memo || '')}</td>
+          <td style="color:var(--text-muted); font-size:0.85rem;">${m.date}</td>
+          <td style="text-align: center;">
+            <button class="badge-pin ${m.status === '완료' ? 'pinned' : 'unpinned'}" onclick="toggleMemoirStatus('${m.id}')">
+              ${m.status || '대기'}
+            </button>
+          </td>
+          <td style="text-align: center;">
+            <button class="btn-action-sm del" onclick="deleteMemoirRequest('${m.id}')">삭제</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function toggleMemoirStatus(id) {
+      const list = getMemoirRequests();
+      const target = list.find(m => m.id === id);
+      if (target) {
+        target.status = target.status === '완료' ? '대기' : '완료';
+        saveMemoirRequests(list);
+      }
+    }
+
+    function deleteMemoirRequest(id) {
+      if (confirm('신청 내역을 삭제하시겠습니까?')) {
+        let list = getMemoirRequests();
+        list = list.filter(m => m.id !== id);
+        saveMemoirRequests(list);
+      }
+    }
+
+    // ================= 5. 아카데미 지원자 명단 관리 =================
+    const ACADEMY_KEY = 'yebaek_academy_consult_v1';
+
+    function getAcademyRequests() {
+      const saved = localStorage.getItem(ACADEMY_KEY);
+      if (saved) {
+        try { return JSON.parse(saved); } catch (e) { return []; }
+      }
+      return [
+        { id: 'a1', name: '박선영 님', phone: '010-4491-0023', track: '뷰티 웰니스 코치', memo: '시니어 헤어/메이크업 방문 코치 1기 지원 상담', date: '2026.09.25', status: '상담완료' },
+        { id: 'a2', name: '최진우 님', phone: '010-7712-4499', track: '생전정리 & 엔딩 플래너', memo: '종활 및 유품 정리 전문 자격과정 수강료 문의', date: '2026.09.24', status: '대기' }
+      ];
+    }
+
+    function saveAcademyRequests(list) {
+      localStorage.setItem(ACADEMY_KEY, JSON.stringify(list));
+      renderAcademyTable();
+    }
+
+    function renderAcademyTable() {
+      const list = getAcademyRequests();
+      const tbody = document.getElementById('academyTableBody');
+      if (!tbody) return;
+
+      if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 24px; color:#94a3b8;">지원자 내역이 없습니다.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map(a => `
+        <tr>
+          <td style="font-weight: 800;">${escapeHtml(a.name)}</td>
+          <td><a href="tel:${a.phone}" style="color:var(--accent); font-weight:700;">${escapeHtml(a.phone)}</a></td>
+          <td><span style="padding:3px 8px; border-radius:6px; background:#eff6ff; color:#1e40af; font-size:0.8rem; font-weight:750;">${escapeHtml(a.track || '전체')}</span></td>
+          <td>${escapeHtml(a.memo || '')}</td>
+          <td style="text-align: center;">
+            <button class="badge-pin ${a.status === '상담완료' ? 'pinned' : 'unpinned'}" onclick="toggleAcademyStatus('${a.id}')">
+              ${a.status || '대기'}
+            </button>
+          </td>
+          <td style="text-align: center;">
+            <button class="btn-action-sm del" onclick="deleteAcademyRequest('${a.id}')">삭제</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function toggleAcademyStatus(id) {
+      const list = getAcademyRequests();
+      const target = list.find(a => a.id === id);
+      if (target) {
+        target.status = target.status === '상담완료' ? '대기' : '상담완료';
+        saveAcademyRequests(list);
+      }
+    }
+
+    function deleteAcademyRequest(id) {
+      if (confirm('지원 내역을 삭제하시겠습니까?')) {
+        let list = getAcademyRequests();
+        list = list.filter(a => a.id !== id);
+        saveAcademyRequests(list);
+      }
+    }
+
+    // ================= 6. 1:1 방문 맞춤 상담 명단 관리 =================
+    const CONSULT_KEY = 'yebaek_consult_requests_v1';
+
+    function getConsultRequests() {
+      const saved = localStorage.getItem(CONSULT_KEY);
+      if (saved) {
+        try { return JSON.parse(saved); } catch (e) { return []; }
+      }
+      return [
+        { id: 'c1', category: '웰니스 뷰티', name: '정옥희 어르신', phone: '010-9943-1288', hopeDate: '평일 오후 2시', memo: '특별한 가족 모임 전 헤어/의상 방문 스타일링 상담', status: '대기', date: '2026.09.26' },
+        { id: 'c2', category: '공간 옷장 비움', name: '강명숙 님', phone: '010-5512-8871', hopeDate: '주말 오전', memo: '모친 댁 옷장 및 짐 정리 코칭 견적 문의', status: '완료', date: '2026.09.25' }
+      ];
+    }
+
+    function saveConsultRequests(list) {
+      localStorage.setItem(CONSULT_KEY, JSON.stringify(list));
+      renderConsultTable();
+    }
+
+    function renderConsultTable() {
+      const list = getConsultRequests();
+      const tbody = document.getElementById('consultTableBody');
+      if (!tbody) return;
+
+      if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 24px; color:#94a3b8;">상담 신청 내역이 없습니다.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map(c => `
+        <tr>
+          <td><span style="padding:3px 8px; border-radius:6px; background:var(--accent-light); color:var(--accent); font-size:0.8rem; font-weight:800;">${escapeHtml(c.category || '일반')}</span></td>
+          <td style="font-weight:800;">${escapeHtml(c.name)}</td>
+          <td><a href="tel:${c.phone}" style="color:var(--accent); font-weight:700;">${escapeHtml(c.phone)}</a></td>
+          <td style="color:var(--text-muted); font-size:0.85rem;">${escapeHtml(c.hopeDate || '-')}</td>
+          <td>${escapeHtml(c.memo || '')}</td>
+          <td style="text-align:center;">
+            <button class="badge-pin ${c.status === '완료' ? 'pinned' : 'unpinned'}" onclick="toggleConsultStatus('${c.id}')">
+              ${c.status || '대기'}
+            </button>
+          </td>
+          <td style="text-align:center;">
+            <button class="btn-action-sm del" onclick="deleteConsultRequest('${c.id}')">삭제</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function toggleConsultStatus(id) {
+      const list = getConsultRequests();
+      const target = list.find(c => c.id === id);
+      if (target) {
+        target.status = target.status === '완료' ? '대기' : '완료';
+        saveConsultRequests(list);
+      }
+    }
+
+    function deleteConsultRequest(id) {
+      if (confirm('상담 내역을 삭제하시겠습니까?')) {
+        let list = getConsultRequests();
+        list = list.filter(c => c.id !== id);
+        saveConsultRequests(list);
+      }
+    }
+
+    // ================= CSV 엑셀 내보내기 유틸 =================
+    function downloadCSV(filename, csvContent) {
+      const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function exportConsultCSV() {
+      const list = getConsultRequests();
+      let csv = "분야,고객성함,연락처,희망일시,요청사항,처리상태,접수일자\n";
+      list.forEach(c => {
+        csv += `"${c.category || ''}","${c.name}","${c.phone}","${c.hopeDate || ''}","${c.memo || ''}","${c.status || '대기'}","${c.date || ''}"\n`;
+      });
+      downloadCSV(`여백과결_1대1상담신청명단_${dateStr}.csv`, csv);
+    }
+
+    function exportMemoirCSV() {
+      const list = getMemoirRequests();
+      let csv = "고객성함,연락처,상담및배송메모,접수일시,처리상태\n";
+      list.forEach(m => {
+        csv += `"${m.name}","${m.phone}","${m.memo || ''}","${m.date || ''}","${m.status || '대기'}"\n`;
+      });
+      downloadCSV(`여백과결_자서전상담신청명단_${dateStr}.csv`, csv);
+    }
+
+    function exportAcademyCSV() {
+      const list = getAcademyRequests();
+      let csv = "지원자성함,연락처,관심트랙,지원동기,처리상태,접수일시\n";
+      list.forEach(a => {
+        csv += `"${a.name}","${a.phone}","${a.track || ''}","${a.memo || ''}","${a.status || '대기'}","${a.date || ''}"\n`;
+      });
+      downloadCSV(`여백과결_코치아카데미지원자명단_${dateStr}.csv`, csv);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function loadAllData() {
+      loadSiteSettings();
+      renderArticlesTable();
+      renderUnburdenTable();
+      renderMemoirTable();
+      renderAcademyTable();
+      renderConsultTable();
+    }
+
+    // 초기 실행
+    window.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+    });
+  </script>
+</body>
+</html>
