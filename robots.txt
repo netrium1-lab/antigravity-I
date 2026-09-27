@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://netrium1-lab.github.io/antigravity-I/sitemap.xml
+Sitemap: https://netrium1-lab.github.io/sitemap.xml
